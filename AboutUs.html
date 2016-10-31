@@ -7,27 +7,42 @@
 		</title>
 		<link rel="stylesheet" type="text/css" href="app.css">
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
-		<script language="javascript" src="app.js"></script>
-
-
 	</head> 
-
-
+	
 	<body>		
-		Space
-		<canvas id="titleCanvas" width="300" height="150">
-		<img id="banner" src="https://github.com/0xYTF/Space/blob/gh-pages/image/logo_banner.png?raw=true"  alt="FristBackground" />
- 
+		<h1>Space</h1><br>
+		
+
+		
+		<canvas id="titleCanvas" width="2000" height="2000">
+		</canvas>
+		
 		<img id="logo" src="https://github.com/0xYTF/Space/blob/gh-pages/image/logo_white.png?raw=true" />
+
 	</body>
 	
 	<script>
+		window.onload = () =>
+		{
+		//<script language="javascript" src="app.js">?????
+		/*
+				<img id="banner" src="https://github.com/0xYTF/Space/blob/gh-pages/image/logo_banner.png?raw=true"  alt="FristBackground" />
+ 
+		
+		*/
 		var canvas = document.getElementById("titleCanvas");
 		var context = canvas.getContext("2d");
-	
+		
+		
 		context.beginPath();
 		context.moveTo(0, 0);
 		context.lineTo(200, 150);
 		context.stroke();
+		
+		
+		//var img = document.getElementById("logo");
+		//context.drawImage(img, 1000, 1000);
+		}
+		
 	</script>
 </html>
