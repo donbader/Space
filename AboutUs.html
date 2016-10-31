@@ -1,5 +1,19 @@
 <html>
 	<body>
 		Space
+		
+		<canvas id="titleCanvas" width="300" height="150">
+		<img src="">
 	</body>
+	
+	<script>
+	var canvas = document.getElementById("titleCanvas");
+	var context = canvas.getContext("2d");
+	
+	context.beginPath();
+	context.moveTo(0, 0);
+	context.lineTo(200, 150);
+	context.stroke();
+	
+	</script>
 </html>
