@@ -1,6 +1,6 @@
 <?php
 
-include_once "./AI_mysql_config.php";
+include_once "./Mysql_config.php";
 
 $query="SELECT * FROM `stone_user` ";
 $result= mysql_query($query,$link) or   die ("Error in query: $query.". mysql_error());;
