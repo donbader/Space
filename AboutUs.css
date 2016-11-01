@@ -68,7 +68,7 @@
 		float: left;
 		width: 426px;
 		height: 93px;
-		background: url(logo_banner_small.png) no-repeat center;
+		background: url(https://raw.githubusercontent.com/0xYTF/Space/gh-pages/image/Small_logo_banner.png) no-repeat center;
 	}
 	
 	nav{
@@ -150,7 +150,7 @@
 		position: relative;
 		
 		border: 15px dotted #ffffff;
-		border-image-source: url(123.png);
+		border-image-source: url(https://raw.githubusercontent.com/0xYTF/Space/gh-pages/image/SmallBorder.png);
 		border-image-slice: 60;
 		border-image-width: 3;
 		background-color: #ffffff;
