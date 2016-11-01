@@ -1,48 +1,214 @@
 <html>
-
 	<head>
 		<meta charset="UTF-8">
-		<title>
-			Space
-		</title>
+		<title>Space</title>
+		<meta name="viewport" content="width=divice-width, initial-scale=1.0">
+		
 		<link rel="stylesheet" type="text/css" href="app.css">
+		<link rel="stylesheet" href="blueberry.css" />
+		<link rel="stylesheet" href="AboutUs.css" />
+		<style type="text/css"></style>
+		
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+		<script src="jquery.blueberry.js"></script>
+		<script>
+			$(window).load(function() {
+				$('.blueberry').blueberry();
+			});
+		</script>
 	</head> 
 	
-	<body>		
-		<h1>Space</h1><br>
+	<body>
+		<header>
+			<a href="#" id="logo"></a>
+			<nav>
+				<a href"#" id="menu"></a>
+				<ul>
+					<li><a href="#">Home</a></li>
+					<li><a href="#" class="current">About Us</a></li>
+				<ul>
+			</nav>
+		</header>
 		
+		<div id="doc">
+			<div id="content">
+				<div class="blueberry">
+					<ul class="slides">
+						<li><img src="https://github.com/0xYTF/Space/blob/gh-pages/image/logo_white.png?raw=true" /></li>
+						<li><img src="https://github.com/0xYTF/Space/blob/gh-pages/image/logo_banner.png?raw=true" /></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<span>
+			<button id="introduction0">
+				<img src="http://i.imgur.com/KI7PK6o.jpg" />
+			</button>
+				
+			<span class="introductionBorder" id="introductionBorder0">
+				<span class="introductionContent" id="introductionContent0">我是馮禹德</span>
+			</span>
+				
+			<h1>馮禹德</h1>
+		</span><br><br>
+		
+		<span>
+			<button id="introduction1">
+				<img src="http://i.imgur.com/ehwW3O7.jpg" />
+			</button>
+			
+			<span class="introductionBorder" id="introductionBorder1">
+				<span class="introductionContent" id="introductionContent1">我是李光庭</span>
+			</span>
+			
+			<h1>李光庭</h1>
+		</span><br><br>
+		
+		<span>
+			<button id="introduction2">
+				<img src="http://i.imgur.com/ZUWxfuF.jpg" />
+			</button>
+			
+			<span class="introductionBorder" id="introductionBorder2">
+				<span class="introductionContent" id="introductionContent2">我是蔡侑軒</span>
+			</span>
+			
+			<h1>蔡侑軒</h1>
+		</span><br><br>
+		
+		<span>
+			<button id="introduction3">
+				<img src="http://i.imgur.com/ZUWxfuF.jpg" />
+			</button>
+			
+			<span class="introductionBorder" id="introductionBorder3">
+				<span class="introductionContent" id="introductionContent3">我是陳念劉</span>
+			</span>
+			
+			<h1>陳念劉</h1>
+		</span><br><br><br>
+		
+		
+		<footer>
+			<section>
+				<h3><b>Space</b></h3>
+				<p>Email: alltime326@gmail.com</p>
+				<p>Phone: 0968169823</p>
+				<a href="http://www.google.com">License</a><br><br>
 
+			
+				<h3><b>Related Web</b></h3>
+				<ul class="social">
+					<li><a href="https://www.youtube.com/?hl=zh-TW&gl=TW" target="_blank"><img src="http://www.w3newbie.com/wp-content/uploads/youtube-36x36.png" /></a></li>
+					<li><a href="http://web.ncku.edu.tw/bin/home.php" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhm-hDoIQApBk0BsOKrrvennwR4FEnxHLMqd4yavBg5ZIpU7hd" /></a></li>
+				</ul>
+			</section>
+			<section>
+				<h3>Connect With Us!</h3>
+				<ul class="social">
+					<li><a href="#"><img src="http://www.w3newbie.com/wp-content/uploads/facebook1.png" /></a></li>
+					<li><a href="#"><img src="http://www.w3newbie.com/wp-content/uploads/googleplus.png" /></a></li>
+					<li><a href="#"><img src="http://www.w3newbie.com/wp-content/uploads/twitter1.png" /></a></li>
+					<li><a href="#"><img src="http://www.w3newbie.com/wp-content/uploads/youtube1.png" /></a></li>
+				</ul>
+			</section>
+			<section>
+				<img src="https://github.com/0xYTF/Space/blob/gh-pages/image/logo_white.png?raw=true" />
+			</section>
+		
+		</footer>
+	
+		<footer class="second">
+			<p>@Copyright - Space</p>
+		</footer>
+	</body>
+	
+	
+	<script>
+		$("#introduction0").click
+		(
+			() =>
+			{
+				$("#introductionBorder0").css("display", "inline-block");
+			}
+		);
+		
+		$("#introduction1").click
+		(
+			() =>
+			{
+				$("#introductionBorder1").css("display", "inline-block");
+			}
+		);
+		
+		$("#introduction2").click
+		(
+			() =>
+			{
+				$("#introductionBorder2").css("display", "inline-block");
+			}
+		);
+		
+		$("#introduction3").click
+		(
+			() =>
+			{
+				$("#introductionBorder3").css("display", "inline-block");
+			}
+		);
+		
+		/*
 		
 		<canvas id="titleCanvas" width="2000" height="2000">
 		</canvas>
 		
 		<img id="logo" src="https://github.com/0xYTF/Space/blob/gh-pages/image/logo_white.png?raw=true" />
-
-	</body>
-	
-	<script>
-		window.onload = () =>
+		function Line (x0, y0, x1, y1, color, context)
 		{
+			this.x0 = x0;
+			this.y0 = y0;
+			this.x1 = x1;
+			this.y1 = y1;
+			this.color = color;
+			
+			this.draw = () =>
+			{
+				context.moveTo(this.x0, this.y0);
+				context.lineTo(this.x1, this.y1);
+				context.stroke();
+				//.line(this.x0, this.y0, this.x1, this.y1, this.color, 3);
+			}
+		}
+		*/
+		
+		//window.onload = () =>
+		//{
 		//<script language="javascript" src="app.js">?????
 		/*
 				<img id="banner" src="https://github.com/0xYTF/Space/blob/gh-pages/image/logo_banner.png?raw=true"  alt="FristBackground" />
  
 		
 		*/
-		var canvas = document.getElementById("titleCanvas");
-		var context = canvas.getContext("2d");
+			//var canvas = document.getElementById("titleCanvas");
+			//var context = canvas.getContext("2d");
 		
-		
-		context.beginPath();
-		context.moveTo(0, 0);
-		context.lineTo(200, 150);
-		context.stroke();
-		
-		
+			//var line = new Line(0, 0, 100, 100, 'black', context);
+			//line.draw();
+			
+			//line.animate({opacity: 0});
+			/*
+			context.beginPath();
+			for(var i = 0; i < 10; ++i)
+			{
+				context.moveTo(i, i);
+				context.lineTo(i + 1, i + 1);
+				context.stroke();
+			}
+			*/
 		//var img = document.getElementById("logo");
 		//context.drawImage(img, 1000, 1000);
-		}
+		//}
 		
 	</script>
 </html>
