@@ -140,9 +140,19 @@
 		padding: 0% 0%;
 	}
 	
+	button.introduction{
+		background-color: transparent;
+	}
+	
 	button img{
+		width: 300px;
 		height: 200px;
-		width: 200px;
+	}
+	
+	.circle{
+		width: 300px;
+		height: 200px;
+		-webkit-clip-path:circle(38% at 50% 50%);
 	}
 	
 	.introductionBorder{
