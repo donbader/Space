@@ -1,4 +1,5 @@
 .navbar-brand > img {
+<<<<<<< HEAD
     display: block;
     width: 96px;
     height: 60px;
@@ -133,4 +134,9 @@ button img {
 -webkit-border-radius: 2px;
    -moz-border-radius: 2px;
 	border-radius: 2px;
+=======
+  display: block;
+  width: 40px;
+  height: 40px;
+>>>>>>> 2efce5f7499b6f5b5081613b44926b0e80781f76
 }
