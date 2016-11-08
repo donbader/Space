@@ -9,17 +9,38 @@
     <form action='do.njs' method='GET'>
       Please Type the student number:<br>
       <input type='text' name='number'>
-      <input type='submit' value='怒送'>
-    </form>
+      <input type='submit' value='怒送'><br>
+         </form>
     
 
-    <!--
-    <script>
-      $.ajax({
-        url:"recive.php"
-    </script>
-    --!>
+    <form id="AJAXX">
+      for AJAX:<br>
+      <input type='text' name='ajaxnumber'>
+      <button id="btn">Click me</button>
+    </form>
 
+  
+    <script>
+    
+        $("#btn").click(function()
+        {
+          $.ajax
+          ({
+
+            url:"name.json",
+            type:"POST",
+            dataType:'json',
+          
+            success: function(JSONData)
+            {
+
+                alert($"#ajaxnumber"
+                alert(JSONData.groupmate[0].id);
+            }
+          });
+        });
+      
+    </script>
 
   </body>
 </html>
