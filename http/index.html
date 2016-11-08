@@ -15,10 +15,10 @@
 
     <form id="AJAXX">
       for AJAX:<br>
-      <input type='text' name='ajaxnumber'>
+      <input type='text' n  ame='ajaxnumber'>
       <button id="btn">Click me</button>
     </form>
-
+  
   
     <script>
     
@@ -26,16 +26,12 @@
         {
           $.ajax
           ({
-
             url:"name.json",
             type:"POST",
-            dataType:'json',
-          
-            success: function(JSONData)
-            {
-
-                alert($"#ajaxnumber"
-                alert(JSONData.groupmate[0].id);
+            dataTpye:"json",
+            data
+            success:function(JSONData)
+            {            
             }
           });
         });
