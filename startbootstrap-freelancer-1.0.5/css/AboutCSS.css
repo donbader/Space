@@ -1,0 +1,136 @@
+.navbar-brand > img {
+    display: block;
+    width: 96px;
+    height: 60px;
+}
+
+.form-signin {
+    background-color: rgba(0%, 0%, 0%, 0.5);
+    width: 50%;
+    margin: 0 auto;
+    padding: 2% 0%;
+}
+
+.form-signin .btn-block {
+    width: 50%;
+    margin: 0 auto;
+    padding: ;
+}
+
+.form-control {
+    width: 50%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+span {
+    width: 100%;
+    padding: 2% 10%;
+    text-align: left;
+    display: inline-block;
+}
+
+span h1 {
+    text-align: left;
+    font-size: 180%;
+    line-height: 80%;
+    margin: 2% 3%;
+    padding: 0% 0%;
+}
+
+button.introduction {
+    background-color: transparent;
+    border: 0px;
+}
+
+button img {
+    width: 300px;
+    height: 200px;
+}
+
+.circle {
+    width: 300px;
+    height: 200px;
+    -webkit-clip-path: circle(38% at 50% 50%);
+    color: #000000;
+    background-color: #000000;
+}
+
+.introductionBorder {
+    display: none;
+    position: relative;
+    border: 15px dotted #ffffff;
+    border-image-source: url(../img/SmallBorder.png);
+    border-image-slice: 60;
+    border-image-width: 3;
+    background-color: #ffffff;
+    width: 60%;
+    height: 165px;
+    margin: 0% 5%;
+    overflow: hidden;
+    opacity: 0.90;
+}
+
+.introductionContent {
+    color: black;
+    text-align: left;
+    margin: 2% 2%;
+}
+
+#doc {
+    margin: 0 0;
+}
+
+#content {
+    margin: 0 0;
+}
+
+.blueberry {
+	width: 100%;
+	margin: 0 0;
+}
+
+.green {
+    color: #fff;
+    background: #18bc9c;
+}
+
+.blueberry .slides {
+	display: block;
+	position: relative;
+	overflow: hidden;
+	width: 100%;
+	margin: 0 0;
+	padding: 0 0;
+}
+
+.blueberry .pager {
+	position: relative;
+	text-align: center;
+	top: -30px;
+	height: 0px;
+	margin: 0 0;
+}
+
+.blueberry .pager li a,
+.blueberry .pager li a span {
+	display: block;
+	height: 10px;
+	width: 10px;
+}
+
+.blueberry .pager li a {
+	padding: 8px 8px;
+-webkit-border-radius: 6px;
+   -moz-border-radius: 6px;
+	border-radius: 6px;
+	background-color: transparent;
+}
+.blueberry .pager li a span {
+	overflow: hidden;
+	background: #c0c0c0;
+	text-indent: -9999px;
+-webkit-border-radius: 2px;
+   -moz-border-radius: 2px;
+	border-radius: 2px;
+}

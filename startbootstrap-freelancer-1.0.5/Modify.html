@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Space - Sign in</title>
+    <title>Space - Modify</title>
     <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -60,30 +60,24 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
-
-    <!-- Sign in -->
+    <!-- Modify -->
     <header>
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <form class="form-signin" action="https://0xytf.github.io/Space/SignIn.php" method="post">
-                        <h2 class="form-signin-heading">Please Sign In</h2>
-                        <label for="inputEmail" class="sr-only">Account</label>
-                        <input type="text" name="account" id="inputEmail" class="form-control" placeholder="Account" required autofocus>
+                        <h2 class="form-signin-heading">Modify</h2>
+                        <label for="inputEmail" class="sr-only">Old Account</label>
+                        <input type="text" name="account" id="inputEmail" class="form-control" placeholder="Old Account" required autofocus>
                         <br>
-                        <label for="inputPassword" class="sr-only">Password</label>
-                        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                        <label for="inputPassword" class="sr-only">Old Password</label>
+                        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Old Password" required>
                         <br>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" value="remember-me"> Remember me
-                            </label>
-                        </div>
-                        <a href="https://0xytf.github.io/Space/Modify.html">Modify My Information!</a>
+                        <label for="inputPassword" class="sr-only">New Password</label>
+                        <input type="password" name="npassword" id="inputPassword" class="form-control" placeholder="New Password" required>
                         <br>
-                        <a href="https://0xytf.github.io/Space/SignUp.html">Not Our User yet? Sign Up Now!</a>
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-                        <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-facebook"></i></a>
+                        <a href="https://0xytf.github.io/Space/SignIn.html">Back to Sign In!</a>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Modify</button>
                     </form>
                 </div>
             </div>
