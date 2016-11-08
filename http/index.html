@@ -1,42 +1,45 @@
-
 <html>
-  <head>
+
+<head>
     <title>Student Number Query</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
-  </head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
 
-  <body>
+<body>
     <form action='do.njs' method='GET'>
-      Please Type the student number:<br>
-      <input type='text' name='number'>
-      <input type='submit' value='怒送'><br>
-         </form>
-    
-
-    <form id="AJAXX">
-      for AJAX:<br>
-      <input type='text' n  ame='ajaxnumber'>
-      <button id="btn">Click me</button>
+        Please Type the student number:
+        <br>
+        <input type='text' name='number'>
+        <input type='submit' value='怒送'>
+        <br>
     </form>
-  
-  
+    <input type='text' id='ajaxnumber'>
+    <button id="btn">Click me</button>
+<!--     <form id="AJAXX">
+        for AJAX:
+        <br>
+        <input type='text' n ame='ajaxnumber'>
+        <button id="btn">Click me</button>
+    </form>
+ -->
     <script>
-    
-        $("#btn").click(function()
-        {
-          $.ajax
-          ({
-            url:"name.json",
-            type:"POST",
-            dataTpye:"json",
-            data
-            success:function(JSONData)
-            {            
+    $("#btn").click(function() {
+        $.ajax({
+            url: "name.json",
+            dataTpye: "json",
+            success: function(JSONData) {
+              var groupmate = JSONData.groupmate;
+              var person = groupmate.find((element)=>{return element.id == $('#ajaxnumber').val()});
+              if(!person){
+                alert("找不到此人！ㄏㄏ");
+              }
+              else{
+                alert("你是說....「"+person.name+"」嗎？");
+              }
             }
-          });
         });
-      
+    });
     </script>
+</body>
 
-  </body>
 </html>
