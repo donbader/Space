@@ -1,15 +1,25 @@
 
 <html>
   <head>
-    <title>http & ajax</title>
+    <title>Student Number Query</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
   </head>
 
   <body>
-    <form action='get.njs' method='GET'>
-      first name: <input type='text' name='fname'><br>
-      last name: <input type='text' name='lname'><br>
-      <input type='submit' value='get submit'>
+    <form action='do.njs' method='GET'>
+      Please Type the student number:<br>
+      <input type='text' name='number'>
+      <input type='submit' value='怒送'>
     </form>
+    
+
+    <!--
+    <script>
+      $.ajax({
+        url:"recive.php"
+    </script>
+    --!>
+
+
   </body>
 </html>
