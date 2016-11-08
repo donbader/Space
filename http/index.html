@@ -6,23 +6,26 @@
 </head>
 
 <body>
-    <form action='do.njs' method='GET'>
-        Please Type the student number:
-        <br>
-        <input type='text' name='number'>
-        <input type='submit' value='怒送'>
-        <br>
-    </form>
-    <input type='text' id='ajaxnumber'>
-    <button id="btn">Click me</button>
-<!--     <form id="AJAXX">
-        for AJAX:
-        <br>
-        <input type='text' n ame='ajaxnumber'>
-        <button id="btn">Click me</button>
-    </form>
- -->
-    <script>
+  <form action='do.njs' method='GET'>
+  Please Type the student number:
+  <br>
+  <input type='text' name='number'>
+  <input type='submit' value='怒送'>
+  <br>
+  </form>
+
+
+
+
+
+
+
+
+
+  <input type='text' id='ajaxnumber'>
+  <button id="btn">Click me</button>
+
+  <script>
     $("#btn").click(function() {
         $.ajax({
             url: "name.json",
@@ -39,7 +42,7 @@
             }
         });
     });
-    </script>
+  </script>
 </body>
 
 </html>
