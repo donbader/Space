@@ -1,11 +1,17 @@
 #!/usr/local/bin/node
 
-var querystring = require('querystring');
+var querystring = require('../node_modules/querystring');
 var para = querystring.parse(process.env.QUERY_STRING);
-var mongoose = require('mongoose');
+var mongoose = require('../node_modules/mongoose');
 
 
-mongoose.connect('mongodb://wp2016_groupL:66666666/wp2016_groupL');
+
+
+
+
+
+
+mongoose.connect('mongodb://wp2016_groupL:66666666@localhost/wp2016_groupL');
 var db = mongoose.connection;
 
 
@@ -22,12 +28,12 @@ var StudentSchema = mongoose.Schema({
   });
 
 var Student = mongoose.model('Student', StudentSchema);
-//var Kitten = mongoose.model('Kitten', kittySchema);
 
 var element = new Student({name: in_name , idnum: in_id});
 console.log(in_name +'and' + in_id);
 
 element.save(function(err,element){
+  console.log("HIHIHI");
   if (err) return console.error(err);
   });
 
