@@ -80,47 +80,52 @@
     </div>
     <!-- introduction -->
     <span class="green">
-            <button class="introduction" id="introduction0">
+            <button class="introduction" id="introductionButton0">
                 <img class="circle" src="./img/馮禹德.jpg" />
+                <h1>馮禹德</h1>
             </button>
-            <span class="introductionBorder" id="introductionBorder0">
-                <span class="introductionContent" id="introductionContent0">我是馮禹德</span>
-    </span>
-    <h1>馮禹德</h1>
+            <span class="introductionBorder">
+                <span class="introductionContent" id="introductionContent0">
+                    <h2>我是馮禹德</h2>
+                </span>
+            </span>
     </span>
     <span class="green">
-            <button class="introduction" id="introduction1">
+            <button class="introduction" id="introductionButton1">
                 <img class="circle" src="./img/李光庭.jpg" />
+                <h1>李光庭</h1>
             </button>
             
-            <span class="introductionBorder" id="introductionBorder1">
-                <span class="introductionContent" id="introductionContent1">我是李光庭</span>
+            <span class="introductionBorder">
+                <span class="introductionContent">
+                    <h2>我是李光庭</h2>
+                </span>
     </span>
-    <h1>李光庭</h1>
     </span>
     <span class="green">
-            <button class="introduction" id="introduction2">
+            <button class="introduction" id="introductionButton2">
                 <img class="circle" src="./img/蔡侑軒.jpg" />
+                <h1>蔡侑軒</h1>
             </button>
             
-            <span class="introductionBorder" id="introductionBorder2">
-                <span class="introductionContent" id="introductionContent2">我是蔡侑軒</span>
+            <span class="introductionBorder">
+                <span class="introductionContent">
+                    <h2>我是蔡侑軒</h2>
+            </span>
     </span>
-    <h1>蔡侑軒</h1>
     </span>
     <span class="green">
-            <button class="introduction" id="introduction3">
+            <button class="introduction" id="introductionButton3">
                 <img class="circle" src="./img/劉俊林.jpg" />
+                <h1>劉俊林</h1>
             </button>
             
-            <span class="introductionBorder" id="introductionBorder3">
-                <span class="introductionContent" id="introductionContent3">我是劉俊林</span>
+            <span class="introductionBorder">
+                <span class="introductionContent">
+                    <h2>我是劉俊林</h2>
+                </span>
     </span>
-    <h1>劉俊林</h1>
     </span>
-    <br>
-    <br>
-    <br>
     <!-- Footer -->
     <footer class="text-center">
         <div class="footer-above">
@@ -415,29 +420,11 @@
     $(window).load(function() {
         $('.blueberry').blueberry();
     });
-    $("#introduction0").click(
-        () => {
-            $("#introductionBorder0").css("display", "inline-block");
-        }
-    );
 
-    $("#introduction1").click(
-        () => {
-            $("#introductionBorder1").css("display", "inline-block");
-        }
-    );
+    $('#introductionButton0').click( () =>
+    {
 
-    $("#introduction2").click(
-        () => {
-            $("#introductionBorder2").css("display", "inline-block");
-        }
-    );
-
-    $("#introduction3").click(
-        () => {
-            $("#introductionBorder3").css("display", "inline-block");
-        }
-    );
+    });
     </script>
 </body>
 
