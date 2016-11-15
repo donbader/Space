@@ -56,6 +56,13 @@ button img {
     height: 200px;
 }
 
+button h1{
+    position: relative;
+    text-align: center;
+    margin: 10px 0 ;
+    padding: 0 0;
+}
+
 .circle {
     width: 300px;
     height: 200px;
@@ -66,25 +73,25 @@ button img {
 
 .introductionBorder {
     display: none;
-    position:relative;
-    top: 50px;
-    border: 15px dotted #ffffff;
+    position: absolute;
     border-image-source: url(../img/SmallBorder.png);
     border-image-slice: 60;
     border-image-width: 3;
     background-color: #ffffff;
     width: 60%;
-    height: 165px;
+    height: 245px;
     margin: 0 0;
-    padding: 20px 0;
+    padding: 0 0;
     overflow: hidden;
     opacity: 0.90;
+    text-align: center;
 }
 
 .introductionContent {
     color: black;
     text-align: left;
     margin: 2% 2%;
+    padding: 2% 2%;
 }
 
 #doc {
@@ -103,6 +110,7 @@ button img {
 .green {
     color: #fff;
     background: #18bc9c;
+    position: relative;
 }
 
 .blueberry .slides {
