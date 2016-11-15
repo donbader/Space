@@ -34,10 +34,10 @@ kittySchema.methods.speak = function(){
   console.log(greeting);
 }
 
-var Kitten = mongoose.model('Kitten', kittySchema);
+var Kitten = mongoose.model('Kittten', kittySchema);
 
 
-var lam = new Kitten({ name: 'lam'});
+var lam = new Kitten({ name: 'yo'});
 console.log(lam.name);
 
 lam.speak();
@@ -47,7 +47,8 @@ lam.save(function(err,lam){
   lam.speak();
 });
 
-Kitten.find(function (err,kittens){
+Kitten.find(function(err,kittens){
   if (err) return console.error(err);
   console.log(kittens);
-  });
+});
+
