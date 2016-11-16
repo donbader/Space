@@ -1,4 +1,3 @@
-# Space
-![alt text](https://github.com/0xYTF/Space/blob/master/public/images/logo_transparent.png?raw=true "Space" )
+# Space 
 ---
-[ Sign In ](luffy.ee.ncku.tw:3001)
+[ Sign In ](http://luffy.ee.ncku.tw:3001)
