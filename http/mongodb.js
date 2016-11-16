@@ -28,27 +28,22 @@ var kittySchema = mongoose.Schema({
     name: String
   });
 
-
+/*
 kittySchema.methods.speak = function(){
   var greeting = this.name ? "I am " + this.name : "Who am I" ;
   console.log(greeting);
 }
-
-var Kitten = mongoose.model('Kittten', kittySchema);
+*/
+var Kitten = mongoose.model('Kitten', kittySchema);
 
 
 var lam = new Kitten({ name: 'yo'});
 console.log(lam.name);
 
-lam.speak();
+//lam.speak();
 
 lam.save(function(err,lam){
   if (err) return console.error(err);
-  lam.speak();
-});
-
-Kitten.find(function(err,kittens){
-  if (err) return console.error(err);
-  console.log(kittens);
+//  lam.speak();
 });
 
