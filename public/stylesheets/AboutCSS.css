@@ -56,9 +56,8 @@ span h2{
 
 button.introduction {
     background-color: transparent;
-    border: 0px;
     outline: none;
-    margin: 0 35%;
+    vertical-alig
 }
 
 button img {
@@ -81,10 +80,17 @@ button h1{
     background-color: #000000;
 }
 
+.introductionDiv{
+    display: block;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
 .introductionBorder {
     display: none;
     position: absolute;
-    border-image-source: url(../img/SmallBorder.png);
+    border-image-source: url(../images/SmallBorder.png);
     border-image-slice: 60;
     border-image-width: 3;
     background-color: transparent;
@@ -120,7 +126,7 @@ button h1{
 .green {
     color: #fff;
     background: #18bc9c;
-    position: relative;
+    text-align: center;
 }
 
 .blueberry .slides {
