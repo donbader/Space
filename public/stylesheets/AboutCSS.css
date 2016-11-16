@@ -54,22 +54,36 @@ span h2{
     font-weight: 100; 
 }
 
-button.introduction {
+div.profilePicture {
     background-color: transparent;
-    outline: none;
-    vertical-alig
+    position: relative;
+    width : 300px;
+    margin: 0 auto;
 }
 
-button img {
+span.profilePicture {
+    background-color: transparent;
+    position: relative;
+    width : 300px;
+    text-align: center;
+    padding: 0 0;
+}
+
+div.profilePicture img {
     width: 300px;
     height: 200px;
 }
 
-button h1{
+span.profilePicture img {
+    width: 300px;
+    height: 200px;
+}
+
+span h1{
     position: relative;
     text-align: center;
-    margin: 10px 0 ;
-    padding: 0 0;
+    margin: 0 0 ;
+    padding: 10 0;
 }
 
 .circle {
@@ -81,33 +95,22 @@ button h1{
 }
 
 .introductionDiv{
-    display: block;
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.introductionBorder {
-    display: none;
-    position: absolute;
-    border-image-source: url(../images/SmallBorder.png);
-    border-image-slice: 60;
-    border-image-width: 3;
-    background-color: transparent;
-    width: 60%;
-    height: 245px;
     margin: 0 0;
-    padding: 0 0;
-    overflow: hidden;
-    opacity: 0.90;
+    padding: 2% 0;
     text-align: center;
 }
 
 .introductionContent {
-    color: black;
-    text-align: left;
-    margin: 2% 2%;
+    display: none;
+    position: absolute;
+    text-align: center;
+    left: 0;
+    right: 0;
     padding: 2% 2%;
+    width: 50%;
+    height: 240px;
+    color: black;
+    overflow: hidden;
 }
 
 #doc {
@@ -126,7 +129,6 @@ button h1{
 .green {
     color: #fff;
     background: #18bc9c;
-    text-align: center;
 }
 
 .blueberry .slides {
