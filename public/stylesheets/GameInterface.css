@@ -1,0 +1,66 @@
+.Container {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	top: 0;
+	width: 200px;
+}
+
+.MenuIcon {
+	margin: 20px 0 0 0;
+	padding: 0 0;
+	text-align: right;
+	height: 100px;
+}
+
+.MenuIcon > img {
+	display: inline-block;
+	margin: 0 20px 0 0 ;
+	padding: 0 0;
+	width: 100px;
+	height: 100px;
+	background-color: #00FFFF;
+}
+
+.FunctionList {
+	display: none;
+	margin: 0px 0px;
+	text-align: center;
+	height: 100%;
+}
+
+.FunctionList > h1 {
+	margin: 0 0;
+	padding: 10px 0;
+}
+
+.FunctionList > p{
+	margin: 0 0;
+	padding: 20px 0;
+	font-size: 150%;
+}
+
+.FunctionListMouseOver {
+	background: white;
+}
+
+.Window {
+	display: none;
+	position: fixed;
+	margin: 0 auto;
+	padding: 0 0;
+	top: 20%;
+	left: 0;
+	width: 500px;
+	height: 400px;
+	background-color: red;
+	text-align: center;
+}
+
+.Window > p {
+	position: absolute;
+	margin: 0 0;
+	bottom: 20px;
+	right: 20px;
+	font-size: 150%;
+}
