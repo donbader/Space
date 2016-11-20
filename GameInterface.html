@@ -10,32 +10,35 @@
     <title>Sapce</title>
     <!-- stylesheets -->
     <link rel="stylesheet" href="./public/stylesheets/GameInterface.css">
-
     <!-- icon -->
     <link rel="icon" href="./public/images/left_top_logo.ico">
 </head>
 
 <body>
-	<div class="Container">
-		<div class="MenuIcon">
-			<img src="./public/images/MenuIcon.png">
-		</div>
-		<div class="FunctionList">
-			<h1>FunctionList</h1>
-				<p onmouseenter="FunctionListItemMouseEnter(this)" onmouseleave="FunctionListItemMouseLeave(this)" onclick="FunctionListItemClick(this)">Friend Fields</p>
-				<p onmouseenter="FunctionListItemMouseEnter(this)" onmouseleave="FunctionListItemMouseLeave(this)" onclick="FunctionListItemClick(this)">Settings</p>
-		</div>
-	</div>
-
-	<div class="Window">
-		<h1></h1>
-		<p>Close</p>
-	</div>
-
-	<!-- jQuery -->
-	<script src="./public/javascripts/jquery.js"></script>
-	<script src="./public/javascripts/GameInterface.js"></script>
+    <div class="Container">
+        <div class="FunctionList">
+            <h1>FunctionList</h1>
+            <p onmouseenter="FunctionListItemMouseEnter(this)" onmouseleave="FunctionListItemMouseLeave(this)" onclick="FunctionListItemClick(this); playSound(0);">Friend Fields</p>
+            <p onmouseenter="FunctionListItemMouseEnter(this)" onmouseleave="FunctionListItemMouseLeave(this)" onclick="FunctionListItemClick(this); playSound(0);">Settings</p>
+            <p onmouseenter="FunctionListItemMouseEnter(this)" onmouseleave="FunctionListItemMouseLeave(this)" onclick="FunctionListExitClick(this); playSound(0);">Exit</p>
+        </div>
+    </div>
+    <div class="MenuIcon">
+        <img src="./public/images/MenuIcon.png">
+    </div>
+    <div class="Window" id="Fields">
+        <h1></h1>
+        <p>Close</p>
+    </div>
+    <div class="Window" id="YesNo">
+    	<h1></h1>
+    	<p id="Yes">Yes</p>
+    	<p id="No">No</p>
+    </div>
+    <div id="sounds"></div>
+    <!-- jQuery -->
+    <script src="./public/javascripts/jquery.js"></script>
+    <script src="./public/javascripts/GameInterface.js"></script>
 </body>
 
 </html>
-
