@@ -23,67 +23,24 @@
     margin: 0 auto;
 }
 
-td{
-    width: 100%;
-    padding: 2% 10%;
-    text-align: left;
-    display: inline-block;
-	
+.green {
+    color: #fff;
+    background: #18bc9c;
 }
 
-span {
-    width: 100%;
-    padding: 2% 10%;
-    text-align: left;
-    display: inline-block;
-}
-
-span h1 {
-    text-align: left;
-    font-size: 180%;
-    line-height: 80%;
-    margin: 2% 3%;
-    padding: 0% 0%;
-}
-
-span h2{
-    text-align: left;
-    color: white;
-    font-size: 120%;
-    font-style: normal;
-    font-weight: 100; 
-}
-
-div.profilePicture {
-    background-color: transparent;
-    position: relative;
-    width : 300px;
-    margin: 0 auto;
-}
-
-span.profilePicture {
-    background-color: transparent;
-    position: relative;
-    width : 300px;
+.introductionDiv{
+    margin: 0 0;
+    padding: 2% 0;
     text-align: center;
+}
+
+.profilePicture {
+    display: inline-block;
+    position: relative;
     padding: 0 0;
-}
-
-div.profilePicture img {
-    width: 300px;
-    height: 200px;
-}
-
-span.profilePicture img {
-    width: 300px;
-    height: 200px;
-}
-
-span h1{
-    position: relative;
+    width : 300px;
     text-align: center;
-    margin: 0 0 ;
-    padding: 10 0;
+    background-color: transparent;
 }
 
 .circle {
@@ -94,23 +51,34 @@ span h1{
     background-color: #000000;
 }
 
-.introductionDiv{
-    margin: 0 0;
-    padding: 2% 0;
+.profilePicture > h1{
+    position: relative;
+    margin: 0 0 ;
+    padding: 0 0;
+    font-size: 180%;
+    line-height: 80%;
     text-align: center;
 }
 
 .introductionContent {
     display: none;
     position: absolute;
-    text-align: center;
     left: 0;
     right: 0;
     padding: 2% 2%;
     width: 50%;
     height: 240px;
     color: black;
+    text-align: center;
     overflow: hidden;
+}
+
+.introductionContent > h2{
+    text-align: left;
+    color: white;
+    font-size: 120%;
+    font-style: normal;
+    font-weight: 100; 
 }
 
 #doc {
@@ -124,11 +92,6 @@ span h1{
 .blueberry {
 	width: 100%;
 	margin: 0 0;
-}
-
-.green {
-    color: #fff;
-    background: #18bc9c;
 }
 
 .blueberry .slides {
