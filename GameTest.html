@@ -1,19 +1,84 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>Space</title>
+    <title>Space</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="stylesheets/game.css" />
-	<script src="stylesheets/bootstrap.min.css"></script>
+    <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
+    <link href="stylesheets/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="stylesheets/freelancer.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+    .navbar-brand > img {
+        display: block;
+        width: 80px;
+        height: 50px;
+    }
+    </style>
 </head>
+
 <body>
-	<div id="GameMessage"></div>
-	<div id="GamePlay"></div>
-	<script src="javascripts/jquery-3.1.1.min.js"></script>
-	<script src="javascripts/three.min.js"></script>
-	<script src="javascripts/Stats.js"></script>
-	<script src="javascripts/Player.js"></script>
-	<script src="javascripts/game.js"></script>
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"><img src="./images/C.png"></a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="page-scroll">
+                        <a href="#">Sign in</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="/SignUp">Sign up</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="/Modify">Modify</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="/About">About</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="/GameTest">GameTest</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <div id="GameMessage"></div>
+    <div id="GamePlay"></div>
+
+    <script src="javascripts/jquery-3.1.1.min.js"></script>
+    <script src="javascripts/three.min.js"></script>
+    <script src="javascripts/Stats.js"></script>
+    <script src="javascripts/Game/Space.js"></script>
+    <script src="javascripts/Game/Class.js"></script>
+    <script src="javascripts/Game/Character.js"></script>
+    <script src="javascripts/Player.js"></script>
+    <script src="javascripts/game.js"></script>
 </body>
+
 </html>

@@ -20,12 +20,7 @@ THREE.Player = function (gender, height, weight){
 	player.gender = gender || 'Male';
 	player.height = height || 170;
 	player.weight = weight || 70;
-	player.position = function(position){
-		if(position)this.controls.instance.position = position;
-		return this.controls.instance.position;
-	}
 	player.controls = {
-		instance: '',
 		camera: new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR),
 		zoomSpeed: 1.0,
 		zoomScaleMax: 5,
@@ -37,23 +32,44 @@ THREE.Player = function (gender, height, weight){
 		moveRight:false,
 		canJump:false,
 		velocity: new THREE.Vector3(),
-		moveVelocity: 400.0,
+		moveVelocity: 1000.0,
 		jumpVelocity: 350.0,
-		ObjectsToPick: []
+		ObjectsToPick: [],
+		ObjectsColliadble: []
 	};
 
+	// body
+	player.eye = new THREE.Object3D();
+	player.body = new THREE.Object3D();
+	player.model = new THREE.Mesh(new THREE.CubeGeometry(50,player.height,50), new THREE.MeshPhongMaterial( { color: 0xffff00 } ));
+	player.light = new THREE.PointLight(0xffffff,3,500);
+	// console.log(player.model);
+	// init
 
 //----------------------------------------------------
 // functions
+	player.init = function(){
+		// add
+		player.body.add(player.eye);
+		player.body.add(player.model);
+
+		// modify
+		player.model.position.set(0,player.height/2,0);
+
+
+		player.controls.third_person(true);
+		player.controls.init();
+	}
 
 	player.controls.init = function () {
+		// implement eye
 		this.camera.rotation.set(0, 0, 0);
-		var yawObject = new THREE.Object3D();
 		var pitchObject = new THREE.Object3D();
 		pitchObject.add(this.camera);
-		yawObject.position.y = 0;
-		yawObject.add(pitchObject);
-		this.instance = yawObject;
+		player.eye.add(pitchObject);
+
+		// add light to eye
+		player.controls.camera.add(player.light);
 	}
 
 	player.controls.enable = function () {
@@ -84,6 +100,16 @@ THREE.Player = function (gender, height, weight){
 		this.enabled = false;
 	}
 
+	player.controls.third_person = function(b){
+		if(b){
+			player.eye.position.set(0,player.height,300);
+		}
+		else{
+			player.eye.position.set(0,player.height,0);
+		}
+		return ;
+	}
+
 	player.controls.zoomIn = function(zoomScale){
 		if(zoomScale === undefined)
 			zoomScale = getZoomScale();
@@ -106,10 +132,24 @@ THREE.Player = function (gender, height, weight){
 		x = x || 0;
 		y = y || 0;
 		z = z || 0;
-		this.controls.instance.translateX(x);
-		this.controls.instance.translateY(y);
-		this.controls.instance.translateZ(z);
 
+		if( !x && !y && !z)
+			return ;
+		else if(player.willCollide(x,y,z)){
+			this.body.translateX(0);
+			this.body.translateY(0);
+			this.body.translateZ(0);
+		}
+		else{
+			this.body.translateX(x);
+			this.body.translateY(y);
+			this.body.translateZ(z);
+		}
+
+	}
+	player.position = function(position){
+		if(position)this.body.position = position;
+		return this.body.position;
 	}
 
 	player.moveTo = function (x, y, z){
@@ -122,7 +162,7 @@ THREE.Player = function (gender, height, weight){
 	player.turn = function (x, y){
 		x = x || 0;
 		y = y || 0;
-		var yawObject = this.controls.instance;
+		var yawObject = this.eye;
 		var pitchObject = yawObject.children[0];
 		yawObject.rotation.y += x;
 		pitchObject.rotation.x += y;
@@ -152,11 +192,46 @@ THREE.Player = function (gender, height, weight){
 
         this.move(controls.velocity.x * delta, controls.velocity.y * delta, controls.velocity.z * delta);
 
-        if ( controls.instance.position.y < this.height ) {
+        if ( this.body.position.y <= 0 ) {
             controls.velocity.y = 0;
-            controls.instance.position.y = this.height;
+            this.body.position.y = 0;
             controls.canJump = true;
         }
+	}
+	player.isCollideObject = function () {
+		var ObjectsColliadble = player.controls.ObjectsColliadble;
+		var originPoint = new THREE.Vector3();
+		originPoint.setFromMatrixPosition(player.model.matrixWorld);
+
+		for(var i in player.model.geometry.vertices){
+			var localVertex = player.model.geometry.vertices[i].clone();
+			var ray = new THREE.Raycaster( originPoint, localVertex.clone().normalize() );
+			var collisionResults = ray.intersectObjects( ObjectsColliadble );
+			// console.log(ray);
+			if ( collisionResults.length > 0 && collisionResults[0].distance < localVertex.length() ){
+				console.log("HIT");
+				return true;
+			}
+		}
+		return false;
+	}
+	player.willCollide = function (x, y, z){
+		var ObjectsColliadble = player.controls.ObjectsColliadble;
+		var originPoint = new THREE.Vector3();
+		originPoint.setFromMatrixPosition(player.model.matrixWorld);
+		originPoint.set(originPoint.x+x, originPoint.y+y, originPoint.z+z);
+
+		for(var i in player.model.geometry.vertices){
+			var localVertex = player.model.geometry.vertices[i].clone();
+			var ray = new THREE.Raycaster( originPoint, localVertex.clone().normalize() );
+			var collisionResults = ray.intersectObjects( ObjectsColliadble );
+			// console.log(ray);
+			if ( collisionResults.length > 0){
+				console.log("HIT");
+				return true;
+			}
+		}
+		return false;
 	}
 
 // Event Handler
@@ -279,6 +354,6 @@ THREE.Player = function (gender, height, weight){
 
 //----------------------------------------------------
 // init
-	player.controls.init();
+	player.init();
 
 }
