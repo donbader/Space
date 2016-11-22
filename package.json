@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "./node_modules/nodemon/bin/nodemon.js ./bin/www",
-    "forever": "./node_modules/forever/bin/forever",
-    "nodemon": "./node_modules/nodemon/bin/nodemon.js"
+    "start": "node ./node_modules/nodemon/bin/nodemon.js ./bin/www",
+    "forever": "node ./node_modules/forever/bin/forever",
+    "nodemon": "node ./node_modules/nodemon/bin/nodemon.js"
   },
   "dependencies": {
     "express": "~4.14.0",
