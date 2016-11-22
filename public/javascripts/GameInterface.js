@@ -1,14 +1,15 @@
 //to define the class
-var Window = function(Id, Type, Width, Height) {
+var Window = Class.extend({
+    init: function(Id, Type, Width, Height) {
     this.Id = Id;
     this.Obj = $('#' + this.Id);
     this.Type = Type;
     this.Width = Width;
     this.Height = Height;
     this.Time = 500;
-
-    this.Open = function() {
-                this.Obj.css({
+    },
+    Open: function() {
+        this.Obj.css({
             'display': 'block',
             'left': (totalWidth - containerWidth) * 0.5,
             'top': totalHeight * 0.2 + this.Height * 0.5
@@ -24,56 +25,70 @@ var Window = function(Id, Type, Width, Height) {
 
         //to write the title of window
         this.Obj.children('.title').text(this.Name);
-    }
+    },
 
-    this.Close = function() {
+    Close: function() {
         this.Obj.animate({
-        'width': 0,
-        'height': 0,
-        'left': (totalWidth - containerWidth) * 0.5,
-        'top': totalHeight * 0.2 + this.Height * 0.5
-    }, this.Time, () => {
-        this.Obj.css('display', 'none')
-    });
+            'width': 0,
+            'height': 0,
+            'left': (totalWidth - containerWidth) * 0.5,
+            'top': totalHeight * 0.2 + this.Height * 0.5
+        }, this.Time, () => {
+            this.Obj.css('display', 'none')
+        });
+    },
+    Click: function() {
+        if (this.Type = "YesNo")
+            this.Obj.css('background-color', 'green');
     }
+});
 
-    this.Click = function() {
-        if(this.Type = "YesNo")
-        this.Obj.css('background-color', 'green');
+var FieldsWindow = Window.extend({
+    init: function(Id, Type, Width, Height) {
+        'use strict';
+
+        //ctor
+    },
+
+    Close: function() {
+        this.Obj.animate({
+            'width': 0,
+            'height': 0,
+            'left': (totalWidth - containerWidth) * 0.5,
+            'top': totalHeight * 0.2 + this.Height * 0.5
+        }, this.Time, () => {
+            this.Obj.css('display', 'none')
+        });
     }
+});
 
-    //for close
-    this.Close = function() {
-    this.Obj.animate({
-        'width': 0,
-        'height': 0,
-        'left': (totalWidth - containerWidth) * 0.5,
-        'top': totalHeight * 0.2 + this.Height * 0.5
-    }, this.Time, () => {
-        this.Obj.css('display', 'none')
-    });
-}
+var YesNoWindow = Window.extend({
+    init: function(Id, Type, Width, Height) {
+        'use strict';
+
+        //ctor
+    },
 
     //for yesno
-    this.ClickYes = function() {
+    ClickYes: function() {
         this.Obj.css('background-color', 'green');
-    }
+    },
 
-    this.ClickNo = function() {
+    ClickNo: function() {
         this.Obj.css('background-color', 'gray');
 
         this.Obj.animate({
- 'width': 0,
-        'height': 0,
-        'left': (totalWidth - containerWidth) * 0.5,
-        'top': totalHeight * 0.2 + this.Height * 0.5
-    }, 500, () => {
-        this.Obj.css('display', 'none')
-    });
+            'width': 0,
+            'height': 0,
+            'left': (totalWidth - containerWidth) * 0.5,
+            'top': totalHeight * 0.2 + this.Height * 0.5
+        }, this.Time, () => {
+            this.Obj.css('display', 'none')
+        });
     }
-}
+});
 
-var FunctionListItem = function (Id, ItemName, WindowType) {
+var FunctionListItem = function(Id, ItemName, WindowType) {
     this.Id = Id;
     this.Obj = $('#' + this.Id);
     this.Name = ItemName;
@@ -134,9 +149,6 @@ var FunctionListItem = function (Id, ItemName, WindowType) {
     }
 }
 
-$(document).ready(() => {
-
-});
 
 $('.MenuIcon').click(() => {
     var container = $('.Container');
@@ -237,7 +249,8 @@ $('.FunctionList .YesNo').click(function() {
 });
 */
 
-/*Window
+/*
+//Window
 $('.Close').click(function() {
     var win = $(this).parent('.Window');
 
@@ -285,3 +298,4 @@ function playSound(i) {
 $('.ClickSoundEffect ').click(() => {
     playSound(0);
 });
+*/
