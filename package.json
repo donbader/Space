@@ -3,11 +3,15 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "./node_modules/nodemon/bin/nodemon.js ./bin/www",
+    "forever": "./node_modules/forever/bin/forever",
+    "nodemon": "./node_modules/nodemon/bin/nodemon.js"
   },
   "dependencies": {
     "express": "~4.14.0",
+    "forever": "^0.15.3",
     "mongoose": "^4.6.8",
+    "nodemon": "^1.11.0",
     "querystring": "^0.2.0",
     "serve-favicon": "~2.3.0"
   }
