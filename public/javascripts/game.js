@@ -4,13 +4,21 @@
 
 // standard global variables
 var container, scene, camera, renderer, controls, stats;
-var player = new THREE.Player('Male');
-var character = new Character();
+// var user = new Character();
+var Ninja = Character.extend({
+    init: function(){
+        this._super();
+        this.body.material.color.setHex( 0x000000 );
+    }
+});
 
+
+var user = new Ninja();
 var clock = new THREE.Clock();
 
-// custom global variables
-var cube;
+var needToRender = true;
+window.addEventListener('focus', ()=>needToRender = true);
+window.addEventListener('blur', ()=>needToRender = false);
 
 // initialization
 init();
@@ -29,14 +37,8 @@ function init() {
     ///////////
     scene = new THREE.Scene();
     scene.updateMatrixWorld();
-    camera = player.controls.camera;
-    // scene.add(camera);
-    // camera.lookAt(scene.position);
-    scene.add(player.body);
-    // camera.position.set(0,170,200);
+    camera = user.controls.camera;
 
-    player.controls.enable();
-    player.move(0,0,500);
 
 
 
@@ -57,7 +59,10 @@ function init() {
     container.appendChild(renderer.domElement);
 
 
-    character.in(scene, renderer);
+    user.in(scene, renderer);
+    user.controls.enable();
+    // user.controls.disable();
+    user.move(0,0,100);
     ///////////
     // STATS //
     ///////////
@@ -131,7 +136,7 @@ function init() {
     var cubeGeometry = new THREE.CubeGeometry(100, 100, 100, 1, 1, 1);
     // using THREE.MeshFaceMaterial() in the constructor below
     //   causes the mesh to use the materials stored in the geometry
-    cube = new THREE.Mesh(cubeGeometry, cubeMaterials);
+    var cube = new THREE.Mesh(cubeGeometry, cubeMaterials);
     cube.position.set(-100, 100, -50);
     cube.name = 'cube';
     scene.add(cube);
@@ -141,7 +146,7 @@ function init() {
     var axes = new THREE.AxisHelper(300);
     scene.add(axes);
 
-    var box = new THREE.Mesh(new THREE.BoxGeometry( 10, 10, 10 ), new THREE.MeshPhongMaterial( { color: 0xffff00 } ));
+    var box = new THREE.Mesh(new THREE.BoxGeometry( 20, 20, 20 ), new THREE.MeshPhongMaterial( { color: 0xffff00 } ));
     box.position.set(0, 0, 6);
     box.name = 'box';
     scene.add(box);
@@ -184,33 +189,21 @@ function init() {
     scene.add(skyBox);
 
 
+    user.canSelect([box, sphere, cube, floor]);
 
-
-    // for player picking
-    player.posFlag = box;
-    player.controls.ObjectsToPick.push(floor);
-    player.controls.ObjectsToPick.push(cube);
-    player.controls.ObjectsToPick.push(box);
-    player.controls.ObjectsToPick.push(sphere);
-    player.controls.ObjectsColliadble.push(cube);
-    player.controls.ObjectsColliadble.push(sphere);
-    player.controls.ObjectsColliadble.push(box);
-
-    // console.log(player);
 }
 
 function gameloop() {
     requestAnimationFrame(gameloop);
-    player.act(clock.getDelta());
-    render();
+    var delta = clock.getDelta();
+    if(needToRender){
+        user.animate(delta);
+        stats.update();
+        renderer.render(scene, camera);
+    }
 }
 
-var i = 0;
 
-function render() {
-    stats.update();
-    renderer.render(scene, camera);
-}
 
 //------------------------------------------------------------
 //------------------------------------------------------------
