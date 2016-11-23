@@ -26,4 +26,8 @@ router.get('/GameTest', function(req, res){
 	res.sendFile(path.join(__dirname, '../', 'GameTest.html'));
 });
 
+router.get('/GameInterface', function(req, res){
+	res.sendFile(path.join(__dirname, '../', 'GameInterface.html'));
+});
+
 module.exports = router;

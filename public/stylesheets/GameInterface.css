@@ -1,91 +1,90 @@
 .Container {
-	display: block;
-	position: fixed;
-	bottom: 0;
-	right: -200px;
-	top: 0;
-	width: 200px;
-	background-color: #0088FF;
+    display: block;
+    position: fixed;
+    bottom: 0;
+    right: -200px;
+    top: 0;
+    width: 200px;
+    background-color: #0088FF;
 }
 
 .MenuIcon {
-	display: block;
-	position: fixed;
-	right: 20px;
-	top: 20px;
-	margin: 0 0 0 0;
-	padding: 0 0;
-	width: 150px;
-	height: 150px;
-	text-align: center;
+    display: block;
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    margin: 0 0 0 0;
+    padding: 0 0;
+    width: 150px;
+    height: 150px;
+    text-align: center;
     -webkit-clip-path: circle(49% at 50% 50%);
     color: #000000;
     background-color: #000000;
 }
 
 .MenuIcon > img {
-	display: inline-block;
-	margin: 25px 0 ;
-	padding: 0 0;
-	width: 100px;
-	height: 100px;
-	background-color: #00FFFF;
+    display: inline-block;
+    margin: 25px 0;
+    padding: 0 0;
+    width: 100px;
+    height: 100px;
+    background-color: #00FFFF;
 }
 
 .FunctionList {
-	margin: 0px 0px;
-	text-align: center;
-	height: 100%;
+    margin: 0px 0px;
+    text-align: center;
+    height: 100%;
 }
 
 .FunctionList > h1 {
-	margin: 170px 0 0 0;
-	padding: 10px 0;
+    margin: 170px 0 0 0;
+    padding: 10px 0;
 }
 
-.FunctionList > p{
-	margin: 0 0;
-	padding: 20px 0;
-	font-size: 150%;
+.FunctionList > p {
+    margin: 0 0;
+    padding: 20px 0;
+    font-size: 150%;
 }
 
-.FunctionListMouseOver {
-	background: white;
+.FunctionListMouseEnter {
+    background: white;
 }
 
 .Window {
-	display: none;
-	position: fixed;
-	margin: 0 auto;
-	padding: 0 0;
-	top: 20%;
-	left: 0;
-	width: 0px;
-	height: 0px;
-	background-color: red;
-	text-align: center;
+    display: none;
+    position: fixed;
+    margin: 0 auto;
+    padding: 0 0;
+    top: 20%;
+    left: 0;
+    width: 0px;
+    height: 0px;
+    background-color: red;
+    text-align: center;
 }
 
-#Fields > p {
-	position: absolute;
-	margin: 0 0;
-	bottom: 20px;
-	right: 20px;
-	font-size: 150%;
+#FieldsWindow > p {
+    position: absolute;
+    margin: 0 0;
+    bottom: 20px;
+    right: 20px;
+    font-size: 150%;
 }
 
-#YesNo > p {
-	position: absolute;
-	margin: 0 0;
-	bottom: 20px;
-	font-size: 150%;
+#YesNoWindow > p {
+    position: absolute;
+    margin: 0 0;
+    bottom: 20px;
+    font-size: 150%;
 }
 
 #Yes {
-	left: 100px;
+    left: 100px;
 }
 
 #No {
-	right: 100px;
+    right: 100px;
 }
-

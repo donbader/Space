@@ -1,6 +1,158 @@
+//to define the class
+var Window = Class.extend({
+    init: function(Id, Type, Width, Height) {
+    this.Id = Id;
+    this.Obj = $('#' + this.Id);
+    this.Type = Type;
+    this.Width = Width;
+    this.Height = Height;
+    this.Time = 500;
+    },
+    Open: function() {
+        this.Obj.css({
+            'display': 'block',
+            'left': (totalWidth - containerWidth) * 0.5,
+            'top': totalHeight * 0.2 + this.Height * 0.5
+        });
+
+        //transform????
+        this.Obj.animate({
+            'width': this.Width,
+            'height': this.Height,
+            'left': (totalWidth - containerWidth - this.Width) * 0.5,
+            'top': totalHeight * 0.2
+        }, this.Time);
+
+        //to write the title of window
+        this.Obj.children('.title').text(this.Name);
+    },
+
+    Close: function() {
+        this.Obj.animate({
+            'width': 0,
+            'height': 0,
+            'left': (totalWidth - containerWidth) * 0.5,
+            'top': totalHeight * 0.2 + this.Height * 0.5
+        }, this.Time, () => {
+            this.Obj.css('display', 'none')
+        });
+    },
+    Click: function() {
+        if (this.Type = "YesNo")
+            this.Obj.css('background-color', 'green');
+    }
+});
+
+var FieldsWindow = Window.extend({
+    init: function(Id, Type, Width, Height) {
+        'use strict';
+
+        //ctor
+    },
+
+    Close: function() {
+        this.Obj.animate({
+            'width': 0,
+            'height': 0,
+            'left': (totalWidth - containerWidth) * 0.5,
+            'top': totalHeight * 0.2 + this.Height * 0.5
+        }, this.Time, () => {
+            this.Obj.css('display', 'none')
+        });
+    }
+});
+
+var YesNoWindow = Window.extend({
+    init: function(Id, Type, Width, Height) {
+        'use strict';
+
+        //ctor
+    },
+
+    //for yesno
+    ClickYes: function() {
+        this.Obj.css('background-color', 'green');
+    },
+
+    ClickNo: function() {
+        this.Obj.css('background-color', 'gray');
+
+        this.Obj.animate({
+            'width': 0,
+            'height': 0,
+            'left': (totalWidth - containerWidth) * 0.5,
+            'top': totalHeight * 0.2 + this.Height * 0.5
+        }, this.Time, () => {
+            this.Obj.css('display', 'none')
+        });
+    }
+});
+
+var FunctionListItem = function(Id, ItemName, WindowType) {
+    this.Id = Id;
+    this.Obj = $('#' + this.Id);
+    this.Name = ItemName;
+    this.WindowType = WindowType;
+    this.WindowObj = new Window();
+    //win = $('#FieldsWindow');
+    //this.Window = $('#' + WindowType);
+    this.Time = 500;
+
+    this.MouseEnter = function() {
+        this.Obj.addClass('FunctionListMouseEnter');
+    }
+
+    this.MouseLeave = function() {
+        this.Obj.removeClass('FunctionListMouseEnter');
+    }
+
+    this.Click = function() {
+        //to open the window
+
+        /*
+        //to do something special
+        switch(this.Name) {
+        case "Friend Fields":
+            //to do something
+            this.Height = 400;
+            break;
+        case "Settings":
+            //to do something
+            this.Height = 400;
+            break;
+        case "Exit":
+            //to do something
+            this.Height = 200;
+        }
+        */
+        this.WindowObj.Open();
+
+        /*
+        //to set initail value for animation
+        this.Window.css({
+            'display': 'block',
+            'left': (totalWidth - containerWidth) * 0.5,
+            'top': totalHeight * 0.2 + this.Height * 0.5
+        });
+
+        //transform????
+        this.Window.animate({
+            'width': this.Width,
+            'height': this.Height,
+            'left': (totalWidth - containerWidth - this.Width) * 0.5,
+            'top': totalHeight * 0.2
+        }, this.Time);
+
+        //to write the title of window
+        this.Window.children('.title').text(this.Name);
+        */
+    }
+}
+
+
 $('.MenuIcon').click(() => {
     var container = $('.Container');
-    
+
     playSound(0);
 
     if (container.css('right') == '0px')
@@ -9,34 +161,23 @@ $('.MenuIcon').click(() => {
         container.animate({ 'right': 0 }, 500);
 });
 
-
-//to use this????
 /*
-$('.FunctionList p').mouseenter(() => {
-    console.log($(this));
-    $(this).addClass('FunctionListMouseOver');
+//FunctionList Item 
+$('.FunctionList p').mouseenter(function() {
+    $(this).addClass('FunctionListMouseEnter');
 });
 
-$('.FunctionList p').mouseleave(() => {
-    console.log($(this));
-    $(this).removeClass('FunctionListMouseOver');
+$('.FunctionList p').mouseleave(function() {
+    $(this).removeClass('FunctionListMouseEnter');
 });
-*/
-
-function FunctionListItemMouseEnter(obj) {
-    $(obj).addClass('FunctionListMouseOver');
-}
-
-function FunctionListItemMouseLeave(obj) {
-    $(obj).removeClass('FunctionListMouseOver');
-}
 
 var totalWidth = $('body').width(),
     totalHeight = $('.Container').height();
 var containerWidth = $('.Container').width();
 
-function FunctionListItemClick(obj) {
-    var name = $(obj).text(), win = $('#Fields');
+$('.FunctionList .Fields').click(function() {
+    var name = $(this).text(),
+        win = $('#FieldsWindow');
 
     if (win.width() == 0) {
         //to open the window
@@ -48,7 +189,6 @@ function FunctionListItemClick(obj) {
             'top': totalHeight * 0.2 + 200
         });
 
-
         //transform????
         win.animate({
             'width': '500px',
@@ -58,38 +198,21 @@ function FunctionListItemClick(obj) {
         }, 500);
     }
 
+    win.children('h1').text(name);
 
-
-    //transform
-    $('#Fields h1').text(name);
-
-    switch ($(obj).text()) {
+    switch (name) {
         case "Friend Fields":
             //to do something
-            $('#Fields h1').text(name);
             break;
         case "Settings":
             //to do something
-            $('#Fields h1').text(name);
             break;
     }
-}
+});
 
-$('#Fields > p').click(() => {
-    var win = $('#Fields');
-
-    win.animate({
-        'width': 0,
-        'height': 0,
-        'left': (totalWidth - containerWidth) * 0.5,
-        'top': totalHeight * 0.2 + 200
-    }, 500, () => {
-        win.css('display', 'none')
-    });
-})
-
-function FunctionListExitClick(obj) {
-    var name = $(obj).text(), win = $('#YesNo');
+$('.FunctionList .YesNo').click(function() {
+    var name = $(this).text(),
+        win = $('#YesNoWindow');
 
     if (win.width() == 0) {
         //to open the window
@@ -113,18 +236,44 @@ function FunctionListExitClick(obj) {
 
 
     //transform
-    $('#YesNo h1').text(name);
+    win.children('h1').text(name);
 
-}
+    switch (name) {
+        case "Friend Fields":
+            //to do something
+            break;
+        case "Settings":
+            //to do something
+            break;
+    }
+});
+*/
 
-$('#YesNo #Yes').click( () => {
-    var win = $('#YesNo');
+/*
+//Window
+$('.Close').click(function() {
+    var win = $(this).parent('.Window');
+
+    //can parameter be changed?
+    win.animate({
+        'width': 0,
+        'height': 0,
+        'left': (totalWidth - containerWidth) * 0.5,
+        'top': totalHeight * 0.2 + 200
+    }, 500, () => {
+        win.css('display', 'none')
+    });
+})
+
+
+$('#YesNoWindow #Yes').click(() => {
+    var win = $('#YesNoWindow');
 
     win.css('background-color', 'green');
 });
 
-$('#YesNo #No').click( () => {
-    var win = $('#YesNo');
+$('#YesNoWindow #No').click(() => {
+    var win = $('#YesNoWindow');
 
     win.css('background-color', 'gray');
 
@@ -138,9 +287,15 @@ $('#YesNo #No').click( () => {
     });
 });
 
+
 var music = new Array("public/playsounds/playsound3.mp3");
 
-    function playSound(i){
-        //指定bgSound其src = 某音效位置
-        document.getElementById("sounds").innerHTML = "<embed width=0 height=0 src="+music[i]+" autostart='true'></embed>";
-    }
+function playSound(i) {
+    //指定bgSound其src = 某音效位置
+    document.getElementById("sounds").innerHTML = "<embed width=0 height=0 src=" + music[i] + " autostart='true'></embed>";
+}
+
+$('.ClickSoundEffect ').click(() => {
+    playSound(0);
+});
+*/

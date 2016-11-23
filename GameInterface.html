@@ -9,36 +9,36 @@
     <meta name="author" content="">
     <title>Sapce</title>
     <!-- stylesheets -->
-    <link rel="stylesheet" href="./public/stylesheets/GameInterface.css">
+    <link rel="stylesheet" href="stylesheets/GameInterface.css">
     <!-- icon -->
-    <link rel="icon" href="./public/images/left_top_logo.ico">
+    <link rel="icon" href="images/left_top_logo.ico">
 </head>
 
 <body>
     <div class="Container">
         <div class="FunctionList">
             <h1>FunctionList</h1>
-            <p onmouseenter="FunctionListItemMouseEnter(this)" onmouseleave="FunctionListItemMouseLeave(this)" onclick="FunctionListItemClick(this); playSound(0);">Friend Fields</p>
-            <p onmouseenter="FunctionListItemMouseEnter(this)" onmouseleave="FunctionListItemMouseLeave(this)" onclick="FunctionListItemClick(this); playSound(0);">Settings</p>
-            <p onmouseenter="FunctionListItemMouseEnter(this)" onmouseleave="FunctionListItemMouseLeave(this)" onclick="FunctionListExitClick(this); playSound(0);">Exit</p>
+            <p class="ClickSoundEffect Fields">Friend Fields</p>
+            <p class="ClickSoundEffect Fields">Settings</p>
+            <p class="ClickSoundEffect YesNo" id="Exit">Exit</p>
         </div>
     </div>
-    <div class="MenuIcon">
-        <img src="./public/images/MenuIcon.png">
+    <div class="ClickSoundEffect MenuIcon">
+        <img src="images/MenuIcon.png">
     </div>
-    <div class="Window" id="Fields">
-        <h1></h1>
-        <p>Close</p>
+    <div class="Window" id="FieldsWindow">
+        <h1 class="title"></h1>
+        <p class="ClickSoundEffect Close">Close</p>
     </div>
-    <div class="Window" id="YesNo">
-    	<h1></h1>
-    	<p id="Yes">Yes</p>
-    	<p id="No">No</p>
+    <div class="Window" id="YesNoWindow">
+        <h1 class="title"></h1>
+        <p class="ClickSoundEffect" id="Yes">Yes</p>
+        <p class="ClickSoundEffect" id="No">No</p>
     </div>
     <div id="sounds"></div>
     <!-- jQuery -->
-    <script src="./public/javascripts/jquery.js"></script>
-    <script src="./public/javascripts/GameInterface.js"></script>
+    <script src="javascripts/jquery.js"></script>
+    <script src="javascripts/GameInterface.js"></script>
 </body>
 
 </html>
