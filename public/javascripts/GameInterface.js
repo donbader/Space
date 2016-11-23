@@ -1,3 +1,14 @@
+$('.MenuIcon').click(() => {
+    var container = $('.Container');
+
+    playSound(0);
+
+    if (container.css('right') == '0px')
+        container.animate({ 'right': '-200px' }, 500);
+    else
+        container.animate({ 'right': 0 }, 500);
+});
+
 //to define the class
 var Window = Class.extend({
     init: function(Id, Type, Width, Height) {
@@ -149,17 +160,17 @@ var FunctionListItem = function(Id, ItemName, WindowType) {
     }
 }
 
+var music = new Array("playsounds/playsound3.mp3");
 
-$('.MenuIcon').click(() => {
-    var container = $('.Container');
+function playSound(i) {
+    //指定bgSound其src = 某音效位置
+    document.getElementById("sounds").innerHTML = "<embed width=0 height=0 src=" + music[i] + " autostart='true'></embed>";
+}
 
+$('.ClickSoundEffect ').click(() => {
     playSound(0);
-
-    if (container.css('right') == '0px')
-        container.animate({ 'right': '-200px' }, 500);
-    else
-        container.animate({ 'right': 0 }, 500);
 });
+
 
 /*
 //FunctionList Item 
@@ -288,14 +299,5 @@ $('#YesNoWindow #No').click(() => {
 });
 
 
-var music = new Array("public/playsounds/playsound3.mp3");
 
-function playSound(i) {
-    //指定bgSound其src = 某音效位置
-    document.getElementById("sounds").innerHTML = "<embed width=0 height=0 src=" + music[i] + " autostart='true'></embed>";
-}
-
-$('.ClickSoundEffect ').click(() => {
-    playSound(0);
-});
 */
