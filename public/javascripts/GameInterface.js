@@ -1,164 +1,48 @@
-$('.MenuIcon').click(() => {
-    var container = $('.Container');
+//to be writed to class ?
+var menuIconOriginalRight = $('.MenuIcon').css('right').split("p")[0];
 
-    playSound(0);
+$(document).ready(function() {
+    //to init some settings
+    var functionListWidth = 200,
+        functionList = new FunctionList(functionListWidth);
 
-    if (container.css('right') == '0px')
-        container.animate({ 'right': '-200px' }, 500);
-    else
-        container.animate({ 'right': 0 }, 500);
-});
+    var settingsWindow = new SettingsWindow(500, 400);
+    console.log(settingsWindow.JObj);
+    console.log(settingsWindow.Width);
 
-//to define the class
-var Window = Class.extend({
-    init: function(Id, Type, Width, Height) {
-    this.Id = Id;
-    this.Obj = $('#' + this.Id);
-    this.Type = Type;
-    this.Width = Width;
-    this.Height = Height;
-    this.Time = 500;
-    },
-    Open: function() {
-        this.Obj.css({
-            'display': 'block',
-            'left': (totalWidth - containerWidth) * 0.5,
-            'top': totalHeight * 0.2 + this.Height * 0.5
-        });
+    functionList.AppendItem("Settings", "Settings1", "SettingsWindow");
+    functionList.AppendItem("Exit", "Exit1", "ExitWindow");
 
-        //transform????
-        this.Obj.animate({
-            'width': this.Width,
-            'height': this.Height,
-            'left': (totalWidth - containerWidth - this.Width) * 0.5,
-            'top': totalHeight * 0.2
-        }, this.Time);
+    //to set the event
+    $('.MenuIcon').click(() => {
+        var menuIcon = $('.MenuIcon'),
+            time = 500;
 
-        //to write the title of window
-        this.Obj.children('.title').text(this.Name);
-    },
-
-    Close: function() {
-        this.Obj.animate({
-            'width': 0,
-            'height': 0,
-            'left': (totalWidth - containerWidth) * 0.5,
-            'top': totalHeight * 0.2 + this.Height * 0.5
-        }, this.Time, () => {
-            this.Obj.css('display', 'none')
-        });
-    },
-    Click: function() {
-        if (this.Type = "YesNo")
-            this.Obj.css('background-color', 'green');
-    }
-});
-
-var FieldsWindow = Window.extend({
-    init: function(Id, Type, Width, Height) {
-        'use strict';
-
-        //ctor
-    },
-
-    Close: function() {
-        this.Obj.animate({
-            'width': 0,
-            'height': 0,
-            'left': (totalWidth - containerWidth) * 0.5,
-            'top': totalHeight * 0.2 + this.Height * 0.5
-        }, this.Time, () => {
-            this.Obj.css('display', 'none')
-        });
-    }
-});
-
-var YesNoWindow = Window.extend({
-    init: function(Id, Type, Width, Height) {
-        'use strict';
-
-        //ctor
-    },
-
-    //for yesno
-    ClickYes: function() {
-        this.Obj.css('background-color', 'green');
-    },
-
-    ClickNo: function() {
-        this.Obj.css('background-color', 'gray');
-
-        this.Obj.animate({
-            'width': 0,
-            'height': 0,
-            'left': (totalWidth - containerWidth) * 0.5,
-            'top': totalHeight * 0.2 + this.Height * 0.5
-        }, this.Time, () => {
-            this.Obj.css('display', 'none')
-        });
-    }
-});
-
-var FunctionListItem = function(Id, ItemName, WindowType) {
-    this.Id = Id;
-    this.Obj = $('#' + this.Id);
-    this.Name = ItemName;
-    this.WindowType = WindowType;
-    this.WindowObj = new Window();
-    //win = $('#FieldsWindow');
-    //this.Window = $('#' + WindowType);
-    this.Time = 500;
-
-    this.MouseEnter = function() {
-        this.Obj.addClass('FunctionListMouseEnter');
-    }
-
-    this.MouseLeave = function() {
-        this.Obj.removeClass('FunctionListMouseEnter');
-    }
-
-    this.Click = function() {
-        //to open the window
-
-        /*
-        //to do something special
-        switch(this.Name) {
-        case "Friend Fields":
-            //to do something
-            this.Height = 400;
-            break;
-        case "Settings":
-            //to do something
-            this.Height = 400;
-            break;
-        case "Exit":
-            //to do something
-            this.Height = 200;
+        if (functionList.JObj.css('right') == '0px') {
+            //to close
+            functionList.Close();
+            menuIcon.animate({ 'right': menuIconOriginalRight }, time);
+        } else {
+            //to turn out
+            functionList.Open();
+            menuIcon.animate({ 'right': parseInt(menuIconOriginalRight) + functionListWidth }, time);
         }
-        */
-        this.WindowObj.Open();
+    });
 
-        /*
-        //to set initail value for animation
-        this.Window.css({
-            'display': 'block',
-            'left': (totalWidth - containerWidth) * 0.5,
-            'top': totalHeight * 0.2 + this.Height * 0.5
-        });
+    //to set the settings event
+    /*
+    functionList[0].JObj.mouseenter(function() {
 
-        //transform????
-        this.Window.animate({
-            'width': this.Width,
-            'height': this.Height,
-            'left': (totalWidth - containerWidth - this.Width) * 0.5,
-            'top': totalHeight * 0.2
-        }, this.Time);
+    });
+    */
+})
 
-        //to write the title of window
-        this.Window.children('.title').text(this.Name);
-        */
-    }
-}
+/*
+        <p class="ClickSoundEffect">Friend Fields1</p>
+        <p class="ClickSoundEffect" id="Settings"></p>
+        <p class="ClickSoundEffect" id="Exit"></p>
+*/
+
 
 var music = new Array("playsounds/playsound3.mp3");
 
