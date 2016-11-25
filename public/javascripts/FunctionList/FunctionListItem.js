@@ -1,12 +1,12 @@
-var FunctionListItem = function(Id, Content, WindowId) {
+var FunctionListItem = function(Id, Content, WindowObj) {
     this.Id = Id;
     this.Content = Content;
-    this.WindowId = WindowId;
 
     this.JObj = $('#' + this.Id);
     //window exists at first
     //this.WindowObj = new ;
-
+    this.WindowObj = WindowObj;
+    /*
     switch (this.WindowId) {
         case "SettingsWindow":
             this.WindowObj = new SettingsWindow(500, 400);
@@ -18,6 +18,7 @@ var FunctionListItem = function(Id, Content, WindowId) {
             this.WindowObj = null;
             break;
     }
+    */
 
     console.log(this.WindowObj);
 
@@ -34,8 +35,9 @@ var FunctionListItem = function(Id, Content, WindowId) {
     this.JObj.click(() => {
         this.WindowObj.Open();
     });
-
+/*
     this.WindowObj.CloseJObj.click(() => {
         this.WindowObj.Close();
     })
+    */
 };

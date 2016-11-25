@@ -2,26 +2,25 @@ var SettingsWindow = Window.extend({
     init: function(Width, Height) {
         'use strict';
         this._super(Width, Height);
+
         //ctor
-        this.Id = "SettingsWindow";
+        this.WindowType = "SettingsWindow";
+        this.Title = "Settings";
+
+        //to create the window
+        windowListJObj.append(
+            "<div class='Window " + this.WindowType + "' id='" + this.Id + "'>" +
+            "<h1 class='title'>" + this.Title + "</h1>" +
+            "<p class='ClickSoundEffect' id='" + this.Id + "Close'>Close</p>" +
+            "</div>"
+        );
+
         this.JObj = $('#' + this.Id);
-        this.CloseJObj = this.JObj.children('#Close');
-        console.log(this.CloseJObj);
-        //this.JObj = $('#' + this.Id);
+        this.CloseJObj = $('#' + this.Id + "Close");
 
-        this.JObj.children('.title').text(this.Id);
+        //to set event
+        this.CloseJObj.click(() => {
+            this.Close();
+        })
     }
-
-    /*
-    Close: function() {
-        this.JObj.animate({
-            'width': 0,
-            'height': 0,
-            'left': (totalWidth - containerWidth) * 0.5,
-            'top': totalHeight * 0.2 + this.Height * 0.5
-        }, this.Time, () => {
-            this.JObj.css('display', 'none')
-        });
-    }
-    */
 });

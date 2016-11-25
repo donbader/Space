@@ -1,10 +1,12 @@
 var Window = Class.extend({
     init: function(Width, Height) {
+    this.Id = "Window" + new Date().getTime();
     this.Width = Width;
     this.Height = Height;
     this.Time = 500;
     },
     Open: function() {
+        console.log(this.JObj);
         this.JObj.css({
             'display': 'block',
             'left': (totalWidth - functionListWidth) * 0.5,
@@ -24,6 +26,7 @@ var Window = Class.extend({
     },
 
     Close: function() {
+        console.log(this.JObj);
         this.JObj.animate({
             'width': 0,
             'height': 0,
@@ -32,9 +35,5 @@ var Window = Class.extend({
         }, this.Time, () => {
             this.JObj.css('display', 'none')
         });
-    },
-    Click: function() {
-        if (this.Type = "YesNo")
-            this.JObj.css('background-color', 'green');
     }
 });

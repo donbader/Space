@@ -1,20 +1,21 @@
 //to be writed to class ?
 var menuIconOriginalRight = $('.MenuIcon').css('right').split("p")[0];
+var functionListJObj = $('#FunctionList');
+var windowListJObj = $('#WindowList');
 var totalWidth = $('body').width(),
-    totalHeight = $('#FunctionList').height();
-var functionListWidth = $('#FunctionList').width();
+    totalHeight = functionListJObj.height();
+var functionListWidth = functionListJObj.width();
 
 $(document).ready(function() {
     //to init some settings
     var functionListWidth = 200,
         functionList = new FunctionList(functionListWidth);
 
-    //var settingsWindow = new SettingsWindow(500, 400);
-    //console.log(settingsWindow.JObj);
-    //console.log(settingsWindow.Width);
+    var settingsWindow = new SettingsWindow(500, 400);
+    var exitWindow = new ExitWindow(500, 200);
 
-    functionList.AppendItem("Settings", "Settings1", "SettingsWindow");
-    //functionList.AppendItem("Exit", "Exit1", "ExitWindow");
+    functionList.AppendItem("Settings", "Settings1", settingsWindow);
+    functionList.AppendItem("Exit", "Exit1", exitWindow);
 
     //to set the event
     $('.MenuIcon').click(() => {

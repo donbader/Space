@@ -1,25 +1,37 @@
 var ExitWindow = Window.extend({
-    init: function(Id, Type, Width, Height) {
+    init: function(Width, Height) {
         'use strict';
+        this._super(Width, Height);
 
         //ctor
-    },
+        this.WindowType = "ExitWindow";
+        this.Title = "Exit";
 
-    //for yesno
-    ClickYes: function() {
-        this.Obj.css('background-color', 'green');
-    },
+        //to create the window
+        windowListJObj.append(
+            "<div class='Window " + this.WindowType + "'+  id='" + this.Id + "'>" +
+            "<h1 class='title'>" + this.Title + "</h1>" +
+            "<p class='ClickSoundEffect' id='" + this.Id + "Yes'>Yes</p>" +
+            "<p class='ClickSoundEffect' id='" + this.Id + "No'>No</p>" +
+            "</div>"
+        );
 
-    ClickNo: function() {
-        this.Obj.css('background-color', 'gray');
+        this.JObj = $('#' + this.Id);
+        this.YesJObj = $('#' + this.Id + "Yes");
+        this.NoJObj = $('#' + this.Id + "No");
 
-        this.Obj.animate({
-            'width': 0,
-            'height': 0,
-            'left': (totalWidth - containerWidth) * 0.5,
-            'top': totalHeight * 0.2 + this.Height * 0.5
-        }, this.Time, () => {
-            this.Obj.css('display', 'none')
+        //to set the css
+        this.YesJObj.css('left', 100);
+        this.NoJObj.css('right', 100);
+
+        //to set event
+        this.YesJObj.click(() => {
+            this.JObj.css('background-color', 'green');
+        });
+
+        this.NoJObj.click(() => {
+            this.JObj.css('background-color', 'gray');
+            this.Close();
         });
     }
 });

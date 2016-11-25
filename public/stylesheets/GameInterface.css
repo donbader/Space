@@ -62,7 +62,7 @@
     text-align: center;
 }
 
-#SettingsWindow > p {
+.SettingsWindow > p {
     position: absolute;
     margin: 0 0;
     bottom: 20px;
@@ -70,17 +70,9 @@
     font-size: 150%;
 }
 
-#ExitWindow > p {
+.ExitWindow > p {
     position: absolute;
     margin: 0 0;
     bottom: 20px;
     font-size: 150%;
-}
-
-#ExitWindow > #Yes {
-    left: 100px;
-}
-
-#ExitWindow > #No {
-    right: 100px;
 }
