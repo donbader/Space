@@ -52,8 +52,8 @@ var Character = this.Character = Class.extend({
 	},
 	third_person: function(enable){
 		if(enable){
-			this.eye.position.set(0,this.height,300);
-			this.turn(0, -0.3);
+			this.eye.position.set(0,this.height+300,500);
+			this.turn(0, -0.7);
 		}
 		else
 			this.eye.position.set(0,this.height/2-10,0);
@@ -116,6 +116,10 @@ var Character = this.Character = Class.extend({
 		this.controls.ObjectsToSelect = this.controls.ObjectsToSelect.concat(arr);
 		return this.controls.ObjectsToSelect;
 	},
+	canMoveOn: function(arr){
+		this.controls.ObjectsToMoveOn = this.controls.ObjectsToMoveOn.concat(arr);
+		return this.controls.ObjectsToMoveOn;
+	},
 
 	/*****************
 	 *    Controls   *
@@ -140,6 +144,7 @@ var Character = this.Character = Class.extend({
 		positionFlag: '',
 		ObjectsToSelect: [],
 		ObjectsColliadble: [],
+		ObjectsToMoveOn: [],
  		enable: function(dom){
  			dom = dom || document;
  			var on = dom.addEventListener;
@@ -150,6 +155,7 @@ var Character = this.Character = Class.extend({
 			on('mousemove', this.onMouseMove);
 			on('mousewheel', this.onMouseWheel);
 			on('dblclick', this.onMouseAtObject);
+			on('contextmenu', this.onRightClick);
 
 			this.enabled = true;
  		},
@@ -262,6 +268,21 @@ controls.onMouseDown = function(event){
 	controls.mouse.state = MOUSE_STATE.KEYDOWN;
 }
 
+controls.onRightClick = function(event){
+	event.preventDefault();
+	var mousePosition = new THREE.Vector2();
+	mousePosition.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+	mousePosition.y = 1 - ( event.clientY / window.innerHeight ) * 2;
+
+	var ray = new THREE.Raycaster();
+	ray.setFromCamera(mousePosition, controls.camera);
+	var intersects = ray.intersectObjects(controls.ObjectsToMoveOn, true);
+	if(intersects.length){
+		var positionFlag = controls.positionFlag;
+		positionFlag.position.set(intersects[0].point.x, intersects[0].point.y + positionFlag.height/2, intersects[0].point.z);
+	}
+}
+
 controls.onMouseUp = function(event){
 	controls.mouse.state = MOUSE_STATE.KEYUP;
 }
@@ -291,13 +312,11 @@ controls.onMouseAtObject = function(event){
 
 	var ray = new THREE.Raycaster();
 	ray.setFromCamera(mousePosition, controls.camera);
-	var intersects = ray.intersectObjects(controls.ObjectsToSelect);
+	var intersects = ray.intersectObjects(controls.ObjectsToSelect, true);
 	if(intersects.length){
-		console.log(intersects[0].object.name);
-		if(intersects[0].object.name == "floor"){
-			var positionFlag = controls.positionFlag;
-			positionFlag.position.set(intersects[0].point.x, positionFlag.height/2, intersects[0].point.z);
-		}
+		var obj = intersects[0].object;
+		while(obj.parent.type != "Scene"){obj = obj.parent;}
+		console.log(obj.name);
 	}
 }
 
