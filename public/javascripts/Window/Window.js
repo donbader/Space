@@ -7,7 +7,7 @@ var Window = Class.extend({
     Open: function() {
         this.JObj.css({
             'display': 'block',
-            'left': (totalWidth - containerWidth) * 0.5,
+            'left': (totalWidth - functionListWidth) * 0.5,
             'top': totalHeight * 0.2 + this.Height * 0.5
         });
 
@@ -15,7 +15,7 @@ var Window = Class.extend({
         this.JObj.animate({
             'width': this.Width,
             'height': this.Height,
-            'left': (totalWidth - containerWidth - this.Width) * 0.5,
+            'left': (totalWidth - functionListWidth - this.Width) * 0.5,
             'top': totalHeight * 0.2
         }, this.Time);
 
@@ -27,7 +27,7 @@ var Window = Class.extend({
         this.JObj.animate({
             'width': 0,
             'height': 0,
-            'left': (totalWidth - containerWidth) * 0.5,
+            'left': (totalWidth - functionListWidth) * 0.5,
             'top': totalHeight * 0.2 + this.Height * 0.5
         }, this.Time, () => {
             this.JObj.css('display', 'none')

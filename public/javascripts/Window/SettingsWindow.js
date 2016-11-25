@@ -3,13 +3,14 @@ var SettingsWindow = Window.extend({
         'use strict';
         this._super(Width, Height);
         //ctor
-    this.Id = "SettingsWindow";
-    this.JObj = $('#' + this.Id);
-
+        this.Id = "SettingsWindow";
+        this.JObj = $('#' + this.Id);
+        this.CloseJObj = this.JObj.children('#Close');
+        console.log(this.CloseJObj);
         //this.JObj = $('#' + this.Id);
 
         this.JObj.children('.title').text(this.Id);
-    },
+    }
 
     /*
     Close: function() {
