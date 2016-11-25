@@ -88,6 +88,15 @@ function init() {
     //////////////
     // GEOMETRY //
     //////////////
+    var loader = new THREE.ObjectLoader();
+        console.log("HI");
+
+    // loader.load("3D/desk/desk2.json", function(object){
+    //     console.log(object);
+    //     scene.add(object);
+    //     object.position.set(0,0,300);
+    //     user.canSelect([object]);
+    // });
 
     // most objects displayed are a "mesh":
     //  a collection of points ("geometry") and
@@ -105,41 +114,6 @@ function init() {
     sphere.name = 'sphere';
     scene.add(sphere);
 
-    // Create an array of materials to be used in a cube, one for each side
-    var cubeMaterialArray = [];
-    // order to add materials: x+,x-,y+,y-,z+,z-
-    cubeMaterialArray.push(new THREE.MeshBasicMaterial({
-        color: 0xff3333
-    }));
-    cubeMaterialArray.push(new THREE.MeshBasicMaterial({
-        color: 0xff8800
-    }));
-    cubeMaterialArray.push(new THREE.MeshBasicMaterial({
-        color: 0xffff33
-    }));
-    cubeMaterialArray.push(new THREE.MeshBasicMaterial({
-        color: 0x33ff33
-    }));
-    cubeMaterialArray.push(new THREE.MeshBasicMaterial({
-        color: 0x3333ff
-    }));
-    cubeMaterialArray.push(new THREE.MeshBasicMaterial({
-        color: 0x8833ff
-    }));
-    // var cubeMaterials = new THREE.MeshFaceMaterial(cubeMaterialArray);
-    var cubeMaterials = new THREE.MeshLambertMaterial({
-        color: 0x8888ff
-    });
-
-    // Cube parameters: width (x), height (y), depth (z), 
-    //        (optional) segments along x, segments along y, segments along z
-    var cubeGeometry = new THREE.CubeGeometry(100, 100, 100, 1, 1, 1);
-    // using THREE.MeshFaceMaterial() in the constructor below
-    //   causes the mesh to use the materials stored in the geometry
-    var cube = new THREE.Mesh(cubeGeometry, cubeMaterials);
-    cube.position.set(-100, 100, -50);
-    cube.name = 'cube';
-    scene.add(cube);
 
     // create a set of coordinate axes to help orient user
     //    specify length in pixels in each direction
@@ -156,7 +130,7 @@ function init() {
     ///////////
 
     // note: 4x4 checkboard pattern scaled so that each square is 25 by 25 pixels.
-    var floorTexture = new THREE.ImageUtils.loadTexture('images/checkerboard.jpg');
+    var floorTexture = new THREE.ImageUtils.loadTexture('images/wood2.jpg');
     floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
     floorTexture.repeat.set(10, 10);
     // DoubleSide: render texture on both sides of mesh
@@ -189,7 +163,7 @@ function init() {
     scene.add(skyBox);
 
 
-    user.canSelect([box, sphere, cube, floor]);
+    user.canSelect([box, sphere, floor]);
 
 }
 
