@@ -63,13 +63,12 @@ var Game = this.Game = Class.extend({
 	    }
 
 
-	    this.useDefaultWorld();
 	},
 	pause: function(){
 
 	},
-	add: function(){
-
+	add: function(obj){
+		this.scene.add(obj);
 	},
 	children: function(){
 		return scene.children;
@@ -93,7 +92,6 @@ var Game = this.Game = Class.extend({
 	    //////////////
 	    var loader = new THREE.ObjectLoader();
 	    loader.load("3D/desk/chair.json", function(object){
-	        console.log(object);
 	        scene.add(object);
 	        object.position.set(0,0,300);
 	    	scope.player.canSelect([object]);
@@ -176,6 +174,8 @@ var Game = this.Game = Class.extend({
 	player: '',
 	clock: '',
 	scope: '',
+
+
 });
 
 
