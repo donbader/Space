@@ -4,9 +4,23 @@ var Window = Class.extend({
     this.Width = Width;
     this.Height = Height;
     this.Time = 500;
+
+            windowListJObj.append(
+            "<div class='Window' id='" + this.Id + "'>" +
+            "<h1 class='Title'>" + this.Title + "</h1>" +
+            "<p class='ClickSoundEffect Close' id='" + this.Id + "Close'>X</p>" +
+            "</div>"
+        );
+
+            this.JObj = $('#' + this.Id);
+this.CloseJObj = $('#' + this.Id + "Close");
+
+        //to set event
+        this.CloseJObj.click(() => {
+            this.Close();
+        });
     },
     Open: function() {
-        console.log(this.JObj);
         this.JObj.css({
             'display': 'block',
             'left': (totalWidth - functionListWidth) * 0.5,
@@ -26,7 +40,7 @@ var Window = Class.extend({
     },
 
     Close: function() {
-        console.log(this.JObj);
+        //console.log(this.JObj);
         this.JObj.animate({
             'width': 0,
             'height': 0,
