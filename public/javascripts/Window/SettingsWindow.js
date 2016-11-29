@@ -3,7 +3,6 @@ var SettingsWindow = Window.extend({
         'use strict';
         this._super(Width, Height);
 
-        //ctor
         this.WindowType = "SettingsWindow";
         this.Title = "Settings";
 

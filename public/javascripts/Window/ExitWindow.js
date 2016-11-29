@@ -3,7 +3,6 @@ var ExitWindow = Window.extend({
         'use strict';
         this._super(Width, Height);
 
-        //ctor
         this.WindowType = "ExitWindow";
         this.Title = "Exit";
 
