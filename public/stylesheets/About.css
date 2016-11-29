@@ -1,7 +1,12 @@
 .navbar-brand > img {
     display: block;
-    width: 80px;
-    height: 50px;
+    width: 120px;
+    height: 80px;
+}
+
+.navbar-brand {
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
 }
 
 .form-signin {
