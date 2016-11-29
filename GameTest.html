@@ -81,10 +81,14 @@
         });
 
         var game = new Game("GamePlay",new Ninja());
-        game.useDefaultWorld();
+        // game.useDefaultWorld();
+
+
+
         var world = new World();
-        // console.log(world);
         game.add(world);
+        // need ray caster ( player can select)
+
         game.start();
     </script>
     <!-- <script src="javascripts/Player.js"></script> -->

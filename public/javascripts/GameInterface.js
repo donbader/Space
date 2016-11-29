@@ -11,9 +11,11 @@ $(document).ready(function() {
     var functionListWidth = 200,
         functionList = new FunctionList(functionListWidth);
 
+    var bagWindow = new BagWindow(600, 600);
     var settingsWindow = new SettingsWindow(500, 400);
     var exitWindow = new ExitWindow(500, 200);
 
+    functionList.AppendItem("Bag", "Bag1", bagWindow);
     functionList.AppendItem("Settings", "Settings1", settingsWindow);
     functionList.AppendItem("Exit", "Exit1", exitWindow);
 
