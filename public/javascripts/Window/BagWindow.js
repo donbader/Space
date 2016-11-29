@@ -27,6 +27,5 @@ var BagWindow = Window.extend({
         		this.Items[i].push(new BagItem(this.JObj, i, j));
         	}
         }
-
     }
 });
