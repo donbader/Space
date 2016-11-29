@@ -72,7 +72,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <form class="form-signin" action="https://0xytf.github.io/Space/SignIn.php" method="post">
+                    <form class="form-signin" method="post">
                         <h2 class="form-signin-heading">Please Sign Up</h2>
                         <label for="inputEmail" class="sr-only">Account</label>
                         <input type="text" name="account" id="inputEmail" class="form-control" placeholder="Account" required autofocus>
@@ -81,12 +81,19 @@
                         <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
                         <br>
                         <a href="https://0xytf.github.io/Space/SignIn.html">Back to Sign In!</a>
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+                        <button class="btn btn-lg btn-primary btn-block" name="submit" type="submit">Sign Up</button>
                     </form>
                 </div>
             </div>
         </div>
     </header>
+
+    <script>
+        $('#submit').click(function(){
+            $.get('/index/add');
+        });
+    </script>
+
     <!-- Footer -->
     <footer class="text-center">
         <div class="footer-above">
