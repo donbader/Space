@@ -7,5 +7,8 @@ var UserSchema = new Schema({
   password : String });
 
 var User = mongodb.mongoose.model("User",UserSchema);
+
+
+
 var UserDAO = function(){};
 module.exports = new UserDAO();
