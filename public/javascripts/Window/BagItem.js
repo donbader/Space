@@ -1,7 +1,7 @@
 var BagItem = function(Tr, Page, Th) {
 	this.Type = "BagItem";
 	this.Id = this.Type + '_' + Page + '_' + Th;
-	this.Image = null;
+	this.ImageSrc = "images/Item.png";
 	this.ItemObj = null;
 	this.Width = 40;
 	this.Height = 40;
@@ -12,7 +12,7 @@ var BagItem = function(Tr, Page, Th) {
 	//to create the BagItem in html
 	this.Tr.append(
 		"<td class='" + this.Type + "' id='" + this.Id + "'>" + 
-		"<img src='" + this.Image + "'>" + 
+		"<img class='ItemImage' src='" + this.ImageSrc + "'>" + 
 		"</td>"
 	);
 
@@ -28,5 +28,10 @@ var BagItem = function(Tr, Page, Th) {
 		'height': this.Height,
 		'background-color': 'green',
 		'text-align': 'center'
+	});
+
+	this.JObj.children('.ItemImage').css({
+		'width': this.Width,
+		'height': this.Height
 	});
 }
