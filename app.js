@@ -6,7 +6,6 @@ var favicon = require('serve-favicon');
 // Routes
 var index = require('./routes/index');
 
-
 // App
 var app = express();
 
