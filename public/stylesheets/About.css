@@ -1,7 +1,7 @@
 .navbar-brand > img {
     display: block;
-    width: 120px;
-    height: 75px;
+    width: 80px;
+    height: 50px;
 }
 
 .form-signin {
@@ -58,6 +58,7 @@
     font-size: 180%;
     line-height: 80%;
     text-align: center;
+    font-family:Microsoft JhengHei; 
 }
 
 .introductionContent {
@@ -78,6 +79,7 @@
     color: white;
     font-size: 120%;
     font-style: normal;
+    font-family:Microsoft JhengHei; 
     font-weight: 100; 
 }
 
