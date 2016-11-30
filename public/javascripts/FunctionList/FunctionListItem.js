@@ -20,7 +20,7 @@ var FunctionListItem = function(Id, Content, WindowObj) {
     }
     */
 
-    console.log(this.WindowObj);
+    //console.log(this.WindowObj);
 
     this.Time = 500;
 
