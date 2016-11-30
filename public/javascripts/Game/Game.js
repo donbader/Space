@@ -10,6 +10,7 @@ var Game = this.Game = Class.extend({
 	    // PLAYER//
 	    ///////////
 	    this.player = player;
+	    this.world = world;
 
 
 	    ///////////
@@ -37,11 +38,6 @@ var Game = this.Game = Class.extend({
 	    this.stats.domElement.style.zIndex = 100;
 	    this.container.appendChild(this.stats.domElement);
 
-	    player.in(this.scene, this.renderer);
-	    player.controls.enable();
-	    player.move(0,0,100);
-
-
 
 	    /////////////////////
 	    // FUNCTION DEFINE //
@@ -63,6 +59,12 @@ var Game = this.Game = Class.extend({
 	    }
 
 
+	    // DO
+	    player.in(this.scene, this.renderer);
+	    player.controls.enable();
+	    player.move(0,0,100);
+	    player.canMoveOn(this.world.ground);
+	    this.add(this.world);
 	},
 	pause: function(){
 
