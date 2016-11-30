@@ -9,7 +9,8 @@ router.get('/', function(req, res){
 });
 
 router.get('/add', function(req, res){
-	res.redirect('/');
+	register.doFinal();
+  res.redirect('/');
 });
 
 
