@@ -1,4 +1,4 @@
-var mongoose = require('dbconnection');
+var mongoose = require('./dbconnection');
 
 var UserSchema = mongoose.Schema({
   name : String,
@@ -7,8 +7,9 @@ var UserSchema = mongoose.Schema({
   });
 
 var User = mongoose.model('User', UserSchema);
-
-exports = mongoose;
+  
+module.exports = User;
+module.exports.mongoose = mongoose;
 /*var mongodb = require ('./mongodb');
 var Schema = mongodb.mongoose.Schema;
 var UserSchema = new Schema({

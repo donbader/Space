@@ -9,8 +9,7 @@ router.get('/', function(req, res){
 });
 
 router.get('/add', function(req, res){
-	register.hihi();
-	console.log("fuck");
+	res.redirect('/');
 });
 
 
