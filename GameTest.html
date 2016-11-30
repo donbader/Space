@@ -72,6 +72,9 @@
     <script src="javascripts/Game/Character.js"></script>
     <script src="javascripts/Game/Game.js"></script>
     <script src="javascripts/Game/World.js"></script>
+    <script src="javascripts/OBJMTLLoader.js"></script>
+    <script src="javascripts/MTLLoader.js"></script>
+    <script src="javascripts/OBJLoader.js"></script>
     <script type="text/javascript">
         var Ninja = Character.extend({
             init: function(){
@@ -88,8 +91,15 @@
         var world = new World();
         game.add(world);
         // need ray caster ( player can select)
-
+         var loader = new THREE.ObjectLoader();
+         loader.load("/3D/bararea/bararea.json",  function(object){
+            // object.scale.set(100,100,100);
+               game.add(object);
+               console.log(object);
+           });
+           
         game.start();
+
     </script>
     <!-- <script src="javascripts/Player.js"></script> -->
     <!-- <script src="javascripts/game.js"></script> -->
