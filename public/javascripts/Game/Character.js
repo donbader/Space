@@ -22,7 +22,6 @@ var Character = this.Character = Class.extend({
 		 *****************/
 		// init eye
 		this.eye.add(new THREE.Object3D().add(this.controls.camera));
-		this.eye.add(this.flashLight);
 		this.third_person(true);
 
 		// init body
@@ -33,6 +32,8 @@ var Character = this.Character = Class.extend({
 
 		// init model
 		this.model.add(this.body);
+		this.model.add(this.flashLight);
+	    this.flashLight.position.set(0,this.height + 10,0);
 
 		// init position Flag
 		this.controls.positionFlag = new THREE.Mesh(new THREE.BoxGeometry( 5, 30, 5 ), new THREE.MeshPhongMaterial( { color: 0xff0000 } ));
@@ -49,6 +50,7 @@ var Character = this.Character = Class.extend({
 
 	    scene.add(this.model);
 	    scene.add(this.controls.positionFlag);
+
 	},
 	third_person: function(enable){
 		if(enable){
@@ -83,16 +85,38 @@ var Character = this.Character = Class.extend({
 		pitchObject.rotation.x += y;
 		pitchObject.rotation.x = Math.max( - PI_2, Math.min( PI_2, pitchObject.rotation.x ) );
 	},
+	walkToDestination: function(destination){
+		var deltaX = destination.x - this.model.position.x;
+		var deltaZ = destination.z - this.model.position.z;
+		var distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaZ, 2));
+		controls.velocity.x = deltaX / distance * this.controls.walk.speed;
+		controls.velocity.z = deltaZ / distance * this.controls.walk.speed;
+		if(distance <= 10){
+			controls.walk.ing = false;
+			controls.velocity.x = 0;
+			controls.velocity.z = 0;
+		}
+
+	},
 	position: function(){
 		return this.model.position;
 	},
 	animate: function(delta){
+
+
 		if(!this.controls.enabled)return;
 
 		var controls = this.controls;
-		controls.velocity.x -= controls.velocity.x * 5 * delta;
-        controls.velocity.z -= controls.velocity.z * 5 * delta;
-        controls.velocity.y -= gravity * delta; // v = v0 + at
+
+		if(!controls.walk.ing){
+			controls.velocity.x -= controls.velocity.x * 5 * delta;
+    		controls.velocity.z -= controls.velocity.z * 5 * delta;
+    		controls.velocity.y -= gravity * delta; // v = v0 + at
+    	}
+    	else{
+    		this.walkToDestination(controls.walk.destination);
+    	}
+
 
         if(Math.abs(controls.velocity.x) < 0.1) controls.velocity.x = 0;
         if(Math.abs(controls.velocity.z) < 0.1) controls.velocity.z = 0;
@@ -142,6 +166,11 @@ var Character = this.Character = Class.extend({
 		moveVelocity: 1000.0,
 		jumpVelocity: 350.0,
 		positionFlag: '',
+		walk: {
+			destination: {x:0, y:0, z:0},
+			ing:false,
+			speed: 500
+		},
 		ObjectsToSelect: [],
 		ObjectsColliadble: [],
 		ObjectsToMoveOn: [],
@@ -189,7 +218,7 @@ var Character = this.Character = Class.extend({
 	model: new THREE.Object3D(),
 	body: '',
 	eye: new THREE.Object3D(),
-	flashLight: new THREE.PointLight(0xffffff,3,500),
+	flashLight: new THREE.PointLight(0xffffff,0.3, 1000),
 
 });
 
@@ -280,6 +309,9 @@ controls.onRightClick = function(event){
 	if(intersects.length){
 		var positionFlag = controls.positionFlag;
 		positionFlag.position.set(intersects[0].point.x, intersects[0].point.y + positionFlag.height/2, intersects[0].point.z);
+		controls.walk.ing = true;
+		controls.walk.destination.x = intersects[0].point.x;
+		controls.walk.destination.z = intersects[0].point.z;
 	}
 }
 
