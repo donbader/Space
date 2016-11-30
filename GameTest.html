@@ -58,6 +58,8 @@
     <script src="javascripts/GameObject/GameObject.js"></script>
     <!-- For Window -->
     <script src="javascripts/Window/Window.js"></script>
+    <script src="javascripts/Window/BagItem.js"></script>
+    <script src="javascripts/Window/BagWindow.js"></script>
     <script src="javascripts/Window/SettingsWindow.js"></script>
     <script src="javascripts/Window/ExitWindow.js"></script>
 
@@ -83,13 +85,21 @@
             }
         });
 
-        var game = new Game("GamePlay",new Ninja());
+        var game = new Game("GamePlay",new Ninja(), new World());
         // game.useDefaultWorld();
 
+        var room = new Room (2048,2048,500, 0xf88399);
+        game.add(room);
+        // var world = new World();
+        // console.log(world.addLightAtWall);
+
+        var loader = new THREE.ObjectLoader();
+        loader.load("3D/desk/chair.json", function(object){
+            object.position.set(0,0,300);
+            game.add(object);
+        });
 
 
-        var world = new World();
-        game.add(world);
         // need ray caster ( player can select)
          var loader = new THREE.ObjectLoader();
          loader.load("/3D/bararea/bararea.json",  function(object){

@@ -11,7 +11,7 @@ $(document).ready(function() {
     var functionListWidth = 200,
         functionList = new FunctionList(functionListWidth);
 
-    var bagWindow = new BagWindow(600, 600);
+    var bagWindow = new BagWindow(600, 400);
     var settingsWindow = new SettingsWindow(500, 400);
     var exitWindow = new ExitWindow(500, 200);
 

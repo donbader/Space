@@ -62,17 +62,14 @@
     text-align: center;
 }
 
-.SettingsWindow > p {
-    position: absolute;
-    margin: 0 0;
-    bottom: 20px;
-    right: 20px;
-    font-size: 150%;
+.Title {
+    text-align: center;
 }
 
-.ExitWindow > p {
+.Close {
     position: absolute;
-    margin: 0 0;
-    bottom: 20px;
-    font-size: 150%;
+    margin: 5px 5px;
+    top: 10px;
+    right: 10px;
+    font-size: 100%;
 }
