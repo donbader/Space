@@ -18,9 +18,6 @@ router.get('/Modify', function(req, res){
 	res.sendFile(path.join(__dirname, '../', 'Modify.html'));
 });
 
-router.get('/SignUp', function(req, res){
-	res.sendFile(path.join(__dirname, '../', 'SignUp.html'));
-});
 
 router.get('/GameTest', function(req, res){
 	res.sendFile(path.join(__dirname, '../', 'GameTest.html'));

@@ -5,6 +5,9 @@ var favicon = require('serve-favicon');
 
 // Routes
 var index = require('./routes/index');
+var signup = require('./routes/signup');
+
+
 
 // App
 var app = express();
@@ -12,12 +15,13 @@ var app = express();
 
 // Add path
 app.use(express.static(path.join(__dirname, 'public')));
-var user = require('./routes/user'); //front-end json
+//var user = require('./routes/user'); //front-end json
 
 // Route Service
 app.use('/', index);
 
-
+app.use('/SignUp',signup);
+/*
 app.get('/index/add',user.UserAdd); //add		
  /*app.post('/index/add',index.doUserAdd); //submit		
  app.get('/index/:id',index.userAdd); //edit		
