@@ -61,7 +61,7 @@ var Character = this.Character = Class.extend({
 			this.eye.position.set(0,this.height/2-10,0);
 
 	},
-	move: function(x, y, z){
+	translate: function(x, y, z){
 		x = x || 0;
 		y = y || 0;
 		z = z || 0;
@@ -69,6 +69,12 @@ var Character = this.Character = Class.extend({
 		this.model.translateX(x);
 		this.model.translateY(y);
 		this.model.translateZ(z);
+	},
+	move: function(x,y,z){
+		var position = this.position();
+		position.x += x;
+		position.y += y;
+		position.z += z;
 	},
 	moveTo: function (x, y, z){
 		var position = this.position();
@@ -107,28 +113,29 @@ var Character = this.Character = Class.extend({
 		if(!this.controls.enabled)return;
 
 		var controls = this.controls;
-
-		if(!controls.walk.ing){
-			controls.velocity.x -= controls.velocity.x * 5 * delta;
-    		controls.velocity.z -= controls.velocity.z * 5 * delta;
-    		controls.velocity.y -= gravity * delta; // v = v0 + at
-    	}
-    	else{
+		if(controls.walk.ing){
     		this.walkToDestination(controls.walk.destination);
+			controls.velocity.x -= controls.velocity.x * 5 * delta;
+			controls.velocity.z -= controls.velocity.z * 5 * delta;
+			controls.velocity.y -= gravity * delta; // v = v0 + at
+			if(Math.abs(controls.velocity.x) < 0.1) controls.velocity.x = 0;
+			if(Math.abs(controls.velocity.z) < 0.1) controls.velocity.z = 0;
+
+			this.move(controls.velocity.x * delta, controls.velocity.y * delta, controls.velocity.z * delta);
     	}
-
-
-        if(Math.abs(controls.velocity.x) < 0.1) controls.velocity.x = 0;
-        if(Math.abs(controls.velocity.z) < 0.1) controls.velocity.z = 0;
-
-
-        if ( controls.moveForward )controls.velocity.z -= controls.moveVelocity * delta;
-        if ( controls.moveBackward )controls.velocity.z += controls.moveVelocity * delta;
-        if ( controls.moveLeft )controls.velocity.x -= controls.moveVelocity * delta;
-        if ( controls.moveRight )controls.velocity.x += controls.moveVelocity * delta;
-
-
-        this.move(controls.velocity.x * delta, controls.velocity.y * delta, controls.velocity.z * delta);
+		else{
+			controls.velocity.x -= controls.velocity.x * 5 * delta;
+			controls.velocity.z -= controls.velocity.z * 5 * delta;
+			controls.velocity.y -= gravity * delta; // v = v0 + at
+	        if(Math.abs(controls.velocity.x) < 0.1) controls.velocity.x = 0;
+	        if(Math.abs(controls.velocity.z) < 0.1) controls.velocity.z = 0;
+			// Key
+			if ( controls.moveForward )controls.velocity.z -= controls.moveVelocity * delta;
+	        if ( controls.moveBackward )controls.velocity.z += controls.moveVelocity * delta;
+	        if ( controls.moveLeft )controls.velocity.x -= controls.moveVelocity * delta;
+	        if ( controls.moveRight )controls.velocity.x += controls.moveVelocity * delta;
+			this.translate(controls.velocity.x * delta, controls.velocity.y * delta, controls.velocity.z * delta);
+		}
 
         if ( this.model.position.y <= 0 ) {
             controls.velocity.y = 0;
@@ -169,7 +176,7 @@ var Character = this.Character = Class.extend({
 		walk: {
 			destination: {x:0, y:0, z:0},
 			ing:false,
-			speed: 500
+			speed: 500.0
 		},
 		ObjectsToSelect: [],
 		ObjectsColliadble: [],
@@ -198,6 +205,7 @@ var Character = this.Character = Class.extend({
 			off('mousemove', this.onMouseMove);
 			off('mousewheel', this.onMouseWheel);
 			off('dblclick', this.onMouseAtObject);
+			off('contextmenu', this.onRightClick);
 
 			this.enabled = false;
 		}
@@ -374,7 +382,3 @@ function getZoomScale(){
 }
 
 })();
-
-
-
-
