@@ -54,6 +54,11 @@ this.JObj.children('.Title').text(this.Title);
             "</div>"
         )
         //to set the css
+                //close state
+        this.JObj.css({
+            'top': this.CloseTop,
+            'right': this.CloseRight
+        });
         
         $('.' + this.WindowType).css({
             'text-align': 'left'
