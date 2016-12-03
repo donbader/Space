@@ -1,5 +1,7 @@
 (function(){
 const MOUSE_STATE = {NONE: 0, KEYDOWN: 1, KEYUP: 2};
+const MODE_STATE = {FIRST_PERSON: 0, THIRD_PERSON: 1, WHITEBOARD: 2 }
+
 const PI_2 = Math.PI / 2;
 const gravity = 980;
 
@@ -22,7 +24,7 @@ var Character = this.Character = Class.extend({
 		 *****************/
 		// init eye
 		this.eye.add(new THREE.Object3D().add(this.controls.camera));
-		this.third_person(true);
+		this.setMode(MODE_STATE.THIRD_PERSON);
 
 		// init body
 		this.body = new THREE.Mesh(new THREE.CubeGeometry(50, this.height,50), new THREE.MeshPhongMaterial( { color: 0x00ffff } ));
@@ -61,7 +63,7 @@ var Character = this.Character = Class.extend({
 			this.eye.position.set(0,this.height/2-10,0);
 
 	},
-	move: function(x, y, z){
+	translate: function(x, y, z){
 		x = x || 0;
 		y = y || 0;
 		z = z || 0;
@@ -69,6 +71,12 @@ var Character = this.Character = Class.extend({
 		this.model.translateX(x);
 		this.model.translateY(y);
 		this.model.translateZ(z);
+	},
+	move: function(x,y,z){
+		var position = this.position();
+		position.x += x;
+		position.y += y;
+		position.z += z;
 	},
 	moveTo: function (x, y, z){
 		var position = this.position();
@@ -85,7 +93,7 @@ var Character = this.Character = Class.extend({
 		pitchObject.rotation.x += y;
 		pitchObject.rotation.x = Math.max( - PI_2, Math.min( PI_2, pitchObject.rotation.x ) );
 	},
-	walkToDestination: function(destination){
+	walkFunction: function(destination){
 		var deltaX = destination.x - this.model.position.x;
 		var deltaZ = destination.z - this.model.position.z;
 		var distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaZ, 2));
@@ -107,28 +115,29 @@ var Character = this.Character = Class.extend({
 		if(!this.controls.enabled)return;
 
 		var controls = this.controls;
-
-		if(!controls.walk.ing){
+		if(controls.walk.ing){
+    		this.walkFunction(controls.walk.destination);
 			controls.velocity.x -= controls.velocity.x * 5 * delta;
-    		controls.velocity.z -= controls.velocity.z * 5 * delta;
-    		controls.velocity.y -= gravity * delta; // v = v0 + at
+			controls.velocity.z -= controls.velocity.z * 5 * delta;
+			controls.velocity.y -= gravity * delta; // v = v0 + at
+			if(Math.abs(controls.velocity.x) < 0.1) controls.velocity.x = 0;
+			if(Math.abs(controls.velocity.z) < 0.1) controls.velocity.z = 0;
+
+			this.move(controls.velocity.x * delta, controls.velocity.y * delta, controls.velocity.z * delta);
     	}
-    	else{
-    		this.walkToDestination(controls.walk.destination);
-    	}
-
-
-        if(Math.abs(controls.velocity.x) < 0.1) controls.velocity.x = 0;
-        if(Math.abs(controls.velocity.z) < 0.1) controls.velocity.z = 0;
-
-
-        if ( controls.moveForward )controls.velocity.z -= controls.moveVelocity * delta;
-        if ( controls.moveBackward )controls.velocity.z += controls.moveVelocity * delta;
-        if ( controls.moveLeft )controls.velocity.x -= controls.moveVelocity * delta;
-        if ( controls.moveRight )controls.velocity.x += controls.moveVelocity * delta;
-
-
-        this.move(controls.velocity.x * delta, controls.velocity.y * delta, controls.velocity.z * delta);
+		else{
+			controls.velocity.x -= controls.velocity.x * 5 * delta;
+			controls.velocity.z -= controls.velocity.z * 5 * delta;
+			controls.velocity.y -= gravity * delta; // v = v0 + at
+	        if(Math.abs(controls.velocity.x) < 0.1) controls.velocity.x = 0;
+	        if(Math.abs(controls.velocity.z) < 0.1) controls.velocity.z = 0;
+			// Key
+			if ( controls.moveForward )controls.velocity.z -= controls.moveVelocity * delta;
+	        if ( controls.moveBackward )controls.velocity.z += controls.moveVelocity * delta;
+	        if ( controls.moveLeft )controls.velocity.x -= controls.moveVelocity * delta;
+	        if ( controls.moveRight )controls.velocity.x += controls.moveVelocity * delta;
+			this.translate(controls.velocity.x * delta, controls.velocity.y * delta, controls.velocity.z * delta);
+		}
 
         if ( this.model.position.y <= 0 ) {
             controls.velocity.y = 0;
@@ -169,7 +178,12 @@ var Character = this.Character = Class.extend({
 		walk: {
 			destination: {x:0, y:0, z:0},
 			ing:false,
-			speed: 500
+			speed: 500.0,
+			to: function(x,z){
+				this.ing = true;
+				this.destination.x = x;
+				this.destination.z = z;
+			}
 		},
 		ObjectsToSelect: [],
 		ObjectsColliadble: [],
@@ -198,6 +212,7 @@ var Character = this.Character = Class.extend({
 			off('mousemove', this.onMouseMove);
 			off('mousewheel', this.onMouseWheel);
 			off('dblclick', this.onMouseAtObject);
+			off('contextmenu', this.onRightClick);
 
 			this.enabled = false;
 		}
@@ -219,7 +234,31 @@ var Character = this.Character = Class.extend({
 	body: '',
 	eye: new THREE.Object3D(),
 	flashLight: new THREE.PointLight(0xffffff,0.3, 1000),
+	mode:{
+		current: MODE_STATE.FIRST_PERSON,
+		previous: MODE_STATE.FIRST_PERSON,
+	},
+	setMode: function(m){
+		this.mode.current = m;
+		console.log("change mode__");
+		console.log("current: "+this.mode.current);
+		console.log("previous: "+this.mode.previous);
+		switch (m) {
+			case MODE_STATE.FIRST_PERSON:
+				this.eye.position.set(0,this.height/2-10,0);
+				break;
+			case MODE_STATE.THIRD_PERSON:
+				this.eye.position.set(0,this.height+300,500);
+				this.turn(0, -0.7);
+				break;
+			case MODE_STATE.WHITEBOARD:
+				this.walk.ing
+				break;
+			default:
 
+		}
+		return this;
+	}
 });
 
 /*******************
@@ -309,10 +348,26 @@ controls.onRightClick = function(event){
 	if(intersects.length){
 		var positionFlag = controls.positionFlag;
 		positionFlag.position.set(intersects[0].point.x, intersects[0].point.y + positionFlag.height/2, intersects[0].point.z);
-		controls.walk.ing = true;
-		controls.walk.destination.x = intersects[0].point.x;
-		controls.walk.destination.z = intersects[0].point.z;
+		controls.walk.to(intersects[0].point.x, intersects[0].point.z)
 	}
+}
+
+controls.onLeftClick = function(event) {
+	event.preventDefault();
+
+	var mousePosition = new THREE.Vector2();
+	mousePosition.x = ( event.clientX / window.innerWidth) * 2 - 1;
+	mousePosition.y = 1 - (event.clientY / window.innerHeight ) * 2;
+
+	var obj = new THREE.Mesh(new THREE.CubeGeometry(1, 1, 1), new THREE.MeshPhongMaterial({color: 0x000000}));
+	var ray = new THREE.Raycaster();
+	ray.setFromCamera(mousePosition, controls.camera);
+	var intersects = ray.intersectObjects(controls.ObjectsToMoveOn, true);
+
+	if(intersects.length) {
+		obj.position.set(intersects[0].point.x, intersects[0].point.y, intersects[0].point.z);
+	}
+
 }
 
 controls.onMouseUp = function(event){
@@ -374,7 +429,3 @@ function getZoomScale(){
 }
 
 })();
-
-
-
-
