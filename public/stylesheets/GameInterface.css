@@ -1,3 +1,9 @@
+.Height {
+    display: block;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+}
 .MenuIcon {
     display: block;
     position: fixed;
@@ -8,45 +14,52 @@
     width: 100px;
     height: 100px;
     text-align: center;
-    -webkit-clip-path: circle(49% at 50% 50%);
-    color: #000000;
-    background-color: #000000;
+    z-index: 2;
 }
 
 .MenuIcon > img {
-    display: inline-block;
-    margin: 25px 0;
-    padding: 0 0;
-    width: 50px;
-    height: 50px;
-    background-color: #00FFFF;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 80px;
+    height: 80px;
+    opacity: 1;
 }
 
-#FunctionList {
+.FunctionList {
     display: block;
     position: fixed;
-    top: 0;
-    bottom: 0;
-    right: -200px;
-    width: 200px;
-    margin: 0px 0px;
+    top: 20px;
+    right: 20px;
+    margin: 0 0 0 0;
+    padding: 0 0;
+    width: 100px;
+    height: 100px;
     text-align: center;
-    background-color: #0088FF;
+    -webkit-clip-path: circle(49% at 50% 50%);
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.5);
+    z-index: 1;
 }
 
-#FunctionList > h1 {
+.FunctionList > h1 {
+    display: block;
     margin: 170px 0 0 0;
     padding: 10px 0;
+    font-size: 170%;
+    z-index: 2;
 }
 
-#FunctionList > p {
+.FunctionList > p {
+    display: block;
     margin: 0 0;
     padding: 20px 0;
     font-size: 150%;
+    z-index: 2;
 }
 
 .FunctionListMouseEnter {
-    background: white;
+    background-color: rgba(255, 255, 255, 0.8);
 }
 
 .Window {
