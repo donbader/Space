@@ -66,136 +66,13 @@
     </nav>
     <!-- Sign in -->
     <header>
-        <div id="GamePlay" style="z-index: -1;display: none;"></div>
-        <script src="javascripts/jquery-3.1.1.min.js"></script>
-        <script src="javascripts/three.min.js"></script>
-        <script src="javascripts/Game/Class.js"></script>
-        <!-- For FunctionList -->
-        <script src="javascripts/FunctionList/FunctionList.js"></script>
-        <script src="javascripts/FunctionList/FunctionListItem.js"></script>
-        <!-- For GameObject -->
-        <script src="javascripts/GameObject/GameObject.js"></script>
-        <!-- For Window -->
-        <script src="javascripts/Window/Window.js"></script>
-        <script src="javascripts/Window/BagItem.js"></script>
-        <script src="javascripts/Window/BagWindow.js"></script>
-        <script src="javascripts/Window/SettingsWindow.js"></script>
-        <script src="javascripts/Window/ExitWindow.js"></script>
-        <!-- For Main GameInterface -->
-        <script src="javascripts/GameInterface.js"></script>
-        <script src="javascripts/Stats.js"></script>
-        <script src="javascripts/Game/Class2.js"></script>
-        <script src="javascripts/Game/Character.js"></script>
-        <script src="javascripts/Game/Game.js"></script>
-        <script src="javascripts/Game/World.js"></script>
-        <script src="javascripts/OBJMTLLoader.js"></script>
-        <script src="javascripts/MTLLoader.js"></script>
-        <script src="javascripts/OBJLoader.js"></script>
-        <script type="text/javascript">
-        /*
-        $('#enter').click(function() {
-
-            document.getElementById("GamePlay").style.display = "list-inline";
-
-
-
-
-            var Ninja = Character.extend({
-                init: function() {
-                    this._super();
-                    this.body.material.color.setHex(0x000000);
-                }
-            });
-
-            var game = new Game("GamePlay", new Ninja(), new World());
-            // game.useDefaultWorld();
-
-            var room = new Room(2048, 2048, 500, 0xf88399);
-            game.add(room);
-            // var world = new World();
-            // console.log(world.addLightAtWall);
-
-            var loader = new THREE.ObjectLoader();
-            loader.load("3D/desk/chair.json", function(object) {
-                object.position.set(0, 0, 300);
-                object.rotation.set(4.71, 0, 3.14);
-                game.add(object);
-            });
-
-            loader = new THREE.ObjectLoader();
-
-            // need ray caster ( player can select)
-            loader.load("/3D/table/table.json", function(object) {
-                // object.scale.set(250,250,250);
-                object.position.set(0, 0, 150);
-                game.add(object);
-            });
-            loader = new THREE.ObjectLoader();
-
-            loader.load("3D/laptop/laptop.json", function(object) {
-                object.scale.set(3, 3, 3);
-                object.position.set(0, 100, 150);
-                game.add(object);
-                // var link = $('<a></a>');
-                // var dataURL =  'data:application/json;charset=utf-8' + encodeURIComponent(JSON.stringify(object));
-                // link.data("href", dataURL);
-                // link.click();
-                console.log("done");
-            });
-            loader = new THREE.ObjectLoader();
-
-            loader.load("3D/charizard/charizard.json", function(object) {
-                object.scale.set(10, 10, 10);
-                object.position.set(0, 0, 150);
-                game.add(object);
-                console.log(object);
-
-            });
-
-            //    var loader = new THREE.JSONLoader();
-
-            //     loader.load( 'book.json', function ( geometry, material ) {
-            //     model = new THREE.Mesh( geometry, material);
-            //     scene.add( model )
-            // }, 
-            // 'Fabric_nor.png');
-
-            loader = new THREE.ObjectLoader();
-
-            loader.load("3D/books/book.json", function(object) {
-                //object.scale.set(100,100,100);
-                object.position.set(50, 100, 150);
-                game.add(object);
-                console.log(object);
-
-            });
-            // var loader = new ;;;
-            // var object = loader.parse(json);
-            /*
-                     var light = new THREE.PointLight();
-                     game.add(light);
-                     light.position.set(0,50,0);*/
-            /*woodendoor
-         loader = new THREE.ObjectLoader();
-
-         loader.load("3D/woodendoor/woodendoor.json", function(object){
-           // object.scale.set(100,100,100);
-            object.position.set(0,0,300);
-            game.add(object);
-             console.log(object);
-        });
-
-            game.start();
-        })
-*/
-        </script>
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <form class="form-signin" action="index/login" method="post">
+                    <div class="form-signin">
                         <h2 class="form-signin-heading">Please Sign In</h2>
                         <label for="inputEmail" class="sr-only">Account</label>
-                        <input type="text" name="account" id="inputEmail" class="form-control" placeholder="Account" required autofocus>
+                        <input type="text" name="Account" id="inputEmail" class="form-control" placeholder="Account" required autofocus>
                         <br>
                         <label for="inputPassword" class="sr-only">Password</label>
                         <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
@@ -208,13 +85,14 @@
                         <a href="https://0xytf.github.io/Space/Modify.html">Modify My Information!</a>
                         <br>
                         <a href="https://0xytf.github.io/Space/SignUp.html">Not Our User yet? Sign Up Now!</a>
-                        <button id="enter" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                        <button id="enter" class="btn btn-lg btn-primary btn-block" >Sign in</button>
                         <a href="#page-top" class="btn-social btn-outline"><i class="fa fa-fw fa-facebook"></i></a>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
+
     <!-- Footer -->
     <footer class="text-center">
         <div class="footer-above">
@@ -485,7 +363,7 @@
                                     </strong>
                                 </li>
                             </ul>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button> 
                         </div>
                     </div>
                 </div>
@@ -494,6 +372,24 @@
     </div>
     <!-- jQuery -->
     <script src="javascripts/jquery.js"></script>
+        <script>
+     
+        $("#enter").click(function() {
+            var send_data = {
+                Account: $('#inputEmail').val(),
+                Password: $("#inputPassword").val()
+                }   
+            $.ajax({
+                type: 'post',
+                url: "login",
+                dataTpye: "json",
+                data: send_data,
+                success: function(JSONData) {
+                    console.log(JSONData.Account);
+                }
+            });
+        });
+        </script>
     <!-- Bootstrap Core JavaScript -->
     <script src="javascripts/bootstrap.min.js"></script>
     <!-- Plugin JavaScript -->
