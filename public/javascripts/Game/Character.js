@@ -323,6 +323,24 @@ controls.onRightClick = function(event){
 	}
 }
 
+controls.onLeftClick = function(event) {
+	event.preventDefault();
+
+	var mousePosition = new THREE.Vector2();
+	mousePosition.x = ( event.clientX / window.innerWidth) * 2 - 1;
+	mousePosition.y = 1 - (event.clientY / window.innerHeight ) * 2;
+
+	var obj = new THREE.Mesh(new THREE.CubeGeometry(1, 1, 1), new THREE.MeshPhongMaterial({color: 0x000000}));
+	var ray = new THREE.Raycaster();
+	ray.setFromCamera(mousePosition, controls.camera);
+	var intersects = ray.intersectObjects(controls.ObjectsToMoveOn, true);
+
+	if(intersects.length) {
+		obj.position.set(intersects[0].point.x, intersects[0].point.y, intersects[0].point.z);
+	}
+
+}
+
 controls.onMouseUp = function(event){
 	controls.mouse.state = MOUSE_STATE.KEYUP;
 }
