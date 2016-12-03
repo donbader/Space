@@ -1,8 +1,10 @@
 var express = require('express');
 var path = require('path');
+var User = require('./../db/user');
 var router = express.Router();
 var login = require('../db/login');	
 var querystring = require("querystring");
+var mongoose = require('mongoose');
 
 /* GET home page. */
 router.get('/', function(req, res, next){
@@ -17,10 +19,24 @@ router.post('/login', function(req, res){
 		body+=data;
 	});
 	req.on('end',function(){
-		querystring.parse(body);
-		//console.log(body);
+		var para = querystring.parse(body);
+		var name = para.Account;
+		var password = para.Password;
+
+	User.findOne({ "name" : name },'password',  function (err, user) {
+  		if (err) return console.log(err);
+  		if (user == null) 	
+  			res.send({msg:"fail"});
+  		else
+  			res.send({msg:"success"});
+	});	
+
+
+
+		//console.log(name + "fuck" + password);
 	})
-	res.send(body);
+
+	
 });
 
 
