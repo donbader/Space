@@ -1,2145 +1,767 @@
 {
-    "textures": [],
-    "metadata": {
-        "type": "Object",
-        "generator": "io_three",
-        "version": 4.4
-    },
-    "materials": [{
-        "vertexColors": false,
-        "color": 3487029,
-        "emissive": 0,
-        "name": "353535",
-        "ambient": 3487029,
-        "depthTest": true,
-        "type": "MeshPhongMaterial",
-        "specular": 0,
-        "shininess": 50,
-        "side": 2,
-        "blending": "NormalBlending",
-        "uuid": "07FD8688-5B67-339A-87BB-ACB8F68B2FDA",
-        "depthWrite": true
-    },{
-        "vertexColors": false,
-        "color": 11579568,
-        "emissive": 0,
-        "name": "b0b0b0",
-        "ambient": 11579568,
-        "depthTest": true,
-        "type": "MeshPhongMaterial",
-        "specular": 0,
-        "shininess": 50,
-        "side": 2,
-        "blending": "NormalBlending",
-        "uuid": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-        "depthWrite": true
-    },{
-        "vertexColors": false,
-        "color": 12233109,
-        "emissive": 0,
-        "name": "baa995",
-        "ambient": 12233109,
-        "depthTest": true,
-        "type": "MeshPhongMaterial",
-        "specular": 0,
-        "shininess": 50,
-        "side": 2,
-        "blending": "NormalBlending",
-        "uuid": "63AAEFF5-6535-3F16-AE87-5581D08223C4",
-        "depthWrite": true
-    },{
-        "vertexColors": false,
-        "color": 16777215,
-        "emissive": 0,
-        "name": "ffffff",
-        "ambient": 16777215,
-        "depthTest": true,
-        "type": "MeshPhongMaterial",
-        "specular": 0,
-        "shininess": 50,
-        "side": 2,
-        "blending": "NormalBlending",
-        "uuid": "A05C207B-E3D1-3023-96B3-1D1FFEA34A95",
-        "depthWrite": true
-    }],
-    "animations": [{
-        "tracks": [],
-        "name": "default",
-        "fps": 29
-    }],
-    "geometries": [{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "b0b0b0",
-            "colorDiffuse": [0.690196,0.690196,0.690196],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.690196,0.690196,0.690196],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "8FC544DA-4B5C-3379-9ECE-F442BE935DA8",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box32Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.015,-0.015,0.15,0.015,0.015,0.15,0.015,-0.015,-0.15,0.015,0.015,-0.15,-0.015,0.015,0.15,-0.015,-0.015,0.15,-0.015,0.015,-0.15,-0.015,-0.015,-0.15],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "b0b0b0",
-            "colorDiffuse": [0.690196,0.690196,0.690196],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.690196,0.690196,0.690196],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "15641190-4052-3871-BF5E-F046F6B1B496",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "BoxGeometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.015,-0.015,0.4,0.015,0.015,0.4,0.015,-0.015,-0.4,0.015,0.015,-0.4,-0.015,0.015,0.4,-0.015,-0.015,0.4,-0.015,0.015,-0.4,-0.015,-0.015,-0.4],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "b0b0b0",
-            "colorDiffuse": [0.690196,0.690196,0.690196],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.690196,0.690196,0.690196],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "1115A1C8-EBF4-37C3-BB25-69F6ED4449BA",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box24Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.015,-0.015,0.15,0.015,0.015,0.15,0.015,-0.015,-0.15,0.015,0.015,-0.15,-0.015,0.015,0.15,-0.015,-0.015,0.15,-0.015,0.015,-0.15,-0.015,-0.015,-0.15],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "b0b0b0",
-            "colorDiffuse": [0.690196,0.690196,0.690196],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.690196,0.690196,0.690196],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "580DD110-F264-3355-A9CC-CBFFD9544223",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box22Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.015,-0.015,0.15,0.015,0.015,0.15,0.015,-0.015,-0.15,0.015,0.015,-0.15,-0.015,0.015,0.15,-0.015,-0.015,0.15,-0.015,0.015,-0.15,-0.015,-0.015,-0.15],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "b0b0b0",
-            "colorDiffuse": [0.690196,0.690196,0.690196],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.690196,0.690196,0.690196],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "629D7D3C-CE94-3BA3-9F3C-40B745BD5FB2",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box31Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.015,-0.015,0.15,0.015,0.015,0.15,0.015,-0.015,-0.15,0.015,0.015,-0.15,-0.015,0.015,0.15,-0.015,-0.015,0.15,-0.015,0.015,-0.15,-0.015,-0.015,-0.15],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "b0b0b0",
-            "colorDiffuse": [0.690196,0.690196,0.690196],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.690196,0.690196,0.690196],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "5CFF8B8C-EEB1-3EE2-A920-2B690473F196",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box26Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.015,-0.015,0.15,0.015,0.015,0.15,0.015,-0.015,-0.15,0.015,0.015,-0.15,-0.015,0.015,0.15,-0.015,-0.015,0.15,-0.015,0.015,-0.15,-0.015,-0.015,-0.15],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "b0b0b0",
-            "colorDiffuse": [0.690196,0.690196,0.690196],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.690196,0.690196,0.690196],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "7840C11D-F176-3086-9582-A83014568918",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box30Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.015,-0.015,0.3,0.015,0.015,0.3,0.015,-0.015,-0.3,0.015,0.015,-0.3,-0.015,0.015,0.3,-0.015,-0.015,0.3,-0.015,0.015,-0.3,-0.015,-0.015,-0.3],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "b0b0b0",
-            "colorDiffuse": [0.690196,0.690196,0.690196],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.690196,0.690196,0.690196],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "53C39429-DD48-3DAB-9067-5776A017E64B",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box29Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.015,-0.015,0.3,0.015,0.015,0.3,0.015,-0.015,-0.3,0.015,0.015,-0.3,-0.015,0.015,0.3,-0.015,-0.015,0.3,-0.015,0.015,-0.3,-0.015,-0.015,-0.3],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "b0b0b0",
-            "colorDiffuse": [0.690196,0.690196,0.690196],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.690196,0.690196,0.690196],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "5B23DCE7-72A6-31B5-B561-B5098FF6433E",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box10Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.15,-0.3,0.0025,0.15,0.3,0.0025,0.15,-0.3,-0.0025,0.15,0.3,-0.0025,-0.15,0.3,0.0025,-0.15,-0.3,0.0025,-0.15,0.3,-0.0025,-0.15,-0.3,-0.0025],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "b0b0b0",
-            "colorDiffuse": [0.690196,0.690196,0.690196],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.690196,0.690196,0.690196],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "778708C3-2A4C-30ED-AC23-F99783DFA888",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box7Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.015,-0.015,0.4,0.015,0.015,0.4,0.015,-0.015,-0.4,0.015,0.015,-0.4,-0.015,0.015,0.4,-0.015,-0.015,0.4,-0.015,0.015,-0.4,-0.015,-0.015,-0.4],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "b0b0b0",
-            "colorDiffuse": [0.690196,0.690196,0.690196],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.690196,0.690196,0.690196],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "AEE9FCF5-858F-3E75-8197-0FB1F94F5091",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box16Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.015,-0.015,0.3,0.015,0.015,0.3,0.015,-0.015,-0.3,0.015,0.015,-0.3,-0.015,0.015,0.3,-0.015,-0.015,0.3,-0.015,0.015,-0.3,-0.015,-0.015,-0.3],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "b0b0b0",
-            "colorDiffuse": [0.690196,0.690196,0.690196],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.690196,0.690196,0.690196],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "64183BD0-6EAE-3D88-8ABC-1117C3AD9D35",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box5Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.015,-0.015,0.4,0.015,0.015,0.4,0.015,-0.015,-0.4,0.015,0.015,-0.4,-0.015,0.015,0.4,-0.015,-0.015,0.4,-0.015,0.015,-0.4,-0.015,-0.015,-0.4],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "ffffff",
-            "colorDiffuse": [1,1,1],
-            "blending": "NormalBlending",
-            "colorAmbient": [1,1,1],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "CA468235-6318-31E9-A81A-2C1F5F2934B1",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box12Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.15,-0.3,0.0025,0.15,0.3,0.0025,0.15,-0.3,-0.0025,0.15,0.3,-0.0025,-0.15,0.3,0.0025,-0.15,-0.3,0.0025,-0.15,0.3,-0.0025,-0.15,-0.3,-0.0025],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "b0b0b0",
-            "colorDiffuse": [0.690196,0.690196,0.690196],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.690196,0.690196,0.690196],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "DAF26EED-E8A1-3597-94D1-E65246622C91",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box3Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.015,-0.015,0.4,0.015,0.015,0.4,0.015,-0.015,-0.4,0.015,0.015,-0.4,-0.015,0.015,0.4,-0.015,-0.015,0.4,-0.015,0.015,-0.4,-0.015,-0.015,-0.4],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "b0b0b0",
-            "colorDiffuse": [0.690196,0.690196,0.690196],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.690196,0.690196,0.690196],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "4CCE7535-BBA4-34D5-818B-3FC77ACB2721",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box20Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.015,-0.015,0.15,0.015,0.015,0.15,0.015,-0.015,-0.15,0.015,0.015,-0.15,-0.015,0.015,0.15,-0.015,-0.015,0.15,-0.015,0.015,-0.15,-0.015,-0.015,-0.15],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "ffffff",
-            "colorDiffuse": [1,1,1],
-            "blending": "NormalBlending",
-            "colorAmbient": [1,1,1],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "CD7D62CA-6C08-3384-8598-2BE3FE25E16A",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box11Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.15,-0.3,0.0025,0.15,0.3,0.0025,0.15,-0.3,-0.0025,0.15,0.3,-0.0025,-0.15,0.3,0.0025,-0.15,-0.3,0.0025,-0.15,0.3,-0.0025,-0.15,-0.3,-0.0025],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "353535",
-            "colorDiffuse": [0.207843,0.207843,0.207843],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.207843,0.207843,0.207843],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "F44F6C5E-78D6-3464-9233-B5E5E66E0110",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box14Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.125,-0.275,0.275,0.125,0.275,0.275,0.125,-0.275,-0.275,0.125,0.275,-0.275,-0.125,0.275,0.275,-0.125,-0.275,0.275,-0.125,0.275,-0.275,-0.125,-0.275,-0.275],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "b0b0b0",
-            "colorDiffuse": [0.690196,0.690196,0.690196],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.690196,0.690196,0.690196],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "BA987BDC-5B1E-3FF9-85BE-2847EDD7B178",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box19Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.015,-0.015,0.3,0.015,0.015,0.3,0.015,-0.015,-0.3,0.015,0.015,-0.3,-0.015,0.015,0.3,-0.015,-0.015,0.3,-0.015,0.015,-0.3,-0.015,-0.015,-0.3],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "b0b0b0",
-            "colorDiffuse": [0.690196,0.690196,0.690196],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.690196,0.690196,0.690196],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "A3266DF7-EF8B-3835-B919-F2D9B9D10D07",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box2Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.015,-0.015,0.4,0.015,0.015,0.4,0.015,-0.015,-0.4,0.015,0.015,-0.4,-0.015,0.015,0.4,-0.015,-0.015,0.4,-0.015,0.015,-0.4,-0.015,-0.015,-0.4],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "b0b0b0",
-            "colorDiffuse": [0.690196,0.690196,0.690196],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.690196,0.690196,0.690196],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "25D600BE-28B0-3C17-B4C0-BCF73072758F",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box33Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.015,-0.015,0.3,0.015,0.015,0.3,0.015,-0.015,-0.3,0.015,0.015,-0.3,-0.015,0.015,0.3,-0.015,-0.015,0.3,-0.015,0.015,-0.3,-0.015,-0.015,-0.3],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "b0b0b0",
-            "colorDiffuse": [0.690196,0.690196,0.690196],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.690196,0.690196,0.690196],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "4586DE01-4056-3396-9DC3-B08F800E38FB",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box23Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.015,-0.015,0.15,0.015,0.015,0.15,0.015,-0.015,-0.15,0.015,0.015,-0.15,-0.015,0.015,0.15,-0.015,-0.015,0.15,-0.015,0.015,-0.15,-0.015,-0.015,-0.15],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "b0b0b0",
-            "colorDiffuse": [0.690196,0.690196,0.690196],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.690196,0.690196,0.690196],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "D9FDB576-F098-320B-9FFB-E5989779BD81",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box8Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.15,-0.3,0.0025,0.15,0.3,0.0025,0.15,-0.3,-0.0025,0.15,0.3,-0.0025,-0.15,0.3,0.0025,-0.15,-0.3,0.0025,-0.15,0.3,-0.0025,-0.15,-0.3,-0.0025],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "ffffff",
-            "colorDiffuse": [1,1,1],
-            "blending": "NormalBlending",
-            "colorAmbient": [1,1,1],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "98CE0ABF-982E-3010-BF1D-01919C9CB4EF",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box9Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.15,-0.3,0.0025,0.15,0.3,0.0025,0.15,-0.3,-0.0025,0.15,0.3,-0.0025,-0.15,0.3,0.0025,-0.15,-0.3,0.0025,-0.15,0.3,-0.0025,-0.15,-0.3,-0.0025],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "b0b0b0",
-            "colorDiffuse": [0.690196,0.690196,0.690196],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.690196,0.690196,0.690196],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "5158BD82-9EF3-39E5-A8E0-7B6DD16E3F2A",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box15.001Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.015,-0.015,0.4,0.015,0.015,0.4,0.015,-0.015,-0.4,0.015,0.015,-0.4,-0.015,0.015,0.4,-0.015,-0.015,0.4,-0.015,0.015,-0.4,-0.015,-0.015,-0.4],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "b0b0b0",
-            "colorDiffuse": [0.690196,0.690196,0.690196],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.690196,0.690196,0.690196],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "0813763B-3A95-3717-A405-7EEF112B324A",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box1Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.015,-0.015,0.3,0.015,0.015,0.3,0.015,-0.015,-0.3,0.015,0.015,-0.3,-0.015,0.015,0.3,-0.015,-0.015,0.3,-0.015,0.015,-0.3,-0.015,-0.015,-0.3],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "b0b0b0",
-            "colorDiffuse": [0.690196,0.690196,0.690196],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.690196,0.690196,0.690196],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "62F1C6F9-2345-3E83-B2F1-2F82E909E028",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box25Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.015,-0.015,0.15,0.015,0.015,0.15,0.015,-0.015,-0.15,0.015,0.015,-0.15,-0.015,0.015,0.15,-0.015,-0.015,0.15,-0.015,0.015,-0.15,-0.015,-0.015,-0.15],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "b0b0b0",
-            "colorDiffuse": [0.690196,0.690196,0.690196],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.690196,0.690196,0.690196],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "5F05442A-9704-3BFB-BE1B-EE12E2150EE3",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box6Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.015,-0.015,0.4,0.015,0.015,0.4,0.015,-0.015,-0.4,0.015,0.015,-0.4,-0.015,0.015,0.4,-0.015,-0.015,0.4,-0.015,0.015,-0.4,-0.015,-0.015,-0.4],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "baa995",
-            "colorDiffuse": [0.73,0.663724,0.585921],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.73,0.663724,0.585921],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "AC0895ED-19F7-3290-AE60-9FA3A609C69C",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box13Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.75,-0.35,0.01,0.75,0.35,0.01,0.75,-0.35,-0.01,0.75,0.35,-0.01,-0.75,0.35,0.01,-0.75,-0.35,0.01,-0.75,0.35,-0.01,-0.75,-0.35,-0.01],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "b0b0b0",
-            "colorDiffuse": [0.690196,0.690196,0.690196],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.690196,0.690196,0.690196],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "2261E3D4-FC80-30B5-9256-704D6F92DDBB",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box34Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.015,-0.015,0.3,0.015,0.015,0.3,0.015,-0.015,-0.3,0.015,0.015,-0.3,-0.015,0.015,0.3,-0.015,-0.015,0.3,-0.015,0.015,-0.3,-0.015,-0.015,-0.3],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "b0b0b0",
-            "colorDiffuse": [0.690196,0.690196,0.690196],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.690196,0.690196,0.690196],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "B06408BE-40FD-3CF5-8133-8A1EE9E62A96",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box15Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.015,-0.015,0.3,0.015,0.015,0.3,0.015,-0.015,-0.3,0.015,0.015,-0.3,-0.015,0.015,0.3,-0.015,-0.015,0.3,-0.015,0.015,-0.3,-0.015,-0.015,-0.3],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "b0b0b0",
-            "colorDiffuse": [0.690196,0.690196,0.690196],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.690196,0.690196,0.690196],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "A8CB77DA-E1B3-37D1-9219-8371E28D46A5",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box28Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.015,-0.015,0.3,0.015,0.015,0.3,0.015,-0.015,-0.3,0.015,0.015,-0.3,-0.015,0.015,0.3,-0.015,-0.015,0.3,-0.015,0.015,-0.3,-0.015,-0.015,-0.3],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "b0b0b0",
-            "colorDiffuse": [0.690196,0.690196,0.690196],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.690196,0.690196,0.690196],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "55F1FDF9-11CF-3519-A786-324BFF57CA12",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box18Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.015,-0.015,0.3,0.015,0.015,0.3,0.015,-0.015,-0.3,0.015,0.015,-0.3,-0.015,0.015,0.3,-0.015,-0.015,0.3,-0.015,0.015,-0.3,-0.015,-0.015,-0.3],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "b0b0b0",
-            "colorDiffuse": [0.690196,0.690196,0.690196],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.690196,0.690196,0.690196],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "96C72E92-151D-3D1B-81D3-EEB6AB6DBC68",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box21Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.015,-0.015,0.15,0.015,0.015,0.15,0.015,-0.015,-0.15,0.015,0.015,-0.15,-0.015,0.015,0.15,-0.015,-0.015,0.15,-0.015,0.015,-0.15,-0.015,-0.015,-0.15],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "b0b0b0",
-            "colorDiffuse": [0.690196,0.690196,0.690196],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.690196,0.690196,0.690196],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "7088A12B-6703-31CC-B70B-A3FFAA56E28C",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box27Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.015,-0.015,0.3,0.015,0.015,0.3,0.015,-0.015,-0.3,0.015,0.015,-0.3,-0.015,0.015,0.3,-0.015,-0.015,0.3,-0.015,0.015,-0.3,-0.015,-0.015,-0.3],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "b0b0b0",
-            "colorDiffuse": [0.690196,0.690196,0.690196],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.690196,0.690196,0.690196],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "0FDC8DC4-ABE1-3B55-BE51-7F9FDC6BC2CD",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box17Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.015,-0.015,0.15,0.015,0.015,0.15,0.015,-0.015,-0.15,0.015,0.015,-0.15,-0.015,0.015,0.15,-0.015,-0.015,0.15,-0.015,0.015,-0.15,-0.015,-0.015,-0.15],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    },{
-        "materials": [{
-            "DbgColor": 15658734,
-            "DbgName": "b0b0b0",
-            "colorDiffuse": [0.690196,0.690196,0.690196],
-            "blending": "NormalBlending",
-            "colorAmbient": [0.690196,0.690196,0.690196],
-            "colorSpecular": [0.001176,0.001176,0.001176],
-            "opacity": 1,
-            "visible": true,
-            "specularCoef": 50,
-            "wireframe": false,
-            "doubleSided": true,
-            "DbgIndex": 0,
-            "depthTest": true,
-            "transparent": false,
-            "colorEmissive": [0,0,0],
-            "shading": "phong",
-            "depthWrite": true
-        }],
-        "uuid": "21064AED-2F9E-349A-8048-33069A9BEACE",
-        "type": "Geometry",
-        "data": {
-            "bones": [],
-            "skinIndices": [],
-            "influencesPerVertex": 2,
-            "animations": [],
-            "normals": [0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,0.577349,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,-0.577349,0.577349],
-            "name": "Box4Geometry",
-            "metadata": {
-                "bones": 0,
-                "faces": 6,
-                "materials": 1,
-                "vertices": 8,
-                "normals": 8,
-                "uvs": 1,
-                "morphTargets": 0,
-                "generator": "io_three",
-                "version": 3
-            },
-            "faces": [43,0,2,3,1,0,0,1,2,3,0,1,2,3,43,4,6,7,5,0,0,1,2,3,4,5,6,7,43,0,1,4,5,0,2,3,0,1,0,3,4,7,43,7,6,3,2,0,0,1,2,3,6,5,2,1,43,2,0,5,7,0,2,3,0,1,1,0,7,6,43,1,3,6,4,0,0,1,2,3,3,2,5,4],
-            "skinWeights": [],
-            "vertices": [0.015,-0.015,0.4,0.015,0.015,0.4,0.015,-0.015,-0.4,0.015,0.015,-0.4,-0.015,0.015,0.4,-0.015,-0.015,0.4,-0.015,0.015,-0.4,-0.015,-0.015,-0.4],
-            "uvs": [[0,1,0,0,1,0,1,1]],
-            "morphTargets": []
-        }
-    }],
-    "object": {
-        "children": [{
-            "name": "Box14",
-            "uuid": "DFF46D8A-6273-380C-9F06-32554A226289",
-            "matrix": [-1,0,0,0,0,0,1,0,0,1,0,0,-0.9526,-0.0719,0.2995,1],
-            "visible": true,
-            "type": "Mesh",
-            "material": "07FD8688-5B67-339A-87BB-ACB8F68B2FDA",
-            "castShadow": true,
-            "receiveShadow": true,
-            "geometry": "F44F6C5E-78D6-3464-9233-B5E5E66E0110"
-        },{
-            "name": "Camera",
-            "uuid": "DE0714B3-5D16-30EF-9A0A-6C5D6DD394B9",
-            "matrix": [-1,0,0,0,0,0.969684,0.24436,0,0,0.24436,-0.969684,0,-0.3244,0.745,-2.3418,1],
-            "visible": true,
-            "type": "PerspectiveCamera",
-            "far": 50000,
-            "near": 0.1,
-            "aspect": 1.77778,
-            "fov": 38.6274
-        },{
-            "name": "group",
-            "uuid": "4579AA1B-0625-355A-94A9-713A14FBE90F",
-            "matrix": [-1,0,0,0,0,0,1,0,0,1,0,0,-0.360714,0.010714,0.3,1],
-            "visible": true,
-            "type": "Object",
-            "children": [{
-                "name": "Box",
-                "uuid": "DDA9AE26-14F9-3E6A-9BDD-AF02F6D2F286",
-                "matrix": [1,0,0,0,0,1,0,0,0,0,1,0,-0.360714,-0.3,-0.010714,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "15641190-4052-3871-BF5E-F046F6B1B496"
-            },{
-                "name": "Box1",
-                "uuid": "13AB8362-B9AF-310A-8509-00DC96972EBC",
-                "matrix": [1,0,0,0,0,-0,1,0,0,-1,-0,0,0.7389,-0.0154,0.2202,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "0813763B-3A95-3717-A405-7EEF112B324A"
-            },{
-                "name": "Box10",
-                "uuid": "C80DC305-4B7A-395C-897F-E4767BA2D8A6",
-                "matrix": [1.0961,0,0,0,0,1.0458,0,0,0,0,1,0,-0.510714,0,-0.360714,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "5B23DCE7-72A6-31B5-B561-B5098FF6433E"
-            },{
-                "name": "Box11",
-                "uuid": "303885B5-D681-34A0-BE3A-FF503094081C",
-                "matrix": [1.0968,0,0,0,0,1.0498,0,0,0,0,1,0,-0.510714,0,0.239286,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "A05C207B-E3D1-3023-96B3-1D1FFEA34A95",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "CD7D62CA-6C08-3384-8598-2BE3FE25E16A"
-            },{
-                "name": "Box12",
-                "uuid": "73DFC2DD-8605-33DF-943F-25833DE0AA66",
-                "matrix": [1.0633,0,0,0,0,1.0463,0,0,0,0,1,0,-0.510714,0,-0.060714,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "A05C207B-E3D1-3023-96B3-1D1FFEA34A95",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "CA468235-6318-31E9-A81A-2C1F5F2934B1"
-            },{
-                "name": "Box13",
-                "uuid": "656E752A-C320-3047-8661-E390EF3B5190",
-                "matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0.039286,0,0.389286,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "63AAEFF5-6535-3F16-AE87-5581D08223C4",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "AC0895ED-19F7-3290-AE60-9FA3A609C69C"
-            },{
-                "name": "Box15",
-                "uuid": "ADEBC251-8314-31AC-915B-5FCE433AF6AC",
-                "matrix": [1,0,0,0,0,-0,1,0,0,-1,-0,0,-0.35,0,0,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "B06408BE-40FD-3CF5-8133-8A1EE9E62A96"
-            },{
-                "name": "Box15.001",
-                "uuid": "8B1546C6-FEB8-31FD-9AEA-9FFAF42534BF",
-                "matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0.439286,-0.3,-0.010714,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "5158BD82-9EF3-39E5-A8E0-7B6DD16E3F2A"
-            },{
-                "name": "Box16",
-                "uuid": "387438EB-5EE1-35C6-86D8-1EDA56ABA0BB",
-                "matrix": [1,0,0,0,0,-0,1,0,0,-1,-0,0,0.7388,-0.0154,-0.3804,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "AEE9FCF5-858F-3E75-8197-0FB1F94F5091"
-            },{
-                "name": "Box17",
-                "uuid": "A5403191-362A-3350-9C60-67FFF7E60B22",
-                "matrix": [-0,0,1,0,0,1,0,0,-1,0,-0,0,0.5956,0.2992,0.2205,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "0FDC8DC4-ABE1-3B55-BE51-7F9FDC6BC2CD"
-            },{
-                "name": "Box18",
-                "uuid": "00BCCA53-9387-3CCA-A8B7-21B222DCD307",
-                "matrix": [1,0,0,0,0,-0,1,0,0,-1,-0,0,-0.3606,-0.0154,0.2201,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "55F1FDF9-11CF-3519-A786-324BFF57CA12"
-            },{
-                "name": "Box19",
-                "uuid": "0FB8EA19-109E-36F1-BCA4-82D2FF1C6A16",
-                "matrix": [1,0,0,0,0,-0,1,0,0,-1,-0,0,0.4386,-0.0154,0.2205,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "BA987BDC-5B1E-3FF9-85BE-2847EDD7B178"
-            },{
-                "name": "Box2",
-                "uuid": "66A008AC-44C6-3B23-9275-5237B57058C0",
-                "matrix": [1,0,0,0,0,1,0,0,0,0,1,0,-0.360714,0.3,-0.010714,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "A3266DF7-EF8B-3835-B919-F2D9B9D10D07"
-            },{
-                "name": "Box20",
-                "uuid": "7EFC8933-5DD0-302B-B843-5B4EB1B6AD7B",
-                "matrix": [-0,0,1,0,0,1,0,0,-1,0,-0,0,0.5942,0.2969,-0.379,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "4CCE7535-BBA4-34D5-818B-3FC77ACB2721"
-            },{
-                "name": "Box21",
-                "uuid": "A0B3EFCD-7CFE-39F7-AA89-C76B4A6F54FE",
-                "matrix": [-0,0,1,0,0,1,0,0,-1,0,-0,0,-0.5059,0.2995,-0.3787,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "96C72E92-151D-3D1B-81D3-EEB6AB6DBC68"
-            },{
-                "name": "Box22",
-                "uuid": "FE3C7EB8-C48C-3EC0-A919-8527E332E68D",
-                "matrix": [-0,0,1,0,0,1,0,0,-1,0,-0,0,0.5942,-0.2999,-0.379,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "580DD110-F264-3355-A9CC-CBFFD9544223"
-            },{
-                "name": "Box23",
-                "uuid": "36BE529D-F5EA-369D-82B3-54B4FA1A128C",
-                "matrix": [-0,0,1,0,0,1,0,0,-1,0,-0,0,0.5942,-0.2982,0.2205,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "4586DE01-4056-3396-9DC3-B08F800E38FB"
-            },{
-                "name": "Box24",
-                "uuid": "38694742-03F8-3AE7-8348-2B524CC2A46D",
-                "matrix": [-0,0,1,0,0,1,0,0,-1,0,-0,0,-0.5059,0.2977,-0.0781,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "1115A1C8-EBF4-37C3-BB25-69F6ED4449BA"
-            },{
-                "name": "Box25",
-                "uuid": "2911F6EC-5D5D-35C6-992B-0F1651CDD828",
-                "matrix": [-0,0,1,0,0,1,0,0,-1,0,-0,0,-0.5059,-0.3005,-0.0777,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "62F1C6F9-2345-3E83-B2F1-2F82E909E028"
-            },{
-                "name": "Box26",
-                "uuid": "75198497-BABE-316C-A887-22D3E5FE2AE5",
-                "matrix": [-0,0,1,0,0,1,0,0,-1,0,-0,0,-0.5059,-0.3005,-0.3787,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "5CFF8B8C-EEB1-3EE2-A920-2B690473F196"
-            },{
-                "name": "Box27",
-                "uuid": "42E0E581-4004-3149-8EBF-D6D9AEAD2A28",
-                "matrix": [1,0,0,0,0,-0,1,0,0,-1,-0,0,0.4404,-0.0154,-0.3804,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "7088A12B-6703-31CC-B70B-A3FFAA56E28C"
-            },{
-                "name": "Box28",
-                "uuid": "0F8E5B26-B880-3BA6-92BE-AA7EDDB19A94",
-                "matrix": [1,0,0,0,0,-0,1,0,0,-1,-0,0,-0.6615,-0.0154,0.2215,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "A8CB77DA-E1B3-37D1-9219-8371E28D46A5"
-            },{
-                "name": "Box29",
-                "uuid": "ACCB9306-9C18-3A07-BA80-5CC31B0AE961",
-                "matrix": [1,0,0,0,0,-0,1,0,0,-1,-0,0,-0.6615,-0.0154,-0.3804,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "53C39429-DD48-3DAB-9067-5776A017E64B"
-            },{
-                "name": "Box3",
-                "uuid": "BF7F5BAE-ECAB-32A6-B7E6-0F0B02A66F3D",
-                "matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0.439286,0.3,-0.010714,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "DAF26EED-E8A1-3597-94D1-E65246622C91"
-            },{
-                "name": "Box30",
-                "uuid": "2D5913E8-4F47-3116-9424-F36891BB72DA",
-                "matrix": [1,0,0,0,0,-0,1,0,0,-1,-0,0,-0.6615,-0.0154,-0.0777,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "7840C11D-F176-3086-9582-A83014568918"
-            },{
-                "name": "Box31",
-                "uuid": "497BCCDE-8B61-388E-A48B-0EF1296B5CF4",
-                "matrix": [-0,0,1,0,0,1,0,0,-1,0,-0,0,-0.5059,-0.3005,0.2205,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "629D7D3C-CE94-3BA3-9F3C-40B745BD5FB2"
-            },{
-                "name": "Box32",
-                "uuid": "0ECFB468-FCFC-3FC7-B4C4-849E5586137B",
-                "matrix": [-0,0,1,0,0,1,0,0,-1,0,-0,0,-0.5059,0.2977,0.2205,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "8FC544DA-4B5C-3379-9ECE-F442BE935DA8"
-            },{
-                "name": "Box33",
-                "uuid": "7AF4E8DA-3D5C-3736-8589-6F2805C921AF",
-                "matrix": [1,0,0,0,0,-0,1,0,0,-1,-0,0,-0.3606,-0.0154,-0.3804,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "25D600BE-28B0-3C17-B4C0-BCF73072758F"
-            },{
-                "name": "Box34",
-                "uuid": "93F1F2D5-B049-3BA0-B214-B996ACBED3DE",
-                "matrix": [1,0,0,0,0,-0,1,0,0,-1,-0,0,-0.3606,-0.0154,-0.0791,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "2261E3D4-FC80-30B5-9256-704D6F92DDBB"
-            },{
-                "name": "Box4",
-                "uuid": "21E1EE28-720A-3F5F-A701-169B87D161B6",
-                "matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0.739286,-0.3,-0.010714,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "21064AED-2F9E-349A-8048-33069A9BEACE"
-            },{
-                "name": "Box5",
-                "uuid": "B7F31A6C-E829-3060-8AE1-EBA084A2865B",
-                "matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0.739286,0.3,-0.010714,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "64183BD0-6EAE-3D88-8ABC-1117C3AD9D35"
-            },{
-                "name": "Box6",
-                "uuid": "635989B7-6F0F-336A-8B27-DC1722994B13",
-                "matrix": [1,0,0,0,0,1,0,0,0,0,1,0,-0.660714,-0.3,-0.010714,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "5F05442A-9704-3BFB-BE1B-EE12E2150EE3"
-            },{
-                "name": "Box7",
-                "uuid": "438FF972-AF36-3959-A474-DA6FFA57510C",
-                "matrix": [1,0,0,0,0,1,0,0,0,0,1,0,-0.660714,0.3,-0.010714,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "778708C3-2A4C-30ED-AC23-F99783DFA888"
-            },{
-                "name": "Box8",
-                "uuid": "43CFC224-7989-3DCA-9CAA-AACBEFA6DBBB",
-                "matrix": [1.0988,0,0,0,0,1.0309,0,0,0,0,1,0,0.589286,0,-0.360714,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "D9FDB576-F098-320B-9FFB-E5989779BD81"
-            },{
-                "name": "Box9",
-                "uuid": "82475668-0D68-35E4-A7AD-6FC2EA1CDC6D",
-                "matrix": [1.0897,0,0,0,0,1.0282,0,0,0,0,1,0,0.589286,0,0.239286,1],
-                "visible": true,
-                "type": "Mesh",
-                "material": "A05C207B-E3D1-3023-96B3-1D1FFEA34A95",
-                "castShadow": true,
-                "receiveShadow": true,
-                "geometry": "98CE0ABF-982E-3010-BF1D-01919C9CB4EF"
-            }]
-        },{
-            "name": "SpotLight",
-            "uuid": "1B18A08F-0404-3C2E-888D-7391D0AB1E6E",
-            "matrix": [-1,0,0,0,0,0.974949,0.222428,0,0,0.222428,-0.974949,0,-0.332,0.4242,-0.8937,1],
-            "visible": true,
-            "type": "SpotLight",
-            "castShadow": true,
-            "color": 16777215,
-            "intensity": 1,
-            "distance": 0,
-            "angle": 2.0944,
-            "decayExponent": 2
-        },{
-            "name": "SpotLight1",
-            "uuid": "D3F76104-364D-3D91-80D7-FB01739E4BBE",
-            "matrix": [-1,0,0,0,0,-0.984616,0.174729,0,0,0.174729,0.984616,0,0,0,1.5774,1],
-            "visible": true,
-            "type": "SpotLight",
-            "castShadow": true,
-            "color": 16777215,
-            "intensity": 1,
-            "distance": 0,
-            "angle": 2.0944,
-            "decayExponent": 2
-        },{
-            "name": "V_Ray_Omni",
-            "uuid": "189C2C11-B383-3E31-A49E-DCF684B864D1",
-            "matrix": [-1,0,0,0,0,1,-0,0,0,-0,-1,0,0,1.3321,0.2624,1],
-            "visible": true,
-            "type": "PointLight",
-            "color": 16777215,
-            "intensity": 1,
-            "distance": 0,
-            "decayExponent": 2
-        }],
-        "uuid": "A35D56AA-53AB-4109-B3D5-D52585A28F04",
-        "type": "Scene",
-        "matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]
-    },
-    "images": []
+	"metadata": {
+		"version": 4.4,
+		"type": "Object",
+		"generator": "Object3D.toJSON"
+	},
+	"geometries": [
+		{
+			"uuid": "15641190-4052-3871-BF5E-F046F6B1B496",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.015,-0.015,0.4,0.015,0.015,0.4,0.015,-0.015,-0.4,0.015,0.015,-0.4,-0.015,0.015,0.4,-0.015,-0.015,0.4,-0.015,0.015,-0.4,-0.015,-0.015,-0.4],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,1,0,0,-1,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "0813763B-3A95-3717-A405-7EEF112B324A",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.015,-0.015,0.3,0.015,0.015,0.3,0.015,-0.015,-0.3,0.015,0.015,-0.3,-0.015,0.015,0.3,-0.015,-0.015,0.3,-0.015,0.015,-0.3,-0.015,-0.015,-0.3],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,1,0,0,-1,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "5B23DCE7-72A6-31B5-B561-B5098FF6433E",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.15,-0.3,0.0025,0.15,0.3,0.0025,0.15,-0.3,-0.0025,0.15,0.3,-0.0025,-0.15,0.3,0.0025,-0.15,-0.3,0.0025,-0.15,0.3,-0.0025,-0.15,-0.3,-0.0025],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,0.9999999999999999,0,0,-0.9999999999999999,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "CD7D62CA-6C08-3384-8598-2BE3FE25E16A",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.15,-0.3,0.0025,0.15,0.3,0.0025,0.15,-0.3,-0.0025,0.15,0.3,-0.0025,-0.15,0.3,0.0025,-0.15,-0.3,0.0025,-0.15,0.3,-0.0025,-0.15,-0.3,-0.0025],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,0.9999999999999999,0,0,-0.9999999999999999,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "CA468235-6318-31E9-A81A-2C1F5F2934B1",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.15,-0.3,0.0025,0.15,0.3,0.0025,0.15,-0.3,-0.0025,0.15,0.3,-0.0025,-0.15,0.3,0.0025,-0.15,-0.3,0.0025,-0.15,0.3,-0.0025,-0.15,-0.3,-0.0025],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,0.9999999999999999,0,0,-0.9999999999999999,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "AC0895ED-19F7-3290-AE60-9FA3A609C69C",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.75,-0.35,0.01,0.75,0.35,0.01,0.75,-0.35,-0.01,0.75,0.35,-0.01,-0.75,0.35,0.01,-0.75,-0.35,0.01,-0.75,0.35,-0.01,-0.75,-0.35,-0.01],
+				"normals": [0.9999999999999999,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-0.9999999999999999,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,1,0,0,-1,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "B06408BE-40FD-3CF5-8133-8A1EE9E62A96",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.015,-0.015,0.3,0.015,0.015,0.3,0.015,-0.015,-0.3,0.015,0.015,-0.3,-0.015,0.015,0.3,-0.015,-0.015,0.3,-0.015,0.015,-0.3,-0.015,-0.015,-0.3],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,1,0,0,-1,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "5158BD82-9EF3-39E5-A8E0-7B6DD16E3F2A",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.015,-0.015,0.4,0.015,0.015,0.4,0.015,-0.015,-0.4,0.015,0.015,-0.4,-0.015,0.015,0.4,-0.015,-0.015,0.4,-0.015,0.015,-0.4,-0.015,-0.015,-0.4],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,1,0,0,-1,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "AEE9FCF5-858F-3E75-8197-0FB1F94F5091",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.015,-0.015,0.3,0.015,0.015,0.3,0.015,-0.015,-0.3,0.015,0.015,-0.3,-0.015,0.015,0.3,-0.015,-0.015,0.3,-0.015,0.015,-0.3,-0.015,-0.015,-0.3],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,1,0,0,-1,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "0FDC8DC4-ABE1-3B55-BE51-7F9FDC6BC2CD",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.015,-0.015,0.15,0.015,0.015,0.15,0.015,-0.015,-0.15,0.015,0.015,-0.15,-0.015,0.015,0.15,-0.015,-0.015,0.15,-0.015,0.015,-0.15,-0.015,-0.015,-0.15],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,1,0,0,-1,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "55F1FDF9-11CF-3519-A786-324BFF57CA12",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.015,-0.015,0.3,0.015,0.015,0.3,0.015,-0.015,-0.3,0.015,0.015,-0.3,-0.015,0.015,0.3,-0.015,-0.015,0.3,-0.015,0.015,-0.3,-0.015,-0.015,-0.3],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,1,0,0,-1,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "BA987BDC-5B1E-3FF9-85BE-2847EDD7B178",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.015,-0.015,0.3,0.015,0.015,0.3,0.015,-0.015,-0.3,0.015,0.015,-0.3,-0.015,0.015,0.3,-0.015,-0.015,0.3,-0.015,0.015,-0.3,-0.015,-0.015,-0.3],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,1,0,0,-1,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "A3266DF7-EF8B-3835-B919-F2D9B9D10D07",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.015,-0.015,0.4,0.015,0.015,0.4,0.015,-0.015,-0.4,0.015,0.015,-0.4,-0.015,0.015,0.4,-0.015,-0.015,0.4,-0.015,0.015,-0.4,-0.015,-0.015,-0.4],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,1,0,0,-1,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "4CCE7535-BBA4-34D5-818B-3FC77ACB2721",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.015,-0.015,0.15,0.015,0.015,0.15,0.015,-0.015,-0.15,0.015,0.015,-0.15,-0.015,0.015,0.15,-0.015,-0.015,0.15,-0.015,0.015,-0.15,-0.015,-0.015,-0.15],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,1,0,0,-1,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "96C72E92-151D-3D1B-81D3-EEB6AB6DBC68",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.015,-0.015,0.15,0.015,0.015,0.15,0.015,-0.015,-0.15,0.015,0.015,-0.15,-0.015,0.015,0.15,-0.015,-0.015,0.15,-0.015,0.015,-0.15,-0.015,-0.015,-0.15],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,1,0,0,-1,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "580DD110-F264-3355-A9CC-CBFFD9544223",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.015,-0.015,0.15,0.015,0.015,0.15,0.015,-0.015,-0.15,0.015,0.015,-0.15,-0.015,0.015,0.15,-0.015,-0.015,0.15,-0.015,0.015,-0.15,-0.015,-0.015,-0.15],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,1,0,0,-1,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "4586DE01-4056-3396-9DC3-B08F800E38FB",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.015,-0.015,0.15,0.015,0.015,0.15,0.015,-0.015,-0.15,0.015,0.015,-0.15,-0.015,0.015,0.15,-0.015,-0.015,0.15,-0.015,0.015,-0.15,-0.015,-0.015,-0.15],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,1,0,0,-1,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "1115A1C8-EBF4-37C3-BB25-69F6ED4449BA",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.015,-0.015,0.15,0.015,0.015,0.15,0.015,-0.015,-0.15,0.015,0.015,-0.15,-0.015,0.015,0.15,-0.015,-0.015,0.15,-0.015,0.015,-0.15,-0.015,-0.015,-0.15],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,1,0,0,-1,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "62F1C6F9-2345-3E83-B2F1-2F82E909E028",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.015,-0.015,0.15,0.015,0.015,0.15,0.015,-0.015,-0.15,0.015,0.015,-0.15,-0.015,0.015,0.15,-0.015,-0.015,0.15,-0.015,0.015,-0.15,-0.015,-0.015,-0.15],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,1,0,0,-1,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "5CFF8B8C-EEB1-3EE2-A920-2B690473F196",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.015,-0.015,0.15,0.015,0.015,0.15,0.015,-0.015,-0.15,0.015,0.015,-0.15,-0.015,0.015,0.15,-0.015,-0.015,0.15,-0.015,0.015,-0.15,-0.015,-0.015,-0.15],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,1,0,0,-1,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "7088A12B-6703-31CC-B70B-A3FFAA56E28C",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.015,-0.015,0.3,0.015,0.015,0.3,0.015,-0.015,-0.3,0.015,0.015,-0.3,-0.015,0.015,0.3,-0.015,-0.015,0.3,-0.015,0.015,-0.3,-0.015,-0.015,-0.3],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,1,0,0,-1,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "A8CB77DA-E1B3-37D1-9219-8371E28D46A5",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.015,-0.015,0.3,0.015,0.015,0.3,0.015,-0.015,-0.3,0.015,0.015,-0.3,-0.015,0.015,0.3,-0.015,-0.015,0.3,-0.015,0.015,-0.3,-0.015,-0.015,-0.3],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,1,0,0,-1,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "53C39429-DD48-3DAB-9067-5776A017E64B",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.015,-0.015,0.3,0.015,0.015,0.3,0.015,-0.015,-0.3,0.015,0.015,-0.3,-0.015,0.015,0.3,-0.015,-0.015,0.3,-0.015,0.015,-0.3,-0.015,-0.015,-0.3],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,1,0,0,-1,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "DAF26EED-E8A1-3597-94D1-E65246622C91",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.015,-0.015,0.4,0.015,0.015,0.4,0.015,-0.015,-0.4,0.015,0.015,-0.4,-0.015,0.015,0.4,-0.015,-0.015,0.4,-0.015,0.015,-0.4,-0.015,-0.015,-0.4],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,1,0,0,-1,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "7840C11D-F176-3086-9582-A83014568918",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.015,-0.015,0.3,0.015,0.015,0.3,0.015,-0.015,-0.3,0.015,0.015,-0.3,-0.015,0.015,0.3,-0.015,-0.015,0.3,-0.015,0.015,-0.3,-0.015,-0.015,-0.3],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,1,0,0,-1,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "629D7D3C-CE94-3BA3-9F3C-40B745BD5FB2",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.015,-0.015,0.15,0.015,0.015,0.15,0.015,-0.015,-0.15,0.015,0.015,-0.15,-0.015,0.015,0.15,-0.015,-0.015,0.15,-0.015,0.015,-0.15,-0.015,-0.015,-0.15],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,1,0,0,-1,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "8FC544DA-4B5C-3379-9ECE-F442BE935DA8",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.015,-0.015,0.15,0.015,0.015,0.15,0.015,-0.015,-0.15,0.015,0.015,-0.15,-0.015,0.015,0.15,-0.015,-0.015,0.15,-0.015,0.015,-0.15,-0.015,-0.015,-0.15],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,1,0,0,-1,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "25D600BE-28B0-3C17-B4C0-BCF73072758F",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.015,-0.015,0.3,0.015,0.015,0.3,0.015,-0.015,-0.3,0.015,0.015,-0.3,-0.015,0.015,0.3,-0.015,-0.015,0.3,-0.015,0.015,-0.3,-0.015,-0.015,-0.3],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,1,0,0,-1,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "2261E3D4-FC80-30B5-9256-704D6F92DDBB",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.015,-0.015,0.3,0.015,0.015,0.3,0.015,-0.015,-0.3,0.015,0.015,-0.3,-0.015,0.015,0.3,-0.015,-0.015,0.3,-0.015,0.015,-0.3,-0.015,-0.015,-0.3],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,1,0,0,-1,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "21064AED-2F9E-349A-8048-33069A9BEACE",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.015,-0.015,0.4,0.015,0.015,0.4,0.015,-0.015,-0.4,0.015,0.015,-0.4,-0.015,0.015,0.4,-0.015,-0.015,0.4,-0.015,0.015,-0.4,-0.015,-0.015,-0.4],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,1,0,0,-1,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "64183BD0-6EAE-3D88-8ABC-1117C3AD9D35",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.015,-0.015,0.4,0.015,0.015,0.4,0.015,-0.015,-0.4,0.015,0.015,-0.4,-0.015,0.015,0.4,-0.015,-0.015,0.4,-0.015,0.015,-0.4,-0.015,-0.015,-0.4],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,1,0,0,-1,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "5F05442A-9704-3BFB-BE1B-EE12E2150EE3",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.015,-0.015,0.4,0.015,0.015,0.4,0.015,-0.015,-0.4,0.015,0.015,-0.4,-0.015,0.015,0.4,-0.015,-0.015,0.4,-0.015,0.015,-0.4,-0.015,-0.015,-0.4],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,1,0,0,-1,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "778708C3-2A4C-30ED-AC23-F99783DFA888",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.015,-0.015,0.4,0.015,0.015,0.4,0.015,-0.015,-0.4,0.015,0.015,-0.4,-0.015,0.015,0.4,-0.015,-0.015,0.4,-0.015,0.015,-0.4,-0.015,-0.015,-0.4],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,1,0,0,-1,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "D9FDB576-F098-320B-9FFB-E5989779BD81",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.15,-0.3,0.0025,0.15,0.3,0.0025,0.15,-0.3,-0.0025,0.15,0.3,-0.0025,-0.15,0.3,0.0025,-0.15,-0.3,0.0025,-0.15,0.3,-0.0025,-0.15,-0.3,-0.0025],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,0.9999999999999999,0,0,-0.9999999999999999,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		},
+		{
+			"uuid": "98CE0ABF-982E-3010-BF1D-01919C9CB4EF",
+			"type": "Geometry",
+			"data": {
+				"vertices": [0.15,-0.3,0.0025,0.15,0.3,0.0025,0.15,-0.3,-0.0025,0.15,0.3,-0.0025,-0.15,0.3,0.0025,-0.15,-0.3,0.0025,-0.15,0.3,-0.0025,-0.15,-0.3,-0.0025],
+				"normals": [1,0,0,0.577349,-0.577349,0.577349,0.577349,-0.577349,-0.577349,0.577349,0.577349,0.577349,0.577349,0.577349,-0.577349,-1,0,0,-0.577349,0.577349,0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0.577349,-0.577349,-0.577349,-0.577349,0,0,0.9999999999999999,0,0,-0.9999999999999999,0,-1,0,0,1,0],
+				"uvs": [[0,1,0,0,1,1,1,0]],
+				"faces": [58,0,2,1,0,0,1,2,0,1,2,3,58,2,3,1,0,1,3,2,0,2,4,3,58,4,6,5,0,0,1,2,5,6,7,8,58,6,7,5,0,1,3,2,5,7,9,8,58,0,1,5,0,3,2,1,10,1,3,8,58,1,4,5,0,2,0,1,10,3,6,8,58,7,6,2,0,0,1,2,11,9,7,2,58,6,3,2,0,1,3,2,11,7,4,2,58,2,0,7,0,3,2,1,12,2,1,9,58,0,5,7,0,2,0,1,12,1,8,9,58,1,3,4,0,0,1,2,13,3,4,6,58,3,6,4,0,1,3,2,13,4,7,6]
+			}
+		}],
+	"materials": [
+		{
+			"uuid": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C",
+			"type": "MeshPhongMaterial",
+			"name": "b0b0b0",
+			"color": 11579568,
+			"emissive": 0,
+			"specular": 0,
+			"shininess": 50,
+			"blending": "NormalBlending",
+			"side": 2,
+			"vertexColors": false,
+			"depthFunc": 3,
+			"depthTest": true,
+			"depthWrite": true,
+			"skinning": false,
+			"morphTargets": false
+		},
+		{
+			"uuid": "A05C207B-E3D1-3023-96B3-1D1FFEA34A95",
+			"type": "MeshPhongMaterial",
+			"name": "ffffff",
+			"color": 16777215,
+			"emissive": 0,
+			"specular": 0,
+			"shininess": 50,
+			"blending": "NormalBlending",
+			"side": 2,
+			"vertexColors": false,
+			"depthFunc": 3,
+			"depthTest": true,
+			"depthWrite": true,
+			"skinning": false,
+			"morphTargets": false
+		},
+		{
+			"uuid": "63AAEFF5-6535-3F16-AE87-5581D08223C4",
+			"type": "MeshPhongMaterial",
+			"name": "baa995",
+			"color": 12233109,
+			"emissive": 0,
+			"specular": 0,
+			"shininess": 50,
+			"blending": "NormalBlending",
+			"side": 2,
+			"vertexColors": false,
+			"depthFunc": 3,
+			"depthTest": true,
+			"depthWrite": true,
+			"skinning": false,
+			"morphTargets": false
+		}],
+	"object": {
+		"uuid": "4579AA1B-0625-355A-94A9-713A14FBE90F",
+		"type": "Object3D",
+		"name": "group",
+		"matrix": [-250,0,0,0,0,-5.551115123125783e-14,250,0,0,250,5.551115123125783e-14,0,-0.36071398854255676,0.010714000090956688,0.30000001192092896,1],
+		"children": [
+			{
+				"uuid": "DDA9AE26-14F9-3E6A-9BDD-AF02F6D2F286",
+				"type": "Mesh",
+				"name": "Box",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,-0.36071398854255676,-0.30000001192092896,-0.010714000090956688,1],
+				"geometry": "15641190-4052-3871-BF5E-F046F6B1B496",
+				"material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C"
+			},
+			{
+				"uuid": "13AB8362-B9AF-310A-8509-00DC96972EBC",
+				"type": "Mesh",
+				"name": "Box1",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [1,0,0,0,0,2.220446049250313e-16,1,0,0,-1,2.220446049250313e-16,0,0.7389000058174133,-0.015399999916553497,0.22020000219345093,1],
+				"geometry": "0813763B-3A95-3717-A405-7EEF112B324A",
+				"material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C"
+			},
+			{
+				"uuid": "C80DC305-4B7A-395C-897F-E4767BA2D8A6",
+				"type": "Mesh",
+				"name": "Box10",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [1.0960999727249146,0,0,0,0,1.045799970626831,0,0,0,0,1,0,-0.5107139945030212,0,-0.36071398854255676,1],
+				"geometry": "5B23DCE7-72A6-31B5-B561-B5098FF6433E",
+				"material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C"
+			},
+			{
+				"uuid": "303885B5-D681-34A0-BE3A-FF503094081C",
+				"type": "Mesh",
+				"name": "Box11",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [1.0967999696731567,0,0,0,0,1.0498000383377075,0,0,0,0,1,0,-0.5107139945030212,0,0.23928600549697876,1],
+				"geometry": "CD7D62CA-6C08-3384-8598-2BE3FE25E16A",
+				"material": "A05C207B-E3D1-3023-96B3-1D1FFEA34A95"
+			},
+			{
+				"uuid": "73DFC2DD-8605-33DF-943F-25833DE0AA66",
+				"type": "Mesh",
+				"name": "Box12",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [1.0633000135421753,0,0,0,0,1.0463000535964966,0,0,0,0,1,0,-0.5107139945030212,0,-0.0607139989733696,1],
+				"geometry": "CA468235-6318-31E9-A81A-2C1F5F2934B1",
+				"material": "A05C207B-E3D1-3023-96B3-1D1FFEA34A95"
+			},
+			{
+				"uuid": "656E752A-C320-3047-8661-E390EF3B5190",
+				"type": "Mesh",
+				"name": "Box13",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0.03928599879145622,0,0.38928601145744324,1],
+				"geometry": "AC0895ED-19F7-3290-AE60-9FA3A609C69C",
+				"material": "63AAEFF5-6535-3F16-AE87-5581D08223C4"
+			},
+			{
+				"uuid": "ADEBC251-8314-31AC-915B-5FCE433AF6AC",
+				"type": "Mesh",
+				"name": "Box15",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [1,0,0,0,0,2.220446049250313e-16,1,0,0,-1,2.220446049250313e-16,0,-0.3499999940395355,0,0,1],
+				"geometry": "B06408BE-40FD-3CF5-8133-8A1EE9E62A96",
+				"material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C"
+			},
+			{
+				"uuid": "8B1546C6-FEB8-31FD-9AEA-9FFAF42534BF",
+				"type": "Mesh",
+				"name": "Box15.001",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0.4392859935760498,-0.30000001192092896,-0.010714000090956688,1],
+				"geometry": "5158BD82-9EF3-39E5-A8E0-7B6DD16E3F2A",
+				"material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C"
+			},
+			{
+				"uuid": "387438EB-5EE1-35C6-86D8-1EDA56ABA0BB",
+				"type": "Mesh",
+				"name": "Box16",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [1,0,0,0,0,2.220446049250313e-16,1,0,0,-1,2.220446049250313e-16,0,0.7387999892234802,-0.015399999916553497,-0.38040000200271606,1],
+				"geometry": "AEE9FCF5-858F-3E75-8197-0FB1F94F5091",
+				"material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C"
+			},
+			{
+				"uuid": "A5403191-362A-3350-9C60-67FFF7E60B22",
+				"type": "Mesh",
+				"name": "Box17",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [2.220446049250313e-16,0,1,0,0,1,0,0,-1,0,2.220446049250313e-16,0,0.5956000089645386,0.29919999837875366,0.22050000727176666,1],
+				"geometry": "0FDC8DC4-ABE1-3B55-BE51-7F9FDC6BC2CD",
+				"material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C"
+			},
+			{
+				"uuid": "00BCCA53-9387-3CCA-A8B7-21B222DCD307",
+				"type": "Mesh",
+				"name": "Box18",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [1,0,0,0,0,2.220446049250313e-16,1,0,0,-1,2.220446049250313e-16,0,-0.36059999465942383,-0.015399999916553497,0.22010000050067902,1],
+				"geometry": "55F1FDF9-11CF-3519-A786-324BFF57CA12",
+				"material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C"
+			},
+			{
+				"uuid": "0FB8EA19-109E-36F1-BCA4-82D2FF1C6A16",
+				"type": "Mesh",
+				"name": "Box19",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [1,0,0,0,0,2.220446049250313e-16,1,0,0,-1,2.220446049250313e-16,0,0.43860000371932983,-0.015399999916553497,0.22050000727176666,1],
+				"geometry": "BA987BDC-5B1E-3FF9-85BE-2847EDD7B178",
+				"material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C"
+			},
+			{
+				"uuid": "66A008AC-44C6-3B23-9275-5237B57058C0",
+				"type": "Mesh",
+				"name": "Box2",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,-0.36071398854255676,0.30000001192092896,-0.010714000090956688,1],
+				"geometry": "A3266DF7-EF8B-3835-B919-F2D9B9D10D07",
+				"material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C"
+			},
+			{
+				"uuid": "7EFC8933-5DD0-302B-B843-5B4EB1B6AD7B",
+				"type": "Mesh",
+				"name": "Box20",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [2.220446049250313e-16,0,1,0,0,1,0,0,-1,0,2.220446049250313e-16,0,0.5942000150680542,0.2969000041484833,-0.3790000081062317,1],
+				"geometry": "4CCE7535-BBA4-34D5-818B-3FC77ACB2721",
+				"material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C"
+			},
+			{
+				"uuid": "A0B3EFCD-7CFE-39F7-AA89-C76B4A6F54FE",
+				"type": "Mesh",
+				"name": "Box21",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [2.220446049250313e-16,0,1,0,0,1,0,0,-1,0,2.220446049250313e-16,0,-0.5059000253677368,0.2994999885559082,-0.37869998812675476,1],
+				"geometry": "96C72E92-151D-3D1B-81D3-EEB6AB6DBC68",
+				"material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C"
+			},
+			{
+				"uuid": "FE3C7EB8-C48C-3EC0-A919-8527E332E68D",
+				"type": "Mesh",
+				"name": "Box22",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [2.220446049250313e-16,0,1,0,0,1,0,0,-1,0,2.220446049250313e-16,0,0.5942000150680542,-0.29989999532699585,-0.3790000081062317,1],
+				"geometry": "580DD110-F264-3355-A9CC-CBFFD9544223",
+				"material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C"
+			},
+			{
+				"uuid": "36BE529D-F5EA-369D-82B3-54B4FA1A128C",
+				"type": "Mesh",
+				"name": "Box23",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [2.220446049250313e-16,0,1,0,0,1,0,0,-1,0,2.220446049250313e-16,0,0.5942000150680542,-0.29820001125335693,0.22050000727176666,1],
+				"geometry": "4586DE01-4056-3396-9DC3-B08F800E38FB",
+				"material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C"
+			},
+			{
+				"uuid": "38694742-03F8-3AE7-8348-2B524CC2A46D",
+				"type": "Mesh",
+				"name": "Box24",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [2.220446049250313e-16,0,1,0,0,1,0,0,-1,0,2.220446049250313e-16,0,-0.5059000253677368,0.2976999878883362,-0.07810000330209732,1],
+				"geometry": "1115A1C8-EBF4-37C3-BB25-69F6ED4449BA",
+				"material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C"
+			},
+			{
+				"uuid": "2911F6EC-5D5D-35C6-992B-0F1651CDD828",
+				"type": "Mesh",
+				"name": "Box25",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [2.220446049250313e-16,0,1,0,0,1,0,0,-1,0,2.220446049250313e-16,0,-0.5059000253677368,-0.3005000054836273,-0.07769999653100967,1],
+				"geometry": "62F1C6F9-2345-3E83-B2F1-2F82E909E028",
+				"material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C"
+			},
+			{
+				"uuid": "75198497-BABE-316C-A887-22D3E5FE2AE5",
+				"type": "Mesh",
+				"name": "Box26",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [2.220446049250313e-16,0,1,0,0,1,0,0,-1,0,2.220446049250313e-16,0,-0.5059000253677368,-0.3005000054836273,-0.37869998812675476,1],
+				"geometry": "5CFF8B8C-EEB1-3EE2-A920-2B690473F196",
+				"material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C"
+			},
+			{
+				"uuid": "42E0E581-4004-3149-8EBF-D6D9AEAD2A28",
+				"type": "Mesh",
+				"name": "Box27",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [1,0,0,0,0,2.220446049250313e-16,1,0,0,-1,2.220446049250313e-16,0,0.44040000438690186,-0.015399999916553497,-0.38040000200271606,1],
+				"geometry": "7088A12B-6703-31CC-B70B-A3FFAA56E28C",
+				"material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C"
+			},
+			{
+				"uuid": "0F8E5B26-B880-3BA6-92BE-AA7EDDB19A94",
+				"type": "Mesh",
+				"name": "Box28",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [1,0,0,0,0,2.220446049250313e-16,1,0,0,-1,2.220446049250313e-16,0,-0.6614999771118164,-0.015399999916553497,0.2214999943971634,1],
+				"geometry": "A8CB77DA-E1B3-37D1-9219-8371E28D46A5",
+				"material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C"
+			},
+			{
+				"uuid": "ACCB9306-9C18-3A07-BA80-5CC31B0AE961",
+				"type": "Mesh",
+				"name": "Box29",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [1,0,0,0,0,2.220446049250313e-16,1,0,0,-1,2.220446049250313e-16,0,-0.6614999771118164,-0.015399999916553497,-0.38040000200271606,1],
+				"geometry": "53C39429-DD48-3DAB-9067-5776A017E64B",
+				"material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C"
+			},
+			{
+				"uuid": "BF7F5BAE-ECAB-32A6-B7E6-0F0B02A66F3D",
+				"type": "Mesh",
+				"name": "Box3",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0.4392859935760498,0.30000001192092896,-0.010714000090956688,1],
+				"geometry": "DAF26EED-E8A1-3597-94D1-E65246622C91",
+				"material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C"
+			},
+			{
+				"uuid": "2D5913E8-4F47-3116-9424-F36891BB72DA",
+				"type": "Mesh",
+				"name": "Box30",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [1,0,0,0,0,2.220446049250313e-16,1,0,0,-1,2.220446049250313e-16,0,-0.6614999771118164,-0.015399999916553497,-0.07769999653100967,1],
+				"geometry": "7840C11D-F176-3086-9582-A83014568918",
+				"material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C"
+			},
+			{
+				"uuid": "497BCCDE-8B61-388E-A48B-0EF1296B5CF4",
+				"type": "Mesh",
+				"name": "Box31",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [2.220446049250313e-16,0,1,0,0,1,0,0,-1,0,2.220446049250313e-16,0,-0.5059000253677368,-0.3005000054836273,0.22050000727176666,1],
+				"geometry": "629D7D3C-CE94-3BA3-9F3C-40B745BD5FB2",
+				"material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C"
+			},
+			{
+				"uuid": "0ECFB468-FCFC-3FC7-B4C4-849E5586137B",
+				"type": "Mesh",
+				"name": "Box32",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [2.220446049250313e-16,0,1,0,0,1,0,0,-1,0,2.220446049250313e-16,0,-0.5059000253677368,0.2976999878883362,0.22050000727176666,1],
+				"geometry": "8FC544DA-4B5C-3379-9ECE-F442BE935DA8",
+				"material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C"
+			},
+			{
+				"uuid": "7AF4E8DA-3D5C-3736-8589-6F2805C921AF",
+				"type": "Mesh",
+				"name": "Box33",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [1,0,0,0,0,2.220446049250313e-16,1,0,0,-1,2.220446049250313e-16,0,-0.36059999465942383,-0.015399999916553497,-0.38040000200271606,1],
+				"geometry": "25D600BE-28B0-3C17-B4C0-BCF73072758F",
+				"material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C"
+			},
+			{
+				"uuid": "93F1F2D5-B049-3BA0-B214-B996ACBED3DE",
+				"type": "Mesh",
+				"name": "Box34",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [1,0,0,0,0,2.220446049250313e-16,1,0,0,-1,2.220446049250313e-16,0,-0.36059999465942383,-0.015399999916553497,-0.07909999787807465,1],
+				"geometry": "2261E3D4-FC80-30B5-9256-704D6F92DDBB",
+				"material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C"
+			},
+			{
+				"uuid": "21E1EE28-720A-3F5F-A701-169B87D161B6",
+				"type": "Mesh",
+				"name": "Box4",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0.7392860054969788,-0.30000001192092896,-0.010714000090956688,1],
+				"geometry": "21064AED-2F9E-349A-8048-33069A9BEACE",
+				"material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C"
+			},
+			{
+				"uuid": "B7F31A6C-E829-3060-8AE1-EBA084A2865B",
+				"type": "Mesh",
+				"name": "Box5",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0.7392860054969788,0.30000001192092896,-0.010714000090956688,1],
+				"geometry": "64183BD0-6EAE-3D88-8ABC-1117C3AD9D35",
+				"material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C"
+			},
+			{
+				"uuid": "635989B7-6F0F-336A-8B27-DC1722994B13",
+				"type": "Mesh",
+				"name": "Box6",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,-0.6607139706611633,-0.30000001192092896,-0.010714000090956688,1],
+				"geometry": "5F05442A-9704-3BFB-BE1B-EE12E2150EE3",
+				"material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C"
+			},
+			{
+				"uuid": "438FF972-AF36-3959-A474-DA6FFA57510C",
+				"type": "Mesh",
+				"name": "Box7",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,-0.6607139706611633,0.30000001192092896,-0.010714000090956688,1],
+				"geometry": "778708C3-2A4C-30ED-AC23-F99783DFA888",
+				"material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C"
+			},
+			{
+				"uuid": "43CFC224-7989-3DCA-9CAA-AACBEFA6DBBB",
+				"type": "Mesh",
+				"name": "Box8",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [1.0987999439239502,0,0,0,0,1.030900001525879,0,0,0,0,1,0,0.5892860293388367,0,-0.36071398854255676,1],
+				"geometry": "D9FDB576-F098-320B-9FFB-E5989779BD81",
+				"material": "B92F5ACA-E24A-3A69-B2DD-69B8C9C5682C"
+			},
+			{
+				"uuid": "82475668-0D68-35E4-A7AD-6FC2EA1CDC6D",
+				"type": "Mesh",
+				"name": "Box9",
+				"castShadow": true,
+				"receiveShadow": true,
+				"matrix": [1.0896999835968018,0,0,0,0,1.0282000303268433,0,0,0,0,1,0,0.5892860293388367,0,0.23928600549697876,1],
+				"geometry": "98CE0ABF-982E-3010-BF1D-01919C9CB4EF",
+				"material": "A05C207B-E3D1-3023-96B3-1D1FFEA34A95"
+			}]
+	}
 }
