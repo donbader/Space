@@ -96,17 +96,73 @@
         var loader = new THREE.ObjectLoader();
         loader.load("3D/desk/chair.json", function(object){
             object.position.set(0,0,300);
+            object.rotation.set(4.71,0,3.14);
             game.add(object);
         });
 
+        loader = new THREE.ObjectLoader();
 
         // need ray caster ( player can select)
-         var loader = new THREE.ObjectLoader();
-         loader.load("/3D/bararea/bararea.json",  function(object){
-            // object.scale.set(100,100,100);
-               game.add(object);
-               console.log(object);
-           });
+         loader.load("/3D/table/table.json",  function(object){
+            // object.scale.set(250,250,250);
+               object.position.set(0,0,150);
+               game.add(object);      
+        });
+         loader = new THREE.ObjectLoader();
+
+         loader.load("3D/laptop/laptop.json", function(object){
+            object.scale.set(3,3,3);
+            object.position.set(0,100,150);
+            game.add(object);
+            // var link = $('<a></a>');
+            // var dataURL =  'data:application/json;charset=utf-8' + encodeURIComponent(JSON.stringify(object));
+            // link.data("href", dataURL);
+            // link.click();
+            console.log("done")
+           ;
+        });
+         loader = new THREE.ObjectLoader();
+
+         loader.load("3D/charizard/charizard.json", function(object){
+            object.scale.set(10,10,10);
+            object.position.set(0,0,150);
+            game.add(object);
+            console.log(object);
+           
+        });
+
+    //    var loader = new THREE.JSONLoader();
+
+    //     loader.load( 'book.json', function ( geometry, material ) {
+    //     model = new THREE.Mesh( geometry, material);
+    //     scene.add( model )
+    // }, 
+    // 'Fabric_nor.png');
+
+        loader = new THREE.ObjectLoader();
+
+         loader.load("3D/books/book.json", function(object){
+            //object.scale.set(100,100,100);
+            object.position.set(50,100,150);
+            game.add(object);
+            console.log(object);
+           
+        });
+         // var loader = new ;;;
+         // var object = loader.parse(json);
+/*
+         var light = new THREE.PointLight();
+         game.add(light);
+         light.position.set(0,50,0);*/
+         /*woodendoor
+         loader = new THREE.ObjectLoader();
+
+         loader.load("3D/woodendoor/woodendoor.json", function(object){
+           // object.scale.set(100,100,100);
+            object.position.set(0,0,300);
+            game.add(object);
+             console.log(object);
+        });*/
            
         game.start();
 
