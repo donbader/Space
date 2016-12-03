@@ -1,3 +1,4 @@
+// TODO: Store the previous rotation
 (function() {
     const MOUSE_STATE = {
         NONE: 0,
@@ -9,7 +10,7 @@
         FIRST_PERSON: 0,
         THIRD_PERSON: 1,
         DRAW: 2
-    }
+    };
 
     const PI_2 = Math.PI / 2;
     const gravity = 980;
@@ -55,8 +56,6 @@
                 color: 0xff0000
             }));
             this.controls.positionFlag.height = 30;
-
-            this.setMode(MODE_STATE.DRAW);
         },
         in: function(scene, renderer) {
             this.scene = scene;
@@ -92,7 +91,7 @@
             position.y = y;
             position.z = z;
         },
-        turn: function(x, y) {
+        direction: function(x, y) {
             x = x || 0;
             y = y || 0;
             var yawObject = this.eye;
@@ -100,6 +99,10 @@
             this.model.rotation.y += x;
             pitchObject.rotation.x += y;
             pitchObject.rotation.x = Math.max(-PI_2, Math.min(PI_2, pitchObject.rotation.x));
+        },
+        directionTo: function(x, y){
+            this.model.rotation.y = x;
+            this.eye.children[0].rotation.x = y;
         },
         walkFunction: function(destination) {
             var deltaX = destination.x - this.model.position.x;
@@ -160,6 +163,10 @@
             this.controls.ObjectsToMoveOn = this.controls.ObjectsToMoveOn.concat(arr);
             return this.controls.ObjectsToMoveOn;
         },
+        canDrawOn: function(arr) {
+            this.controls.ObjectsToDrawOn = this.controls.ObjectsToDrawOn.concat(arr);
+            return this.controls.ObjectsToDrawOn;
+        },
 
         /*****************
          *    Controls   *
@@ -201,6 +208,7 @@
             },
             ObjectsToSelect: [],
             ObjectsColliadble: [],
+            ObjectsToDrawOn: [],
             ObjectsToMoveOn: [],
             enable: function(dom) {
                 dom = dom || document;
@@ -253,20 +261,20 @@
             previous: MODE_STATE.FIRST_PERSON,
         },
         setMode: function(m) {
+            this.mode.previous = this.mode.current;
             this.mode.current = m;
-            console.log("change mode__");
-            console.log("current: " + this.mode.current);
-            console.log("previous: " + this.mode.previous);
             switch (m) {
                 case MODE_STATE.FIRST_PERSON:
+                    console.log("第一人稱視角");
                     this.eye.position.set(0, this.height / 2 - 10, 0);
                     break;
                 case MODE_STATE.THIRD_PERSON:
+                    console.log("第三人稱視角");
                     this.eye.position.set(0, this.height + 300, 500);
-                    this.turn(0, -0.7);
+                    this.directionTo(0, -0.7);
                     break;
-                case MODE_STATE.WHITEBOARD:
-                    this.walk.ing
+                case MODE_STATE.DRAW:
+                    console.log("小畫家");
                     break;
                 default:
 
@@ -306,8 +314,26 @@
                 break;
 
             case 32: // space
+                event.preventDefault();
                 if (controls.canJump === true) controls.velocity.y += controls.jumpVelocity;
                 controls.canJump = false;
+                break;
+
+            case 190: // .
+                character.moveTo(0,0,0);
+                break;
+
+            case 191: // /
+                if(character.mode.current == MODE_STATE.DRAW)
+                    character.setMode(character.mode.previous);
+                else
+                    character.setMode(MODE_STATE.DRAW);
+                break;
+            case 77:
+                if(character.mode.current == MODE_STATE.DRAW)
+                    character.setMode(character.mode.previous);
+                else
+                    character.setMode((character.mode.current + 1)%2);
                 break;
         }
     };
@@ -350,7 +376,7 @@
                 var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
                 var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
 
-                character.turn(-movementX * mouse.sensitivity, -movementY * mouse.sensitivity);
+                character.direction(-movementX * mouse.sensitivity, -movementY * mouse.sensitivity);
                 break;
         }
 
@@ -460,15 +486,15 @@
 
         //drawing mode 0
 
-        var intersects = ray.intersectObjects(controls.ObjectsToMoveOn, true);
+        var intersects = ray.intersectObjects(controls.ObjectsToDrawOn, true);
 
         if (intersects.length) {
             //drawing point
-            var point = new THREE.Mesh(new THREE.BoxGeometry(20, 20, 20), new THREE.MeshBasicMaterial({
-                color: 0xffffff
+            var point = new THREE.Mesh(new THREE.BoxGeometry(5, 1, 5), new THREE.MeshBasicMaterial({
+                color: 0x000000
             }));
             //var point = points.pop();
-            point.position.set(intersects[0].point.x, intersects[0].point.y + 10, intersects[0].point.z);
+            point.position.set(intersects[0].point.x, intersects[0].point.y, intersects[0].point.z);
             Scene.add(point);
         }
 
