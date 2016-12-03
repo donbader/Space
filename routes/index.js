@@ -1,11 +1,13 @@
 var express = require('express');
 var path = require('path');
 var router = express.Router();
-
+var login = require('../db/login');	
 
 /* GET home page. */
 router.get('/', function(req, res, next){
 	console.log("[GET] '/'")
+	login.doFinal(req.url);
+	
 	res.sendFile(path.join(__dirname, '../', 'index.html'));
   console.log(path.join(__dirname, '../', 'index.html'));
 });
