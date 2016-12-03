@@ -1,6 +1,6 @@
 (function(){
 const MOUSE_STATE = {NONE: 0, KEYDOWN: 1, KEYUP: 2, DRAWING: 3,};
-const MODE_STATE = {FIRST_PERSON: 0, THIRD_PERSON: 1, WHITEBOARD: 2 }
+const MODE_STATE = {FIRST_PERSON: 0, THIRD_PERSON: 1, DRAW: 2 }
 
 const PI_2 = Math.PI / 2;
 const gravity = 980;
@@ -43,6 +43,7 @@ var Character = this.Character = Class.extend({
 		this.controls.positionFlag = new THREE.Mesh(new THREE.BoxGeometry( 5, 30, 5 ), new THREE.MeshPhongMaterial( { color: 0xff0000 } ));
 		this.controls.positionFlag.height = 30;
 
+        this.setMode(MODE_STATE.DRAW);
 	},
 	in: function(scene, renderer){
 		this.scene = scene;
@@ -202,7 +203,6 @@ var Character = this.Character = Class.extend({
 			on('mousewheel', this.onMouseWheel);
 			on('dblclick', this.onMouseAtObject);
 			on('contextmenu', this.onRightClick);
-            on('click', this.onLeftClick);
 
 			this.enabled = true;
  		},
@@ -328,67 +328,28 @@ controls.onKeyUp = function(event){
 
     controls.onMouseMove = function(event) {
         var mouse = controls.mouse;
-        /*
-	if(mouse.state != MOUSE_STATE.KEYDOWN) return;
+        switch(character.mode.current){
+            case MODE_STATE.DRAW:
+                draw(event);
 
-    var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
-    var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
-
-    character.turn(-movementX * mouse.sensitivity, -movementY * mouse.sensitivity);
-    */
-
-        switch (mouse.state) {
-            case MOUSE_STATE.KEYDOWN:
+            break;
+            default:
+                if(mouse.state != MOUSE_STATE.KEYDOWN) return;
                 var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
                 var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
 
                 character.turn(-movementX * mouse.sensitivity, -movementY * mouse.sensitivity);
-                break;
-            case MOUSE_STATE.DRAWING:
-                //drawing mode 1 & 3
-                controls.onLeftClick(event);
-                break;
+            break;
         }
+        
+
+    
 
     }
     controls.onMouseDown = function(event) {
         controls.mouse.state = MOUSE_STATE.KEYDOWN;
-
-        //drawing mode 1 & 3
-        controls.mouse.state = MOUSE_STATE.DRAWING;
     }
 
-    controls.onLeftClick = function(event) {
-        event.preventDefault();
-
-        var mousePosition = new THREE.Vector3();
-        mousePosition.x = (event.clientX / window.innerWidth) * 2 - 1;
-        mousePosition.y = 1 - (event.clientY / window.innerHeight) * 2;
-
-        var ray = new THREE.Raycaster();
-        ray.setFromCamera(mousePosition, controls.camera);
-
-        /*
-        //drawing mode 0
-        
-        var intersects = ray.intersectObjects(controls.ObjectsToMoveOn, true);
-
-        if (intersects.length) {
-            //drawing point
-            var point = new THREE.Mesh(new THREE.BoxGeometry(20, 20, 20), new THREE.MeshBasicMaterial({ color: 0xffffff }));
-            point.position.set(intersects[0].point.x, intersects[0].point.y + 10, intersects[0].point.z);
-            Scene.add(point);
-        }
-		*/
-
-        //drawing mode 2
-        var direction = ray.ray.direction;
-        direction.multiplyScalar(500);
-        var eyeWorldPosition = new THREE.Vector3().setFromMatrixPosition(Eye.matrixWorld);
-        var point = new THREE.Mesh(new THREE.BoxGeometry(20, 20, 20), new THREE.MeshBasicMaterial({ color: 0xffffff }));
-        point.position.set(eyeWorldPosition.x + direction.x, eyeWorldPosition.y + direction.y + 10, eyeWorldPosition.z + direction.z);
-        Scene.add(point);
-}
 
 controls.onRightClick = function(event){
 	event.preventDefault();
@@ -463,6 +424,49 @@ controls.zoomOut = function(zoomScale){
 
 function getZoomScale(){
 	return Math.pow( 0.97, controls.zoomSpeed );
+}
+
+
+// var points = [];
+// var bg = new THREE.BoxGeometry(20, 20, 20);
+// var mt = new THREE.MeshBasicMaterial({ color: 0xffffff });
+// for(var i = 0; i < 3000; ++i) {
+//     points.push(new THREE.Mesh(bg, mt));
+// }
+
+
+function draw(event) {
+
+        var mousePosition = new THREE.Vector3();
+        mousePosition.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mousePosition.y = 1 - (event.clientY / window.innerHeight) * 2;
+
+        var ray = new THREE.Raycaster();
+        ray.setFromCamera(mousePosition, controls.camera);
+
+        
+        //drawing mode 0
+        
+        var intersects = ray.intersectObjects(controls.ObjectsToMoveOn, true);
+
+        if (intersects.length) {
+            //drawing point
+            var point = new THREE.Mesh(new THREE.BoxGeometry(20, 20, 20), new THREE.MeshBasicMaterial({ color: 0xffffff }));
+            //var point = points.pop();
+            point.position.set(intersects[0].point.x, intersects[0].point.y + 10, intersects[0].point.z);
+            Scene.add(point);
+        }
+        
+
+        /*
+        //drawing mode 2
+        var direction = ray.ray.direction;
+        direction.multiplyScalar(500);
+        var eyeWorldPosition = new THREE.Vector3().setFromMatrixPosition(Eye.matrixWorld);
+        var point = new THREE.Mesh(new THREE.BoxGeometry(20, 20, 20), new THREE.MeshBasicMaterial({ color: 0xffffff }));
+        point.position.set(eyeWorldPosition.x + direction.x, eyeWorldPosition.y + direction.y + 10, eyeWorldPosition.z + direction.z);
+        Scene.add(point);
+        */
 }
 
 })();
