@@ -1,5 +1,7 @@
 (function(){
 const MOUSE_STATE = {NONE: 0, KEYDOWN: 1, KEYUP: 2};
+const MODE_STATE = {FIRST_PERSON: 0, THIRD_PERSON: 1, WHITEBOARD: 2 }
+
 const PI_2 = Math.PI / 2;
 const gravity = 980;
 
@@ -22,7 +24,7 @@ var Character = this.Character = Class.extend({
 		 *****************/
 		// init eye
 		this.eye.add(new THREE.Object3D().add(this.controls.camera));
-		this.third_person(true);
+		this.setMode(MODE_STATE.THIRD_PERSON);
 
 		// init body
 		this.body = new THREE.Mesh(new THREE.CubeGeometry(50, this.height,50), new THREE.MeshPhongMaterial( { color: 0x00ffff } ));
@@ -91,7 +93,7 @@ var Character = this.Character = Class.extend({
 		pitchObject.rotation.x += y;
 		pitchObject.rotation.x = Math.max( - PI_2, Math.min( PI_2, pitchObject.rotation.x ) );
 	},
-	walkToDestination: function(destination){
+	walkFunction: function(destination){
 		var deltaX = destination.x - this.model.position.x;
 		var deltaZ = destination.z - this.model.position.z;
 		var distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaZ, 2));
@@ -114,7 +116,7 @@ var Character = this.Character = Class.extend({
 
 		var controls = this.controls;
 		if(controls.walk.ing){
-    		this.walkToDestination(controls.walk.destination);
+    		this.walkFunction(controls.walk.destination);
 			controls.velocity.x -= controls.velocity.x * 5 * delta;
 			controls.velocity.z -= controls.velocity.z * 5 * delta;
 			controls.velocity.y -= gravity * delta; // v = v0 + at
@@ -176,7 +178,12 @@ var Character = this.Character = Class.extend({
 		walk: {
 			destination: {x:0, y:0, z:0},
 			ing:false,
-			speed: 500.0
+			speed: 500.0,
+			to: function(x,z){
+				this.ing = true;
+				this.destination.x = x;
+				this.destination.z = z;
+			}
 		},
 		ObjectsToSelect: [],
 		ObjectsColliadble: [],
@@ -227,7 +234,31 @@ var Character = this.Character = Class.extend({
 	body: '',
 	eye: new THREE.Object3D(),
 	flashLight: new THREE.PointLight(0xffffff,0.3, 1000),
+	mode:{
+		current: MODE_STATE.FIRST_PERSON,
+		previous: MODE_STATE.FIRST_PERSON,
+	},
+	setMode: function(m){
+		this.mode.current = m;
+		console.log("change mode__");
+		console.log("current: "+this.mode.current);
+		console.log("previous: "+this.mode.previous);
+		switch (m) {
+			case MODE_STATE.FIRST_PERSON:
+				this.eye.position.set(0,this.height/2-10,0);
+				break;
+			case MODE_STATE.THIRD_PERSON:
+				this.eye.position.set(0,this.height+300,500);
+				this.turn(0, -0.7);
+				break;
+			case MODE_STATE.WHITEBOARD:
+				this.walk.ing
+				break;
+			default:
 
+		}
+		return this;
+	}
 });
 
 /*******************
@@ -317,9 +348,7 @@ controls.onRightClick = function(event){
 	if(intersects.length){
 		var positionFlag = controls.positionFlag;
 		positionFlag.position.set(intersects[0].point.x, intersects[0].point.y + positionFlag.height/2, intersects[0].point.z);
-		controls.walk.ing = true;
-		controls.walk.destination.x = intersects[0].point.x;
-		controls.walk.destination.z = intersects[0].point.z;
+		controls.walk.to(intersects[0].point.x, intersects[0].point.z)
 	}
 }
 
