@@ -12,7 +12,13 @@
     room:
     <input id="room" type="text" value="yeemin"/>
     <input id="join" type="button" value="join"/>
-    <textarea id="text"></textarea>
+    <input id="leave" type="button" value="leave"/>
+
+<script>
+    //<textarea id="text"></textarea>
+</script>
+
+
     <script type="text/javascript">
         var socket = io.connect();
         // first join to self's room
@@ -22,18 +28,21 @@
         // });
 
         $("#join").on('click',function(e){
-            socket.emit('leave');
+
+            //socket.emit('leave');
             socket.emit('join', {
                 username: $("#username").val(),
                 roomID: $("#room").val()
             });
         });
-
+/*
         $("#text").on("keypress",function(e){
             if(e.keyCode == 13){
                 socket.emit('action', {message: $(this).val()});
             }
         })
+*/
+
 
         socket.on('messages', function(data){
             console.log(data);
@@ -43,7 +52,7 @@
             console.log('sys:' + data);
         });
 
-        //
+
     </script>
 </body>
 

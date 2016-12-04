@@ -1,11 +1,23 @@
 var handler = {};
+  /*
 var rooms = {
     corey: [],
     lamfuck: [],
     yeemin: [],
     guangting: []
 };
+*/
+
+
+var User = require('./../db/user');
+var Item = require('./../db/item');
+var Room = require('./../db/room');
+var mongoose = require('mongoose');
+
+
+
 var server;
+
 handler.setServer = function(s){server = s;}
 
 handler.connection = function (socket){
@@ -15,8 +27,16 @@ handler.connection = function (socket){
     // join room
     socket.on('join', function(data){
         user = data.username;
-        roomID = data.roomID;
+        socket.join(user);
+    });
 
+    socket.on('move', function(data){
+        server.to(user).emit('sys', user + "talking");
+    });
+
+
+      //roomID = data.roomID;
+/*
         if(!rooms[roomID]){
             socket.emit('sys', roomID+' is not exist.');
             return;
@@ -33,7 +53,9 @@ handler.connection = function (socket){
             server.to(roomID).emit('sys', user+" has been joined.");
             console.log(user+" has been joined:"+roomID);
         }
-    });
+
+        */
+
 
     // leave room
     socket.on('leave',function(){
