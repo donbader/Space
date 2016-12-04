@@ -9,7 +9,7 @@ var debug = require('debug')('space:server');
 var http = require('http');
 // Socket EventHandler
 var io = require('socket.io')
-var gameEventHandler = require('../gameEventHandler');
+var gameEventHandler = require('../server/gameEventHandler');
 
 
 
