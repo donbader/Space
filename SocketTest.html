@@ -35,6 +35,16 @@
                 roomID: $("#room").val()
             });
         });
+
+
+        $("#leave").on('click',function(e){
+
+            //socket.emit('leave');
+            socket.emit('leave', {
+                username: $("#username").val(),
+                roomID: $("#room").val()
+            });
+        });
 /*
         $("#text").on("keypress",function(e){
             if(e.keyCode == 13){

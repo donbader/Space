@@ -28,6 +28,7 @@ handler.connection = function (socket){
     socket.on('join', function(data){
         user = data.username;
         socket.join(user);
+        console.log(user);
     });
 
     socket.on('move', function(data){
@@ -56,7 +57,7 @@ handler.connection = function (socket){
 
         */
 
-
+/*
     // leave room
     socket.on('leave',function(){
         console.log("fucku");
@@ -81,7 +82,7 @@ handler.connection = function (socket){
         server.to(roomID).emit('messages', a);
     });
 
-}
+
 
 function checkUserInRooms(user){
     for(var id in rooms){
@@ -91,6 +92,6 @@ function checkUserInRooms(user){
     }
     return false;
 }
-
-
+*/
+}
 module.exports = handler;
