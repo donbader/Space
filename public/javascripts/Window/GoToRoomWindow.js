@@ -1,4 +1,4 @@
-var ExitWindow = Window.extend({
+var GoToRoomWindow = Window.extend({
     init: function(Width, Height) {
         'use strict';
         this._super(Width, Height);
@@ -47,5 +47,7 @@ var ExitWindow = Window.extend({
         //to set event
         this.ConfirmJObj.click(() => {
             this.JObj.css('background-color', 'green');
+            console.log(this.InputJObj.val());
         });
+    }
 });

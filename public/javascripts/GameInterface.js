@@ -22,7 +22,7 @@ $(document).ready(function() {
 
     functionListWindow.AppendItem("Bag", "Bag1", bagWindow);
     functionListWindow.AppendItem("Settings", "Settings1", settingsWindow);
-    functionListWindow.ApeendItem('GoToRoom', 'GoToRoom1', goToRoomWindow);
+    functionListWindow.AppendItem("GoToRoom", "GoToRoom1", goToRoomWindow);
     functionListWindow.AppendItem("Exit", "Exit1", exitWindow);
 
     //to set the event

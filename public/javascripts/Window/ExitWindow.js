@@ -51,6 +51,7 @@ var ExitWindow = Window.extend({
         //to set event
         this.YesJObj.click(() => {
             this.JObj.css('background-color', 'green');
+            window.location = '/';
         });
 
         this.NoJObj.click(() => {
