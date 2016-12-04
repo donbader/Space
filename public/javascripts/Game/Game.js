@@ -13,8 +13,6 @@
             this.player = player;
             this.world = world;
 
-
-
             ///////////
             // SCENE //
             ///////////
@@ -23,8 +21,6 @@
             this.camera = player.controls.camera;
 
 			this.CssScene = new THREE.Scene();
-            // this.CssScene.updateMatrixWorld();
-
 
             //////////////
             // RENDERER //
@@ -65,27 +61,25 @@
             this.add(this.world);
 
 			//to create the plane mesh
-            //var iframeWidth = 256, iframeHeight = 256;
+            var iframeWidth = 256, iframeHeight = 256;
             var planeMaterial = new THREE.MeshBasicMaterial({ wireframe: true , color: 0x000000});
-            var planeGeometry = new THREE.PlaneGeometry(256, 256);
+            var planeGeometry = new THREE.PlaneGeometry(iframeWidth, iframeHeight);
             var planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
-            planeMesh.position.set(0, 150, -100);
+            planeMesh.position.set(0, 300, -500);
             this.add(planeMesh);
 
-			// css Obj
 			//to create the dom element
             var element = document.createElement('img');
             element.src = 'images/CC.png';
-            element.width = 256;
-            element.height = 256;
+            element.width = iframeWidth;
+            element.height = iframeHeight;
 			var cssObj = new THREE.CSS3DObject(element);
 			cssObj.position.copy(planeMesh.position);
             cssObj.rotation.copy(planeMesh.rotation);
 			this.CssScene.add(cssObj);
+
+            //important
 			scope.camera.updateProjectionMatrix();
-
-            //20161204
-
 
             /////////////////////
             // FUNCTION DEFINE //
@@ -95,11 +89,8 @@
                 scope.player.animate(delta);
                 scope.stats.update();
                 scope.renderer.render(scope.scene, scope.camera);
-
-                //20161204
                 scope.CssRenderer.render(scope.CssScene, scope.camera);
-                ///
-
+                
                 requestAnimationFrame(scope.render);
             }
             this.start = function() {
@@ -110,36 +101,6 @@
                 if (this.requestId)
                     cancelAnimationFrame(this.requestId);
             }
-
-
-
-
-            /*
-            $(element).css({
-            	'left': 0,
-            	'right': 0,
-            	'top': 0,
-            	'bottom': 0
-            });
-			*/
-
-            //var element = document.createElement('iframe');
-
-            /*
-            element.src = 'http://www.wibibi.com/info.php?tid=366';
-            element.width = iframeWidth;
-            element.height = iframeHeight
-            element.frameborder = 0;
-            element.scrolling = 'yes';
-			*/
-
-
-
-            //to create the cssScene
-
-
-
-
         },
         pause: function() {
 
