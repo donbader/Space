@@ -1,4 +1,6 @@
 // TODO: Store the previous rotation
+// TODO: move() emit 'action' to socket
+// TODO: Collision
 (function() {
     const MOUSE_STATE = {
         NONE: 0,
@@ -15,7 +17,7 @@
     const PI_2 = Math.PI / 2;
     const gravity = 980;
 
-    var Scene, Eye;
+    var Scene;
 
     var Character = this.Character = Class.extend({
         init: function(args) {
@@ -44,7 +46,6 @@
             this.body.name = this.name;
             this.body.position.set(0, this.height / 2, 0);
             this.body.add(this.eye);
-            Eye = this.eye;
 
             // init model
             this.model.add(this.body);
@@ -80,6 +81,7 @@
             this.model.translateZ(z);
         },
         move: function(x, y, z) {
+
             var position = this.position();
             position.x += x;
             position.y += y;
@@ -91,7 +93,7 @@
             position.y = y;
             position.z = z;
         },
-        direction: function(x, y) {
+        turn: function(x, y) {
             x = x || 0;
             y = y || 0;
             var yawObject = this.eye;
@@ -100,7 +102,7 @@
             pitchObject.rotation.x += y;
             pitchObject.rotation.x = Math.max(-PI_2, Math.min(PI_2, pitchObject.rotation.x));
         },
-        directionTo: function(x, y){
+        turnTo: function(x, y){
             this.model.rotation.y = x;
             this.eye.children[0].rotation.x = y;
         },
@@ -155,6 +157,9 @@
                 controls.canJump = true;
             }
         },
+        collision: function(x, y, z){
+
+        },
         canSelect: function(arr) {
             this.controls.ObjectsToSelect = this.controls.ObjectsToSelect.concat(arr);
             return this.controls.ObjectsToSelect;
@@ -166,6 +171,9 @@
         canDrawOn: function(arr) {
             this.controls.ObjectsToDrawOn = this.controls.ObjectsToDrawOn.concat(arr);
             return this.controls.ObjectsToDrawOn;
+        },
+        addObstacles: function(arr){
+
         },
 
         /*****************
@@ -207,7 +215,7 @@
                 }
             },
             ObjectsToSelect: [],
-            ObjectsColliadble: [],
+            Obstacles: [],
             ObjectsToDrawOn: [],
             ObjectsToMoveOn: [],
             enable: function(dom) {
@@ -271,7 +279,7 @@
                 case MODE_STATE.THIRD_PERSON:
                     console.log("第三人稱視角");
                     this.eye.position.set(0, this.height + 300, 500);
-                    this.directionTo(0, -0.7);
+                    this.turnTo(0, -0.7);
                     break;
                 case MODE_STATE.DRAW:
                     console.log("小畫家");
@@ -376,7 +384,7 @@
                 var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
                 var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
 
-                character.direction(-movementX * mouse.sensitivity, -movementY * mouse.sensitivity);
+                character.turn(-movementX * mouse.sensitivity, -movementY * mouse.sensitivity);
                 break;
         }
 
@@ -501,11 +509,11 @@
 
         /*
         //drawing mode 2
-        var direction = ray.ray.direction;
-        direction.multiplyScalar(500);
+        var turn = ray.ray.turn;
+        turn.multiplyScalar(500);
         var eyeWorldPosition = new THREE.Vector3().setFromMatrixPosition(Eye.matrixWorld);
         var point = new THREE.Mesh(new THREE.BoxGeometry(20, 20, 20), new THREE.MeshBasicMaterial({ color: 0xffffff }));
-        point.position.set(eyeWorldPosition.x + direction.x, eyeWorldPosition.y + direction.y + 10, eyeWorldPosition.z + direction.z);
+        point.position.set(eyeWorldPosition.x + turn.x, eyeWorldPosition.y + turn.y + 10, eyeWorldPosition.z + turn.z);
         Scene.add(point);
         */
     }

@@ -17,10 +17,12 @@ $(document).ready(function() {
 
     var bagWindow = new BagWindow(600, 400);
     var settingsWindow = new SettingsWindow(500, 400);
+    var goToRoomWindow = new GoToRoomWindow(500, 200);
     var exitWindow = new ExitWindow(500, 200);
 
     functionListWindow.AppendItem("Bag", "Bag1", bagWindow);
     functionListWindow.AppendItem("Settings", "Settings1", settingsWindow);
+    functionListWindow.ApeendItem('GoToRoom', 'GoToRoom1', goToRoomWindow);
     functionListWindow.AppendItem("Exit", "Exit1", exitWindow);
 
     //to set the event

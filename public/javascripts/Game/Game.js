@@ -1,3 +1,4 @@
+// TODO: onselectstart="return false"
 (function() {
     var GAME_STATE = { STOP: -1, READY: 0, RUNNING: 1, PAUSE: 2 };
     var Game = this.Game = Class.extend({
@@ -13,12 +14,17 @@
             this.world = world;
 
 
+
             ///////////
             // SCENE //
             ///////////
             this.scene = new THREE.Scene();
             this.scene.updateMatrixWorld();
             this.camera = player.controls.camera;
+
+			this.CssScene = new THREE.Scene();
+            // this.CssScene.updateMatrixWorld();
+
 
             //////////////
             // RENDERER //
@@ -27,35 +33,67 @@
                 antialias: true
             });
 
+			// this.renderer.setPixelRatio( window.devicePixelRatio );
             this.renderer.setSize(window.innerWidth, window.innerHeight);
             this.renderer.domElement.style.position = 'absolute';
             this.renderer.domElement.style.top = 0;
-            this.renderer.domElement.style.zIndex = 2;
-
             this.container.appendChild(this.renderer.domElement);
+
+			this.CssRenderer = new THREE.CSS3DRenderer();
+            this.CssRenderer.setSize(window.innerWidth, window.innerHeight);
+            this.CssRenderer.domElement.style.position = 'absolute';
+            this.CssRenderer.domElement.style.top = 0;
+            this.container.appendChild(this.CssRenderer.domElement);
 
             ///////////
             // STATS //
             ///////////
-            // this.stats = new Stats();
-            // this.stats.domElement.style.position = 'absolute';
-            // //this.stats.domElement.style.bottom = '0px';
-            // this.stats.domElement.style.top = '0px';
-            // this.stats.domElement.style.left = '0px';
-            // this.stats.domElement.style.zIndex = 100;
-            // this.container.appendChild(this.stats.domElement);
+            this.stats = new Stats();
+            this.stats.domElement.style.position = 'absolute';
+            //this.stats.domElement.style.bottom = '0px';
+            this.stats.domElement.style.top = '0px';
+            this.stats.domElement.style.left = '0px';
+            this.stats.domElement.style.zIndex = 100;
+            this.container.appendChild(this.stats.domElement);
+
+
+            // DO
+            player.in(this.scene, this.renderer);
+            player.controls.enable();
+            player.move(0, 0, 100);
+            player.canMoveOn(this.world.ground);
+            this.add(this.world);
+
+			//to create the plane mesh
+            //var iframeWidth = 256, iframeHeight = 256;
+            var planeMaterial = new THREE.MeshBasicMaterial({ wireframe: true , color: 0x000000});
+            var planeGeometry = new THREE.PlaneGeometry(256, 256);
+            var planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
+            planeMesh.position.set(0, 150, -100);
+            this.add(planeMesh);
+
+			// css Obj
+			//to create the dom element
+            var element = document.createElement('img');
+            element.src = 'images/CC.png';
+            element.width = 256;
+            element.height = 256;
+			var cssObj = new THREE.CSS3DObject(element);
+			cssObj.position.copy(planeMesh.position);
+            cssObj.rotation.copy(planeMesh.rotation);
+			this.CssScene.add(cssObj);
+			scope.camera.updateProjectionMatrix();
+
+            //20161204
+
 
             /////////////////////
             // FUNCTION DEFINE //
             /////////////////////
             this.render = function() {
-                console.log(planeMesh.position);
-                console.log(cssObj.position);
-                console.log(planeMesh.rotation);
-                console.log(cssObj.rotation);
                 var delta = scope.clock.getDelta();
                 scope.player.animate(delta);
-                //scope.stats.update();
+                scope.stats.update();
                 scope.renderer.render(scope.scene, scope.camera);
 
                 //20161204
@@ -74,45 +112,7 @@
             }
 
 
-            // DO
-            player.in(this.scene, this.renderer);
-            player.controls.enable();
-            player.move(0, 0, 100);
-            player.canMoveOn(this.world.ground);
-            this.add(this.world);
 
-            //20161204
-
-            //to create the plane mesh
-            //var iframeWidth = 256, iframeHeight = 256;
-            var planeMaterial = new THREE.MeshBasicMaterial({ wireframe: true , color: 0x000000});
-            var planeGeometry = new THREE.PlaneGeometry(256, 256);
-            var planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
-            planeMesh.position.set(0, 0, -1000);
-            this.world.add(planeMesh);
-
-            //to create the test world
-            //var testWorld = this.TestWorld = new TestWorld();
-            //this.add(testWorld);
-            //console.log(testWorld);
-            //console.log(world);
-
-            //var testWorldElement = document.createElement('div');
-            //element.src = 'images/CC.png';
-            //this.TestWorld = new THREE.CSS3DObject( testWorldElement );
-            // cssObj.position = planeMesh.position;
-            //this.TestWorld.position.set(planeMesh.position.x, planeMesh.position.y, planeMesh.position.z);
-            // cssObj.rotation = planeMesh.rotation;
-            //this.TestWorld.rotation.set(planeMesh.rotation.x, planeMesh.rotation.y, planeMesh.rotation.z);
-            //console.log(world.position);
-            //console.log(this.TestWorld.position);
-
-
-            //to create the dom element
-            var element = document.createElement('img');
-            element.src = 'images/CC.png';
-            element.width = 256;
-            element.height = 256;
 
             /*
             $(element).css({
@@ -133,52 +133,13 @@
             element.scrolling = 'yes';
 			*/
 
-            var cssObj = new THREE.CSS3DObject(element);
-            // cssObj.position = planeMesh.position;
- planeMesh.position.copy(cssObj.position);
-                        
 
-            //cssObj.position.set(planeMesh.position.x, planeMesh.position.y, planeMesh.position.z);
-            // cssObj.rotation = planeMesh.rotation;
-            planeMesh.rotation.copy(cssObj.rotation);
-            //cssObj.rotation.set(planeMesh.rotation.x, planeMesh.rotation.y, planeMesh.rotation.z);
-            //console.log(cssObj.position);
-            //console.log(planeMesh.position);
 
             //to create the cssScene
-            this.CssScene = new THREE.Scene();
-            this.CssScene.updateMatrixWorld();
 
-            this.CssRenderer = new THREE.CSS3DRenderer();
-            /*
-            this.CssRenderer.setSize(window.innerWidth, window.innerHeight);
-            //this.CssRenderer.domElement.style.display = 'inline-block';
-            this.CssRenderer.domElement.style.position = 'absolute';
-            this.CssRenderer.domElement.style.bottom = '0px';
-            this.CssRenderer.domElement.style.top = '0px';
-            this.CssRenderer.domElement.style.left = '0px';
-            this.CssRenderer.domElement.style.right = '0px';
-            this.CssRenderer.domElement.style.zIndex = 100;
-            */
 
-            this.CssRenderer.setSize(window.innerWidth, window.innerHeight);
-            this.CssRenderer.domElement.style.position = 'absolute';
-            this.CssRenderer.domElement.style.top = 0;
-            this.CssRenderer.domElement.style.margin = 0;
-            this.CssRenderer.domElement.style.padding = 0;
-            this.CssRenderer.domElement.style.zIndex = 20;
 
-            this.container.appendChild(this.CssRenderer.domElement);
 
-            window.objectCSS = cssObj;
-
-            //this.add(this.CssScene);
-
-            this.CssScene.add(cssObj);
-            //this.CssScene.add(this.TestWorld);
-            //this.TestWorld.add(cssObj);
-            //testWorld.add(cssObj);
-            //this.CssScene.add(cssObj);
         },
         pause: function() {
 
@@ -216,7 +177,7 @@
 
             // most objects displayed are a "mesh":
             //  a collection of points ("geometry") and
-            //  a set of surface parameters ("material")    
+            //  a set of surface parameters ("material")
 
             // Sphere parameters: radius, segments along width, segments along height
             var sphereGeometry = new THREE.SphereGeometry(50, 32, 16);
@@ -265,7 +226,7 @@
             // SKY //
             /////////
 
-            // recommend either a skybox or fog effect (can't use both at the same time) 
+            // recommend either a skybox or fog effect (can't use both at the same time)
             // without one of these, the scene's background color is determined by webpage background
 
             // make sure the camera's "far" value is large enough so that it will render the skyBox!
@@ -293,6 +254,7 @@
 
 
     });
+
 
 
 
