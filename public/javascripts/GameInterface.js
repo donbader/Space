@@ -6,7 +6,7 @@ var totalWidth = $('body').width(),
     totalHeight = $('.Height').height();
 var functionListWidth = 200;
 
-console.log(totalHeight);
+//console.log(totalHeight);
 
 $(document).ready(function() {
     //to init some settings

@@ -85,7 +85,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <form class="form-signin" action="SignUp/add" method="get">
+                    <div class="form-signin">
                         <h2 class="form-signin-heading">Please Sign Up</h2>
                         <label for="inputEmail" class="sr-only">Account</label>
                         <input type="text" name="account" id="inputEmail" class="form-control" placeholder="Account" required autofocus>
@@ -95,7 +95,7 @@
                         <br>
                         <a href="https://0xytf.github.io/Space/SignIn.html">Back to Sign In!</a>
                         <button class="btn btn-lg btn-primary btn-block" name="submit" id="submitbutton" >Sign Up</button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -392,6 +392,32 @@
     <script src="javascripts/contact_me.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="javascripts/freelancer.js"></script>
+
+    <script type="text/javascript">
+        $("#submitbutton").click(function() {
+            var send_data = {
+                Account: $('#inputEmail').val(),
+                Password: $("#inputPassword").val()
+            }
+            $.ajax({
+                type: 'post',
+                url: "Signup/add",
+                dataTpye: "json",
+                data: send_data,
+                success: function(JSONData) {
+                    console.log(JSONData.msg);
+                  }
+              });
+            });
+    </script>
+
+
+
+
+
+
+
+
 </body>
 
 </html>

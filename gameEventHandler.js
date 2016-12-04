@@ -22,6 +22,7 @@ handler.connection = function (socket){
             return;
         }
         else{
+            console.log("check success");
             var r = checkUserInRooms(user);
             if(r){
                 socket.emit('leave');
@@ -36,6 +37,7 @@ handler.connection = function (socket){
 
     // leave room
     socket.on('leave',function(){
+        console.log("fucku");
         if(!user || !roomID || !rooms[roomID])return;
         var index = rooms[roomID].indexOf(user);
         if(index !== -1){
