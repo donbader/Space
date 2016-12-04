@@ -3,22 +3,47 @@
 <head>
     <title>SocketTest</title>
     <script src="/socket.io/socket.io.js"></script>
+    <script src="/javascripts/jquery-3.1.1.min.js"></script>
 </head>
 <body>
     <div id="date"></div>
+    username:
+    <input id="username" type="text" value="corey"/>
+    room:
+    <input id="room" type="text" value="yeemin"/>
+    <input id="join" type="button" value="join"/>
     <textarea id="text"></textarea>
     <script type="text/javascript">
         var socket = io.connect();
-        socket.on("message", function(data){
-            console.log(data);
-        })
-        var area = document.getElementById("text");
-        console.log(area);
-        area.addEventListener('keypress',function(e){
-            socket.emit('client_data', {
-                letter: String.fromCharCode(e.charCode)
+        // first join to self's room
+        // socket.emit('join', {
+        //     username: $("#username").val(),
+        //     roomID: $("#username").val()
+        // });
+
+        $("#join").on('click',function(e){
+            socket.emit('leave');
+            socket.emit('join', {
+                username: $("#username").val(),
+                roomID: $("#room").val()
             });
         });
+
+        $("#text").on("keypress",function(e){
+            if(e.keyCode == 13){
+                socket.emit('action', {message: $(this).val()});
+            }
+        })
+
+        socket.on('messages', function(data){
+            console.log(data);
+        });
+
+        socket.on('sys', function(data){
+            console.log('sys:' + data);
+        });
+
+        //
     </script>
 </body>
 

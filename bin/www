@@ -33,13 +33,14 @@ var server = http.createServer(app);
 
 server.listen(port);
 var serv_io = io.listen(server);
+gameEventHandler.setServer(serv_io);
 console.log('listening on port:' + port + ' ...');
+
+
 server.on('error', onError);
 server.on('listening', onListening);
+serv_io.sockets.on('connection', gameEventHandler['connection']);
 
-for(var name in gameEventHandler){
-    serv_io.sockets.on(name, gameEventHandler[name]);
-}
 
 
 
