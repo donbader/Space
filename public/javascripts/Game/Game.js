@@ -1,3 +1,4 @@
+// TODO: onselectstart="return false"
 (function(){
 var GAME_STATE = {STOP:-1, READY: 0, RUNNING: 1, PAUSE:2};
 var Game = this.Game = Class.extend({
@@ -102,7 +103,7 @@ var Game = this.Game = Class.extend({
 
 	    // most objects displayed are a "mesh":
 	    //  a collection of points ("geometry") and
-	    //  a set of surface parameters ("material")    
+	    //  a set of surface parameters ("material")
 
 	    // Sphere parameters: radius, segments along width, segments along height
 	    var sphereGeometry = new THREE.SphereGeometry(50, 32, 16);
@@ -151,7 +152,7 @@ var Game = this.Game = Class.extend({
 	    // SKY //
 	    /////////
 
-	    // recommend either a skybox or fog effect (can't use both at the same time) 
+	    // recommend either a skybox or fog effect (can't use both at the same time)
 	    // without one of these, the scene's background color is determined by webpage background
 
 	    // make sure the camera's "far" value is large enough so that it will render the skyBox!
@@ -183,7 +184,3 @@ var Game = this.Game = Class.extend({
 
 
 })();
-
-
-
-
