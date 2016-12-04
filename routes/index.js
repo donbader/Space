@@ -2,7 +2,6 @@ var express = require('express');
 var path = require('path');
 var User = require('./../db/user');
 var router = express.Router();
-var login = require('../db/login');
 var querystring = require("querystring");
 var mongoose = require('mongoose');
 
