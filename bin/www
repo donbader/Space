@@ -5,8 +5,14 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('stocku:server');
+var debug = require('debug')('space:server');
 var http = require('http');
+// Socket EventHandler
+var io = require('socket.io')
+var gameEventHandler = require('../gameEventHandler');
+
+
+
 
 /**
  * Get port from environment and store in Express.
@@ -26,9 +32,17 @@ var server = http.createServer(app);
  */
 
 server.listen(port);
+var serv_io = io.listen(server);
+gameEventHandler.setServer(serv_io);
 console.log('listening on port:' + port + ' ...');
+
+
 server.on('error', onError);
 server.on('listening', onListening);
+serv_io.sockets.on('connection', gameEventHandler['connection']);
+
+
+
 
 /**
  * Normalize a port into a number, string, or false.

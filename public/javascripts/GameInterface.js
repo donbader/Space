@@ -1,38 +1,47 @@
 //to be writed to class ?
 var menuIconOriginalRight = $('.MenuIcon').css('right').split("p")[0];
-var functionListJObj = $('#FunctionList');
+//var functionListJObj = $('#FunctionList');
 var windowListJObj = $('#WindowList');
 var totalWidth = $('body').width(),
-    totalHeight = functionListJObj.height();
-var functionListWidth = functionListJObj.width();
+    totalHeight = $('.Height').height();
+var functionListWidth = 200;
+
+console.log(totalHeight);
 
 $(document).ready(function() {
     //to init some settings
-    var functionListWidth = 200,
-        functionList = new FunctionList(functionListWidth);
+    //var functionListWidth = 200,
+    //    functionList = new FunctionList(functionListWidth);
+
+    var functionListWindow = new FunctionListWindow(functionListWidth);
 
     var bagWindow = new BagWindow(600, 400);
     var settingsWindow = new SettingsWindow(500, 400);
     var exitWindow = new ExitWindow(500, 200);
 
-    functionList.AppendItem("Bag", "Bag1", bagWindow);
-    functionList.AppendItem("Settings", "Settings1", settingsWindow);
-    functionList.AppendItem("Exit", "Exit1", exitWindow);
+    functionListWindow.AppendItem("Bag", "Bag1", bagWindow);
+    functionListWindow.AppendItem("Settings", "Settings1", settingsWindow);
+    functionListWindow.AppendItem("Exit", "Exit1", exitWindow);
 
     //to set the event
     $('.MenuIcon').click(() => {
         var menuIcon = $('.MenuIcon'),
             time = 500;
-
-        if (functionList.JObj.css('right') == '0px') {
+            //65465464654
+            functionListWindow.Click();
+            /*
+        if (functionListWindow.JObj.css('right') == '0px') {
             //to close
-            functionList.Close();
-            menuIcon.animate({ 'right': menuIconOriginalRight }, time);
+            functionListWindow.Close();
+            //menuIcon.animate({ 'right': menuIconOriginalRight }, time);
+            //functionListJObj.animate({ 'right': menuIconOriginalRight }, time, functionListJObj.children('*').css('display', 'block'));
+
         } else {
             //to turn out
-            functionList.Open();
-            menuIcon.animate({ 'right': parseInt(menuIconOriginalRight) + functionListWidth }, time);
-        }
+            functionListWindow.Open();
+            //menuIcon.animate({ 'right': parseInt(menuIconOriginalRight) + functionListWidth }, time);
+            //functionListJObj.animate({ 'right': parseInt(menuIconOriginalRight) + functionListWidth }, time, functionListJObj.children('*').css('display', 'none'));
+        }*/
     });
 
     //to set the settings event

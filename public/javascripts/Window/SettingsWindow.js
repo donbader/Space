@@ -27,6 +27,12 @@ var SettingsWindow = Window.extend({
         this.SetJObj = $('#' + this.Id + "Set");
 
         //to set the css
+        //close state
+        this.JObj.css({
+            'top': this.CloseTop,
+            'right': this.CloseRight
+        });
+
         $('.' + this.WindowType + ">.ButtonList").css({
                 'position': 'absolute',
     'margin': '0px 0px',
