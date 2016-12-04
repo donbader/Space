@@ -181,6 +181,7 @@
     <script src="javascripts/jquery-3.1.1.min.js"></script>
     <script src="javascripts/three.min.js"></script>
     <script src="javascripts/Game/Class.js"></script>
+    <script src="javascripts/CSS3DRenderer.js"></script>
 
     <!-- For GameObject -->
     <script src="javascripts/GameObject/GameObject.js"></script>
@@ -243,6 +244,7 @@
                         $("#GameAll").css({
                             'display': 'inline'
                         });
+                        console.log("000");
                         var Ninja = Character.extend({
                             init: function() {
                                 this._super();
@@ -296,6 +298,7 @@
 
 
                         game.start();
+
                         console.log("12345");
                         $("#Black").animate({
                             'opacity': "0"
