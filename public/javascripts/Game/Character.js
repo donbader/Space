@@ -157,8 +157,8 @@
                 controls.canJump = true;
             }
         },
-        collision: function(x,y,z){
-            
+        collision: function(x, y, z){
+
         },
         canSelect: function(arr) {
             this.controls.ObjectsToSelect = this.controls.ObjectsToSelect.concat(arr);

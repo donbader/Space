@@ -31,8 +31,6 @@ router.post('/login', function(req, res){
 	});
 
 
-
-		//console.log(name + "fuck" + password);
 	})
 
 
