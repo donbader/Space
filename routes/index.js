@@ -27,7 +27,8 @@ router.post('/login', function(req, res){
   		if (user == null)
   			res.send({msg:"fail"});
   		else
-  			res.send({msg:"success"});
+  			res.send({msg:"success",
+									"id": name });
 	});
 
 

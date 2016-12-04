@@ -181,6 +181,7 @@
     <script src="javascripts/jquery-3.1.1.min.js"></script>
     <script src="javascripts/three.min.js"></script>
     <script src="javascripts/Game/Class.js"></script>
+    <script src="javascripts/CSS3DRenderer.js"></script>
 
     <!-- For GameObject -->
     <script src="javascripts/GameObject/GameObject.js"></script>
@@ -203,6 +204,7 @@
     <script src="javascripts/OBJMTLLoader.js"></script>
     <script src="javascripts/MTLLoader.js"></script>
     <script src="javascripts/OBJLoader.js"></script>
+      <script src="/socket.io/socket.io.js"></script>  //This is Socket
     <script type="text/javascript">
     $("#GameAll").css({
         'display': 'none'
@@ -221,6 +223,12 @@
                 console.log(JSONData.msg);
 
                 if (JSONData.msg == "success") {
+
+                    var socket = io.connect();
+                    socket.emit('join', {
+                      username: JSONData.id
+                    });
+
                     // console.log("ID=",id);
                     //document.getElementById("Black").style.display = "inline";
                     $("#Black").css({
@@ -236,6 +244,7 @@
                         $("#GameAll").css({
                             'display': 'inline'
                         });
+                        console.log("000");
                         var Ninja = Character.extend({
                             init: function() {
                                 this._super();
@@ -289,6 +298,7 @@
 
 
                         game.start();
+
                         console.log("12345");
                         $("#Black").animate({
                             'opacity': "0"
