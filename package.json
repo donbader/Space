@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./node_modules/nodemon/bin/nodemon.js ./bin/www",
-    "forever": "node ./node_modules/forever/bin/forever ./bin/www",
+    "forever": "node ./node_modules/forever/bin/forever ./bin/www"
   },
   "dependencies": {
     "express": "~4.14.0",
