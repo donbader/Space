@@ -21,10 +21,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 
 app.use('/SignUp',signup);
+
+
 /*
-app.get('/index/add',user.UserAdd); //add		
- /*app.post('/index/add',index.doUserAdd); //submit		
- app.get('/index/:id',index.userAdd); //edit		
+app.get('/index/add',user.UserAdd); //add
+ /*app.post('/index/add',index.doUserAdd); //submit
+ app.get('/index/:id',index.userAdd); //edit
  app.get('/index/json/:id',index.userJSON); //require*/
 
 
