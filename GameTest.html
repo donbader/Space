@@ -64,7 +64,7 @@
         var Ninja = Character.extend({
             init: function(){
                 this._super();
-                this.body.material.color.setHex( 0x000000 );
+                this.body.material.color.setHex( 0xFFFFFF );
             }
         });
 
@@ -76,8 +76,8 @@
         var whiteboard = new THREE.Mesh(new THREE.PlaneGeometry(1000,500), new THREE.MeshPhongMaterial({color: 0xffffff}));
         ninja.canDrawOn(whiteboard);
         whiteboard.position.set(0,0,-1000);
-        game.add(room);
-        game.add(whiteboard);
+        //game.add(room);
+        //game.add(whiteboard);
 
         // var world = new World();
         // console.log(world.addLightAtWall);
