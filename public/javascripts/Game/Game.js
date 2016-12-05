@@ -2,24 +2,18 @@
 (function() {
     var GAME_STATE = { STOP: -1, READY: 0, RUNNING: 1, PAUSE: 2 };
     var Game = this.Game = Class.extend({
-        init: function(divId, player, world) {
+        init: function(divId, player, world, socket) {
             // init elements
             this.container = document.getElementById('GamePlay');
             var scope = this.scope = this;
             this.clock = new THREE.Clock();
-            ///////////
-            // PLAYER//
-            ///////////
-            this.player = player;
-            this.world = world;
+            this.socket = socket;
 
             ///////////
             // SCENE //
             ///////////
             this.scene = new THREE.Scene();
             this.scene.updateMatrixWorld();
-            this.camera = player.controls.camera;
-
 			this.CssScene = new THREE.Scene();
 
             //////////////
@@ -53,12 +47,15 @@
             this.container.appendChild(this.stats.domElement);
 
 
+            ///////////
+            // PLAYER//
+            ///////////
+            this.setController(player);
+
             // DO
-            player.in(this.scene, this.renderer);
-            player.controls.enable();
-            player.move(0, 0, 100);
-            player.canMoveOn(this.world.ground);
-            this.add(this.world);
+            // TODO: Think the better way to store
+            player.canMoveOn(world.ground);
+            this.add(world);
 
 			//to create the plane mesh
             var iframeWidth = 256, iframeHeight = 256;
@@ -86,11 +83,11 @@
             /////////////////////
             this.render = function() {
                 var delta = scope.clock.getDelta();
-                scope.player.animate(delta);
+                scope.ObjectsToUpdate.forEach((obj)=>obj.update(delta));
                 scope.stats.update();
                 scope.renderer.render(scope.scene, scope.camera);
                 scope.CssRenderer.render(scope.CssScene, scope.camera);
-                
+
                 requestAnimationFrame(scope.render);
             }
             this.start = function() {
@@ -102,14 +99,34 @@
                     cancelAnimationFrame(this.requestId);
             }
         },
-        pause: function() {
-
-        },
         add: function(obj) {
             this.scene.add(obj);
         },
+        addDynamicObject: function(obj, model){
+            if(!obj.update){
+                console.error("This is not an Dynamic Object");
+                return;
+            }
+            // WARNING: This obj must have update();
+            this.scene.add(model ? model : obj);
+            this.ObjectsToUpdate.push(obj);
+        },
         children: function() {
             return scene.children;
+        },
+        setController: function(controller){
+            if(this.Controller)
+                this.Controller.controls.enable(false);
+
+
+            controller.in(this.scene, this.renderer);
+            controller.controls.enable(true, this.container);
+            controller.socket = this.socket;
+
+            this.camera = controller.controls.camera;
+            this.addDynamicObject(controller, controller.model);
+
+            this.Controller = controller;
         },
         useDefaultWorld: function() {
             var scope = this;
@@ -212,6 +229,7 @@
         player: '',
         clock: '',
         scope: '',
+        ObjectsToUpdate: []
 
 
     });

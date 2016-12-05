@@ -49,27 +49,14 @@
 				console.log(this);
 			}
 
+			// set objects in it
+			this.Obstacles = [].concat(this.walls);
+
 			//20161204
 			//to create a box with texture
 			//var box = CreateBoxWithTexture();
 			//box.position.set(0, 100, -100);
 			//this.add(box);
-		},
-		addLightAtWall: function(){
-			console.log("H?");
-			// this.lights = [];
-			// this.lights.push(new THREE.PointLight(0xffffff, 0.3));
-			// this.lights[0].position.set(-width / 2 + 1, height, -long / 2 + 1);
-			// this.lights.push(new THREE.PointLight(0xffffff, 0.3));
-			// this.lights[1].position.set(-width / 2 + 1, height, long / 2 - 1);
-			// this.lights.push(new THREE.PointLight(0xffffff, 0.3));
-			// this.lights[2].position.set(width / 2 - 1, height, -long / 2 + 1);
-			// this.lights.push(new THREE.PointLight(0xffffff, 0.3));
-			// this.lights[3].position.set(width / 2 - 1, height, long / 2 - 1);
-
-			// for (var i in this.lights) {
-			// 	this.add(this.lights[i]);
-			// }
 		}
 	});
 
@@ -105,7 +92,7 @@ var TestWorld = this.TestWorld = Class.extend({
 			width = width || 10240;
 			height = height || 1000;
 
-			
+
 			// ground
 			this.ground = new THREE.Mesh(
 				new THREE.PlaneGeometry(width, long), new THREE.MeshPhongMaterial({
@@ -114,7 +101,7 @@ var TestWorld = this.TestWorld = Class.extend({
 
 			this.ground.rotation.x = -Math.PI / 2;
 			this.add(this.ground);
-			
+
 
 			/*
 			// walls

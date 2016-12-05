@@ -7,13 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Space - Modify</title>
+    <title>Space - Sign up</title>
     <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
     <link href="stylesheets/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="stylesheets/freelancer.css" rel="stylesheet">
     <link href="stylesheets/About.css" rel="stylesheet">
-    <link rel="icon" href="images/left_top_logo.ico">
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
@@ -24,6 +23,9 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+
+
 </head>
 
 <body id="page-top" class="index">
@@ -50,10 +52,10 @@
                         <a href="/">Sign in</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="/SignUp">Sign up</a>
+                        <a href="#page-top">Sign up</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#page-top">Modify</a>
+                        <a href="/Modify">Modify</a>
                     </li>
                     <li class="page-scroll">
                         <a href="/About">About</a>
@@ -67,29 +69,38 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
-    <!-- Modify -->
+
+    <!--
+    <script>
+        $('#submitbutton').click(function(){
+            console.log("hi");
+            //$.get('/index/add');
+        });
+    </script>
+!-->
+
+    <!-- Sing up -->
     <header>
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <form class="form-signin" action="https://0xytf.github.io/Space/SignIn.php" method="post">
-                        <h2 class="form-signin-heading">Modify</h2>
-                        <label for="inputEmail" class="sr-only">Old Account</label>
-                        <input type="text" name="account" id="inputEmail" class="form-control" placeholder="Old Account" required autofocus>
+                    <div class="form-signin">
+                        <h2 class="form-signin-heading">Please Sign Up</h2>
+                        <label for="inputEmail" class="sr-only">Account</label>
+                        <input type="text" name="account" id="inputEmail" class="form-control" placeholder="Account" required autofocus>
                         <br>
-                        <label for="inputPassword" class="sr-only">Old Password</label>
-                        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Old Password" required>
+                        <label for="inputPassword" class="sr-only">Password</label>
+                        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
                         <br>
-                        <label for="inputPassword" class="sr-only">New Password</label>
-                        <input type="password" name="npassword" id="inputPassword" class="form-control" placeholder="New Password" required>
-                        <br>
-                        <a href="https://0xytf.github.io/Space/SignIn.html">Back to Sign In!</a>
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">Modify</button>
-                    </form>
+                        <a href="/">Back to Sign In!</a>
+                        <button class="btn btn-lg btn-primary btn-block" name="submit" id="submitbutton">Sign Up</button>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
+
+
     <!-- Footer -->
     <footer class="text-center">
         <div class="footer-above">
@@ -122,8 +133,8 @@
                     </div>
                     <div class="footer-col col-md-4">
                         <h3>About Space</h3>
-                        <p>Space is a room that you can set everything as you want.</p> 
-                        <p>Let's create your own <a href="http://localhost:3001/SignUp">Space</a>!</p>
+                        <p>Space is a room that you can set everything as you want.</p>
+                        <p>Let's create your own <a href="/">Space</a>!</p>
                     </div>
                 </div>
             </div>
@@ -160,7 +171,8 @@
                             <h2>Project Title</h2>
                             <hr class="star-primary">
                             <img src="images/portfolio/cabin.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
+                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or
+                                you can purchase the entire set with 146 icons for only $12!</p>
                             <ul class="list-inline item-details">
                                 <li>Client:
                                     <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
@@ -197,7 +209,8 @@
                             <h2>Project Title</h2>
                             <hr class="star-primary">
                             <img src="images/portfolio/cake.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
+                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or
+                                you can purchase the entire set with 146 icons for only $12!</p>
                             <ul class="list-inline item-details">
                                 <li>Client:
                                     <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
@@ -234,7 +247,8 @@
                             <h2>Project Title</h2>
                             <hr class="star-primary">
                             <img src="images/portfolio/circus.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
+                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or
+                                you can purchase the entire set with 146 icons for only $12!</p>
                             <ul class="list-inline item-details">
                                 <li>Client:
                                     <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
@@ -271,7 +285,8 @@
                             <h2>Project Title</h2>
                             <hr class="star-primary">
                             <img src="images/portfolio/game.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
+                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or
+                                you can purchase the entire set with 146 icons for only $12!</p>
                             <ul class="list-inline item-details">
                                 <li>Client:
                                     <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
@@ -308,7 +323,8 @@
                             <h2>Project Title</h2>
                             <hr class="star-primary">
                             <img src="images/portfolio/safe.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
+                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or
+                                you can purchase the entire set with 146 icons for only $12!</p>
                             <ul class="list-inline item-details">
                                 <li>Client:
                                     <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
@@ -345,7 +361,8 @@
                             <h2>Project Title</h2>
                             <hr class="star-primary">
                             <img src="images/portfolio/submarine.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
+                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or
+                                you can purchase the entire set with 146 icons for only $12!</p>
                             <ul class="list-inline item-details">
                                 <li>Client:
                                     <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
@@ -380,6 +397,11 @@
     <script src="javascripts/contact_me.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="javascripts/freelancer.js"></script>
+    <script src="javascripts/signup.js"></script>
+
+
+
+
 </body>
 
 </html>

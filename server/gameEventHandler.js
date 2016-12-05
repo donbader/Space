@@ -9,89 +9,119 @@ var rooms = {
 */
 
 
-var User = require('./../db/user');
-var Item = require('./../db/item');
-var Room = require('./../db/room');
-var mongoose = require('mongoose');
+// var User = require('./../db/user');
+// var Item = require('./../db/item');
+// var Room = require('./../db/room');
+// var mongoose = require('mongoose');
 
-
+var rooms = {
+    corey: {},
+    yee: {},
+    lam: {},
+    ting: {}
+};
 
 var server;
 
 handler.setServer = function(s){server = s;}
 
-handler.connection = function (socket){
-    var user;
+handler.connection = function (client){
+    var username = client.handshake.query.username;
     var roomID;
 
+
     // join room
-    socket.on('join', function(data){
-        user = data.username;
-        socket.join(user);
-        console.log(user);
-    });
-
-    socket.on('move', function(data){
-        server.to(user).emit('sys', user + "talking");
-    });
-
-
-      //roomID = data.roomID;
-/*
-        if(!rooms[roomID]){
-            socket.emit('sys', roomID+' is not exist.');
-            return;
-        }
-        else{
-            console.log("check success");
-            var r = checkUserInRooms(user);
-            if(r){
-                socket.emit('leave');
+    client.on('join', (data)=>{
+        roomID = data.roomID;
+        if(!checkValid())return;
+        var prevRoom = checkUserInRooms(username);
+        if(prevRoom){
+            if(roomID == prevRoom){
+                sysMsg(client, 'already in '+roomID);
                 return;
             }
-            rooms[roomID].push(user);
-            socket.join(roomID);
-            server.to(roomID).emit('sys', user+" has been joined.");
-            console.log(user+" has been joined:"+roomID);
+            else{
+                leave();
+            }
         }
 
-        */
+        // join main
+        // try to find room's config..
+        // client.emit('doscript', {rommmmm});
+        client.join(roomID);
+        rooms[roomID][username] = true;
+        server.to(roomID).emit('add user', {
+            username: username,
+            script: "new Ninja(000,9992,2);"
+        });
+    });
 
-/*
-    // leave room
-    socket.on('leave',function(){
-        console.log("fucku");
-        if(!user || !roomID || !rooms[roomID])return;
-        var index = rooms[roomID].indexOf(user);
-        if(index !== -1){
-            rooms[roomID].splice(index, 1);
+    client.on('update',(data)=>{
+        if(!checkValid())return;
+        server.to(roomID).emit('update', {
+            username: username,
+            object: data
+        });
+    });
+
+
+    client.on('disconnect', leave);
+
+
+    function checkValid(){
+        if(!username || !roomID || !rooms[roomID]){
+            sysMsg(client, 'Invalid username or room('+username+","+roomID+')');
+            return false;
         }
-        socket.leave(roomID);
-        server.to(roomID).emit('sys', user+'has been left');
-        console.log(user+" has been leaved:"+roomID);
-    });
+        return true;
+    }
 
-    socket.on('disconnect', function () {
-        socket.emit('leave');
-    });
+    function leave(){
+        if(!checkValid())return;
 
-    //
-    socket.on('action', function(data){
-        var a = user+ ": "+ data.message;
-        console.log(a);
-        server.to(roomID).emit('messages', a);
-    });
+        client.leave(roomID);
+
+        if(checkUserInRooms(username, roomID)){
+            server.to(roomID).emit('pop user', {username: username});
+        }
+
+        if(rooms[roomID][username])
+            delete rooms[roomID][username];
+
+        sysMsg(client, 'leave '+roomID);
+    }
 
 
+}
 
-function checkUserInRooms(user){
-    for(var id in rooms){
-        if(!rooms[id].find((elem)=>user == elem)) continue;
-        else
-            return id;
+function checkUserInRooms(username, roomID){
+    if(roomID !== undefined && rooms[roomID][username]){
+        return roomID;
+    }
+    else{
+        for(var id in rooms){
+            if(rooms[id][username])return id;
+        }
     }
     return false;
 }
-*/
+
+function replaceID(client, server, id){
+    client.id = id;
+    server.adapter
+
 }
+function sysMsg(client, msg){
+    client.emit('sys', msg);
+    // console.log(client.id +": [sys] "+ msg);
+    console.log(rooms);
+}
+function onJoin(){
+
+}
+
+function onLeave(){
+
+}
+
 module.exports = handler;
