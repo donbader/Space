@@ -15,12 +15,12 @@ var app = express();
 
 // Add path
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'view')));
 //var user = require('./routes/user'); //front-end json
 
 // Route Service
 app.use('/', index);
-
-app.use('/SignUp',signup);
+app.use('/SignUp', signup);
 
 
 
