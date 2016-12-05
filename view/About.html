@@ -7,13 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Space - Sign up</title>
+    <title>Space - About</title>
     <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
     <link href="stylesheets/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="stylesheets/freelancer.css" rel="stylesheet">
-    <link href="stylesheets/About.css" rel="stylesheet">
-    <link rel="icon" href="images/left_top_logo.ico">
+    <link rel="stylesheet" href="stylesheets/blueberry.css">
+    <link rel="stylesheet" href="stylesheets/About.css">
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
@@ -24,9 +24,6 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-
-
 </head>
 
 <body id="page-top" class="index">
@@ -53,13 +50,13 @@
                         <a href="/">Sign in</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#page-top">Sign up</a>
+                        <a href="/SignUp">Sign up</a>
                     </li>
                     <li class="page-scroll">
                         <a href="/Modify">Modify</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="/About">About</a>
+                        <a href="#page-top">About</a>
                     </li>
                     <li class="page-scroll">
                         <a href="/GameTest">GameTest</a>
@@ -70,38 +67,55 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
-
-<!--
-    <script>
-        $('#submitbutton').click(function(){
-            console.log("hi");
-            //$.get('/index/add');
-        });
-    </script>
-!-->
-
-    <!-- Sing up -->
-    <header>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="form-signin">
-                        <h2 class="form-signin-heading">Please Sign Up</h2>
-                        <label for="inputEmail" class="sr-only">Account</label>
-                        <input type="text" name="account" id="inputEmail" class="form-control" placeholder="Account" required autofocus>
-                        <br>
-                        <label for="inputPassword" class="sr-only">Password</label>
-                        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                        <br>
-                        <a href="https://0xytf.github.io/Space/SignIn.html">Back to Sign In!</a>
-                        <button class="btn btn-lg btn-primary btn-block" name="submit" id="submitbutton" >Sign Up</button>
-                    </div>
-                </div>
+    <!-- buleberry -->
+    <div id="doc">
+        <div id="content">
+            <div class="blueberry">
+                <ul class="slides">
+                    <li><img src="images/Group2.jpg" /></li>
+                    <li><img src="images/Group1.jpg" /></li>
+                    <li><img src="images/Group0.jpg" /></li>
+                </ul>
             </div>
         </div>
-    </header>
-
-
+    </div>
+    <!-- introduction -->
+    <div class="green introductionDiv" onmouseenter="IntroductionOnMouseEnter(this)" onmouseleave="IntroductionOnMouseLeave(this)">
+        <span class="profilePicture">
+            <img class="circle" src="images/馮禹德.jpg" />
+            <h1>遊戲開發者 - 馮禹德</h1>
+        </span>
+        <span class="introductionContent">
+            <h2>我是馮禹德</h2>
+        </span>
+    </div>
+    <div class="green introductionDiv"  onmouseenter="IntroductionOnMouseEnter(this)" onmouseleave="IntroductionOnMouseLeave(this)">
+        <span class="profilePicture">
+                <img class="circle" src="images/蔡侑軒.jpg" />
+                <h1>遊戲開發者 - 蔡侑軒</h1>
+            </span>
+        <span class="introductionContent">
+                <h2>我是蔡侑軒</h2>
+            </span>
+    </div>
+    <div class="green introductionDiv"  onmouseenter="IntroductionOnMouseEnter(this)" onmouseleave="IntroductionOnMouseLeave(this)">
+        <span class="profilePicture">
+                <img class="circle" src="images/李光庭.jpg" />
+                <h1>前端工程師 - 李光庭</h1>
+            </span>
+        <span class="introductionContent">
+                    <h2>我是李光庭</h2>
+            </span>
+    </div>
+    <div class="green introductionDiv"  onmouseenter="IntroductionOnMouseEnter(this)" onmouseleave="IntroductionOnMouseLeave(this)">
+        <span class="profilePicture">
+                <img class="circle" src="images/劉俊林.jpg" />
+                <h1>後端大魔王 - 劉俊林</h1>
+            </span>
+        <span class="introductionContent">
+                <h2>我是劉俊林</h2>
+            </span>
+    </div>
     <!-- Footer -->
     <footer class="text-center">
         <div class="footer-above">
@@ -392,40 +406,8 @@
     <script src="javascripts/contact_me.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="javascripts/freelancer.js"></script>
-
-    <script type="text/javascript">
-        $("#submitbutton").click(function() {
-            var send_data = {
-                Account: $('#inputEmail').val(),
-                Password: $("#inputPassword").val()
-            }
-            $.ajax({
-                type: 'post',
-                url: "Signup/add",
-                dataTpye: "json",
-                data: send_data,
-                success: function(JSONData) {
-                    console.log(JSONData.msg);
-                    if (JSONData.msg == "success"){
-                        alert("Sign up successfully!");
-                        window.location = "/";
-                    }
-                    else {
-                        alert("This Username is existed, or something is wrong!")
-                        window.location = "/Signup";
-                    }
-                  }
-              });
-            });
-    </script>
-
-
-
-
-
-
-
-
+    <script src="javascripts/jquery.blueberry.js"></script>
+    <script src="javascripts/About.js"></script>
 </body>
 
 </html>
