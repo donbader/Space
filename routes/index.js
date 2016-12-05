@@ -61,8 +61,8 @@ router.get('/SocketTest', function(req, res) {
     res.sendFile(path.join(__dirname, '../view', 'SocketTest.html'));
 });
 
-router.get('/Paint', function(req, res){
-	res.sendFile(path.join(__dirname, '../view', 'Paint.html'));
+router.get('/Paint', function(req, res) {
+    res.sendFile(path.join(__dirname, '../view', 'Paint.html'));
 });
 
 
