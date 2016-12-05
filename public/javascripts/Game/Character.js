@@ -79,19 +79,50 @@
             this.model.translateX(x);
             this.model.translateY(y);
             this.model.translateZ(z);
+            if(x && y && z){
+                if(this.socket){
+                    var scope = this;
+                    socket.emit('update', {
+                        id: scope.model.id,
+                        scripts: [
+                            "translate("+x+","+y+","+z+")"
+                        ]
+                    });
+                }
+            }
         },
         move: function(x, y, z) {
-
+            console.log("NMOMEOOMEMOEO");
             var position = this.position();
             position.x += x;
             position.y += y;
             position.z += z;
+            if(x && y && z){
+                if(this.socket){
+                    var scope = this;
+                    socket.emit('update', {
+                        id: scope.model.id,
+                        scripts: [
+                            "move("+x+","+y+","+z+")"
+                        ]
+                    });
+                }
+            }
         },
         moveTo: function(x, y, z) {
             var position = this.position();
             position.x = x;
             position.y = y;
             position.z = z;
+            if(this.socket){
+                var scope = this;
+                socket.emit('update', {
+                    id: scope.model.id,
+                    scripts: [
+                        "moveTo("+x+","+y+","+z+")"
+                    ]
+                });
+            }
         },
         turn: function(x, y) {
             x = x || 0;
@@ -101,10 +132,29 @@
             this.model.rotation.y += x;
             pitchObject.rotation.x += y;
             pitchObject.rotation.x = Math.max(-PI_2, Math.min(PI_2, pitchObject.rotation.x));
+
+            if(this.socket){
+                var scope = this;
+                socket.emit('update', {
+                    id: scope.model.id,
+                    scripts: [
+                        "turn("+x+","+y+")"
+                    ]
+                });
+            }
         },
         turnTo: function(x, y){
             this.model.rotation.y = x;
             this.eye.children[0].rotation.x = y;
+            if(this.socket){
+                var scope = this;
+                socket.emit('update', {
+                    id: scope.model.id,
+                    scripts: [
+                        "turnTo("+x+","+y+")"
+                    ]
+                });
+            }
         },
         walkFunction: function(destination) {
             var deltaX = destination.x - this.model.position.x;
@@ -122,8 +172,7 @@
         position: function() {
             return this.model.position;
         },
-        animate: function(delta) {
-
+        update: function(delta) {
 
             if (!this.controls.enabled) return;
 
@@ -156,6 +205,7 @@
                 this.model.position.y = 0;
                 controls.canJump = true;
             }
+
         },
         collision: function(x, y, z){
 
@@ -218,34 +268,37 @@
             Obstacles: [],
             ObjectsToDrawOn: [],
             ObjectsToMoveOn: [],
-            enable: function(dom) {
-                dom = dom || document;
-                var on = dom.addEventListener;
-                on('keydown', this.onKeyDown);
-                on('keyup', this.onKeyUp);
-                on('mousedown', this.onMouseDown);
-                on('mouseup', this.onMouseUp);
-                on('mousemove', this.onMouseMove);
-                on('mousewheel', this.onMouseWheel);
-                on('dblclick', this.onMouseAtObject);
-                on('contextmenu', this.onRightClick);
+            // TODO: Change To "set enabled()";
+            enable: function(bool, dom) {
+                if(bool){
+                    dom = dom || document;
+                    var on = dom.addEventListener;
+                    on('keydown', this.onKeyDown);
+                    on('keyup', this.onKeyUp);
+                    on('mousedown', this.onMouseDown);
+                    on('mouseup', this.onMouseUp);
+                    on('mousemove', this.onMouseMove);
+                    on('mousewheel', this.onMouseWheel);
+                    on('dblclick', this.onMouseAtObject);
+                    on('contextmenu', this.onRightClick);
 
-                this.enabled = true;
+                    this.enabled = true;
+                }
+                else {
+                    dom = dom || document;
+                    var off = dom.removeEventListener;
+                    off('keydown', this.onKeyDown);
+                    off('keyup', this.onKeyUp);
+                    off('mousedown', this.onMouseDown);
+                    off('mouseup', this.onMouseUp);
+                    off('mousemove', this.onMouseMove);
+                    off('mousewheel', this.onMouseWheel);
+                    off('dblclick', this.onMouseAtObject);
+                    off('contextmenu', this.onRightClick);
+
+                    this.enabled = false;
+                }
             },
-            disable: function(dom) {
-                dom = dom || document;
-                var off = dom.removeEventListener;
-                off('keydown', this.onKeyDown);
-                off('keyup', this.onKeyUp);
-                off('mousedown', this.onMouseDown);
-                off('mouseup', this.onMouseUp);
-                off('mousemove', this.onMouseMove);
-                off('mousewheel', this.onMouseWheel);
-                off('dblclick', this.onMouseAtObject);
-                off('contextmenu', this.onRightClick);
-
-                this.enabled = false;
-            }
 
 
         },

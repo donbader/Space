@@ -4,63 +4,22 @@
     <title>SocketTest</title>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/javascripts/jquery-3.1.1.min.js"></script>
+    <script src="/javascripts/three.min.js"></script>
+    <script src="/javascripts/CSS3DRenderer.js"></script>
+    <script src="/javascripts/Stats.js"></script>
 </head>
 <body>
-    <div id="date"></div>
-    username:
-    <input id="username" type="text" value="corey"/>
-    room:
-    <input id="room" type="text" value="yeemin"/>
-    <input id="join" type="button" value="join"/>
-    <input id="leave" type="button" value="leave"/>
-
-<script>
-    //<textarea id="text"></textarea>
-</script>
-
+    <div id="GamePlay" style="top: 0; left: 0; position: absolute;"></div>
+    <script src="/javascripts/Game/Class.js"></script>
+    <script src="/javascripts/Game/Character.js"></script>
+    <script src="/javascripts/Game/World.js"></script>
+    <script src="/javascripts/Game/Game.js"></script>
+    <script src="/javascripts/Game/Main.js"></script>
 
     <script type="text/javascript">
-        var socket = io.connect();
-        // first join to self's room
-        // socket.emit('join', {
-        //     username: $("#username").val(),
-        //     roomID: $("#username").val()
-        // });
-
-        $("#join").on('click',function(e){
-
-            //socket.emit('leave');
-            socket.emit('join', {
-                username: $("#username").val(),
-                roomID: $("#room").val()
-            });
-        });
 
 
-        $("#leave").on('click',function(e){
 
-            //socket.emit('leave');
-            socket.emit('leave', {
-                username: $("#username").val(),
-                roomID: $("#room").val()
-            });
-        });
-/*
-        $("#text").on("keypress",function(e){
-            if(e.keyCode == 13){
-                socket.emit('action', {message: $(this).val()});
-            }
-        })
-*/
-
-
-        socket.on('messages', function(data){
-            console.log(data);
-        });
-
-        socket.on('sys', function(data){
-            console.log('sys:' + data);
-        });
 
 
     </script>
