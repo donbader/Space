@@ -26,7 +26,7 @@ router.post('/login', function(req, res) {
             "name": name
         }, 'password', function(err, user) {
             if (err) return console.log(err);
-            if (user == null)
+            if (user == null || user.password != password)
                 res.send({
                     msg: "fail"
                 });
