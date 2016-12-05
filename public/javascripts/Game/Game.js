@@ -58,18 +58,19 @@
             this.add(world);
 
 			//to create the plane mesh
-            var iframeWidth = 256, iframeHeight = 256;
+            var iframeWidth = 1004, iframeHeight = 504;
             var planeMaterial = new THREE.MeshBasicMaterial({ wireframe: true , color: 0x000000});
             var planeGeometry = new THREE.PlaneGeometry(iframeWidth, iframeHeight);
             var planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
-            planeMesh.position.set(0, 300, -500);
+            planeMesh.position.set(0, 250, -1000);
             this.add(planeMesh);
 
 			//to create the dom element
-            var element = document.createElement('img');
-            element.src = 'images/CC.png';
+            var element = document.createElement('iframe');
+            element.src = '/Paint';
             element.width = iframeWidth;
             element.height = iframeHeight;
+            element.scrolling = 'no';
 			var cssObj = new THREE.CSS3DObject(element);
 			cssObj.position.copy(planeMesh.position);
             cssObj.rotation.copy(planeMesh.rotation);
