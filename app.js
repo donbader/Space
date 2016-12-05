@@ -16,7 +16,7 @@ var app = express();
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'view')));
 
-app.use(favicon(__dirname + '/public/images/item.ico'));
+app.use(favicon(__dirname + '/public/images/left_top_logo.ico'));
 
 
 // Route Service
