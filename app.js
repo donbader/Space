@@ -8,7 +8,6 @@ var index = require('./routes/index');
 var signup = require('./routes/signup');
 
 
-
 // App
 var app = express();
 
@@ -16,7 +15,9 @@ var app = express();
 // Add path
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'view')));
-//var user = require('./routes/user'); //front-end json
+
+app.use(favicon(__dirname + '/public/images/item.ico'));
+
 
 // Route Service
 app.use('/', index);
