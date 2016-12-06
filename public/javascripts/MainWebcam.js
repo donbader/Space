@@ -1,3 +1,110 @@
+
+// Webcam.set({
+//     width: 320,
+//     height: 240,
+//     image_format: 'jpeg',
+//     jpeg_quality: 90
+// });
+
+// Webcam.attach('#camera');
+
+
+(function webcam() {
+if (!navigator.getUserMedia) {
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+}
+
+if (!navigator.getUserMedia) {
+    return alert('getUserMedia not supported in this browser.');
+}
+
+var canvas = document.getElementById('canvas');
+var context = canvas.getContext('2d');
+var audioSource;
+var cw = Math.floor(canvas.clientWidth / 2);
+var ch = Math.floor(canvas.clientHeight/2);
+//canvas.width = cw;
+//canvas.height = ch;
+
+//off dom video player
+var video = document.createElement("video");
+video.autoplay="autoplay";
+video.addEventListener('playing', function(){
+    //delay for settling...
+    setTimeout(draw,50,this,context,(currentSource*canvas.clientWidth/2),cw,ch);
+},false);
+
+function captureVideo() {
+    //console.log("Capturing " + currentSource,videosources[currentSource]);
+    var mediaOptions = {
+        audio: {
+            optional: [{sourceId: audioSource}]
+        },
+        video: {
+            optional: [
+                {sourceId: videosources[currentSource].id}
+            ]
+        }};
+    navigator.getUserMedia(mediaOptions, success, errorCallback);
+}
+var currentSource=0;
+var videosources = [];
+var lastStream;
+function errorCallback(error){
+    //console.log("navigator.getUserMedia error: ", error);
+}
+function success(stream) {
+    //console.log("the stream" + currentSource,stream);
+    video.src = window.URL.createObjectURL(stream);
+    video.play();
+    lastStream=stream;
+}
+function next(){
+    //console.log("next");
+    //console.log(lastStream);
+    if(lastStream){
+
+        lastStream.getTracks()[0].stop();
+    }
+    video.src = "";
+    if(currentSource < videosources.length-1){
+        currentSource+=1;
+    }
+    else
+    {
+        currentSource=0;
+    }
+    captureVideo();
+}
+function draw(v,c,l,w,h) {
+    if(v.paused || v.ended) return false;
+    //console.log("drawing",l)
+    c.drawImage(v,l,0,w,h);
+    setTimeout(next,25);
+}
+
+MediaStreamTrack.getSources(function (sourceInfos) {
+
+    for (var i = 0; i != sourceInfos.length; ++i) {
+        var sourceInfo = sourceInfos[i];
+        if (sourceInfo.kind === 'audio') {
+            //console.log(sourceInfo.id, sourceInfo.label || 'microphone');
+            audioSource=sourceInfo.id;
+
+        } else if (sourceInfo.kind === 'video') {
+            //console.log(sourceInfo.id, sourceInfo.facing, sourceInfo.label || 'camera');
+            videosources.push(sourceInfo);
+
+        } else {
+            //console.log('Some other kind of source: ', sourceInfo);
+        }
+    }
+console.log("sources",videosources)
+    next();
+});
+})();
+
+/*
 (function() {
     var App;
     App = {};
@@ -5,14 +112,7 @@
     //Init 
     App.init = function() {
     	//to set webcam
-Webcam.set({
-	width: 320,
-	height: 240,
-	image_format: 'jpeg',
-	jpeg_quality: 90
-});
 
-Webcam.attach('#camera');
 
 
         //to set tool and tool mode
@@ -183,4 +283,4 @@ Webcam.attach('#camera');
     $(function() {
         return App.init();
     });
-}).call(this);
+}).call(this);*/

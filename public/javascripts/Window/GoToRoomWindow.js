@@ -41,7 +41,15 @@ var GoToRoomWindow = Window.extend({
         //to set event
         this.ConfirmJObj.click(() => {
             this.JObj.css('background-color', 'green');
-            console.log(this.InputJObj.val());
+            //var rid = this.InputJObj.val();
+            var rid = 'corey';
+            console.log(rid);
+
+            //to set socket
+            var socket = io.connect('/');
+            socket.emit('join', {
+                roomID: rid
+            });
         });
 
         this.CloseJObj.click(() => {
