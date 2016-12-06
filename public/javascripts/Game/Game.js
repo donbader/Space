@@ -88,16 +88,23 @@
                 scope.renderer.render(scope.scene, scope.camera);
                 scope.CssRenderer.render(scope.CssScene, scope.camera);
 
-                requestAnimationFrame(scope.render);
+                if(scope.state == GAME_STATE.RUNNING)
+                    scope.requestId = requestAnimationFrame(scope.render);
+                // else if(this.state == GAME_STATE.STOP)
+                    // cancelAnimationFrame(this.requestId);
             }
             this.start = function() {
-                this.state = GAME_STATE.RUNNING;
-                this.requestId = requestAnimationFrame(scope.render);
+                scope.state = GAME_STATE.RUNNING;
+                requestAnimationFrame(scope.render);
             }
             this.stop = function() {
-                if (this.requestId)
-                    cancelAnimationFrame(this.requestId);
+                scope.state = GAME_STATE.STOP;
+                if (scope.requestId){
+                    cancelAnimationFrame(scope.requestId);
+                    console.log("Game has stopped..."+scope.requestId);
+                }
             }
+            this.state = GAME_STATE.READY;
         },
         add: function(obj) {
             this.scene.add(obj);
