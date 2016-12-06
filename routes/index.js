@@ -45,10 +45,6 @@ router.get('/About', function(req, res) {
     res.sendFile(path.join(__dirname, '../view', 'About.html'));
 });
 
-router.get('/Modify', function(req, res) {
-    res.sendFile(path.join(__dirname, '../view', 'Modify.html'));
-});
-
 router.get('/GameTest', function(req, res) {
     res.sendFile(path.join(__dirname, '../view', 'GameTest.html'));
 });
