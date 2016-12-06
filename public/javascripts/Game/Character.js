@@ -305,7 +305,7 @@ var Character = this.Character = THREE.Object3D.extend({
         this.translateX(x || 0);
         this.translateY(y || 0);
         this.translateZ(z || 0);
-        if(x || y > 0 || z && this.socket){
+        if(x || this.position.y || z && this.socket){
             this.ServerUpdate();
         };
     },

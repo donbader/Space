@@ -6,7 +6,7 @@ $("#submitbutton").click(function() {
         Password: $("#inputPassword").val()
     }
     if ($('#inputEmail').val() != "" && $('#inputPassword').val() != "") {
-        $.ajax({，
+        $.ajax({
             type: 'post',
             url: "Signup/add",
             dataTpye: "json",
