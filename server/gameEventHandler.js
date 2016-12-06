@@ -21,11 +21,13 @@ handler.connection = function(client) {
     var Character_type;
 
     //Get type
-    User.findOne({
-        name: username
-    }, function(err, data) {
-        Character_type = data.type;
-    });
+    if(username){
+        User.findOne({
+            name: username
+        }, function(err, data) {
+            Character_type = data.type;
+        });
+    }
 
 
 
