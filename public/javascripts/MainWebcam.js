@@ -4,6 +4,17 @@
 
     //Init 
     App.init = function() {
+    	//to set webcam
+Webcam.set({
+	width: 320,
+	height: 240,
+	image_format: 'jpeg',
+	jpeg_quality: 90
+});
+
+Webcam.attach('#camera');
+
+
         //to set tool and tool mode
         App.toolMode = { Brush: 0, Eraser: 1 };
         App.tool = App.toolMode.Brush;
@@ -173,5 +184,3 @@
         return App.init();
     });
 }).call(this);
-
-//call ????

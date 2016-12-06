@@ -37,7 +37,6 @@
     height: 100px;
     text-align: center;
     -webkit-clip-path: circle(49% at 50% 50%);
-    text-align: center;
     background-color: rgba(255, 255, 255, 0.5);
     z-index: 1;
 }
@@ -71,8 +70,10 @@
     left: 0;
     width: 0px;
     height: 0px;
-    background-color: red;
+    background-color: rgba(255, 255, 255, 0.5);
     text-align: center;
+    border-radius: 25;
+    z-index: 1;
 }
 
 .Title {

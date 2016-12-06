@@ -8,8 +8,13 @@ var GoToRoomWindow = Window.extend({
 
         this.JObj.addClass(this.WindowType);
 
+        //to add the "X" button
         this.JObj.append(
-            "<input type='text' placeholder='Please input the room name' id='" + this.Id + "Input'></p>" +　
+            "<p class='ClickSoundEffect Close' id='" + this.Id + "Close'>X</p>"
+        );
+
+        this.JObj.append(
+            "<input type='text' placeholder='Please input the room name' id='" + this.Id + "Input'></p>" + 　
             "<p class='ClickSoundEffect' id='" + this.Id + "Confirm'>Confirm</p>"
         );
 
@@ -17,6 +22,7 @@ var GoToRoomWindow = Window.extend({
 
         this.InputJObj = $('#' + this.Id + 'Input');
         this.ConfirmJObj = $('#' + this.Id + 'Confirm');
+        this.CloseJObj = $('#' + this.Id + "Close");
 
         //to set the css
         //close state
@@ -24,18 +30,6 @@ var GoToRoomWindow = Window.extend({
             'top': this.CloseTop,
             'right': this.CloseRight
         });
-
-        /*
-        $('.' + this.WindowType + ">.ButtonList").css({
-            'position': 'absolute',
-            'margin': '0px 0px',
-            'bottom': '20px',
-            'font-size': '150%'
-        });
-
-        this.YesJObj.css('left', 100);
-        this.NoJObj.css('right', 100);
-        */
 
         this.InputJObj.css({
             'top': this.Height * 0.3,
@@ -48,6 +42,10 @@ var GoToRoomWindow = Window.extend({
         this.ConfirmJObj.click(() => {
             this.JObj.css('background-color', 'green');
             console.log(this.InputJObj.val());
+        });
+
+        this.CloseJObj.click(() => {
+            this.Close();
         });
     }
 });

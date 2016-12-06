@@ -61,6 +61,10 @@ router.get('/Paint', function(req, res) {
     res.sendFile(path.join(__dirname, '../view', 'Paint.html'));
 });
 
+router.get('/Webcam', function(req, res) {
+    res.sendFile(path.join(__dirname, '../view', 'Webcam.html'));
+});
+
 
 
 

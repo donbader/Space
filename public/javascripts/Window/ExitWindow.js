@@ -6,23 +6,15 @@ var ExitWindow = Window.extend({
         this.WindowType = "ExitWindow";
         this.Title = "Exit";
 
-        /*
-        //to create the window
-        windowListJObj.append(
-            "<div class='Window " + this.WindowType + "'+  id='" + this.Id + "'>" +
-            "<h1 class='title'>" + this.Title + "</h1>" +
-            "<p class='ClickSoundEffect' id='" + this.Id + "Yes'>Yes</p>" +
-            "<p class='ClickSoundEffect' id='" + this.Id + "No'>No</p>" +
-            "</div>"
-        );
-        
-        this.JObj = $('#' + this.Id);
-        */
-
         this.JObj.addClass(this.WindowType);
 
+        //to add the "X" button
         this.JObj.append(
-                        "<p class='ClickSoundEffect ButtonList' id='" + this.Id + "Yes'>Yes</p>" +
+            "<p class='ClickSoundEffect Close' id='" + this.Id + "Close'>X</p>"
+        );
+
+        this.JObj.append(
+            "<p class='ClickSoundEffect ButtonList' id='" + this.Id + "Yes'>Yes</p>" +
             "<p class='ClickSoundEffect ButtonList' id='" + this.Id + "No'>No</p>"
         );
 
@@ -30,6 +22,7 @@ var ExitWindow = Window.extend({
 
         this.YesJObj = $('#' + this.Id + "Yes");
         this.NoJObj = $('#' + this.Id + "No");
+        this.CloseJObj = $('#' + this.Id + "Close");
 
         //to set the css
         //close state
@@ -37,12 +30,12 @@ var ExitWindow = Window.extend({
             'top': this.CloseTop,
             'right': this.CloseRight
         });
-        
+
         $('.' + this.WindowType + ">.ButtonList").css({
             'position': 'absolute',
-    'margin': '0px 0px',
-    'bottom': '20px',
-    'font-size': '150%'
+            'margin': '0px 0px',
+            'bottom': '20px',
+            'font-size': '150%'
         });
 
         this.YesJObj.css('left', 100);
@@ -56,6 +49,10 @@ var ExitWindow = Window.extend({
 
         this.NoJObj.click(() => {
             this.JObj.css('background-color', 'gray');
+        });
+
+        this.CloseJObj.click(() => {
+            this.Close();
         });
     }
 });
