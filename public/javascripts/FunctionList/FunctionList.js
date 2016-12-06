@@ -2,8 +2,6 @@ var FunctionListWindow = Window.extend({
     init: function(Width) {
         'use strict';
         this.Top = 20;
-        //'right': functionListWidth * 0.5,
-        //'right': functionListWidth,
         this._super(Width, totalHeight - this.Top * 2);
 
         this.OpenTop = this.Top;
@@ -12,8 +10,6 @@ var FunctionListWindow = Window.extend({
         this.CloseRight = this.Width * 0.5;
         this.CloseWidth = 100;
         this.CloseHeight = 100;
-
-        //this.Id = 
 
         this.WindowType = "FunctionList";
         this.Title = "FunctionList";
@@ -25,23 +21,14 @@ var FunctionListWindow = Window.extend({
         this.JObj.addClass(this.WindowType);
 
         this.JObj.children('.Title').text(this.Title);
-
-        /*
-        this.JObj.click(() => {
-            if (this.IsOpen)
-                this.Close();
-            else
-                this.Open();
-        });
-        */
     },
     AppendItem: function(ItemId, ItemContent, ItemWindowId) {
         this.JObj.append(
             "<p class='ClickSoundEffect' id='" + ItemId + "'>" + ItemContent + "</p>"
-            );
+        );
         this.Items.push(new FunctionListItem(ItemId, ItemContent, ItemWindowId));
     },
-        Close: function() {
+    Close: function() {
         this.JObj.animate({
             'width': this.CloseWidth,
             'height': this.CloseHeight,
@@ -59,8 +46,7 @@ var FunctionListWindow = Window.extend({
         if (this.IsOpen) {
             this.IsOpen = false;
             this.Close();
-        }
-        else {
+        } else {
             this.IsOpen = true;
             this.Open();
             this.JObj.css({

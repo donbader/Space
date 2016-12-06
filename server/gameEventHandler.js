@@ -18,7 +18,7 @@ handler.connection = function(client) {
     var username = client.handshake.query.username;
     var roomID = username;
     var Character_type;
-    console.log(username +" ON CONNECTION");
+    console.log(username + " ON CONNECTION");
 
     //Get type
     if (username) {
@@ -124,7 +124,7 @@ handler.connection = function(client) {
                     users: userdata
                 }
             }, function(err, msg) {
-                if(msg.ok && msg.nModified){
+                if (msg.ok && msg.nModified) {
                     server.to(roomID).emit('add user', userdata);
                     client.join(roomID);
                 }
@@ -168,6 +168,33 @@ handler.connection = function(client) {
             x: data.x,
             y: data.y,
             type: data.type
+        });
+    });
+
+    client.on('setColor', function(data) {
+        client.broadcast.emit('setColor', {
+            i: data.i
+        });
+    });
+
+    client.on('setSize', function(data) {
+        client.broadcast.emit('setSize', {
+            i: data.i
+        });
+    });
+
+    client.on('setTool', function(data) {
+        client.broadcast.emit('setTool', {
+            tool: data.tool
+        });
+    });
+
+    client.on('clear', function(data) {
+        client.broadcast.emit('clear', {
+            x: data.x,
+            y: data.y,
+            width: data.width,
+            height: data.height
         });
     });
 

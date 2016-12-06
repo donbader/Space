@@ -6,17 +6,12 @@ var SettingsWindow = Window.extend({
         this.WindowType = "SettingsWindow";
         this.Title = "Settings";
 
-        //to create the window
-        /*
-        windowListJObj.append(
-            "<div class='Window " + this.WindowType + "' id='" + this.Id + "'>" +
-            "<h1 class='title'>" + this.Title + "</h1>" +
-            "<p class='ClickSoundEffect' id='" + this.Id + "Close'>Close</p>" +
-            "</div>"
-        );
-        */
-
         this.JObj.addClass(this.WindowType);
+
+        //to add the "X" button
+        this.JObj.append(
+            "<p class='ClickSoundEffect Close' id='" + this.Id + "Close'>X</p>"
+        );
 
         this.JObj.append(
             "<p class='ClickSoundEffect ButtonList' id='" + this.Id + "Set'>Set</p>"
@@ -25,6 +20,7 @@ var SettingsWindow = Window.extend({
         this.JObj.children('.Title').text(this.Title);
 
         this.SetJObj = $('#' + this.Id + "Set");
+        this.CloseJObj = $('#' + this.Id + "Close");
 
         //to set the css
         //close state
@@ -34,15 +30,20 @@ var SettingsWindow = Window.extend({
         });
 
         $('.' + this.WindowType + ">.ButtonList").css({
-                'position': 'absolute',
-    'margin': '0px 0px',
-    'bottom': '20px',
-    'right': '20px',
-    'font-size': '150%'
+            'position': 'absolute',
+            'margin': '0px 0px',
+            'bottom': '20px',
+            'right': '20px',
+            'font-size': '150%'
         });
 
+        //to set event
         this.SetJObj.click(() => {
             this.JObj.css('background-color', 'yellow')
+        });
+
+        this.CloseJObj.click(() => {
+            this.Close();
         });
     }
 });

@@ -35,9 +35,9 @@ var FunctionListItem = function(Id, Content, WindowObj) {
     this.JObj.click(() => {
         this.WindowObj.Open();
     });
-/*
-    this.WindowObj.CloseJObj.click(() => {
-        this.WindowObj.Close();
-    })
-    */
+    /*
+        this.WindowObj.CloseJObj.click(() => {
+            this.WindowObj.Close();
+        })
+        */
 };

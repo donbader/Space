@@ -14,21 +14,15 @@ var Window = Class.extend({
         windowListJObj.append(
             "<div class='Window' id='" + this.Id + "'>" +
             "<h1 class='Title'>" + this.Title + "</h1>" +
-            "<p class='ClickSoundEffect Close' id='" + this.Id + "Close'>X</p>" +
             "</div>"
         );
 
         this.JObj = $('#' + this.Id);
-        this.CloseJObj = $('#' + this.Id + "Close");
-
-        //to set event
-        this.CloseJObj.click(() => {
-            this.Close();
-        });
     },
     Open: function() {
         this.JObj.css({
-            'display': 'block'
+            'display': 'block',
+            '-webkit-border-radius': 25
         });
 
         //transform????
@@ -51,7 +45,7 @@ var Window = Class.extend({
             'top': this.CloseTop,
             'right': this.CloseRight
         }, this.Time, () => {
-            this.JObj.css('display', 'none')
+            this.JObj.css('display', 'none');
         });
     }
 });
