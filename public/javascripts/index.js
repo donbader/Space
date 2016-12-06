@@ -1,9 +1,10 @@
-
+$('form').submit(false);
 
 $("#GameAll").css({
     'display': 'none'
 });
 $("#enter").click(function() {
+    //if ($('#inputEmail').val() != "" && $('#inputPassword').val() != "") {
     var send_data = {
         Account: $('#inputEmail').val(),
         Password: $("#inputPassword").val()
@@ -108,5 +109,7 @@ $("#enter").click(function() {
                 window.location = "/";
             }
         }
+
     });
+//  }
 });

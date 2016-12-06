@@ -102,6 +102,9 @@
         add: function(obj) {
             this.scene.add(obj);
         },
+        remove: function(obj){
+            this.scene.remove(obj);
+        },
         addDynamicObject: function(obj, model){
             if(!obj.update){
                 console.error("This is not an Dynamic Object");
