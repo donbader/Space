@@ -1,5 +1,5 @@
 var handler = {};
-
+// TODO: Write statics function to Room, Item, User
 
 
 var User = require('./../db/user');
@@ -15,13 +15,13 @@ handler.setServer = function(s) {
 }
 
 handler.connection = function(client) {
-    console.log("connection");
     var username = client.handshake.query.username;
     var roomID = username;
     var Character_type;
+    console.log(username +" ON CONNECTION");
 
     //Get type
-    if(username){
+    if (username) {
         User.findOne({
             name: username
         }, function(err, data) {
@@ -36,12 +36,18 @@ handler.connection = function(client) {
     client.on('join', (data) => {
         roomID = data.roomID;
         // remove from prev room
-        Room.findAndModify(
-            {users: {$in: [username]}},
-            {$pull: {users: username}},
-            function(err, obj){
-                if(err)console.error(err);
-                if(obj && obj.value){
+        Room.findAndModify({
+                users: {
+                    $in: [username]
+                }
+            }, {
+                $pull: {
+                    users: username
+                }
+            },
+            function(err, obj) {
+                if (err) console.error(err);
+                if (obj && obj.value) {
                     leave(obj.value.owner);
                 }
             }
@@ -51,20 +57,24 @@ handler.connection = function(client) {
         // try to find room's config..
         Room.findOne({
             owner: roomID
-        }, function(err, obj){
-            if(err)return console.error(err);
+        }, function(err, obj) {
+            if (err) return console.error(err);
+            if (!obj) {
+                sysMsg(client, "There is no room: " + roomID);
+                return;
+            }
             // create game
 
             client.emit('create game', {
                 character: Character_type
             });
             // render items
-            obj.items.forEach((element, index, array)=>{
+            obj.items.forEach((element, index, array) => {
                 Item.findOne({
                     id: element.id
-                }, function(err,data){
-                    if(err)return console.log(err);
-                    if(data){
+                }, function(err, data) {
+                    if (err) return console.log(err);
+                    if (data) {
                         client.emit('render item', {
                             item: data,
                             position: element.position,
@@ -75,45 +85,90 @@ handler.connection = function(client) {
             });
 
             // render users
-            for(var j=0; j< obj.users.length; ++j){
-                User.findOne({
-                    name: obj.users[j]
-                }, function(err,user){
-                    if(err)return console.log(err);
-                    if(user){
-                        console.log(user);
-                        client.emit('render user', user.type);
-                    }
-                })
-            }
+            // for(var j=0; j< obj.users.length; ++j){
+            //     User.findOne({
+            //         name: obj.users[j]
+            //     }, function(err,user){
+            //         if(err)return console.log(err);
+            //         if(user){
+            //             console.log(user);
+            //             client.emit('render user', {
+            //                 name: user.name,
+            //                 type: user.type,
+            //                 position: ,
+            //
+            //             });
+            //         }
+            //     })
+            // }
 
             client.emit("start game");
+            var userdata = {
+                name: username,
+                type: Character_type,
+                position: {
+                    x: 0,
+                    y: 0,
+                    z: 0
+                },
+                rotation: {
+                    x: 0,
+                    y: 0,
+                    z: 0
+                }
+            };
+            Room.update({
+                owner: roomID
+            }, {
+                $push: {
+                    users: userdata
+                }
+            }, function(err, msg) {
+                if(msg.ok && msg.nModified){
+                    server.to(roomID).emit('add user', userdata);
+                    client.join(roomID);
+                }
+            });
         });
 
         // BroadCast
-        client.join(roomID);
-        server.to(roomID).emit('render user', Character_type);
-
-
     });
-
-    client.on('update', (data) => {
+    client.on('update user', function(data) {
         if (!checkValid()) return;
-        server.to(roomID).emit('update', {
-            username: username,
-            object: data
+        server.to(roomID).emit('update user', {
+            name: username,
+            position: data.position,
+            rotation: data.rotation
         });
+
+        Room.update({
+            owner: roomID,
+            "users.name": username
+        }, {
+            $set: {
+                "users.$.position": data.position,
+                "users.$.rotation": data.rotation
+            }
+        });
+
     });
+    // client.on('update', (data) => {
+    //     if (!checkValid()) return;
+    //     server.to(roomID).emit('update', {
+    //         username: username,
+    //         object: data
+    //     });
+    // });
 
 
     client.on('disconnect', leave);
 
     client.on('drawClick', function(data) {
-      client.broadcast.emit('draw', {
-        x: data.x,
-        y: data.y,
-        type: data.type
-      });
+        client.broadcast.emit('draw', {
+            x: data.x,
+            y: data.y,
+            type: data.type
+        });
     });
 
     function checkValid(id) {
@@ -126,11 +181,22 @@ handler.connection = function(client) {
     }
 
     function leave(id) {
-        if(!checkValid(id))return;
+        if (!checkValid(id)) return;
+        console.log("ON LEAVE");
         id = id || roomID;
         client.leave(id);
-        server.to(id).emit('pop user', {username: username});
-
+        server.to(id).emit('remove user', username);
+        Room.update({
+            owner: roomID
+        }, {
+            $pull: {
+                users: {
+                    name: username
+                }
+            }
+        }, {
+            multi: true
+        }, function(err, obj) {});
         sysMsg(client, 'leave ' + roomID);
     }
 
