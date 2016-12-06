@@ -71,19 +71,19 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <form class="form-signin" action="" method="post">
+                    <form class="form-signin">
                         <h2 class="form-signin-heading">Modify</h2>
                         <label for="inputEmail" class="sr-only">Old Account</label>
                         <input type="text" name="account" id="inputEmail" class="form-control" placeholder="Old Account" required autofocus>
                         <br>
                         <label for="inputPassword" class="sr-only">Old Password</label>
-                        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Old Password" required>
+                        <input type="password" name="password" id="old_inputPassword" class="form-control" placeholder="Old Password" required>
                         <br>
                         <label for="inputPassword" class="sr-only">New Password</label>
-                        <input type="password" name="npassword" id="inputPassword" class="form-control" placeholder="New Password" required>
+                        <input type="password" name="npassword" id="new_inputPassword" class="form-control" placeholder="New Password" required>
                         <br>
                         <a href="/">Back to Sign In!</a>
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">Modify</button>
+                        <button class="btn btn-lg btn-primary btn-block" id="enter" type="submit">Modify</button>
                     </form>
                 </div>
             </div>
@@ -122,7 +122,7 @@
                     <div class="footer-col col-md-4">
                         <h3>About Space</h3>
                         <p>Space is a room that you can set everything as you want.</p>
-                        <p>Let's create your own <a href="http://localhost:3001/SignUp">Space</a>!</p>
+                        <p>Let's create your own <a href="/">Space</a>!</p>
                     </div>
                 </div>
             </div>
@@ -385,6 +385,8 @@
     <script src="javascripts/contact_me.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="javascripts/freelancer.js"></script>
+    <script src="javascripts/modify.js"></script>
+
 </body>
 
 </html>
