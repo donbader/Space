@@ -71,22 +71,31 @@ $("#enter").click(function() {
                     });
 
                     socket.on('render item', function(data){
-                        var item;
                         switch (data.item.type) {
                             case "script":
-                                var scripts = "item = ";
+                                var scripts = "var item = ";
                                 scripts += data.item.data.scripts.join();
                                 eval(scripts);
+                                item.position.set(data.position.x, data.position.y, data.position.z);
+                                item.rotation.set(data.rotation.x, data.rotation.y, data.rotation.z);
+                                game.add(item);
+                                if(item.ObjectsToMoveOn){
+                                    player.canMoveOn(item.ObjectsToMoveOn);
+                                }
+                                break;
+                            case "file":
+                                var loader = new THREE.ObjectLoader();
+                                loader.load(data.item.data.path, function(item) {
+                                    item.position.set(data.position.x, data.position.y, data.position.z);
+                                    item.rotation.set(data.rotation.x, data.rotation.y, data.rotation.z);
+                                    game.add(item);
+                                });
+                                break;
+                        }
 
 
-                        }
-                        item.position.set(data.position.x, data.position.y, data.position.z);
-                        item.rotation.set(data.rotation.x, data.rotation.y, data.rotation.z);
-                        game.add(item);
-                        if(item.ObjectsToMoveOn){
-                            player.canMoveOn(item.ObjectsToMoveOn);
-                        }
                     });
+
 
 
                     socket.on('add user', function(userdata){
@@ -118,7 +127,11 @@ $("#enter").click(function() {
                             // Users[userdata.name].object.rotation.z = userdata.rotation.z;
                         }
 
-                    })
+                    });
+                    socket.on('destroy game', function(){
+                        game.stop();
+                        delete game;
+                    });
 
 
                     ////////////////////
@@ -129,13 +142,7 @@ $("#enter").click(function() {
                     socket.emit('join', {
                         roomID:roomID
                     });
-
-                    // var Ninja = Character.extend({
-                    //     init: function(){
-                    //         this._super();
-                    //         this.body.material.color.setHex( 0x000000 );
-                    //     }
-                    // });
+                    //
 
 
 

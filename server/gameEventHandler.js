@@ -214,6 +214,7 @@ handler.connection = function(client) {
         }, {
             multi: true
         }, function(err, obj) {});
+        client.emit('destroy game');
         sysMsg(client, 'leave ' + roomID);
     }
 
