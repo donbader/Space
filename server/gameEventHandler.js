@@ -85,22 +85,9 @@ handler.connection = function(client) {
             });
 
             // render users
-            // for(var j=0; j< obj.users.length; ++j){
-            //     User.findOne({
-            //         name: obj.users[j]
-            //     }, function(err,user){
-            //         if(err)return console.log(err);
-            //         if(user){
-            //             console.log(user);
-            //             client.emit('render user', {
-            //                 name: user.name,
-            //                 type: user.type,
-            //                 position: ,
-            //
-            //             });
-            //         }
-            //     })
-            // }
+            obj.users.forEach((element,index,array)=>{
+                client.emit('add user', element);
+            });
 
             client.emit("start game");
             var userdata = {
@@ -135,7 +122,7 @@ handler.connection = function(client) {
     });
     client.on('update user', function(data) {
         if (!checkValid()) return;
-        server.to(roomID).emit('update user', {
+        client.broadcast.to(roomID).emit('update user', {
             name: username,
             position: data.position,
             rotation: data.rotation
@@ -149,7 +136,7 @@ handler.connection = function(client) {
                 "users.$.position": data.position,
                 "users.$.rotation": data.rotation
             }
-        });
+        },function(err,msg){});
 
     });
     // client.on('update', (data) => {
@@ -161,7 +148,9 @@ handler.connection = function(client) {
     // });
 
 
-    client.on('disconnect', leave);
+    client.on('disconnect', ()=>{
+        leave();
+    });
 
     client.on('drawClick', function(data) {
         client.broadcast.emit('draw', {
