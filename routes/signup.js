@@ -6,8 +6,6 @@ var router = express.Router();
 var querystring = require("querystring");
 var mongoose = require('mongoose');
 
-
-
 router.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, '../view', 'SignUp.html'));
 });
@@ -46,13 +44,27 @@ router.post('/add', function(req, res) {
                 });
 
                 var roomdata = new Room({
-                    owner:in_name,
+                    owner: in_name,
                     name: in_name + "\'s room",
-                    items: ["Room_000"],
-                    users:[]
+                    items: [{
+                        id: "Room_000",
+                        position: {
+                            x: 0,
+                            y: 0,
+                            z: 0
+                        },
+                        rotation: {
+                            x: 0,
+                            y: 0,
+                            z: 0
+                        }
+                    }],
+                    users: []
                 });
-                roomdata.save(function(err){if(err)return console.error(err);});
-            } else{
+                roomdata.save(function(err) {
+                    if (err) return console.error(err);
+                });
+            } else {
                 res.send({
                     msg: "fail"
                 });

@@ -25,7 +25,8 @@ handler.connection = function(client) {
         User.findOne({
             name: username
         }, function(err, data) {
-            Character_type = data.type;
+            if(err)return console.error(err);
+            if(data)Character_type = data.type;
         });
     }
 
