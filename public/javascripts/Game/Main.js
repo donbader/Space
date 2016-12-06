@@ -52,24 +52,28 @@ socket.on('add user', function(userdata){
     console.log(Users);
     Users[userdata.name] = userdata;
     // Users[userdata.name].object = (new Character()).model;
-    Users[userdata.name].object = eval('new '+userdata.type+'()').model;
+    Users[userdata.name].object = eval('new '+userdata.type+'()');
     Users[userdata.name].object.name = userdata.name;
     game.add(Users[userdata.name].object);
-    console.log(game.scene);
+    console.log(userdata);
     // because pos,rot is all 0 , so we don't set them
 })
 socket.on('remove user', function(username){
     console.log('remove user');
     console.log(Users);
-    game.remove(Users[username]);
+    game.remove(Users[username].object);
     delete Users[username];
 });
 
 socket.on('update user', function(userdata){
-    console.log("updated user");
     if(Users[userdata.name]){
-        Users[userdata.name].object.model.position.set(userdata.position);
-        Users[userdata.name].object.model.rotation.set(userdata.rotation);
+        Users[userdata.name].object.position.x = userdata.position.x;
+        Users[userdata.name].object.position.y = userdata.position.y;
+        Users[userdata.name].object.position.z = userdata.position.z;
+        Users[userdata.name].object.rotation.y = userdata.rotation._y;
+        // Users[userdata.name].object.rotation.x = userdata.rotation.x;
+        // Users[userdata.name].object.rotation.y = userdata.rotation.y;
+        // Users[userdata.name].object.rotation.z = userdata.rotation.z;
     }
 
 })

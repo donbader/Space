@@ -105,8 +105,8 @@ $("#enter").click(function() {
                     });
                 });
             } else {
-                alert("Wrong In Username Or Password");
-                window.location = "/";
+                // alert("Wrong In Username Or Password");
+                // window.location = "/";
             }
         }
 

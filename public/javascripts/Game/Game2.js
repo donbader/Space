@@ -121,16 +121,13 @@
             if(this.Controller)
                 this.Controller.controls.enable(false);
 
-            // controller.in(this.scene, this.renderer);
-            this.add(controller);
-            this.add(controller.controls.positionFlag);
-            controller.controls.enable(true, this.container);
 
-            if(this.socket)
-                controller.socket = this.socket;
+            controller.in(this.scene, this.renderer);
+            controller.controls.enable(true, this.container);
+            controller.socket = this.socket;
 
             this.camera = controller.controls.camera;
-            this.addDynamicObject(controller);
+            this.addDynamicObject(controller, controller.model);
 
             this.Controller = controller;
         },
