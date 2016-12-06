@@ -2,7 +2,7 @@
 (function() {
     var GAME_STATE = { STOP: -1, READY: 0, RUNNING: 1, PAUSE: 2 };
     var Game = this.Game = Class.extend({
-        init: function(divId, player, world, socket) {
+        init: function(divId, player, socket) {
             // init elements
             this.container = document.getElementById('GamePlay');
             var scope = this.scope = this;
@@ -54,8 +54,7 @@
 
             // DO
             // TODO: Think the better way to store
-            player.canMoveOn(world.ground);
-            this.add(world);
+            // player.canMoveOn(world.ground);
 
 			//to create the plane mesh
             var iframeWidth = 1004, iframeHeight = 504;

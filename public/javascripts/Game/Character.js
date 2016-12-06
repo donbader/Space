@@ -92,7 +92,6 @@
             }
         },
         move: function(x, y, z) {
-            console.log("NMOMEOOMEMOEO");
             var position = this.position();
             position.x += x;
             position.y += y;

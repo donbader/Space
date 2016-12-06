@@ -1,6 +1,7 @@
 var express = require('express');
 var path = require('path');
 var User = require('./../db/user');
+var Room = require('./../db/room');
 var router = express.Router();
 var querystring = require("querystring");
 var mongoose = require('mongoose');
@@ -22,27 +23,43 @@ router.post('/add', function(req, res) {
         var in_password = para.Password;
         var in_name = para.Account;
 
-        var element = new User({
+        var userdata = new User({
             name: in_name,
-            password: in_password
+            password: in_password,
+            type: "Character"
         });
 
+
+
+        // TODO: Avoid Callback Hell (Use findOne.exec())
+        // TODO: Room save error handler, success handler
         User.findOne({
             name: in_name
         }, function(err, user) {
             if (err) return console.log(err);
             if (user == null) {
-                element.save(function(err, element) {
+                userdata.save(function(err) {
                     if (err) return console.error(err);
                     res.send({
                         msg: "success"
                     });
                 });
-            } else
+
+                var roomdata = new Room({
+                    owner:in_name,
+                    name: in_name + "\'s room",
+                    items: ["Room_000"],
+                    users:[]
+                });
+                roomdata.save(function(err){if(err)return console.error(err);});
+            } else{
                 res.send({
                     msg: "fail"
                 });
+            }
         });
+
+
 
     })
 
