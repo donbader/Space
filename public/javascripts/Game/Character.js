@@ -35,6 +35,7 @@
             /*****************
              *    Model      *
              *****************/
+            this.model = new THREE.Object3D();
             // init eye
             this.eye.add(new THREE.Object3D().add(this.controls.camera));
             this.setMode(MODE_STATE.THIRD_PERSON);
@@ -57,6 +58,9 @@
                 color: 0xff0000
             }));
             this.controls.positionFlag.height = 30;
+
+            ////////////////////////////////////////
+
         },
         in: function(scene, renderer) {
             this.scene = scene;
@@ -81,13 +85,7 @@
             this.model.translateZ(z);
             if(x && y && z){
                 if(this.socket){
-                    var scope = this;
-                    socket.emit('update', {
-                        id: scope.model.id,
-                        scripts: [
-                            "translate("+x+","+y+","+z+")"
-                        ]
-                    });
+                    this.ServerUpdate();
                 }
             }
         },
@@ -98,13 +96,7 @@
             position.z += z;
             if(x && y && z){
                 if(this.socket){
-                    var scope = this;
-                    socket.emit('update', {
-                        id: scope.model.id,
-                        scripts: [
-                            "move("+x+","+y+","+z+")"
-                        ]
-                    });
+                    this.ServerUpdate();
                 }
             }
         },
@@ -114,13 +106,7 @@
             position.y = y;
             position.z = z;
             if(this.socket){
-                var scope = this;
-                socket.emit('update', {
-                    id: scope.model.id,
-                    scripts: [
-                        "moveTo("+x+","+y+","+z+")"
-                    ]
-                });
+                this.ServerUpdate();
             }
         },
         turn: function(x, y) {
@@ -146,13 +132,7 @@
             this.model.rotation.y = x;
             this.eye.children[0].rotation.x = y;
             if(this.socket){
-                var scope = this;
-                socket.emit('update', {
-                    id: scope.model.id,
-                    scripts: [
-                        "turnTo("+x+","+y+")"
-                    ]
-                });
+                this.ServerUpdate();
             }
         },
         walkFunction: function(destination) {
@@ -170,6 +150,12 @@
         },
         position: function() {
             return this.model.position;
+        },
+        ServerUpdate: function(){
+            socket.emit('update user', {
+                position: this.model.position,
+                rotation: this.model.rotation
+            })
         },
         update: function(delta) {
 
