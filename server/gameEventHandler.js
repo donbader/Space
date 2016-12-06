@@ -106,6 +106,13 @@ handler.connection = function(client) {
 
     client.on('disconnect', leave);
 
+    client.on('drawClick', function(data) {
+      client.broadcast.emit('draw', {
+        x: data.x,
+        y: data.y,
+        type: data.type
+      });
+    });
 
     function checkValid(id) {
         id = id || roomID;

@@ -1,6 +1,6 @@
 var mongoose = require('./dbconnection');
 
-var UserSchema = mongoose.Schema({
+var UserSchema = new mongoose.Schema({
   name : String,
   password : String,
   type: String

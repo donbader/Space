@@ -1,6 +1,6 @@
 var mongoose = require('./dbconnection');
 
-var ItemSchema = mongoose.Schema({
+var ItemSchema = new mongoose.Schema({
   id : String,
   type: String,
   data: {}
