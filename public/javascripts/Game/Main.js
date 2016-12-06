@@ -6,7 +6,7 @@ var roomID = query[1].split("=")[1];
 ////////////////////
 //////SOCKET////////
 ////////////////////
-var Users = [];
+var Users = {};
 var game;
 var player;
 var world;
@@ -17,22 +17,15 @@ socket.on('sys', function(data){
     console.log('sys:' + data);
 });
 
-socket.on('update',function (data){
-    console.log(data);
-    // for(var i in data){
-    //     console.log(data[i]);
-    //     // var object = .get(data[i].id);
-    //     // object.position.set(data[i].position);
-    //     // object.rotation.set(data[i].rotation);
-    // }
-});
 socket.on('create game', function(data){
     player = eval("new "+data.character+"()");
+    // player = new Character();
     game = new Game("GamePlay", player, socket);
 });
 
 socket.on('start game', function(){
     game.start();
+    console.log(game.scene);
 });
 
 socket.on('render item', function(data){
@@ -54,14 +47,34 @@ socket.on('render item', function(data){
 });
 
 
-socket.on('render user', function(data){
-    console.log('render user');
-    console.log(data);
+socket.on('add user', function(userdata){
+    console.log(userdata.name + " has joined");
+    console.log(Users);
+    Users[userdata.name] = userdata;
+    // Users[userdata.name].object = (new Character()).model;
+    Users[userdata.name].object = eval('new '+userdata.type+'()').model;
+    Users[userdata.name].object.name = userdata.name;
+    game.add(Users[userdata.name].object);
+    console.log(game.scene);
+    // because pos,rot is all 0 , so we don't set them
+})
+socket.on('remove user', function(username){
+    console.log('remove user');
+    console.log(Users);
+    game.remove(Users[username]);
+    delete Users[username];
 });
-socket.on('pop user', function(data){
-    console.log('pop');
-    console.log(data.username);
-});
+
+socket.on('update user', function(userdata){
+    console.log("updated user");
+    if(Users[userdata.name]){
+        Users[userdata.name].object.model.position.set(userdata.position);
+        Users[userdata.name].object.model.rotation.set(userdata.rotation);
+    }
+
+})
+
+
 ////////////////////
 ////////MAIN////////
 ////////////////////
