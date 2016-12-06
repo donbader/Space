@@ -2,7 +2,7 @@ var GoToRoomWindow = Window.extend({
     init: function(Width, Height) {
         'use strict';
         this._super(Width, Height);
-
+        var socket = this.socket;
         this.WindowType = "GoToRoomWindow";
         this.Title = "GoToRoom";
 
@@ -41,12 +41,11 @@ var GoToRoomWindow = Window.extend({
         //to set event
         this.ConfirmJObj.click(() => {
             this.JObj.css('background-color', 'green');
-            //var rid = this.InputJObj.val();
-            var rid = 'corey';
+            var rid = this.InputJObj.val();
+            //var rid = 'corey';
             console.log(rid);
 
             //to set socket
-            var socket = io.connect('/');
             socket.emit('join', {
                 roomID: rid
             });

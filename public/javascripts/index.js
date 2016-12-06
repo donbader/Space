@@ -21,7 +21,7 @@ $("#enter").click(function() {
 
                 var socket = io.connect();
                 socket.emit('join', {
-                    username: JSONData.id
+                    roomID: JSONData.id
                 });
 
                 // console.log("ID=",id);
@@ -129,6 +129,7 @@ $("#enter").click(function() {
 
                     });
                     socket.on('destroy game', function(){
+                        console.log("YO");
                         game.stop();
                         delete game;
                     });
