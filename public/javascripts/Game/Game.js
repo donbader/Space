@@ -75,6 +75,26 @@
             cssObj.rotation.copy(planeMesh.rotation);
 			this.CssScene.add(cssObj);
 
+            elemet = document.createElement('iframe');
+            element.src = '/Webcam';
+            element.with = iframeWidth;
+            element.height = iframeHeight;
+            element.scrolling = 'no';
+            cssObj = new THREE.CSS3DObject(element);
+            cssObj.position.set(200, 250, -1000);
+            //cssObj.rotation.copy(planeMesh.rotation);
+            this.CssScene.add(cssObj);
+
+            elemet = document.createElement('iframe');
+            element.src = '/WebcamCanvas';
+            element.with = iframeWidth;
+            element.height = iframeHeight;
+            element.scrolling = 'no';
+            cssObj = new THREE.CSS3DObject(element);
+            cssObj.position.set(400, 250, -1000);
+            //cssObj.rotation.copy(planeMesh.rotation);
+            this.CssScene.add(cssObj);
+
             //important
 			scope.camera.updateProjectionMatrix();
 

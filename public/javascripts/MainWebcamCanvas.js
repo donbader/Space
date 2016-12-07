@@ -8,7 +8,9 @@
 
 // Webcam.attach('#camera');
 
+
 (function webcam() {
+    /*
 if (!navigator.getUserMedia) {
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 }
@@ -16,12 +18,16 @@ if (!navigator.getUserMedia) {
 if (!navigator.getUserMedia) {
     return alert('getUserMedia not supported in this browser.');
 }
+*/
+
+
 
 var canvas = document.getElementById('canvas');
 var context = canvas.getContext('2d');
 var audioSource;
 var cw = Math.floor(canvas.clientWidth / 2);
 var ch = Math.floor(canvas.clientHeight/2);
+var stream;
 //canvas.width = cw;
 //canvas.height = ch;
 
@@ -30,12 +36,17 @@ var video = document.createElement("video");
 video.autoplay="autoplay";
 video.addEventListener('playing', function(){
     //delay for settling...
+    console.log(this);
     setTimeout(draw,50,this,context,(currentSource*canvas.clientWidth/2),cw,ch);
 },false);
 
 //to set socket
 
 var socket = io.connect('/');
+socket.on('getStream', function(data) {
+    //return next(data.mediaStream);
+    stream = data.mediaStream;
+});
 
 function captureVideo() {
     //console.log("Capturing " + currentSource,videosources[currentSource]);
@@ -48,8 +59,11 @@ function captureVideo() {
                 {sourceId: videosources[currentSource].id}
             ]
         }};
-    navigator.getUserMedia(mediaOptions, success, errorCallback);
+    //navigator.getUserMedia(mediaOptions, success, errorCallback);
+
+    success(stream);
 }
+
 var currentSource=0;
 var videosources = [];
 var lastStream;
@@ -61,17 +75,12 @@ function success(stream) {
     video.src = window.URL.createObjectURL(stream);
     video.play();
     lastStream=stream;
-
-    //to push the stream
-    socket.emit('pushStream', {
-        mediaStream: stream
-    });
 }
+
 function next(){
     //console.log("next");
     //console.log(lastStream);
     if(lastStream){
-
         lastStream.getTracks()[0].stop();
     }
     video.src = "";
@@ -82,6 +91,9 @@ function next(){
     {
         currentSource=0;
     }
+
+    //stream = mediaStream;
+
     captureVideo();
 }
 function draw(v,c,l,w,h) {

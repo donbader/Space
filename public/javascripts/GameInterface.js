@@ -5,6 +5,7 @@ var windowListJObj = $('#WindowList');
 var totalWidth = $('body').width(),
     totalHeight = $('.Height').height();
 var functionListWidth = 200;
+var funcitonListWindow;
 
 //console.log(totalHeight);
 
@@ -13,16 +14,16 @@ $(document).ready(function() {
     //var functionListWidth = 200,
     //    functionList = new FunctionList(functionListWidth);
 
-    var functionListWindow = new FunctionListWindow(functionListWidth);
+    functionListWindow = new FunctionListWindow(functionListWidth);
 
     var bagWindow = new BagWindow(600, 400);
     var settingsWindow = new SettingsWindow(500, 400);
-    var goToRoomWindow = new GoToRoomWindow(500, 200);
+    //var goToRoomWindow = new GoToRoomWindow(500, 200);
     var exitWindow = new ExitWindow(500, 200);
 
     functionListWindow.AppendItem("Bag", "Bag1", bagWindow);
     functionListWindow.AppendItem("Settings", "Settings1", settingsWindow);
-    functionListWindow.AppendItem("GoToRoom", "GoToRoom1", goToRoomWindow);
+    //functionListWindow.AppendItem("GoToRoom", "GoToRoom1", goToRoomWindow);
     functionListWindow.AppendItem("Exit", "Exit1", exitWindow);
 
     //to set the event

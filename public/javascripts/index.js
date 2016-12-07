@@ -21,7 +21,7 @@ $("#enter").click(function() {
 
                 var socket = io.connect();
                 socket.emit('join', {
-                    username: JSONData.id
+                    roomID: JSONData.id
                 });
 
                 // console.log("ID=",id);
@@ -63,6 +63,12 @@ $("#enter").click(function() {
                         player = eval("new "+data.character+"()");
                         // player = new Character();
                         game = new Game("GamePlay", player, socket);
+
+                        //to create gotoroomwindow
+                        var goToRoomWindow = new GoToRoomWindow(500, 200, socket);
+                        console.log(funcitonListWindow);
+                        functionListWindow.AppendItem("GoToRoom", "GoToRoom1", goToRoomWindow);
+
                     });
 
                     socket.on('start game', function(){
@@ -136,8 +142,12 @@ $("#enter").click(function() {
                             // Users[userdata.name].object.rotation.y = userdata.rotation.y;
                             // Users[userdata.name].object.rotation.z = userdata.rotation.z;
                         }
-
-                    })
+                    });
+                    socket.on('destroy game', function(){
+                        console.log("YO");
+                        game.stop();
+                        delete game;
+                    });
 
 
                     ////////////////////
