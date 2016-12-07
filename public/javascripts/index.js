@@ -68,7 +68,8 @@ $("#enter").click(function() {
                         var goToRoomWindow = new GoToRoomWindow(500, 200, socket);
                         console.log(funcitonListWindow);
                         functionListWindow.AppendItem("GoToRoom", "GoToRoom1", goToRoomWindow);
-
+                        //console.log("socket id" + socket.)
+                        console.log(socket);
                     });
 
                     socket.on('start game', function(){

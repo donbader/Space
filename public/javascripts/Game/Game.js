@@ -75,25 +75,25 @@
             cssObj.rotation.copy(planeMesh.rotation);
 			this.CssScene.add(cssObj);
 
-            elemet = document.createElement('iframe');
-            element.src = '/Webcam';
-            element.with = iframeWidth;
-            element.height = iframeHeight;
-            element.scrolling = 'no';
-            cssObj = new THREE.CSS3DObject(element);
-            cssObj.position.set(200, 250, -1000);
+            var element1 = document.createElement('iframe');
+            element1.src = '/Webcam';
+            element1.with = 504;
+            element1.height = 404;
+            element1.scrolling = 'no';
+            var cssObj1 = new THREE.CSS3DObject(element1);
+            cssObj1.position.set(200, 250, -1000);
             //cssObj.rotation.copy(planeMesh.rotation);
-            this.CssScene.add(cssObj);
+            this.CssScene.add(cssObj1);
 
-            elemet = document.createElement('iframe');
-            element.src = '/WebcamCanvas';
-            element.with = iframeWidth;
-            element.height = iframeHeight;
-            element.scrolling = 'no';
-            cssObj = new THREE.CSS3DObject(element);
-            cssObj.position.set(400, 250, -1000);
-            //cssObj.rotation.copy(planeMesh.rotation);
-            this.CssScene.add(cssObj);
+            var element2 = document.createElement('iframe');
+            element2.src = '/WebcamCanvas';
+            element2.with = 504;
+            element2.height = 404;
+            element2.scrolling = 'no';
+            var cssObj2 = new THREE.CSS3DObject(element2);
+            cssObj2.position.set(400, 250, -1000);
+            //cssObj2.rotation.copy(planeMesh.rotation);
+            this.CssScene.add(cssObj2);
 
             //important
 			scope.camera.updateProjectionMatrix();
