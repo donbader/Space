@@ -72,9 +72,11 @@ handler.connection = function(client) {
 
             // render users
             obj.users.forEach((element,index,array)=>{
-                client.emit('add user', element);
-                console.log('['+username+'] add user'+element.name);
-                client.broadcast.to(roomID).emit('fetch userdata', client.id);
+                if(element.name && element.type){
+                    client.emit('add user', element);
+                    console.log('['+username+'] add user'+element.name);
+                    client.broadcast.to(roomID).emit('fetch userdata', client.id);
+                }
             });
 
             client.emit("start game");
