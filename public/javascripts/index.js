@@ -106,19 +106,19 @@ $("#enter").click(function() {
 
                     socket.on('add user', function(userdata){
                         console.log(userdata.name + " has joined");
+                        Users[userdata.id] = userdata;
                         console.log(Users);
-                        Users[userdata.name] = userdata;
-                        // Users[userdata.name].object = (new Character()).model;
-                        Users[userdata.name].object = eval('new '+userdata.type+'()');
-                        Users[userdata.name].object.name = userdata.name;
-                        game.add(Users[userdata.name].object);
+                        // Users[userdata.id].object = (new Character()).model;
+                        Users[userdata.id].object = eval('new '+userdata.type+'()');
+                        Users[userdata.id].object.name = userdata.name;
+                        game.add(Users[userdata.id].object);
                         console.log(userdata);
                         // because pos,rot is all 0 , so we don't set them
                     })
-                    socket.on('remove user', function(username){
+                    socket.on('remove user', function(id){
                         console.log('remove user');
                         console.log(Users);
-                        game.remove(Users[username].object);
+                        game.remove(Users[id].object);
                         delete Users[username];
                     });
 
@@ -133,12 +133,14 @@ $("#enter").click(function() {
 
 
 
-                    socket.on('update user', function(userdata){
-                        if(Users[userdata.name]){
-                            Users[userdata.name].object.position.x = userdata.position.x;
-                            Users[userdata.name].object.position.y = userdata.position.y;
-                            Users[userdata.name].object.position.z = userdata.position.z;
-                            Users[userdata.name].object.rotation.y = userdata.rotation._y;
+                    socket.on('zzz', function(userdata){
+                        console.log('zzz');
+                        console.log(Users[userdata.id]);
+                        if(Users[userdata.id]){
+                            Users[userdata.id].object.position.x = userdata.position.x;
+                            Users[userdata.id].object.position.y = userdata.position.y;
+                            Users[userdata.id].object.position.z = userdata.position.z;
+                            Users[userdata.id].object.rotation.y = userdata.rotation._y;
                             // Users[userdata.name].object.rotation.x = userdata.rotation.x;
                             // Users[userdata.name].object.rotation.y = userdata.rotation.y;
                             // Users[userdata.name].object.rotation.z = userdata.rotation.z;
