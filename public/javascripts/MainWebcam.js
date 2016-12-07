@@ -22,6 +22,7 @@ var context = canvas.getContext('2d');
 var audioSource;
 var cw = Math.floor(canvas.clientWidth / 2);
 var ch = Math.floor(canvas.clientHeight/2);
+
 //canvas.width = cw;
 //canvas.height = ch;
 
