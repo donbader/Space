@@ -75,6 +75,26 @@
             cssObj.rotation.copy(planeMesh.rotation);
 			this.CssScene.add(cssObj);
 
+            elemet = document.createElement('iframe');
+            element.src = '/Webcam';
+            element.with = iframeWidth;
+            element.height = iframeHeight;
+            element.scrolling = 'no';
+            cssObj = new THREE.CSS3DObject(element);
+            cssObj.position.set(200, 250, -1000);
+            //cssObj.rotation.copy(planeMesh.rotation);
+            this.CssScene.add(cssObj);
+
+            elemet = document.createElement('iframe');
+            element.src = '/WebcamCanvas';
+            element.with = iframeWidth;
+            element.height = iframeHeight;
+            element.scrolling = 'no';
+            cssObj = new THREE.CSS3DObject(element);
+            cssObj.position.set(400, 250, -1000);
+            //cssObj.rotation.copy(planeMesh.rotation);
+            this.CssScene.add(cssObj);
+
             //important
 			scope.camera.updateProjectionMatrix();
 
@@ -88,16 +108,23 @@
                 scope.renderer.render(scope.scene, scope.camera);
                 scope.CssRenderer.render(scope.CssScene, scope.camera);
 
-                requestAnimationFrame(scope.render);
+                if(scope.state == GAME_STATE.RUNNING)
+                    scope.requestId = requestAnimationFrame(scope.render);
+                // else if(this.state == GAME_STATE.STOP)
+                    // cancelAnimationFrame(this.requestId);
             }
             this.start = function() {
-                this.state = GAME_STATE.RUNNING;
-                this.requestId = requestAnimationFrame(scope.render);
+                scope.state = GAME_STATE.RUNNING;
+                requestAnimationFrame(scope.render);
             }
             this.stop = function() {
-                if (this.requestId)
-                    cancelAnimationFrame(this.requestId);
+                scope.state = GAME_STATE.STOP;
+                if (scope.requestId){
+                    cancelAnimationFrame(scope.requestId);
+                    console.log("Game has stopped..."+scope.requestId);
+                }
             }
+            this.state = GAME_STATE.READY;
         },
         add: function(obj) {
             this.scene.add(obj);

@@ -104,9 +104,9 @@ var Character = this.Character = THREE.Object3D.extend({
                 }
             },
             onKeyDown: function(event){
-            	event.preventDefault();
             	switch(event.keyCode){
                 case 38: // up
+                    event.preventDefault();
                 case 87: // w
                     controls.moveForward = true;
             		controls.walk.ing = false;
@@ -119,6 +119,7 @@ var Character = this.Character = THREE.Object3D.extend({
                     break;
 
                 case 40: // down
+                    event.preventDefault();
                 case 83: // s
                     controls.moveBackward = true;
             		controls.walk.ing = false;
@@ -131,15 +132,16 @@ var Character = this.Character = THREE.Object3D.extend({
                     break;
 
                 case 32: // space
+                    event.preventDefault();
                     if (controls.canJump === true) controls.velocity.y += controls.jumpVelocity;
                     controls.canJump = false;
                     break;
             	}
             },
             onKeyUp: function(event){
-            	event.preventDefault();
                 switch (event.keyCode) {
                     case 38: // up
+                        event.preventDefault();
                     case 87: // w
                         controls.moveForward = false;
                         break;
@@ -150,6 +152,7 @@ var Character = this.Character = THREE.Object3D.extend({
                         break;
 
                     case 40: // down
+                        event.preventDefault();
                     case 83: // s
                         controls.moveBackward = false;
                         break;
