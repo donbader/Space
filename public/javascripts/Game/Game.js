@@ -81,7 +81,7 @@
             element1.height = 404;
             element1.scrolling = 'no';
             var cssObj1 = new THREE.CSS3DObject(element1);
-            cssObj1.position.set(200, 250, -1000);
+            cssObj1.position.set(200, 250,1000);
             //cssObj.rotation.copy(planeMesh.rotation);
             this.CssScene.add(cssObj1);
 
@@ -91,7 +91,7 @@
             element2.height = 404;
             element2.scrolling = 'no';
             var cssObj2 = new THREE.CSS3DObject(element2);
-            cssObj2.position.set(400, 250, -1000);
+            cssObj2.position.set(400, 250, 1000);
             //cssObj2.rotation.copy(planeMesh.rotation);
             this.CssScene.add(cssObj2);
 
