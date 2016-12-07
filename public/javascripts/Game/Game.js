@@ -126,6 +126,41 @@
                     console.log("Game has stopped..."+scope.requestId);
                 }
             }
+
+            /////////////
+            //TODO: NO 寫死
+            /////
+                    var loader = new THREE.ObjectLoader();
+        loader.load("3D/desk/chair.json", function(object) {
+            object.position.set(0, 0, -200);
+            object.rotation.set(4.71, 0, 3.14);
+            scope.add(object);
+        });
+
+        loader = new THREE.ObjectLoader();
+
+        // need ray caster ( player can select)
+        loader.load("/3D/table/table.json", function(object) {
+            // object.scale.set(250,250,250);
+            object.position.set(0, 0, -350);
+            scope.add(object);
+        });
+        loader = new THREE.ObjectLoader();
+
+        loader.load("3D/laptop/laptop.json", function(object) {
+            object.scale.set(3, 3, 3);
+            object.position.set(0, 100, -350);
+            scope.add(object);
+            console.log("done");
+        });
+        loader = new THREE.ObjectLoader();
+                loader.load("3D/books/book.json", function(object) {
+            //object.scale.set(100,100,100);
+            object.position.set(50, 100, -350);
+            scope.add(object);
+            console.log(object);
+
+        });
             this.state = GAME_STATE.READY;
         },
         add: function(obj) {

@@ -23,6 +23,10 @@ if (!navigator.getUserMedia) {
 
 
 var canvas = document.getElementById('canvas');
+console.log(window.innerWidth);
+console.log(window.innerHeight);
+canvas.setAttribute('width', window.innerWidth);
+canvas.setAttribute('height', window.innerHeight);
 var context = canvas.getContext('2d');
 var audioSource;
 var cw = Math.floor(canvas.clientWidth / 2);
