@@ -1,8 +1,9 @@
 var GoToRoomWindow = Window.extend({
-    init: function(Width, Height) {
+    init: function(Width, Height, socket) {
         'use strict';
         this._super(Width, Height);
-        var socket = this.socket;
+
+        this.socket = socket;
         this.WindowType = "GoToRoomWindow";
         this.Title = "GoToRoom";
 
@@ -44,9 +45,10 @@ var GoToRoomWindow = Window.extend({
             var rid = this.InputJObj.val();
             //var rid = 'corey';
             console.log(rid);
+            console.log(this.socket);
 
             //to set socket
-            socket.emit('join', {
+            this.socket.emit('join', {
                 roomID: rid
             });
         });

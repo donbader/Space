@@ -63,6 +63,12 @@ $("#enter").click(function() {
                         player = eval("new "+data.character+"()");
                         // player = new Character();
                         game = new Game("GamePlay", player, socket);
+
+                        //to create gotoroomwindow
+                        var goToRoomWindow = new GoToRoomWindow(500, 200, socket);
+                        console.log(funcitonListWindow);
+                        functionListWindow.AppendItem("GoToRoom", "GoToRoom1", goToRoomWindow);
+
                     });
 
                     socket.on('start game', function(){

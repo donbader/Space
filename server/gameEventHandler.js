@@ -188,6 +188,15 @@ handler.connection = function(client) {
         });
     });
 
+    //for webcam
+
+    client.on('pushStream', function(data) {
+        client.broadcast.emit('getStream', {
+            mediaStream: data.mediaStream
+        });
+    });
+
+
     function checkValid(id) {
         id = id || roomID;
         if (!username || !id) {

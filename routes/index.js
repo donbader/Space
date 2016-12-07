@@ -65,6 +65,11 @@ router.get('/Webcam', function(req, res) {
     res.sendFile(path.join(__dirname, '../view', 'Webcam.html'));
 });
 
+router.get('/WebcamCanvas', function(req, res) {
+    res.sendFile(path.join(__dirname, '../view', 'WebcamCanvas.html'));
+});
+
+
 
 
 
