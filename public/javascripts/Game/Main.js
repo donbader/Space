@@ -73,6 +73,17 @@ socket.on('remove user', function(username){
     delete Users[username];
 });
 
+socket.on('fetch userdata', function(receiver){
+    console.log("send data to"+receiver);
+    socket.emit('update user to one',{
+        receiver: receiver,
+        position:game.Controller.position,
+        rotation:game.Controller.rotation
+    });
+})
+
+
+
 socket.on('update user', function(userdata){
     if(Users[userdata.name]){
         Users[userdata.name].object.position.x = userdata.position.x;
