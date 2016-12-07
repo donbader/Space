@@ -291,7 +291,7 @@ var Character = this.Character = THREE.Object3D.extend({
     ServerUpdate: function(){
         if(!this.socket)return;
         var scope = this;
-        this.socket.emit('update user', {
+        this.socket.emit('update user to all', {
             position: scope.position,
             rotation: scope.rotation
         });

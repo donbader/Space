@@ -104,7 +104,6 @@ $("#enter").click(function() {
                     });
 
 
-
                     socket.on('add user', function(userdata){
                         console.log(userdata.name + " has joined");
                         console.log(Users);
@@ -123,6 +122,17 @@ $("#enter").click(function() {
                         delete Users[username];
                     });
 
+                    socket.on('fetch userdata', function(receiver){
+                        console.log("send data to"+receiver);
+                        socket.emit('update user to one',{
+                            receiver: receiver,
+                            position:game.Controller.position,
+                            rotation:game.Controller.rotation
+                        });
+                    })
+
+
+
                     socket.on('update user', function(userdata){
                         if(Users[userdata.name]){
                             Users[userdata.name].object.position.x = userdata.position.x;
@@ -133,7 +143,6 @@ $("#enter").click(function() {
                             // Users[userdata.name].object.rotation.y = userdata.rotation.y;
                             // Users[userdata.name].object.rotation.z = userdata.rotation.z;
                         }
-
                     });
                     socket.on('destroy game', function(){
                         console.log("YO");
@@ -150,7 +159,6 @@ $("#enter").click(function() {
                     socket.emit('join', {
                         roomID:roomID
                     });
-                    //
 
 
 
@@ -165,8 +173,8 @@ $("#enter").click(function() {
                     });
                 });
             } else {
-                // alert("Wrong In Username Or Password");
-                // window.location = "/";
+                alert("Wrong In Username Or Password");
+                window.location = "/";
             }
         }
 

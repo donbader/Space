@@ -37,22 +37,7 @@ handler.connection = function(client) {
     client.on('join', (data) => {
         roomID = data.roomID;
         // remove from prev room
-        Room.findAndModify({
-                users: {
-                    $in: [username]
-                }
-            }, {
-                $pull: {
-                    users: username
-                }
-            },
-            function(err, obj) {
-                if (err) console.error(err);
-                if (obj && obj.value) {
-                    leave(obj.value.owner);
-                }
-            }
-        );
+        Room.pullUserFromPrevRoom(username, leave);
 
         // join main
         // try to find room's config..
@@ -88,57 +73,31 @@ handler.connection = function(client) {
             // render users
             obj.users.forEach((element,index,array)=>{
                 client.emit('add user', element);
+                console.log('['+username+'] add user'+element.name);
+                client.broadcast.to(roomID).emit('fetch userdata', client.id);
             });
 
             client.emit("start game");
-            var userdata = {
-                name: username,
-                type: Character_type,
-                position: {
-                    x: 0,
-                    y: 0,
-                    z: 0
-                },
-                rotation: {
-                    x: 0,
-                    y: 0,
-                    z: 0
-                }
-            };
-            Room.update({
-                owner: roomID
-            }, {
-                $push: {
-                    users: userdata
-                }
-            }, function(err, msg) {
-                if (msg.ok && msg.nModified) {
-                    server.to(roomID).emit('add user', userdata);
-                    client.join(roomID);
-                }
-            });
+            Room.pushUser(roomID, {name: username, type: Character_type}, onAddUser);
         });
 
         // BroadCast
     });
-    client.on('update user', function(data) {
+    client.on('update user to one', function(data){
+        if(!checkValid())return;
+        client.broadcast.to(data.receiver).emit('update user', {
+            name: username,
+            position: data.position,
+            rotation: data.rotation
+        });
+    });
+    client.on('update user to all', function(data) {
         if (!checkValid()) return;
         client.broadcast.to(roomID).emit('update user', {
             name: username,
             position: data.position,
             rotation: data.rotation
         });
-
-        Room.update({
-            owner: roomID,
-            "users.name": username
-        }, {
-            $set: {
-                "users.$.position": data.position,
-                "users.$.rotation": data.rotation
-            }
-        },function(err,msg){});
-
     });
     // client.on('update', (data) => {
     //     if (!checkValid()) return;
@@ -204,6 +163,11 @@ handler.connection = function(client) {
             return false;
         }
         return true;
+    }
+
+    function onAddUser(userdata){
+        client.broadcast.to(roomID).emit('add user', userdata);
+        client.join(roomID);
     }
 
     function leave(id) {
