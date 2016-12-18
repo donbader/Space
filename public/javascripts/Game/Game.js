@@ -65,6 +65,7 @@
             // this.add(planeMesh);
 
 			//to create the dom element
+
    //          var element = document.createElement('iframe');
    //          element.src = '/Paint';
    //          element.width = 1004;
@@ -126,6 +127,7 @@
                 }
             };
 
+<<<<<<< HEAD
             function setPaintTool (tool) {
                 paintTool = tool;
             };
@@ -219,6 +221,7 @@
             }
             //to create the web camera
 
+
             // var element1 = document.createElement('iframe');
             // element1.src = '/Webcam';
             // element1.with = 504;
@@ -238,6 +241,7 @@
             // cssObj2.position.set(400, 250, 1000);
             // //cssObj2.rotation.copy(planeMesh.rotation);
             // this.CssScene.add(cssObj2);
+
 
             //to get the web camera
             navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
@@ -276,13 +280,13 @@
                 if(e.code == 1) {
                     msg = 'User denied access to use camera';
                 }
-                
+
                 console.log(msg);
             }
 
 
             //to get the html element
-            
+
             this.videoImage = document.getElementById('videoImage');
             this.videoImageContext = this.videoImage.getContext('2d');
 
@@ -308,6 +312,7 @@
             // this.scene.add(videoMesh);
             console.log(player.height);
             player.addObj(videoMesh, new THREE.Vector3(0, player.height - 10, 0));
+
 
             //important
 			scope.camera.updateProjectionMatrix();
@@ -348,40 +353,6 @@
                 }
             }
 
-            /////////////
-            //TODO: NO 寫死
-            /////
-                    var loader = new THREE.ObjectLoader();
-        loader.load("3D/desk/chair.json", function(object) {
-            object.position.set(0, 0, -200);
-            object.rotation.set(4.71, 0, 3.14);
-            scope.add(object);
-        });
-
-        loader = new THREE.ObjectLoader();
-
-        // need ray caster ( player can select)
-        loader.load("/3D/table/table.json", function(object) {
-            // object.scale.set(250,250,250);
-            object.position.set(0, 0, -350);
-            scope.add(object);
-        });
-        loader = new THREE.ObjectLoader();
-
-        loader.load("3D/laptop/laptop.json", function(object) {
-            object.scale.set(3, 3, 3);
-            object.position.set(0, 100, -350);
-            scope.add(object);
-            console.log("done");
-        });
-        loader = new THREE.ObjectLoader();
-                loader.load("3D/books/book.json", function(object) {
-            //object.scale.set(100,100,100);
-            object.position.set(50, 100, -350);
-            scope.add(object);
-            console.log(object);
-
-        });
             this.state = GAME_STATE.READY;
         },
         add: function(obj) {

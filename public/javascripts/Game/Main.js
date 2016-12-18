@@ -17,22 +17,25 @@ socket.on('sys', function(data){
     console.log('sys:' + data);
 });
 
-socket.on('create game', function(data){
-    player = eval("new "+data.character+"()");
+socket.on('create game', function(user){
+    console.log("[Create Game By User]" , user);
+    player = eval("new "+user.type+"()");
     // player = new Character();
     game = new Game("GamePlay", player, socket);
+    console.log("[game created]", game.scene);
 });
 
 socket.on('start game', function(){
     game.start();
-    console.log(game.scene);
+    console.log("[game started]");
 });
 
 socket.on('render item', function(data){
-    switch (data.item.type) {
+    console.log("[Render Item] ",data.id);
+    switch (data.type) {
         case "script":
             var scripts = "var item = ";
-            scripts += data.item.data.scripts.join();
+            scripts += data.data.scripts.join();
             eval(scripts);
             item.position.set(data.position.x, data.position.y, data.position.z);
             item.rotation.set(data.rotation.x, data.rotation.y, data.rotation.z);
@@ -43,32 +46,28 @@ socket.on('render item', function(data){
             break;
         case "file":
             var loader = new THREE.ObjectLoader();
-            loader.load(data.item.data.path, function(item) {
+            loader.load(data.data.path, function(item) {
                 item.position.set(data.position.x, data.position.y, data.position.z);
                 item.rotation.set(data.rotation.x, data.rotation.y, data.rotation.z);
                 game.add(item);
             });
             break;
     }
-
-
 });
 
 
 socket.on('add user', function(userdata){
-    console.log(userdata.name + " has joined");
-    console.log(Users);
+    console.log("[Add user]", userdata.name, ":",Users );
+
     Users[userdata.name] = userdata;
     // Users[userdata.name].object = (new Character()).model;
     Users[userdata.name].object = eval('new '+userdata.type+'()');
     Users[userdata.name].object.name = userdata.name;
     game.add(Users[userdata.name].object);
-    console.log(userdata);
     // because pos,rot is all 0 , so we don't set them
 })
 socket.on('remove user', function(username){
-    console.log('remove user');
-    console.log(Users);
+    console.log('[remove user]',Users);
     game.remove(Users[username].object);
     delete Users[username];
 });
@@ -85,6 +84,7 @@ socket.on('fetch userdata', function(receiver){
 
 
 socket.on('update user', function(userdata){
+    console.log("["+userdata.name+" Move]", userdata);
     if(Users[userdata.name]){
         Users[userdata.name].object.position.x = userdata.position.x;
         Users[userdata.name].object.position.y = userdata.position.y;
@@ -95,7 +95,20 @@ socket.on('update user', function(userdata){
         // Users[userdata.name].object.rotation.z = userdata.rotation.z;
     }
 
-})
+});
+
+socket.on('destroy game', function(){
+    console.log("[destroy Game]");
+    game.stop();
+    delete game;
+});
+
+socket.on('logout', function(){
+    console.log("[logout]");
+    game.stop();
+    delete game;
+    socket.disconnect();
+});
 
 
 ////////////////////
@@ -103,9 +116,7 @@ socket.on('update user', function(userdata){
 ////////////////////
 
 
-socket.emit('join', {
-    roomID:roomID
-});
+socket.emit('join', roomID);
 
 // var Ninja = Character.extend({
 //     init: function(){
