@@ -1,5 +1,25 @@
 $('form').submit(false);
 
+function setCookie(){
+    var now = new data();
+    now.setTime(now.getTime() + 1000*60);
+    var nameValue = escape($('#inputEmail').val() + "#N" + $("#inputPassword").val());
+    document.cookie = "ID=" + nameValue + ";expires=" + now.toGMTString();
+    console.log(document.cookie);
+}
+var cookieStr = unescape(document.cookie);
+var beginPos = cookieStr.indexOf("ID");
+var endPos = cookieStr.indexOf("#N");
+
+if (beginPos != -1)
+　　　{　
+        console.log("welcome") ;
+        window.location = "/";
+　　　}
+else {　
+        return;
+  　　}
+
 $("#GameAll").css({
     'display': 'none'
 });
