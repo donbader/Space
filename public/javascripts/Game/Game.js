@@ -14,7 +14,7 @@
             ///////////
             this.scene = new THREE.Scene();
             this.scene.updateMatrixWorld();
-			//this.CssScene = new THREE.Scene();
+			this.CssScene = new THREE.Scene();
 
             //////////////
             // RENDERER //
@@ -25,8 +25,9 @@
 
 			// this.renderer.setPixelRatio( window.devicePixelRatio );
             this.renderer.setSize(window.innerWidth, window.innerHeight);
-            this.renderer.domElement.style.position = 'absolute';
-            this.renderer.domElement.style.top = 0;
+            // this.renderer.domElement.style.position = 'absolute';
+            // this.renderer.domElement.style.top = 0;
+            this.renderer.domElement.style.zIndex = 5;
             this.container.appendChild(this.renderer.domElement);
 
 			this.CssRenderer = new THREE.CSS3DRenderer();
@@ -34,6 +35,15 @@
             this.CssRenderer.domElement.style.position = 'absolute';
             this.CssRenderer.domElement.style.top = 0;
             this.container.appendChild(this.CssRenderer.domElement);
+
+            const VIEW_ANGLE = 45,
+    ASPECT = 16/9,
+    NEAR = 0.1,
+    FAR = 20000,
+    PI_2 = Math.PI /2;
+
+            this.CssCamera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
+
 
             ///////////
             // STATS //
@@ -66,158 +76,168 @@
 
 			//to create the dom element
 
-   //          var element = document.createElement('iframe');
-   //          element.src = '/Paint';
-   //          element.width = 1004;
-   //          element.height = 504;
-   //          element.scrolling = 'no';
-			// var cssObj = new THREE.CSS3DObject(element);
-			// // cssObj.position.copy(planeMesh.position);
-   // //          cssObj.rotation.copy(planeMesh.rotation);
-			//          cssObj.position.set(0, 250, -1000);
-   //          //cssObj.rotation.copy(planeMesh.rotation);
-   //          this.CssScene.add(cssObj);
+            var element = document.createElement('div');
+            // element.src = '/Paint';
+            element.innerHTML = "FUCK　ＹＯＵ＠！＠1321251351351313213213515311531514531848564658<br><br><br><br><br><br><br><br>41";
+            element.style['font-size'] = '100px';
+            element.style["background-color"] = "green" ;
+            // element.style["width"] = '1004px !important' ;
+            // element.style["height"] = '504px !important' ;
+            element.width = 1004;
+            element.height = 504;
+            // element.setAttribute('width', 1004);
+            // element.setAttribute('height', 504);
+            // element.scrolling = 'no';
+			var cssObj = new THREE.CSS3DObject(element);
+			// cssObj.position.copy(planeMesh.position);
+   //          cssObj.rotation.copy(planeMesh.rotation);
+			         cssObj.position.set(0, 100, -1000);
+            //cssObj.rotation.copy(planeMesh.rotation);
+            this.CssScene.add(cssObj);
 
             //to create the paint system
-            var paintToolMode = this.paintToolMode = { Brush: 0, Eraser: 1 };
-            var paintTool = this.paintTool = paintToolMode.Brush;
-            var paintFontColors = ['red', 'blue', 'green', 'purple', 'yellow', 'orange', 'pink', 'black', 'white', 'ebebeb'];
-            var paintFontSizes = [1, 3, 5, 10, 15, 20];
-            var paintFontSizeNames = ['default', 'three', 'five', 'ten', 'fifteen', 'twenty'];
-            var paint = this.paint = document.getElementById('paint');
-            var paintJObj = this.paintJObj = $('paint');
+            // var paintToolMode = this.paintToolMode = { Brush: 0, Eraser: 1 };
+            // var paintTool = this.paintTool = paintToolMode.Brush;
+            // var paintFontColors = ['red', 'blue', 'green', 'purple', 'yellow', 'orange', 'pink', 'black', 'white', 'ebebeb'];
+            // var paintFontSizes = [1, 3, 5, 10, 15, 20];
+            // var paintFontSizeNames = ['default', 'three', 'five', 'ten', 'fifteen', 'twenty'];
+            // var paint = this.paint = document.getElementById('paint');
+            // var paintJObj = this.paintJObj = $('paint');
 
-            this.paint.setAttribute('width', 1000);
-            this.paint.setAttribute('height', 600);
-            var paintContext = this.paintContext = this.paint.getContext('2d');
+            // var paintWidth = 1000, paintHeight = 600;
+            // this.paint.setAttribute('width', paintWidth);
+            // this.paint.setAttribute('height', paintHeight);
+            // var paintContext = this.paintContext = this.paint.getContext('2d');
 
-            //to fill up the background color
-            this.paintContext.fillStyle = '#000000';
-            this.paintContext.fillRect(0, 0, this.paint.width, this.paint.height);
+            // //to fill up the background color
+            // this.paintContext.fillStyle = 'solid';
+            // this.paintContext.fillRect(0, 0, this.paint.width, this.paint.height);
+            // this.paintContext.lineCap = 'round';
 
-            //to create the video texture
-            this.paintTexture = new THREE.Texture(this.paint);
-            this.paintTexture.minFilter = THREE.LinearFilter;
-            this.paintTexture.magFilter = THREE.LinearFilter;
+            // //to create the video texture
+            // this.paintTexture = new THREE.Texture(this.paint);
+            // this.paintTexture.minFilter = THREE.LinearFilter;
+            // this.paintTexture.magFilter = THREE.LinearFilter;
 
-            var paintMaterial = new THREE.MeshBasicMaterial({
-                map: this.paintTexture,
-                overdraw: true,
-                side: THREE.DoubleSide
-            });
+            // var paintMaterial = new THREE.MeshBasicMaterial({
+            //     map: this.paintTexture,
+            //     overdraw: true,
+            //     side: THREE.DoubleSide
+            // });
 
-            var paintGeometry = new THREE.PlaneGeometry(100, 100, 1, 1);
-            var paintMesh = new THREE.Mesh(paintGeometry, paintMaterial);
-            this.scene.add(paintMesh);
-            paintMesh.position.set(0, 50, 0);
+            // var paintGeometry = new THREE.PlaneGeometry(paintWidth, paintHeight, 1, 1);
+            // var paintMesh = new THREE.Mesh(paintGeometry, paintMaterial);
+            // this.scene.add(paintMesh);
+            // paintMesh.position.set(0, 50, 0);
 
-            function draw (x, y, type) {
-                if(type === 'mousedown') {
-                    paintContext.beginPath();
-                    paintContext.moveTo(x, y);
-                    paint.on('mousemove', mouseOnCanvas);
-                } else if (type === 'mousemove') {
-                    mouseMove(x, y);
-                } else if (type === 'mouseup') {
-                    paintContext.closePath();
-                    paint.off('mousemove', mouseOnCanvas);
-                }
-                else {
-                    console.log('draw error');
-                }
-            };
+            // function draw (x, y, type) {
+            //     if(type === 'mousedown') {
+            //         paintContext.beginPath();
+            //         paintContext.moveTo(x, y);
+            //         paint.on('mousemove', mouseOnCanvas);
+            //     } else if (type === 'mousemove') {
+            //         mouseMove(x, y);
+            //     } else if (type === 'mouseup') {
+            //         paintContext.closePath();
+            //         paint.off('mousemove', mouseOnCanvas);
+            //     }
+            //     else {
+            //         console.log('draw error');
+            //     }
+            // };
 
-            function setPaintTool (tool) {
-                paintTool = tool;
-            };
+            // function setPaintTool (tool) {
+            //     paintTool = tool;
+            // };
 
-            function setPaintFontColor (i) {
-                paintContext.strokeStyle = paintFontColors[i];
-            };
+            // function setPaintFontColor (i) {
+            //     paintContext.strokeStyle = paintFontColors[i];
+            // };
 
-            function setPaintFontSize (i) {
-                paintContext.lineWidth = paintFontSizess[i];
-            };
+            // function setPaintFontSize (i) {
+            //     paintContext.lineWidth = paintFontSizess[i];
+            // };
 
-            function clearPaint (x, y, width, height) {
-                paintContext.clearRect(x, y, width, height);
-            };
+            // function clearPaint (x, y, width, height) {
+            //     paintContext.clearRect(x, y, width, height);
+            // };
 
-            function paintFontColorClick (i) {
-                $('#' + paintFontColors[i]).on('click', function() {
-                    SetColor(i);
-                    SetTool(paintToolMode.Brush);
-                })
-            }
+            // function paintFontColorClick (i) {
+            //     $('#' + paintFontColors[i]).on('click', function() {
+            //         SetColor(i);
+            //         SetTool(paintToolMode.Brush);
+            //     })
+            // }
 
-            function paintFontSizeClick (i) {
-                $('#' + paintFontSizeNames[i]).on('click', function() {
-                    SetSize(i);
-                });
-            }
+            // function paintFontSizeClick (i) {
+            //     $('#' + paintFontSizeNames[i]).on('click', function() {
+            //         SetSize(i);
+            //     });
+            // }
 
-            function SetPaintFontColor (i) {
-                setColor(i);
-                //socket
-            }
+            // function SetPaintFontColor (i) {
+            //     setColor(i);
+            //     //socket
+            // }
 
-            function SetPaintTool (i) {
-                setTool(tool);
-                //socket
-            }
+            // function SetPaintTool (i) {
+            //     setTool(tool);
+            //     //socket
+            // }
 
-            function ClearPaint (x, y, width, height) {
-                clearPaint(x, y, width, height);
-                //socket
-            }
+            // function ClearPaint (x, y, width, height) {
+            //     clearPaint(x, y, width, height);
+            //     //socket
+            // }
 
-            //to set paint event
-            paintJObj.on('mousedonw mouseup', mouseOnCanvas);
+            // //to set paint event
+            // paintJObj.on('mousedonw mouseup', mouseOnCanvas);
 
-            for(var i = 0; i < paintFontColors.length; ++i) {
-                paintFontColorClick(i);
-            }
+            // for(var i = 0; i < paintFontColors.length; ++i) {
+            //     paintFontColorClick(i);
+            // }
 
-            for(var i = 0; i < paintFontSizes.length; ++i) {
-                paintFontSizeClick(i);
-            }
+            // for(var i = 0; i < paintFontSizes.length; ++i) {
+            //     paintFontSizeClick(i);
+            // }
 
-            $('#eraser').on('click', function() {
-                SetTool(paintToolMode.Eraser);
-            });
+            // $('#eraser').on('click', function() {
+            //     SetTool(paintToolMode.Eraser);
+            // });
 
-            $('#reset').on('click', function() {
-                ClearPaint(0, 0, paint.width, paint.height);
-            });
+            // $('#reset').on('click', function() {
+            //     ClearPaint(0, 0, paint.width, paint.height);
+            // });
 
-            function getMousePos(canvas, evt) {
-                var rect = canvas.getBoundingClientRect();
-                return {
-                    x: evt.clientX - rect.left,
-                    y: evt.clientY - rect.top
-                };
-            };
+            // function getMousePos(canvas, evt) {
+            //     var rect = canvas.getBoundingClientRect();
+            //     return {
+            //         x: evt.clientX - rect.left,
+            //         y: evt.clientY - rect.top
+            //     };
+            // };
 
-            function mouseMove(x, y) {
-                switch(paintTool) {
-                    case paintToolMode.Brush:
-                        paintContext.lineTo(x, y);
-                        paintContext.stroke();
-                        break;
-                    case paintToolMode.Eraser:
-                        var halfWidth = paintContext.lineWidth * 0.5;
-                        paintContext.clearRect(x - halfWidth, y - halfWidth, paintContext.lineWidth, paintContext.lineWidth);
-                        break;
-                }
-            };
+            // function mouseMove(x, y) {
+            //     switch(paintTool) {
+            //         case paintToolMode.Brush:
+            //             paintContext.lineTo(x, y);
+            //             paintContext.stroke();
+            //             break;
+            //         case paintToolMode.Eraser:
+            //             var halfWidth = paintContext.lineWidth * 0.5;
+            //             paintContext.clearRect(x - halfWidth, y - halfWidth, paintContext.lineWidth, paintContext.lineWidth);
+            //             break;
+            //     }
+            // };
 
-            function mouseOnCanvas(e) {
-                var type = e.handleObj.type,
-                    mousePos = getMousePos(paint, e);
+            // function mouseOnCanvas(e) {
+            //     console.log('event');
+            //     var type = e.handleObj.type,
+            //         mousePos = getMousePos(paint, e);
 
-                draw(mousePos.x, mousePox.y, type);
-                //socket
-            }
+            //     draw(mousePos.x, mousePox.y, type);
+            //     //socket
+            // }
             //to create the web camera
 
 
@@ -332,8 +352,11 @@
                     }
                 }
 
+                // scope.paintContext.drawImage(scope.video, 0, 0, scope.videoImage.width, scope.videoImage.height);
+
+                scope.CssRenderer.render(scope.CssScene, scope.camera);
                 scope.renderer.render(scope.scene, scope.camera);
-                // scope.CssRenderer.render(scope.CssScene, scope.camera);
+                // scope.CssRenderer.render(scope.CssScene, scope.CssCamera);
 
                 if(scope.state == GAME_STATE.RUNNING)
                     scope.requestId = requestAnimationFrame(scope.render);
