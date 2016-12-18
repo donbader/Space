@@ -127,7 +127,6 @@
                 }
             };
 
-<<<<<<< HEAD
             function setPaintTool (tool) {
                 paintTool = tool;
             };
