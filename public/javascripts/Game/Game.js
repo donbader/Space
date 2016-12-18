@@ -77,25 +77,53 @@
             //cssObj.rotation.copy(planeMesh.rotation);
             this.CssScene.add(cssObj);
 
-            var element1 = document.createElement('iframe');
-            element1.src = '/Webcam';
-            element1.with = 504;
-            element1.height = 404;
-            element1.scrolling = 'no';
-            var cssObj1 = new THREE.CSS3DObject(element1);
-            cssObj1.position.set(200, 250,1000);
-            //cssObj.rotation.copy(planeMesh.rotation);
-            this.CssScene.add(cssObj1);
+            //to create the web camera
 
-            var element2 = document.createElement('iframe');
-            element2.src = '/WebcamCanvas';
-            element2.with = 504;
-            element2.height = 404;
-            element2.scrolling = 'no';
-            var cssObj2 = new THREE.CSS3DObject(element2);
-            cssObj2.position.set(400, 250, 1000);
-            //cssObj2.rotation.copy(planeMesh.rotation);
-            this.CssScene.add(cssObj2);
+            // var element1 = document.createElement('iframe');
+            // element1.src = '/Webcam';
+            // element1.with = 504;
+            // element1.height = 404;
+            // element1.scrolling = 'no';
+            // var cssObj1 = new THREE.CSS3DObject(element1);
+            // cssObj1.position.set(200, 250,1000);
+            // //cssObj.rotation.copy(planeMesh.rotation);
+            // this.CssScene.add(cssObj1);
+
+            // var element2 = document.createElement('iframe');
+            // element2.src = '/WebcamCanvas';
+            // element2.with = 504;
+            // element2.height = 404;
+            // element2.scrolling = 'no';
+            // var cssObj2 = new THREE.CSS3DObject(element2);
+            // cssObj2.position.set(400, 250, 1000);
+            // //cssObj2.rotation.copy(planeMesh.rotation);
+            // this.CssScene.add(cssObj2);
+
+            //to get the html element
+            video = document.getElementById('monitor');
+            videoImage = document.getElementByid('vidoeImage');
+            videoImageContext = vidoeImage.getContext('2d');
+
+            //to fill up the background color
+            videoImageContext.fillStyle = '#000000';
+            videoImageContext.fillRect(0, 0, videoImage.width, videoImage.height);
+
+            //to create the video texture
+            videoTexture = new THREE.Texture(videoImage);
+            videoTexture.minFilter = THREE.LinearFilter;
+            videoTexture.magFilter = THREE.LinearFilter;
+
+            var videoMaterial = new THREE.MeshBasicMaterial({
+                map: videoTexture,
+                overdraw: true,
+                side: THREE.DoubleSide
+            });
+
+            var videoGeometry = new THREE.PlaneGeometry(100, 100, 1, 1);
+            var videoMesh = new THREE.Mesh(videoGeometry, videoMaterial);
+
+            videoMesh.position.set(0, 50, 0);
+            this.scene.add(videoMesh);
 
             //important
 			scope.camera.updateProjectionMatrix();
