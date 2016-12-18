@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Upload</title>
+    <script src="/javascripts/jquery-3.1.1.min.js"></script>
+</head>
+
+<body>
+
+    <textarea style="width: 700px; height: 700px;" id="text"> </textarea>
+
+    <script type="text/javascript">
+        $("#text").on("keypress", function(e) {
+            if (e.keyCode == 13) {
+                var send_data =  document.getElementById("text").value;
+                console.log(send_data);
+                $.ajax({
+                    type: 'post',
+                    url: "Upload/do",
+                    dataTpye: "json",
+                    data: send_data,
+                    success: function(JSONData) {
+                        window.location = "/Upload";
+                    }
+                });
+
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,3 @@
+var GameObject = Class.extend({
+	
+});

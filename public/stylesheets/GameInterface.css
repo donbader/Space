@@ -1,0 +1,89 @@
+.Height {
+    display: block;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+}
+.MenuIcon {
+    display: block;
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    margin: 0 0 0 0;
+    padding: 0 0;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    z-index: 2;
+}
+
+.MenuIcon > img {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 80px;
+    height: 80px;
+    opacity: 1;
+}
+
+.FunctionList {
+    display: block;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    margin: 0 0 0 0;
+    padding: 0 0;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    -webkit-clip-path: circle(49% at 50% 50%);
+    background-color: rgba(255, 255, 255, 0.5);
+    z-index: 1;
+}
+
+.FunctionList > h1 {
+    display: block;
+    margin: 170px 0 0 0;
+    padding: 10px 0;
+    font-size: 170%;
+    z-index: 2;
+}
+
+.FunctionList > p {
+    display: block;
+    margin: 0 0;
+    padding: 20px 0;
+    font-size: 150%;
+    z-index: 2;
+}
+
+.FunctionListMouseEnter {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.Window {
+    display: none;
+    position: fixed;
+    margin: 0 auto;
+    padding: 0 0;
+    top: 20%;
+    left: 0;
+    width: 0px;
+    height: 0px;
+    background-color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    border-radius: 25;
+    z-index: 1;
+}
+
+.Title {
+    text-align: center;
+}
+
+.Close {
+    position: absolute;
+    margin: 5px 5px;
+    top: 10px;
+    right: 10px;
+    font-size: 100%;
+}
