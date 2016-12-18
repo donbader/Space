@@ -77,25 +77,25 @@
             //cssObj.rotation.copy(planeMesh.rotation);
             this.CssScene.add(cssObj);
 
-            var element1 = document.createElement('iframe');
-            element1.src = '/Webcam';
-            element1.with = 504;
-            element1.height = 404;
-            element1.scrolling = 'no';
-            var cssObj1 = new THREE.CSS3DObject(element1);
-            cssObj1.position.set(200, 250,1000);
-            //cssObj.rotation.copy(planeMesh.rotation);
-            this.CssScene.add(cssObj1);
-
-            var element2 = document.createElement('iframe');
-            element2.src = '/WebcamCanvas';
-            element2.with = 504;
-            element2.height = 404;
-            element2.scrolling = 'no';
-            var cssObj2 = new THREE.CSS3DObject(element2);
-            cssObj2.position.set(400, 250, 1000);
-            //cssObj2.rotation.copy(planeMesh.rotation);
-            this.CssScene.add(cssObj2);
+            // var element1 = document.createElement('iframe');
+            // element1.src = '/Webcam';
+            // element1.with = 504;
+            // element1.height = 404;
+            // element1.scrolling = 'no';
+            // var cssObj1 = new THREE.CSS3DObject(element1);
+            // cssObj1.position.set(200, 250,1000);
+            // //cssObj.rotation.copy(planeMesh.rotation);
+            // this.CssScene.add(cssObj1);
+            //
+            // var element2 = document.createElement('iframe');
+            // element2.src = '/WebcamCanvas';
+            // element2.with = 504;
+            // element2.height = 404;
+            // element2.scrolling = 'no';
+            // var cssObj2 = new THREE.CSS3DObject(element2);
+            // cssObj2.position.set(400, 250, 1000);
+            // //cssObj2.rotation.copy(planeMesh.rotation);
+            // this.CssScene.add(cssObj2);
 
             //important
 			scope.camera.updateProjectionMatrix();
@@ -127,40 +127,6 @@
                 }
             }
 
-            /////////////
-            //TODO: NO 寫死
-            /////
-                    var loader = new THREE.ObjectLoader();
-        loader.load("3D/desk/chair.json", function(object) {
-            object.position.set(0, 0, -200);
-            object.rotation.set(4.71, 0, 3.14);
-            scope.add(object);
-        });
-
-        loader = new THREE.ObjectLoader();
-
-        // need ray caster ( player can select)
-        loader.load("/3D/table/table.json", function(object) {
-            // object.scale.set(250,250,250);
-            object.position.set(0, 0, -350);
-            scope.add(object);
-        });
-        loader = new THREE.ObjectLoader();
-
-        loader.load("3D/laptop/laptop.json", function(object) {
-            object.scale.set(3, 3, 3);
-            object.position.set(0, 100, -350);
-            scope.add(object);
-            console.log("done");
-        });
-        loader = new THREE.ObjectLoader();
-                loader.load("3D/books/book.json", function(object) {
-            //object.scale.set(100,100,100);
-            object.position.set(50, 100, -350);
-            scope.add(object);
-            console.log(object);
-
-        });
             this.state = GAME_STATE.READY;
         },
         add: function(obj) {

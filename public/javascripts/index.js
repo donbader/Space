@@ -20,9 +20,6 @@ $("#enter").click(function() {
             if (JSONData.msg == "success") {
 
                 var socket = io.connect();
-                socket.emit('join', {
-                    roomID: JSONData.id
-                });
 
                 // console.log("ID=",id);
                 //document.getElementById("Black").style.display = "inline";
@@ -133,9 +130,7 @@ $("#enter").click(function() {
 
 
 
-                    socket.on('zzz', function(userdata){
-                        console.log('zzz');
-                        console.log(Users[userdata.id]);
+                    socket.on('update user', function(userdata){
                         if(Users[userdata.id]){
                             Users[userdata.id].object.position.x = userdata.position.x;
                             Users[userdata.id].object.position.y = userdata.position.y;
