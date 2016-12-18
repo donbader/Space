@@ -170,6 +170,9 @@
         </div>
         <div id="WindowList"></div>
         <div id="sounds"></div>
+        <video id = 'monitor' autoplay width = '160' height = '120' style = 'visibility: hidden; float: left; position: fixed;'></video>
+        <canvas id = 'videoImage' width = '160' height = '120' style = 'visibility: hidden; float: left; position: fixed;'></canvas>
+        <canvas id = 'paint' width = '160' height = '120' style = 'visibility: hidden; float: left; position: fixed;'></canvas>
         <div id="GameMessage"></div>
         <div id="GamePlay" style="z-index: -1;"></div>
     </div>
@@ -198,7 +201,7 @@
     <script src="javascripts/Game/Saiyan.js"></script>
     <script src="javascripts/Game/Game.js"></script>
     <script src="javascripts/Game/World.js"></script>
-    <script src="/socket.io/socket.io.js"></script> //This is Socket
+    <script src="/socket.io/socket.io.js"></script>
     <script src="javascripts/index.js"></script>
 
 </body>

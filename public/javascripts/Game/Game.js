@@ -14,7 +14,7 @@
             ///////////
             this.scene = new THREE.Scene();
             this.scene.updateMatrixWorld();
-			this.CssScene = new THREE.Scene();
+			//this.CssScene = new THREE.Scene();
 
             //////////////
             // RENDERER //
@@ -65,17 +65,75 @@
             // this.add(planeMesh);
 
 			//to create the dom element
-            var element = document.createElement('iframe');
-            element.src = '/Paint';
-            element.width = 1004;
-            element.height = 504;
-            element.scrolling = 'no';
-			var cssObj = new THREE.CSS3DObject(element);
-			// cssObj.position.copy(planeMesh.position);
-   //          cssObj.rotation.copy(planeMesh.rotation);
-			         cssObj.position.set(0, 250, -1000);
-            //cssObj.rotation.copy(planeMesh.rotation);
-            this.CssScene.add(cssObj);
+   //          var element = document.createElement('iframe');
+   //          element.src = '/Paint';
+   //          element.width = 1004;
+   //          element.height = 504;
+   //          element.scrolling = 'no';
+			// var cssObj = new THREE.CSS3DObject(element);
+			// // cssObj.position.copy(planeMesh.position);
+   // //          cssObj.rotation.copy(planeMesh.rotation);
+			//          cssObj.position.set(0, 250, -1000);
+   //          //cssObj.rotation.copy(planeMesh.rotation);
+   //          this.CssScene.add(cssObj);
+
+            //to create the paint
+            var paint = this.paint = document.getElementById('paint');
+            
+            console.log(this.paint);
+            var test = $('#paint');
+            console.log(test);
+            console.log(test == this.paint);
+
+            this.paint.setAttribute('width', 1000);
+            this.paint.setAttribute('height', 600);
+            var paintContext = this.paintContext = this.paint.getContext('2d');
+
+            //to fill up the background color
+            this.paintContext.fillStyle = '#000000';
+            this.paintContext.fillRect(0, 0, this.paint.width, this.paint.height);
+
+            //to create the video texture
+            this.paintTexture = new THREE.Texture(this.paint);
+            this.paintTexture.minFilter = THREE.LinearFilter;
+            this.paintTexture.magFilter = THREE.LinearFilter;
+
+            var paintMaterial = new THREE.MeshBasicMaterial({
+                map: this.paintTexture,
+                overdraw: true,
+                side: THREE.DoubleSide
+            });
+
+            var paintGeometry = new THREE.PlaneGeometry(100, 100, 1, 1);
+            var paintMesh = new THREE.Mesh(paintGeometry, paintMaterial);
+            this.scene.add(paintMesh);
+            paintMesh.position.set(0, 50, 0);
+
+            //to set paint
+            var paintFontColors = ['red', 'blue', 'green', 'purple', 'yellow', 'orange', 'pink', 'black', 'white', 'ebebeb'];
+            var paintFontSize = [1, 3, 5, 10, 15, 20];
+            var paintFontSizeNames = ['default', 'three', 'five', 'ten', 'fifteen', 'twenty'];
+
+            function draw (x, y, type) {
+                if(type === 'mousedown') {
+                    paintContext.beginPath();
+                    paintContext.moveTo(x, y);
+                    paint.on('mousemove', mouseOnCanvas);
+                } else if (type === 'mousemove') {
+                    mouseMove(x, y);
+                } else if (type === 'mouseup') {
+                    paintContext.closePath();
+                    paint.off('mousemove', mouseOnCanvas);
+                }
+                else {
+                    console.log('draw error');
+                }
+            };
+
+            // function setTool (tool) {
+                
+            // }
+
 
             //to create the web camera
 
@@ -99,22 +157,64 @@
             // //cssObj2.rotation.copy(planeMesh.rotation);
             // this.CssScene.add(cssObj2);
 
+            //to get the web camera
+            navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+            window.URL = window.URL || window.webkitURL;
+
+            var video = this.video = document.getElementById('monitor');
+
+            if(navigator.getUserMedia) {
+                navigator.getUserMedia({video: true}, gotStream, noStream);
+            }
+            else {
+                console.log('webcam GG');
+            }
+
+            function gotStream(stream) {
+                console.log(stream);
+                console.log(video);
+                if(window.URL) {
+                    video.src = window.URL.createObjectURL(stream);
+                }
+                else {
+                    //Opera
+                    video.src = stream;
+                }
+
+                video.onerror = function(e) {
+                    stream.stop();
+                };
+
+                stream.onended = noStream;
+            }
+
+            function noStream(e) {
+                var msg = 'No camera available';
+
+                if(e.code == 1) {
+                    msg = 'User denied access to use camera';
+                }
+                
+                console.log(msg);
+            }
+
+
             //to get the html element
-            video = document.getElementById('monitor');
-            videoImage = document.getElementByid('vidoeImage');
-            videoImageContext = vidoeImage.getContext('2d');
+            
+            this.videoImage = document.getElementById('videoImage');
+            this.videoImageContext = this.videoImage.getContext('2d');
 
             //to fill up the background color
-            videoImageContext.fillStyle = '#000000';
-            videoImageContext.fillRect(0, 0, videoImage.width, videoImage.height);
+            this.videoImageContext.fillStyle = '#000000';
+            this.videoImageContext.fillRect(0, 0, this.videoImage.width, this.videoImage.height);
 
             //to create the video texture
-            videoTexture = new THREE.Texture(videoImage);
-            videoTexture.minFilter = THREE.LinearFilter;
-            videoTexture.magFilter = THREE.LinearFilter;
+            this.videoTexture = new THREE.Texture(this.videoImage);
+            this.videoTexture.minFilter = THREE.LinearFilter;
+            this.videoTexture.magFilter = THREE.LinearFilter;
 
             var videoMaterial = new THREE.MeshBasicMaterial({
-                map: videoTexture,
+                map: this.videoTexture,
                 overdraw: true,
                 side: THREE.DoubleSide
             });
@@ -123,7 +223,9 @@
             var videoMesh = new THREE.Mesh(videoGeometry, videoMaterial);
 
             videoMesh.position.set(0, 50, 0);
-            this.scene.add(videoMesh);
+            // this.scene.add(videoMesh);
+            console.log(player.height);
+            player.addObj(videoMesh, new THREE.Vector3(0, player.height - 10, 0));
 
             //important
 			scope.camera.updateProjectionMatrix();
@@ -135,8 +237,17 @@
                 var delta = scope.clock.getDelta();
                 scope.ObjectsToUpdate.forEach((obj)=>obj.update(delta));
                 scope.stats.update();
+
+                if( scope.video.readyState === scope.video.HAVE_ENOUGH_DATA ) {
+                    scope.videoImageContext.drawImage(scope.video, 0, 0, scope.videoImage.width, scope.videoImage.height);
+
+                    if( scope.videoTexture ){
+                        scope.videoTexture.needsUpdate = true;
+                    }
+                }
+
                 scope.renderer.render(scope.scene, scope.camera);
-                scope.CssRenderer.render(scope.CssScene, scope.camera);
+                // scope.CssRenderer.render(scope.CssScene, scope.camera);
 
                 if(scope.state == GAME_STATE.RUNNING)
                     scope.requestId = requestAnimationFrame(scope.render);
