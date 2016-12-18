@@ -77,13 +77,14 @@
    //          //cssObj.rotation.copy(planeMesh.rotation);
    //          this.CssScene.add(cssObj);
 
-            //to create the paint
+            //to create the paint system
+            var paintToolMode = this.paintToolMode = { Brush: 0, Eraser: 1 };
+            var paintTool = this.paintTool = paintToolMode.Brush;
+            var paintFontColors = ['red', 'blue', 'green', 'purple', 'yellow', 'orange', 'pink', 'black', 'white', 'ebebeb'];
+            var paintFontSizes = [1, 3, 5, 10, 15, 20];
+            var paintFontSizeNames = ['default', 'three', 'five', 'ten', 'fifteen', 'twenty'];
             var paint = this.paint = document.getElementById('paint');
-            
-            console.log(this.paint);
-            var test = $('#paint');
-            console.log(test);
-            console.log(test == this.paint);
+            var paintJObj = this.paintJObj = $('paint');
 
             this.paint.setAttribute('width', 1000);
             this.paint.setAttribute('height', 600);
@@ -109,11 +110,6 @@
             this.scene.add(paintMesh);
             paintMesh.position.set(0, 50, 0);
 
-            //to set paint
-            var paintFontColors = ['red', 'blue', 'green', 'purple', 'yellow', 'orange', 'pink', 'black', 'white', 'ebebeb'];
-            var paintFontSize = [1, 3, 5, 10, 15, 20];
-            var paintFontSizeNames = ['default', 'three', 'five', 'ten', 'fifteen', 'twenty'];
-
             function draw (x, y, type) {
                 if(type === 'mousedown') {
                     paintContext.beginPath();
@@ -130,11 +126,97 @@
                 }
             };
 
-            // function setTool (tool) {
-                
-            // }
+            function setPaintTool (tool) {
+                paintTool = tool;
+            };
 
+            function setPaintFontColor (i) {
+                paintContext.strokeStyle = paintFontColors[i];
+            };
 
+            function setPaintFontSize (i) {
+                paintContext.lineWidth = paintFontSizess[i];
+            };
+
+            function clearPaint (x, y, width, height) {
+                paintContext.clearRect(x, y, width, height);
+            };
+
+            function paintFontColorClick (i) {
+                $('#' + paintFontColors[i]).on('click', function() {
+                    SetColor(i);
+                    SetTool(paintToolMode.Brush);
+                })
+            }
+
+            function paintFontSizeClick (i) {
+                $('#' + paintFontSizeNames[i]).on('click', function() {
+                    SetSize(i);
+                });
+            }
+
+            function SetPaintFontColor (i) {
+                setColor(i);
+                //socket
+            }
+
+            function SetPaintTool (i) {
+                setTool(tool);
+                //socket
+            }
+
+            function ClearPaint (x, y, width, height) {
+                clearPaint(x, y, width, height);
+                //socket
+            }
+
+            //to set paint event
+            paintJObj.on('mousedonw mouseup', mouseOnCanvas);
+
+            for(var i = 0; i < paintFontColors.length; ++i) {
+                paintFontColorClick(i);
+            }
+
+            for(var i = 0; i < paintFontSizes.length; ++i) {
+                paintFontSizeClick(i);
+            }
+
+            $('#eraser').on('click', function() {
+                SetTool(paintToolMode.Eraser);
+            });
+
+            $('#reset').on('click', function() {
+                ClearPaint(0, 0, paint.width, paint.height);
+            });
+
+            function getMousePos(canvas, evt) {
+                var rect = canvas.getBoundingClientRect();
+                return {
+                    x: evt.clientX - rect.left,
+                    y: evt.clientY - rect.top
+                };
+            };
+
+            function mouseMove(x, y) {
+                switch(paintTool) {
+                    case paintToolMode.Brush:
+                        paintContext.lineTo(x, y);
+                        paintContext.stroke();
+                        break;
+                    case paintToolMode.Eraser:
+                        var halfWidth = paintContext.lineWidth * 0.5;
+                        paintContext.clearRect(x - halfWidth, y - halfWidth, paintContext.lineWidth, paintContext.lineWidth);
+                        break;
+                }
+            };
+
+            function mouseOnCanvas(e) {
+                var type = e.handleObj.type,
+                    mousePos = getMousePos(paint, e);
+
+                draw(mousePos.x, mousePox.y, type);
+                //socket
+            }
             //to create the web camera
 
             // var element1 = document.createElement('iframe');
