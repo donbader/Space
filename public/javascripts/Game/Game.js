@@ -36,15 +36,6 @@
             this.CssRenderer.domElement.style.top = 0;
             this.container.appendChild(this.CssRenderer.domElement);
 
-            const VIEW_ANGLE = 45,
-    ASPECT = 16/9,
-    NEAR = 0.1,
-    FAR = 20000,
-    PI_2 = Math.PI /2;
-
-            this.CssCamera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
-
-
             ///////////
             // STATS //
             ///////////
@@ -354,9 +345,8 @@
 
                 // scope.paintContext.drawImage(scope.video, 0, 0, scope.videoImage.width, scope.videoImage.height);
 
-                scope.CssRenderer.render(scope.CssScene, scope.camera);
                 scope.renderer.render(scope.scene, scope.camera);
-                // scope.CssRenderer.render(scope.CssScene, scope.CssCamera);
+                scope.CssRenderer.render(scope.CssScene, scope.camera);
 
                 if(scope.state == GAME_STATE.RUNNING)
                     scope.requestId = requestAnimationFrame(scope.render);
