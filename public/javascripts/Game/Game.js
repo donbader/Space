@@ -25,9 +25,9 @@
 
 			// this.renderer.setPixelRatio( window.devicePixelRatio );
             this.renderer.setSize(window.innerWidth, window.innerHeight);
-            // this.renderer.domElement.style.position = 'absolute';
-            // this.renderer.domElement.style.top = 0;
-            this.renderer.domElement.style.zIndex = 5;
+            this.renderer.domElement.style.position = 'absolute';
+            this.renderer.domElement.style.top = 0;
+            // this.renderer.domElement.style.zIndex = 5;
             this.container.appendChild(this.renderer.domElement);
 
 			this.CssRenderer = new THREE.CSS3DRenderer();
@@ -67,24 +67,24 @@
 
 			//to create the dom element
 
-            var element = document.createElement('div');
-            // element.src = '/Paint';
-            element.innerHTML = "FUCK　ＹＯＵ＠！＠1321251351351313213213515311531514531848564658<br><br><br><br><br><br><br><br>41";
-            element.style['font-size'] = '100px';
-            element.style["background-color"] = "green" ;
-            // element.style["width"] = '1004px !important' ;
-            // element.style["height"] = '504px !important' ;
-            element.width = 1004;
-            element.height = 504;
-            // element.setAttribute('width', 1004);
-            // element.setAttribute('height', 504);
-            // element.scrolling = 'no';
-			var cssObj = new THREE.CSS3DObject(element);
-			// cssObj.position.copy(planeMesh.position);
-   //          cssObj.rotation.copy(planeMesh.rotation);
-			         cssObj.position.set(0, 100, -1000);
-            //cssObj.rotation.copy(planeMesh.rotation);
-            this.CssScene.add(cssObj);
+   //          var element = document.createElement('div');
+   //          // element.src = '/Paint';
+   //          element.innerHTML = "FUCK　ＹＯＵ＠！＠1321251351351313213213515311531514531848564658<br><br><br><br><br><br><br><br>41";
+   //          element.style['font-size'] = '100px';
+   //          element.style["background-color"] = "green" ;
+   //          // element.style["width"] = '1004px !important' ;
+   //          // element.style["height"] = '504px !important' ;
+   //          element.width = 1004;
+   //          element.height = 504;
+   //          // element.setAttribute('width', 1004);
+   //          // element.setAttribute('height', 504);
+   //          // element.scrolling = 'no';
+			// var cssObj = new THREE.CSS3DObject(element);
+			// // cssObj.position.copy(planeMesh.position);
+   // //          cssObj.rotation.copy(planeMesh.rotation);
+			//          cssObj.position.set(0, 100, -1000);
+   //          //cssObj.rotation.copy(planeMesh.rotation);
+   //          this.CssScene.add(cssObj);
 
             //to create the paint system
             // var paintToolMode = this.paintToolMode = { Brush: 0, Eraser: 1 };
@@ -254,74 +254,74 @@
 
 
             //to get the web camera
-            navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-            window.URL = window.URL || window.webkitURL;
+            // navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+            // window.URL = window.URL || window.webkitURL;
 
-            var video = this.video = document.getElementById('monitor');
+            // var video = this.video = document.getElementById('monitor');
 
-            if(navigator.getUserMedia) {
-                navigator.getUserMedia({video: true}, gotStream, noStream);
-            }
-            else {
-                console.log('webcam GG');
-            }
+            // if(navigator.getUserMedia) {
+            //     navigator.getUserMedia({video: true}, gotStream, noStream);
+            // }
+            // else {
+            //     console.log('webcam GG');
+            // }
 
-            function gotStream(stream) {
-                console.log(stream);
-                console.log(video);
-                if(window.URL) {
-                    video.src = window.URL.createObjectURL(stream);
-                }
-                else {
-                    //Opera
-                    video.src = stream;
-                }
+            // function gotStream(stream) {
+            //     console.log(stream);
+            //     console.log(video);
+            //     if(window.URL) {
+            //         video.src = window.URL.createObjectURL(stream);
+            //     }
+            //     else {
+            //         //Opera
+            //         video.src = stream;
+            //     }
 
-                video.onerror = function(e) {
-                    stream.stop();
-                };
+            //     video.onerror = function(e) {
+            //         stream.stop();
+            //     };
 
-                stream.onended = noStream;
-            }
+            //     stream.onended = noStream;
+            // }
 
-            function noStream(e) {
-                var msg = 'No camera available';
+            // function noStream(e) {
+            //     var msg = 'No camera available';
 
-                if(e.code == 1) {
-                    msg = 'User denied access to use camera';
-                }
+            //     if(e.code == 1) {
+            //         msg = 'User denied access to use camera';
+            //     }
 
-                console.log(msg);
-            }
+            //     console.log(msg);
+            // }
 
 
-            //to get the html element
+            // //to get the html element
 
-            this.videoImage = document.getElementById('videoImage');
-            this.videoImageContext = this.videoImage.getContext('2d');
+            // this.videoImage = document.getElementById('videoImage');
+            // this.videoImageContext = this.videoImage.getContext('2d');
 
-            //to fill up the background color
-            this.videoImageContext.fillStyle = '#000000';
-            this.videoImageContext.fillRect(0, 0, this.videoImage.width, this.videoImage.height);
+            // //to fill up the background color
+            // this.videoImageContext.fillStyle = '#000000';
+            // this.videoImageContext.fillRect(0, 0, this.videoImage.width, this.videoImage.height);
 
-            //to create the video texture
-            this.videoTexture = new THREE.Texture(this.videoImage);
-            this.videoTexture.minFilter = THREE.LinearFilter;
-            this.videoTexture.magFilter = THREE.LinearFilter;
+            // //to create the video texture
+            // this.videoTexture = new THREE.Texture(this.videoImage);
+            // this.videoTexture.minFilter = THREE.LinearFilter;
+            // this.videoTexture.magFilter = THREE.LinearFilter;
 
-            var videoMaterial = new THREE.MeshBasicMaterial({
-                map: this.videoTexture,
-                overdraw: true,
-                side: THREE.DoubleSide
-            });
+            // var videoMaterial = new THREE.MeshBasicMaterial({
+            //     map: this.videoTexture,
+            //     overdraw: true,
+            //     side: THREE.DoubleSide
+            // });
 
-            var videoGeometry = new THREE.PlaneGeometry(100, 100, 1, 1);
-            var videoMesh = new THREE.Mesh(videoGeometry, videoMaterial);
+            // var videoGeometry = new THREE.PlaneGeometry(100, 100, 1, 1);
+            // var videoMesh = new THREE.Mesh(videoGeometry, videoMaterial);
 
-            videoMesh.position.set(0, 50, 0);
-            // this.scene.add(videoMesh);
-            console.log(player.height);
-            player.addObj(videoMesh, new THREE.Vector3(0, player.height - 10, 0));
+            // videoMesh.position.set(0, 50, 0);
+            // // this.scene.add(videoMesh);
+            // console.log(player.height);
+            // player.addObj(videoMesh, new THREE.Vector3(0, player.height - 10, 0));
 
 
             //important
@@ -335,13 +335,13 @@
                 scope.ObjectsToUpdate.forEach((obj)=>obj.update(delta));
                 scope.stats.update();
 
-                if( scope.video.readyState === scope.video.HAVE_ENOUGH_DATA ) {
-                    scope.videoImageContext.drawImage(scope.video, 0, 0, scope.videoImage.width, scope.videoImage.height);
+                // if( scope.video.readyState === scope.video.HAVE_ENOUGH_DATA ) {
+                //     scope.videoImageContext.drawImage(scope.video, 0, 0, scope.videoImage.width, scope.videoImage.height);
 
-                    if( scope.videoTexture ){
-                        scope.videoTexture.needsUpdate = true;
-                    }
-                }
+                //     if( scope.videoTexture ){
+                //         scope.videoTexture.needsUpdate = true;
+                //     }
+                // }
 
                 // scope.paintContext.drawImage(scope.video, 0, 0, scope.videoImage.width, scope.videoImage.height);
 
