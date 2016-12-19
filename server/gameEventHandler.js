@@ -18,10 +18,11 @@ handler.connection = function(client) {
     var USER, ROOMID;
     User.getByName(client.handshake.query.username, (err, user)=>{
         USER = user;
-        log("[Connection]", client.id);
-        if(!user) return "No this user";
+        log("[Connection]", "(",user.name,")", client.id);
+        if(!user) return console.error("No this user");
         user.id = client.id;
         GameSet(user);
+        client.emit('welcome');
     });
 
     client.on('update user to one', function(data) {
