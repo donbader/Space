@@ -119,8 +119,9 @@ socket.on('logout', function(){
 ////////MAIN////////
 ////////////////////
 
-
-socket.emit('join', roomID);
+socket.on('welcome',function(){
+    socket.emit('join', roomID);
+})
 
 // var Ninja = Character.extend({
 //     init: function(){
