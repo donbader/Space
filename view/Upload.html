@@ -7,9 +7,8 @@
 </head>
 
 <body>
-    密碼:<input id="passwd" type="password"><br>
-    id:<input id="id" type="text"><br>
-    type:
+    密碼:<input id="passwd" type="password"><br> id:
+    <input id="id" type="text"><br> type:
     <select id="select">
         <option value="script">script</option>
         <option value="file">file</option>
@@ -20,32 +19,41 @@
     <script type="text/javascript">
         $("#select").on('change', changeDataDisplay);
         $("button[type=submit]").on("click", function(e) {
-            var object = {id: $("#id").val(), type:$("#select").find(":selected").val(), data:{}};
+            var object = {
+                id: $("#id").val(),
+                type: $("#select").find(":selected").val(),
+                data: {}
+            };
             switch (object.type) {
                 case "script":
                     var arr = $("#scripts").val().split('\n').join('');
                     var scripts = eval(arr);
                     object.data.scripts = scripts;
                     object.data.type = $('#datatype').val();
-                break;
+                    break;
                 case "file":
                     object.data.path = $("#path").val();
-                break;
+                    break;
             }
             object.password = $("#passwd").val();
+
+
+            console.log(object);
+
 
             $.ajax({
                 type: 'post',
                 url: 'Upload/do',
-                data: object,
-                success: function(){
+                data: JSON.stringify(object),
+                success: function() {
                     alert("上傳成功!");
-                    window.location = "/Upload";
+
                 }
             });
         });
-        function changeDataDisplay(){
-            switch ($("#select").find(":selected").val()){
+
+        function changeDataDisplay() {
+            switch ($("#select").find(":selected").val()) {
                 case "script":
                     $("#datadiv").empty();
                     $("#datadiv").prepend("Data:<br>");
@@ -53,16 +61,15 @@
                     $("#datadiv").append($("<input id='datatype' type='text' value='Mesh'>"));
                     $("#datadiv").append("<br>Scripts:<br>");
                     $("#datadiv").append($("<textarea id='scripts' style='width:500px; height:200px;'>[\"\"\n,\n\"\"]</textarea>"))
-                break;
+                    break;
                 case "file":
                     $("#datadiv").empty();
                     $("#datadiv").prepend("Path:");
                     $("#datadiv").append($("<input id='path' style='width:500px' type='text'/>"));
-                break;
+                    break;
             }
         }
         changeDataDisplay();
-
     </script>
 </body>
 
