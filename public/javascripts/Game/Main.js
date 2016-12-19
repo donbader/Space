@@ -37,8 +37,10 @@ socket.on('render item', function(data){
             var scripts = "var item = ";
             scripts += data.data.scripts.join();
             eval(scripts);
-            item.position.set(data.position.x, data.position.y, data.position.z);
-            item.rotation.set(data.rotation.x, data.rotation.y, data.rotation.z);
+            if(data.position)
+                item.position.set(data.position.x, data.position.y, data.position.z);
+            if(data.rotation)
+                item.rotation.set(data.rotation.x, data.rotation.y, data.rotation.z);
             game.add(item);
             if(item.ObjectsToMoveOn){
                 player.canMoveOn(item.ObjectsToMoveOn);
@@ -47,8 +49,8 @@ socket.on('render item', function(data){
         case "file":
             var loader = new THREE.ObjectLoader();
             loader.load(data.data.path, function(item) {
-                item.position.set(data.position.x, data.position.y, data.position.z);
-                item.rotation.set(data.rotation.x, data.rotation.y, data.rotation.z);
+                if(data.position)item.position.set(data.position.x, data.position.y, data.position.z);
+                if(data.rotation)item.rotation.set(data.rotation.x, data.rotation.y, data.rotation.z);
                 game.add(item);
             });
             break;
@@ -68,8 +70,10 @@ socket.on('add user', function(userdata){
 })
 socket.on('remove user', function(username){
     console.log('[remove user]',Users);
-    game.remove(Users[username].object);
-    delete Users[username];
+    if(Users[username]){
+        game.remove(Users[username].object);
+        delete Users[username];
+    }
 });
 
 socket.on('fetch userdata', function(receiver){
