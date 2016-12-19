@@ -343,6 +343,10 @@ var Character = this.Character = THREE.Object3D.extend({
         this.controls.ObjectsToMoveOn = this.controls.ObjectsToMoveOn.concat(arr);
         return this.controls.ObjectsToMoveOn;
     },
+    addObj: function(obj, position){
+        this.body.add(obj);
+        obj.position.set(position.x, position.y, position.z);
+    },
     height: 170,
 
 

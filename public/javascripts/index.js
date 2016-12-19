@@ -224,9 +224,6 @@ $("#enter").click(function() {
                 console.log(Cookies.get(""));
 
                 var socket = io.connect();
-                socket.emit('join', {
-                    roomID: JSONData.id
-                });
 
                 // console.log("ID=",id);
                 //document.getElementById("Black").style.display = "inline";
@@ -337,10 +334,15 @@ $("#enter").click(function() {
 
 
 
+<<<<<<< HEAD
                     socket.on('zzz', function(userdata) {
                         console.log('zzz');
                         console.log(Users[userdata.id]);
                         if (Users[userdata.id]) {
+=======
+                    socket.on('update user', function(userdata){
+                        if(Users[userdata.id]){
+>>>>>>> 7587c428751a681807316ecf4bd4379e20b5a29c
                             Users[userdata.id].object.position.x = userdata.position.x;
                             Users[userdata.id].object.position.y = userdata.position.y;
                             Users[userdata.id].object.position.z = userdata.position.z;
