@@ -1,3 +1,5 @@
+
+
 $('form').submit(false);
 
 if (navigator.cookieEnabled) {
@@ -6,7 +8,8 @@ if (navigator.cookieEnabled) {
 
 
     console.log(Cookies.get("ID"));
-    if (Cookies.get("ID") != null && Cookies.get("PW") != null)　　　 {　
+    if (Cookies.get("ID") != null && Cookies.get("PW") != null)　　　 
+     {　
         console.log(Cookies.get("ID") + "welcome");
         //COOKIE傳送回去的帳密確認
 
@@ -170,14 +173,12 @@ if (navigator.cookieEnabled) {
 
 
 
-                        console.log("12345");
                         $("#Black").animate({
                             'opacity': "0"
                         }, 3000, function() {
                             $("#Black").css({
                                 'display': 'none'
                             });
-                            console.log("123456");
                         });
                     });
                 } else {
@@ -209,6 +210,22 @@ $("#enter").click(function() {
         Account: $('#inputEmail').val(),
         Password: $("#inputPassword").val()
     }
+    console.log(send_data.Account.length);
+    if (checkCharacter(send_data.Account) == false || checkCharacter(send_data.Password) == false)
+    {
+        console.log("false");
+        alert("請輸入正確的字元 (僅接受數字及大小寫英文字母!)");
+        window.location = "/";
+    }
+   
+
+
+    
+
+
+
+
+
     $.ajax({
         type: 'post',
         url: "login",
@@ -334,15 +351,9 @@ $("#enter").click(function() {
 
 
 
-<<<<<<< HEAD
-                    socket.on('zzz', function(userdata) {
-                        console.log('zzz');
-                        console.log(Users[userdata.id]);
-                        if (Users[userdata.id]) {
-=======
+
                     socket.on('update user', function(userdata){
                         if(Users[userdata.id]){
->>>>>>> 7587c428751a681807316ecf4bd4379e20b5a29c
                             Users[userdata.id].object.position.x = userdata.position.x;
                             Users[userdata.id].object.position.y = userdata.position.y;
                             Users[userdata.id].object.position.z = userdata.position.z;
@@ -387,5 +398,4 @@ $("#enter").click(function() {
         }
 
     });
-    //  }
 });
