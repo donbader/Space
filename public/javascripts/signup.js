@@ -11,7 +11,7 @@ $("#submitbutton").click(function() {
         console.log("false");
         alert("請輸入正確的字元 (僅接受數字及大小寫英文字母!)");
         window.location = "/Signup";
-    }
+    }else
 
     if ($('#inputEmail').val() != "" && $('#inputPassword').val() != "") {
         $.ajax({
