@@ -23,7 +23,7 @@ app.use(favicon(__dirname + '/public/images/left_top_logo.ico'));
 // Route Service
 app.use('/', index);
 app.use('/SignUp', signup);
-app.use('/upload', Upload);
+// app.use('/upload', Upload);
 app.use('/Modify', Modify);
 
 
