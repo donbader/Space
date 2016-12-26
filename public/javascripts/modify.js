@@ -12,8 +12,8 @@ $("#enter").click(function() {
         console.log("false");
         alert("請輸入正確的字元 (僅接受數字及大小寫英文字母!)");
         window.location = "/Modify";
-    }
-   
+    }else
+
     if ($('#inputEmail').val() != "" && $('#old_inputPassword').val() != "" && $('#new_inputPassword').val() != "") {
         console.log(send_data);
         $.ajax({
