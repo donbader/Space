@@ -7,7 +7,7 @@ if (navigator.cookieEnabled) {
         // 在此加入使用 Cookie 的程式碼
 
 
-    console.log(Cookies.get("ID"));
+    // console.log(Cookies.get("ID"));
     if (Cookies.get("ID") != null && Cookies.get("PW") != null)　　　 
      {　
         console.log(Cookies.get("ID") + "welcome");
@@ -206,25 +206,19 @@ $("#GameAll").css({
 });
 $("#enter").click(function() {
     //if ($('#inputEmail').val() != "" && $('#inputPassword').val() != "") {
-    var send_data = {
-        Account: $('#inputEmail').val(),
-        Password: $("#inputPassword").val()
-    }
     console.log(send_data.Account.length);
     if (checkCharacter(send_data.Account) == false || checkCharacter(send_data.Password) == false)
     {
         console.log("false");
-        alert("請輸入正確的字元 (僅接受數字及大小寫英文字母!)");
+        alert("請輸入正確的字元及長度 (僅接受10個字元以內的數字及大小寫英文字母!)");
         window.location = "/";
     }
-   
-
-
+       
+    var send_data = {
+        Account: $('#inputEmail').val(),
+        Password: $("#inputPassword").val()
+    }
     
-
-
-
-
 
     $.ajax({
         type: 'post',

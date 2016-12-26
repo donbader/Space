@@ -1,4 +1,6 @@
 function checkCharacter(test){
+	if (test.length >= 10)
+        return false;
     for (i=0;i<test.length;i++)
     {
         if (!   ((test[i] >= 'a' && test[i] <= 'z') || (test[i] >='A' && test[i] <='Z') || (test[i] >= 0 &&  test[i]<=9)))
