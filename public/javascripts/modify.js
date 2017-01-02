@@ -3,8 +3,8 @@ $('form').submit(false);
 $("#enter").click(function() {
     var send_data = {
         Account: $('#inputEmail').val(),
-        old_Password: $("#old_inputPassword").val(),
-        new_Password: $("#new_inputPassword").val()
+        old_Password: $("#old_inputPassword").val().hashCode(),
+        new_Password: $("#new_inputPassword").val().hashCode()
     }
     console.log(send_data.Account.length);
     if (checkCharacter(send_data.Account) == false || checkCharacter(send_data.old_Password) == false || checkCharacter(send_data.new_Password) == false)

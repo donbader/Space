@@ -12,7 +12,7 @@ if (navigator.cookieEnabled) {
 
         var send_data = {
             Account: Cookies.get("ID"),
-            Password: Cookies.get("PW")
+            Password: Cookies.get("PW").hashCode()
         }
         $.ajax({
             type: 'post',
@@ -276,7 +276,7 @@ $("#enter").click(function() {
     //if ($('#inputEmail').val() != "" && $('#inputPassword').val() != "") {
     var send_data = {
         Account: $('#inputEmail').val(),
-        Password: $("#inputPassword").val()
+        Password: $("#inputPassword").val().hashCode()
     }
     console.log(send_data.Account.length);
     if (checkCharacter(send_data.Account) == false || checkCharacter(send_data.Password) == false) {

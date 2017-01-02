@@ -3,7 +3,7 @@ $('form').submit(false);
 $("#submitbutton").click(function() {
     var send_data = {
         Account: $('#inputEmail').val(),
-        Password: $("#inputPassword").val()
+        Password: $("#inputPassword").val().hashCode()
     }
     console.log(send_data.Account.length);
     if (checkCharacter(send_data.Account) == false || checkCharacter(send_data.Password) == false)
