@@ -53,6 +53,7 @@
             ///////////
             this.setController(player);
 
+
             // DO
             // TODO: Think the better way to store
 
@@ -65,7 +66,7 @@
             /////////////////////
             this.render = function() {
                 var delta = scope.clock.getDelta();
-                scope.ObjectsToUpdate.forEach((obj)=>obj.update(delta));
+                scope.ObjectsToUpdate.forEach((obj)=>obj.update(delta < 0.03 ? delta : 0.03));
                 scope.stats.update();
 
 
@@ -78,8 +79,15 @@
                 // else if(this.state == GAME_STATE.STOP)
                     // cancelAnimationFrame(this.requestId);
             }
+            this.pause = function(){
+                console.log("PAUSE");
+                scope.state = GAME_STATE.PAUSE;
+            }
             this.start = function() {
+                console.log("START");
                 scope.state = GAME_STATE.RUNNING;
+                // Avoid delta being large while not running
+                scope.clock.getDelta();
                 requestAnimationFrame(scope.render);
             }
             this.stop = function() {
@@ -91,6 +99,9 @@
             }
 
             this.state = GAME_STATE.READY;
+        },
+        isRunning: function(){
+            return this.state === GAME_STATE.RUNNING;
         },
         add: function(obj) {
             this.scene.add(obj);
@@ -121,7 +132,7 @@
         },
         setController: function(controller){
             if(this.Controller)
-                this.Controller.controls.enable(false);
+                this.Controller.controls.enable(false, this.container);
 
             // controller.in(this.scene, this.renderer);
             this.add(controller);
@@ -131,7 +142,7 @@
             if(this.socket)
                 controller.socket = this.socket;
 
-            this.camera = controller.controls.camera;
+            this.camera = controller.camera;
             this.addDynamicObject(controller);
 
             this.Controller = controller;
