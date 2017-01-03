@@ -5,12 +5,16 @@ var router = express.Router();
 var querystring = require("querystring");
 var mongoose = require('mongoose');
 
+
+
 /* GET home page. */
-router.get('/', function(req, res, next) {
-    console.log("[GET] '/'");
-    res.sendFile(path.join(__dirname, '../view', 'index.html'));
-    console.log(path.join(__dirname, '../view', 'index.html'));
-});
+// router.get('/', function(req, res, next) {
+//       // console.log(req.session.isVisit);
+//     console.log("[GET] '/'");
+//     //res.sendFile(path.join(__dirname, '../view', 'index.html'));
+//     console.log(path.join(__dirname, '../view', 'upload.html'));
+// });
+
 
 router.post('/login', function(req, res) {
     var body = '';
