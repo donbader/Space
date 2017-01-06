@@ -23,7 +23,10 @@
         this.enabled = false;
         this.mouse = {
             state: MOUSE_STATE.NONE,
-            sensitivity: 0.001
+            sensitivity: 0.001,
+            previousPosition: {
+                x: 0, y:0
+            }
         };
         /*====================
             Zoom
@@ -91,9 +94,16 @@
         ====================*/
         this.positionFlag = new PositionFlag();
         // this.contextmemu = $("");
-        this.Obstacles = [];
-        this.ObjectsToSelect = [];
-        this.ObjectsToMoveOn = [];
+        this.Objects = {
+            stepOn: [],
+            select: [],
+            collide: [],
+            move: []
+        };
+        this.Controlling = {
+            rotation: false,
+            objects: []
+        }
 
 
         /*====================
@@ -127,17 +137,27 @@
                 case "TYPING":return scope.mode(scope._prevMode);
                 case "NORMAL":return scope.mode("CS");
                 case "CS":return scope.mode("NORMAL");
+                default: return scope.mode("NORMAL");
             }
         };
         hotkey["ENTER"] = function(event){
             (scope._mode !== "TYPING") && scope.mode("TYPING");
-        }
+        };
         hotkey[" "] = function(event,bool){
             if(!bool)return ; //Disable When KeyDown
             if(scope.move.jump){
                 scope.velocity.y = scope.jumpVelocity;
                 scope.move.jump = false;
             }
+        };
+        hotkey["E"] = function(event, bool){
+            if(!bool)return ; //Disable When KeyDown
+            (scope._mode !== "OBJ_EDITING") ?
+                scope.mode('OBJ_EDITING') :
+                scope.mode(scope._prevMode);
+        };
+        hotkey["R"] = function(event, bool){
+            scope.Controlling.rotation = bool;
         }
     };
 
@@ -168,6 +188,7 @@
                 case "NORMAL":
                 case "CS":
                 case "TYPING":
+                case "OBJ_EDITING":
                     this._prevMode = this._mode;
                     this._mode = m;
                     console.log("Switch To ", m , " mode.");
@@ -175,6 +196,10 @@
                 default:
                     return console.error("Invalid Mode in Controls: ", m);
             }
+        },
+        can: function(manipulate, arr){
+            if(this.Objects[manipulate])
+                this.Objects[manipulate] = this.Objects[manipulate].concat(arr);
         },
         onKey: function(dir, event) {
             event.stopPropagation();
@@ -188,24 +213,89 @@
         },
         onMouseDown:function(event){
             this.mouse.state = MOUSE_STATE.KEYDOWN;
+            if(this._mode === "OBJ_EDITING"){
+                var mousePosition = new THREE.Vector2();
+                mousePosition.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+                mousePosition.y = 1 - ( event.clientY / window.innerHeight ) * 2;
+
+                var ray = new THREE.Raycaster();
+                ray.setFromCamera(mousePosition, this.player.camera);
+                var intersects = ray.intersectObjects(this.Objects['move'],true);
+                if(intersects.length){
+                    while(intersects[0].object.parent.type != "Scene"){
+                        intersects[0].object = intersects[0].object.parent;
+                    }
+                    this.Controlling['objects'].push(intersects[0].object);
+                }
+            }
         },
         onMouseUp:function(event){
             this.mouse.state = MOUSE_STATE.KEYUP;
             if(this._mode === "NORMAL"){
                 this.headDirection = {x:0, y:0, enabled:false};
             }
+            else if(this._mode === 'OBJ_EDITING'){
+                this.Controlling['objects'] = [];
+            }
         },
         onMouseMove: function(event){
-            event.preventDefault();
-            if(this._mode === "TYPING")return;
-            if(this._mode === "CS" || this.mouse.state === MOUSE_STATE.KEYDOWN){
-                var x = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
-                var y = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
-                x = -x * this.mouse.sensitivity;
-                y = -y * this.mouse.sensitivity;
-                x = Math.abs(x) <= 0.001 ? 0 : x;
-                y = Math.abs(y) <= 0.001 ? 0 : y;
-                this.headDirection = {x:x, y:y, enabled:true};
+            switch (this._mode) {
+                case "TYPING":return;
+                case "NORMAL":
+                    if(this.mouse.state !== MOUSE_STATE.KEYDOWN)return;
+                case "CS":
+                    var x = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
+                    var y = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
+                    x = -x * this.mouse.sensitivity;
+                    y = -y * this.mouse.sensitivity;
+                    x = Math.abs(x) <= 0.001 ? 0 : x;
+                    y = Math.abs(y) <= 0.001 ? 0 : y;
+                    this.headDirection = {x:x, y:y, enabled:true};
+                    return;
+                case "OBJ_EDITING":
+                    if(this.mouse.state !== MOUSE_STATE.KEYDOWN)return;
+                    var mousePosition = new THREE.Vector2();
+                	mousePosition.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+                	mousePosition.y = 1 - ( event.clientY / window.innerHeight ) * 2;
+                    var ray = new THREE.Raycaster();
+                    ray.setFromCamera(mousePosition, this.player.camera);
+                    var intersects = ray.intersectObjects(this.Objects['stepOn']);
+
+                    if(intersects.length && this.Controlling['objects'].length){
+                        if(!this.Controlling.rotation){ // move position
+                            for(var i in this.Controlling['objects']){
+                                this.Controlling['objects'][i].position.set(
+                                    intersects[0].point.x
+                                    , this.Controlling['objects'][i].position.y
+                                    , intersects[0].point.z
+                                );
+                            }
+                        }
+                        else{ // rotation
+                            var deltaMove = {
+                                x: event.offsetX-this.mouse.previousPosition.x,
+                                y: event.offsetY-this.mouse.previousPosition.y
+                            };
+                            var deltaRotationQuaternion = new THREE.Quaternion()
+                                .setFromEuler(new THREE.Euler(
+                                    0,
+                                    deltaMove.x * Math.PI / 180.0,
+                                    0,
+                                    'XYZ'
+                                ));
+                            for(var i in this.Controlling['objects']){
+                                var selected = this.Controlling['objects'][i];
+                                selected.quaternion.multiplyQuaternions(deltaRotationQuaternion, selected.quaternion);
+                            }
+
+                            this.mouse.previousPosition = {
+                                x: event.offsetX,
+                                y: event.offsetY
+                            }
+                        }
+                    }
+                    break;
+
             }
         },
         onRightClick:function(event){
@@ -216,7 +306,7 @@
 
         	var ray = new THREE.Raycaster();
         	ray.setFromCamera(mousePosition, this.player.camera);
-        	var intersects = ray.intersectObjects(this.ObjectsToMoveOn, true);
+        	var intersects = ray.intersectObjects(this.Objects['stepOn'], true);
 
         	if(intersects.length){
         		var positionFlag = this.positionFlag;
@@ -225,6 +315,7 @@
                 this.move.method = "MOUSECLICK";
                 this.move.to.enabled = true;
                 this.move.to.destination.x = intersects[0].point.x;
+                this.move.to.destination.y = intersects[0].point.y;
                 this.move.to.destination.z = intersects[0].point.z;
         	}
             // if(this._mode === "NORMAL")
@@ -253,14 +344,17 @@
             }
             else if(this.move.method === "MOUSECLICK"){
                 var deltaX = this.move.to.destination.x - this.player.position.x;
+                var deltaY = this.move.to.destination.y - this.player.position.y;
                 var deltaZ = this.move.to.destination.z - this.player.position.z;
-                var distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaZ, 2));
+                var distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaZ, 2) + Math.pow(deltaY,2));
                 this.velocity.x = deltaX / distance * this.move.velocity;
+                this.velocity.y = deltaY / distance * this.move.velocity;
                 this.velocity.z = deltaZ / distance * this.move.velocity;
                 if(distance <= 10){
                     this.positionFlag.visible = false;
                     this.move.to.enabled = false;
                     this.velocity.x = 0;
+                    this.velocity.y = 0;
                     this.velocity.z = 0;
                 }
                 this.player.move(this.velocity.x * delta, this.velocity.y * delta, this.velocity.z * delta);

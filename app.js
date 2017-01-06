@@ -19,9 +19,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.use(express.static(path.join(__dirname, 'view')));
 
 
+
 // app.use(session({
 //   secret: 'ActuallyIReallyDontKnowWhyLamIsFuckingHandsome'
 // }));
+
 
 
 app.use(favicon(__dirname + '/public/images/left_top_logo.ico'));
@@ -30,7 +32,7 @@ app.use(helmet());
 // Route Service
 app.use('/', index);
 app.use('/SignUp', signup);
-// app.use('/upload', Upload);
+// // app.use('/upload', Upload);
 app.use('/Modify', Modify);
 
 

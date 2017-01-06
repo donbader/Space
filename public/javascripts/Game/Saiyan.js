@@ -5,6 +5,7 @@
     }
     this.Saiyan = Character.extend({
         init: function (){
+            this._super();
             this.body.material.color.set("rgb(255,253,54)");
             var light = new THREE.PointLight("rgb(255,253,54)", 3, 170);
             this.add(light);

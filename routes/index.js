@@ -13,6 +13,7 @@ router.get('/', function(req, res, next) {
     console.log("[GET] '/'");
     res.sendFile(path.join(__dirname, '../view', 'index.html'));
     console.log(path.join(__dirname, '../view', 'upload.html'));
+
 });
 
 

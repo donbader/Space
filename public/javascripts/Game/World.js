@@ -1,7 +1,6 @@
 (function() {
-	var World = this.World = Class.extend({
+	var World = this.World = THREE.Object3D.extend({
 		init: function(long, width, height, wallcolor, groundcolor) {
-			this.__proto__ = new THREE.Object3D();
 
 			long = long || 10240;
 			width = width || 10240;
@@ -50,8 +49,9 @@
 			}
 
 			// set objects in it
-			this.Obstacles = [].concat(this.walls);
-			this.ObjectsToMoveOn = [this.ground];
+			this.Objects = {};
+			this.Objects['collide'] = [].concat(this.walls);
+			this.Objects['stepOn'] = [].concat(this.ground);
 
 			//20161204
 			//to create a box with texture
