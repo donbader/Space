@@ -11,6 +11,8 @@ const MODE_VIEW = {FIRST_PERSON: 0, THIRD_PERSON: 1};
 var Character = this.Character = THREE.Object3D.extend({
     init: function(info){
         'use strict';
+        this._super();
+        console.log(this);
         var scope = this;
         var camera = this.camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
         this.type = "Character";
@@ -89,15 +91,22 @@ var Character = this.Character = THREE.Object3D.extend({
             this.ServerUpdate();
         }
     },
-    canSelect: function(arr){
-        this.controls.ObjectsToSelect = this.controls.ObjectsToSelect.concat(arr);
-        return this.controls.ObjectsToSelect;
+    manipulate: function(item){
+        if(item.Objects){
+            for(var manipulate in item.Objects){
+                this.can(manipulate, item.Objects[manipulate]);
+            }
+        }
+        if(item.prop){
+            for(var manipulate in item.prop){
+                if(item.prop[manipulate])
+                    this.can(manipulate, [item]);
+            }
+        }
     },
-    canMoveOn: function(arr){
-        this.controls.ObjectsToMoveOn = this.controls.ObjectsToMoveOn.concat(arr);
-        return this.controls.ObjectsToMoveOn;
-    },
-
+    can: function(manipulate, arr){
+        this.controls.can(manipulate, arr);
+    }
 });
 
 

@@ -45,9 +45,10 @@ socket.on('render item', function(data){
             if(data.rotation)
                 item.rotation.set(data.rotation.x, data.rotation.y, data.rotation.z);
             game.add(item);
-            if(item.ObjectsToMoveOn){
-                player.canMoveOn(item.ObjectsToMoveOn);
-            }
+            item.prop = data.data.prop;
+            item.name = data.id;
+
+            player.manipulate(item);
             break;
         case "file":
             var loader = new THREE.ObjectLoader();
@@ -55,9 +56,17 @@ socket.on('render item', function(data){
                 if(data.position)item.position.set(data.position.x, data.position.y, data.position.z);
                 if(data.rotation)item.rotation.set(data.rotation.x, data.rotation.y, data.rotation.z);
                 game.add(item);
+                // Property
+                item.prop = data.data.prop;
+                item.name = data.id;
+
+                player.manipulate(item);
+
             });
             break;
     }
+
+
 });
 
 

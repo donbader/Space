@@ -6,10 +6,10 @@ var querystring = require("querystring");
 var mongoose = require('mongoose');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
     console.log("[GET] '/'");
     res.sendFile(path.join(__dirname, '../view', 'index.html'));
-    console.log(path.join(__dirname, '../view', 'index.html'));
+    // console.log(path.join(__dirname, '../view', 'index.html'));
 });
 
 router.post('/login', function(req, res) {
