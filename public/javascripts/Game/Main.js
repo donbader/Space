@@ -11,11 +11,14 @@ var game;
 var player;
 var world;
 
+console.log('YO main.js');
 
 var socket = io.connect("/", {query: "username="+username});
 socket.on('sys', function(data){
     console.log('sys:' + data);
 });
+
+console.log('YO socekt connection');
 
 socket.on('create game', function(user){
     console.log("[Create Game By User]" , user);
@@ -115,8 +118,9 @@ socket.on('logout', function(){
 ////////MAIN////////
 ////////////////////
 
-
+console.log('join before');
 socket.emit('join', roomID);
+console.log('join after');
 
 // var Ninja = Character.extend({
 //     init: function(){

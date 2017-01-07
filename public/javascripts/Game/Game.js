@@ -3,6 +3,7 @@
     var GAME_STATE = { STOP: -1, READY: 0, RUNNING: 1, PAUSE: 2 };
     var Game = this.Game = Class.extend({
         init: function(divId, player, socket) {
+            console.log('Yo enter game');
             // init elements
             this.container = document.getElementById('GamePlay');
             var scope = this.scope = this;
@@ -67,169 +68,205 @@
 
 			//to create the dom element
 
-   //          var element = document.createElement('div');
+            
+   //          var paintWidth = 160, paintHeight = 120;
+   //          var dummyPaint = document.createElement('canvas');
    //          // element.src = '/Paint';
-   //          element.innerHTML = "FUCK　ＹＯＵ＠！＠1321251351351313213213515311531514531848564658<br><br><br><br><br><br><br><br>41";
-   //          element.style['font-size'] = '100px';
-   //          element.style["background-color"] = "green" ;
+   //          // element.innerHTML = "FUCK　ＹＯＵ＠！＠1321251351351313213213515311531514531848564658<br><br><br><br><br><br><br><br>41";
+   //          // element.style['font-size'] = '100px';
+   //          // element.style["background-color"] = "green" ;
    //          // element.style["width"] = '1004px !important' ;
    //          // element.style["height"] = '504px !important' ;
-   //          element.width = 1004;
-   //          element.height = 504;
-   //          // element.setAttribute('width', 1004);
-   //          // element.setAttribute('height', 504);
+   //          // element.width = 1004;
+   //          // element.height = 504;
+   //          dummyPaint.style['opacity'] = 0;
+   //          // dummyPaint.style['background-color'] = 'blue';
+   //          dummyPaint.setAttribute('width', paintWidth);
+   //          dummyPaint.setAttribute('height', paintHeight);
+
+   //          var dummyPaintJObj = $(dummyPaint);
+   //          dummyPaintJObj.on('click', function() {
+   //              console.log('canvas click');
+   //          });
+
    //          // element.scrolling = 'no';
-			// var cssObj = new THREE.CSS3DObject(element);
+			// var dummyPaintCSSObj = new THREE.CSS3DObject(dummyPaint);
 			// // cssObj.position.copy(planeMesh.position);
    // //          cssObj.rotation.copy(planeMesh.rotation);
-			//          cssObj.position.set(0, 100, -1000);
+			//  dummyPaintCSSObj.position.set(0, 300, -800);
    //          //cssObj.rotation.copy(planeMesh.rotation);
-   //          this.CssScene.add(cssObj);
+   //          this.CssScene.add(dummyPaintCSSObj);
 
-            //to create the paint system
-            // var paintToolMode = this.paintToolMode = { Brush: 0, Eraser: 1 };
-            // var paintTool = this.paintTool = paintToolMode.Brush;
-            // var paintFontColors = ['red', 'blue', 'green', 'purple', 'yellow', 'orange', 'pink', 'black', 'white', 'ebebeb'];
-            // var paintFontSizes = [1, 3, 5, 10, 15, 20];
-            // var paintFontSizeNames = ['default', 'three', 'five', 'ten', 'fifteen', 'twenty'];
-            // var paint = this.paint = document.getElementById('paint');
-            // var paintJObj = this.paintJObj = $('paint');
+   //          //to create the paint system
+   //          var paintToolMode = this.paintToolMode = { Brush: 0, Eraser: 1 };
+   //          var paintTool = this.paintTool = paintToolMode.Brush;
+   //          var paintFontColors = ['red', 'blue', 'green', 'purple', 'yellow', 'orange', 'pink', 'black', 'white', 'ebebeb'];
+   //          var paintFontSizes = [1, 3, 5, 10, 15, 20];
+   //          var paintFontSizeNames = ['default', 'three', 'five', 'ten', 'fifteen', 'twenty'];
+   //          var paint = this.paint = document.getElementById('paint');
+   //          var paintJObj = this.paintJObj = $('paint');
 
-            // var paintWidth = 1000, paintHeight = 600;
-            // this.paint.setAttribute('width', paintWidth);
-            // this.paint.setAttribute('height', paintHeight);
-            // var paintContext = this.paintContext = this.paint.getContext('2d');
+   //          // this.paint.setAttribute('width', 160);
+   //          // this.paint.setAttribute('height', 120);
+   //          paint.style['border'] = '1px solid #000';
+   //          paint.style['background-color'] = 'white';
+   //          // paint.style['color'] = 'white';
+   //          var paintContext = this.paintContext = this.paint.getContext('2d');
+   //          // paint.style['opacity'] = 1;
 
-            // //to fill up the background color
-            // this.paintContext.fillStyle = 'solid';
-            // this.paintContext.fillRect(0, 0, this.paint.width, this.paint.height);
-            // this.paintContext.lineCap = 'round';
+   //          //to fill up the background color
+   //          this.paintContext.fillStyle = 'solid';
+   //          // this.paintContext.fillRect(0, 0, paintWidth, paintHeight);
 
-            // //to create the video texture
-            // this.paintTexture = new THREE.Texture(this.paint);
-            // this.paintTexture.minFilter = THREE.LinearFilter;
-            // this.paintTexture.magFilter = THREE.LinearFilter;
+   //          // this.paintContext.fillRect(0, 0, this.paint.width, this.paint.height);
+   //          this.paintContext.lineCap = 'round';
+   //          this.paintContext.fillStyle = '#ffffff';
+   //          this.paintContext.fillRect(0,0,paintWidth,paintHeight);
+   //          // this.paintContext.fillStyle = '#000000';
+   //          // this.paintContext.fillRect(0, 0, paintWidth, paintHeight);
 
-            // var paintMaterial = new THREE.MeshBasicMaterial({
-            //     map: this.paintTexture,
-            //     overdraw: true,
-            //     side: THREE.DoubleSide
-            // });
 
-            // var paintGeometry = new THREE.PlaneGeometry(paintWidth, paintHeight, 1, 1);
-            // var paintMesh = new THREE.Mesh(paintGeometry, paintMaterial);
-            // this.scene.add(paintMesh);
-            // paintMesh.position.set(0, 50, 0);
 
-            // function draw (x, y, type) {
-            //     if(type === 'mousedown') {
-            //         paintContext.beginPath();
-            //         paintContext.moveTo(x, y);
-            //         paint.on('mousemove', mouseOnCanvas);
-            //     } else if (type === 'mousemove') {
-            //         mouseMove(x, y);
-            //     } else if (type === 'mouseup') {
-            //         paintContext.closePath();
-            //         paint.off('mousemove', mouseOnCanvas);
-            //     }
-            //     else {
-            //         console.log('draw error');
-            //     }
-            // };
 
-            // function setPaintTool (tool) {
-            //     paintTool = tool;
-            // };
+   //          //to create the video texture
+   //          this.paintTexture = new THREE.Texture(this.paint);
+   //          this.paintTexture.minFilter = THREE.LinearFilter;
+   //          this.paintTexture.magFilter = THREE.LinearFilter;
 
-            // function setPaintFontColor (i) {
-            //     paintContext.strokeStyle = paintFontColors[i];
-            // };
+   //          var paintMaterial = new THREE.MeshBasicMaterial({
+   //              map: this.paintTexture,
+   //              overdraw: true,
+   //              side: THREE.DoubleSide
+   //          });
 
-            // function setPaintFontSize (i) {
-            //     paintContext.lineWidth = paintFontSizess[i];
-            // };
+   //          var paintGeometry = new THREE.PlaneGeometry(100, 100, 1, 1);
+   //          var paintMesh = new THREE.Mesh(paintGeometry, paintMaterial);
+   //          paintMesh.position.set(0, 300, -800);
+   //          this.scene.add(paintMesh);
 
-            // function clearPaint (x, y, width, height) {
-            //     paintContext.clearRect(x, y, width, height);
-            // };
+   //          function draw (x, y, type) {
+   //              if(type === 'mousedown') {
+   //                  console.log('mousedown');
+   //                  paintContext.beginPath();
+   //                  paintContext.moveTo(x, y);
+   //                  dummyPaintJObj.on('mousemove', mouseOnCanvas);
+   //              } else if (type === 'mousemove') {
+   //                  console.log('mousemove');
+   //                  mouseMove(x, y);
+   //              } else if (type === 'mouseup') {
+   //                  console.log('mouseup');
+   //                  paintContext.closePath();
+   //                  dummyPaintJObj.off('mousemove', mouseOnCanvas);
+   //              }
+   //              else {
+   //                  console.log('draw error');
+   //              }
+   //          };
 
-            // function paintFontColorClick (i) {
-            //     $('#' + paintFontColors[i]).on('click', function() {
-            //         SetColor(i);
-            //         SetTool(paintToolMode.Brush);
-            //     })
-            // }
+   //          paintContext.strokeStyle = paintFontColors[0];
+   //          paintContext.lineWidth = paintFontSizes[5];
 
-            // function paintFontSizeClick (i) {
-            //     $('#' + paintFontSizeNames[i]).on('click', function() {
-            //         SetSize(i);
-            //     });
-            // }
+   //          function setPaintTool (tool) {
+   //              paintTool = tool;
+   //          };
 
-            // function SetPaintFontColor (i) {
-            //     setColor(i);
-            //     //socket
-            // }
+   //          function setPaintFontColor (i) {
+   //              paintContext.strokeStyle = paintFontColors[i];
+   //          };
 
-            // function SetPaintTool (i) {
-            //     setTool(tool);
-            //     //socket
-            // }
+   //          function setPaintFontSize (i) {
+   //              paintContext.lineWidth = paintFontSizess[i];
+   //          };
 
-            // function ClearPaint (x, y, width, height) {
-            //     clearPaint(x, y, width, height);
-            //     //socket
-            // }
+   //          function clearPaint (x, y, width, height) {
+   //              paintContext.clearRect(x, y, width, height);
+   //          };
 
-            // //to set paint event
-            // paintJObj.on('mousedonw mouseup', mouseOnCanvas);
+   //          function paintFontColorClick (i) {
+   //              $('#' + paintFontColors[i]).on('click', function() {
+   //                  SetColor(i);
+   //                  SetTool(paintToolMode.Brush);
+   //              })
+   //          }
 
-            // for(var i = 0; i < paintFontColors.length; ++i) {
-            //     paintFontColorClick(i);
-            // }
+   //          function paintFontSizeClick (i) {
+   //              $('#' + paintFontSizeNames[i]).on('click', function() {
+   //                  SetSize(i);
+   //              });
+   //          }
 
-            // for(var i = 0; i < paintFontSizes.length; ++i) {
-            //     paintFontSizeClick(i);
-            // }
+   //          function SetPaintFontColor (i) {
+   //              setColor(i);
+   //              //socket
+   //          }
 
-            // $('#eraser').on('click', function() {
-            //     SetTool(paintToolMode.Eraser);
-            // });
+   //          function SetPaintTool (i) {
+   //              setTool(tool);
+   //              //socket
+   //          }
 
-            // $('#reset').on('click', function() {
-            //     ClearPaint(0, 0, paint.width, paint.height);
-            // });
+   //          function ClearPaint (x, y, width, height) {
+   //              clearPaint(x, y, width, height);
+   //              //socket
+   //          }
 
-            // function getMousePos(canvas, evt) {
-            //     var rect = canvas.getBoundingClientRect();
-            //     return {
-            //         x: evt.clientX - rect.left,
-            //         y: evt.clientY - rect.top
-            //     };
-            // };
+   //          //to set paint event
 
-            // function mouseMove(x, y) {
-            //     switch(paintTool) {
-            //         case paintToolMode.Brush:
-            //             paintContext.lineTo(x, y);
-            //             paintContext.stroke();
-            //             break;
-            //         case paintToolMode.Eraser:
-            //             var halfWidth = paintContext.lineWidth * 0.5;
-            //             paintContext.clearRect(x - halfWidth, y - halfWidth, paintContext.lineWidth, paintContext.lineWidth);
-            //             break;
-            //     }
-            // };
+   //          //to use dummyPaint event
+   //          dummyPaintJObj.on('mousedown mouseup', mouseOnCanvas);
 
-            // function mouseOnCanvas(e) {
-            //     console.log('event');
-            //     var type = e.handleObj.type,
-            //         mousePos = getMousePos(paint, e);
+   //          for(var i = 0; i < paintFontColors.length; ++i) {
+   //              paintFontColorClick(i);
+   //          }
 
-            //     draw(mousePos.x, mousePox.y, type);
-            //     //socket
-            // }
-            //to create the web camera
+   //          for(var i = 0; i < paintFontSizes.length; ++i) {
+   //              paintFontSizeClick(i);
+   //          }
+
+   //          $('#eraser').on('click', function() {
+   //              SetTool(paintToolMode.Eraser);
+   //          });
+
+   //          $('#reset').on('click', function() {
+   //              ClearPaint(0, 0, paint.width, paint.height);
+   //          });
+
+   //          function getMousePos(canvas, evt) {
+   //              console.log('get mouse position');
+   //              var rect = canvas.getBoundingClientRect();
+
+   //                  // console.log()
+   //              return {
+   //                  x: evt.clientX - rect.left,
+   //                  y: evt.clientY - rect.top
+   //              };
+   //          };
+
+   //          function mouseMove(x, y) {
+   //              switch(paintTool) {
+   //                  case paintToolMode.Brush:
+   //                      paintContext.lineTo(x, y);
+   //                      paintContext.stroke();
+   //                      break;
+   //                  case paintToolMode.Eraser:
+   //                      var halfWidth = paintContext.lineWidth * 0.5;
+   //                      paintContext.clearRect(x - halfWidth, y - halfWidth, paintContext.lineWidth, paintContext.lineWidth);
+   //                      break;
+   //              }
+   //          };
+
+   //          function mouseOnCanvas(e) {
+   //              console.log('event');
+   //              var type = e.handleObj.type,
+   //                  mousePos = getMousePos(dummyPaint, e);
+   //                  // mousePos = getMousePos(paint, e);
+
+   //              console.log(mousePos);
+   //              draw(mousePos.x, mousePos.y, type);
+   //              //socket
+   //          }
+
+            // to create the web camera
 
 
             // var element1 = document.createElement('iframe');
@@ -252,25 +289,42 @@
             // //cssObj2.rotation.copy(planeMesh.rotation);
             // this.CssScene.add(cssObj2);
 
-
+            //web RTC
+            var rtc = new RTC(null, player);
             //to get the web camera
             // navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
             // window.URL = window.URL || window.webkitURL;
 
             // var video = this.video = document.getElementById('monitor');
+            // var constraints = {audio: true, video: true};
+
+            // // var constrains = {
+            // //     'audio': true,
+            // //     'video': {
+            // //         'width': {
+            // //             'min': '327',
+            // //             'max': '640'
+            // //         },
+            // //         'height': {
+            // //             'min': '200',
+            // //             'max': '480'
+            // //         }
+            // //     }
+            // // };
 
             // if(navigator.getUserMedia) {
-            //     navigator.getUserMedia({video: true}, gotStream, noStream);
+            //     navigator.getUserMedia(constarints, successCallback, errorCallback);
             // }
             // else {
             //     console.log('webcam GG');
             // }
 
-            // function gotStream(stream) {
+            // function successCallback(stream) {
             //     console.log(stream);
             //     console.log(video);
             //     if(window.URL) {
             //         video.src = window.URL.createObjectURL(stream);
+            //         //URL.revokeObjectURL()   release
             //     }
             //     else {
             //         //Opera
@@ -281,17 +335,18 @@
             //         stream.stop();
             //     };
 
-            //     stream.onended = noStream;
+            //     stream.onended = errorCallback;
+            //     // video.play()
             // }
 
-            // function noStream(e) {
-            //     var msg = 'No camera available';
+            // function errorCallback(e) {
+            //     var msg = '';
 
             //     if(e.code == 1) {
             //         msg = 'User denied access to use camera';
             //     }
 
-            //     console.log(msg);
+            //     console.log('navigator.getUserMedia error: ', error, msg);
             // }
 
 
@@ -318,14 +373,19 @@
             // var videoGeometry = new THREE.PlaneGeometry(100, 100, 1, 1);
             // var videoMesh = new THREE.Mesh(videoGeometry, videoMaterial);
 
-            // videoMesh.position.set(0, 50, 0);
+            // // videoMesh.position.set(0, 50, 0);
             // // this.scene.add(videoMesh);
-            // console.log(player.height);
             // player.addObj(videoMesh, new THREE.Vector3(0, player.height - 10, 0));
 
 
             //important
 			scope.camera.updateProjectionMatrix();
+
+                //             var image = new Image();
+                // image.src = scope.paint.toDataURL('image/png');
+                // scope.
+
+            // Canvas2Image.saveAsPNG(this.paint);
 
             /////////////////////
             // FUNCTION DEFINE //
@@ -337,13 +397,31 @@
 
                 // if( scope.video.readyState === scope.video.HAVE_ENOUGH_DATA ) {
                 //     scope.videoImageContext.drawImage(scope.video, 0, 0, scope.videoImage.width, scope.videoImage.height);
+                //     // scope.paintContext.drawImage(scope.video, 0, 0, paintWidth, paintHeight);
+                
+
 
                 //     if( scope.videoTexture ){
                 //         scope.videoTexture.needsUpdate = true;
                 //     }
+
+
                 // }
 
-                // scope.paintContext.drawImage(scope.video, 0, 0, scope.videoImage.width, scope.videoImage.height);
+
+                // scope.paint
+
+                //             var image = new Image();
+                // image.src = scope.paint.toDataURL('image/png');
+                // scope.paintContext.drawImage(image, 0, 0, paintWidth, paintHeight);
+
+                // if(scope.paintTexture) {
+                //     scope.paintTexture.needsUpdate = true;
+                //     // console.log('YO');
+                // }
+
+
+                // scope.paintContext.drawImage(scope.dummyPaint, 0, 0, scope.videoImage.width, scope.videoImage.height);
 
                 scope.renderer.render(scope.scene, scope.camera);
                 scope.CssRenderer.render(scope.CssScene, scope.camera);

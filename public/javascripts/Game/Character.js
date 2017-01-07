@@ -12,6 +12,7 @@ const MODE_STATE = {FIRST_PERSON: 0, THIRD_PERSON: 1, DRAW: 2 }
 var Character = this.Character = THREE.Object3D.extend({
     init: function(){
         'use strict';
+        console.log('Yo');
         var scope = this;
         var camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
         this.type = "Character";
