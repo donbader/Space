@@ -11,6 +11,8 @@ var game;
 var player;
 var world;
 
+var rtc;
+
 console.log('YO main.js');
 
 var socket = io.connect("/", {query: "username="+username});
@@ -21,14 +23,20 @@ socket.on('sys', function(data){
 console.log('YO socekt connection');
 
 socket.on('create game', function(user){
-    console.log("[Create Game By User]" , user);
-    player = eval("new "+user.type+"()");
+    if(game)return ;
+    console.log("[Create Game By User]" , user, user.type);
+    // player = eval("new "+user.type+"()");
+    player = new Saiyan();
     // player = new Character();
     game = new Game("GamePlay", player, socket);
+
+    // rtc = new RTC(socket, player);
+
     console.log("[game created]", game.scene);
 });
 
 socket.on('start game', function(){
+    if(game.isRunning())return console.log("Game is already running");
     game.start();
     console.log("[game started]");
 });
@@ -40,22 +48,33 @@ socket.on('render item', function(data){
             var scripts = "var item = ";
             scripts += data.data.scripts.join();
             eval(scripts);
-            item.position.set(data.position.x, data.position.y, data.position.z);
-            item.rotation.set(data.rotation.x, data.rotation.y, data.rotation.z);
+            if(data.position)
+                item.position.set(data.position.x, data.position.y, data.position.z);
+            if(data.rotation)
+                item.rotation.set(data.rotation.x, data.rotation.y, data.rotation.z);
             game.add(item);
-            if(item.ObjectsToMoveOn){
-                player.canMoveOn(item.ObjectsToMoveOn);
-            }
+            item.prop = data.data.prop;
+            item.name = data.id;
+
+            player.manipulate(item);
             break;
         case "file":
             var loader = new THREE.ObjectLoader();
             loader.load(data.data.path, function(item) {
-                item.position.set(data.position.x, data.position.y, data.position.z);
-                item.rotation.set(data.rotation.x, data.rotation.y, data.rotation.z);
+                if(data.position)item.position.set(data.position.x, data.position.y, data.position.z);
+                if(data.rotation)item.rotation.set(data.rotation.x, data.rotation.y, data.rotation.z);
                 game.add(item);
+                // Property
+                item.prop = data.data.prop;
+                item.name = data.id;
+
+                player.manipulate(item);
+
             });
             break;
     }
+
+
 });
 
 
@@ -71,8 +90,10 @@ socket.on('add user', function(userdata){
 })
 socket.on('remove user', function(username){
     console.log('[remove user]',Users);
-    game.remove(Users[username].object);
-    delete Users[username];
+    if(Users[username]){
+        game.remove(Users[username].object);
+        delete Users[username];
+    }
 });
 
 socket.on('fetch userdata', function(receiver){
@@ -118,9 +139,9 @@ socket.on('logout', function(){
 ////////MAIN////////
 ////////////////////
 
-console.log('join before');
-socket.emit('join', roomID);
-console.log('join after');
+socket.on('welcome',function(){
+    socket.emit('join', roomID);
+})
 
 // var Ninja = Character.extend({
 //     init: function(){

@@ -18,10 +18,11 @@ handler.connection = function(client) {
     var USER, ROOMID;
     User.getByName(client.handshake.query.username, (err, user)=>{
         USER = user;
-        log("[Connection]", client.id);
-        if(!user) return "No this user";
+        log("[Connection]", "(",user.name,")", client.id);
+        if(!user) return console.error("No this user");
         user.id = client.id;
         GameSet(user);
+        client.emit('welcome');
     });
 
     client.on('update user to one', function(data) {
@@ -103,16 +104,6 @@ handler.connection = function(client) {
     }
 
 
-    function leave(id) {
-        if (!checkValid(id)) return;
-        log('[Leave Room] ', id);
-        console.log("66666666666666666");
-        id = id || roomID;
-        client.leave(id);
-        server.to(id).emit('remove user', client.id);
-        client.emit('destroy game');
-        sysMsg(client, 'leave ' + roomID);
-    }
 
     function kickUserCallback(userdata, roomID){
         if(!userdata || !roomID)return;
@@ -130,7 +121,7 @@ handler.connection = function(client) {
     function GameSet(user){
         client.on("join", (roomID)=>{
             if(!roomID || !user || !client)return;
-            ROOMID = roomID;
+            ROOMID = JSON.parse(JSON.stringify(roomID));
             log("[Join]", roomID);
             client.join(roomID);
             // create Game with user, usertype
@@ -140,14 +131,7 @@ handler.connection = function(client) {
             // render items and users
             Room.render(roomID, user.name,
                 (item)=>{
-                    Item.findOne(
-                        {id:item.id},
-                        (err, data)=>{
-                            item.type = data.type;
-                            item.data = data.data;
-                            client.emit('render item', item);
-                        }
-                    )
+                    client.emit('render item', item);
                 },
                 (anotherUser)=>{
                     console.log("Found Another User");

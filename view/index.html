@@ -171,31 +171,6 @@
         </div>
         <div id="WindowList"></div>
         <div id="sounds"></div>
-        <video id = 'monitor' autoplay width = '160' height = '120' style = 'visibility: hidden; float: left; position: fixed;'></video>
-        <canvas id = 'videoImage' width = '160' height = '120' style = 'visibility: hidden; float: left; position: fixed;'></canvas>
-        <canvas id = 'paint' width = '160' height = '120' style = 'visibility: hidden; float: left; position: fixed;'></canvas>
-        <div id="buttons">
-            <input type="button" id="reset" value="Reset" />
-            <div id='red' class="color"></div>
-            <div id='blue' class="color"></div>
-            <div id='green' class="color"></div>
-            <div id='purple' class="color"></div>
-            <div id='yellow' class="color"></div>
-            <div id='orange' class="color"></div>
-            <div id='pink' class="color"></div>
-            <div id='black' class="color"></div>
-            <div id='white' class="color"></div>
-            <div id='ebebeb' class="color"></div>
-            <div id="default" class="color">1</div>
-            <div id="three" class="color">3</div>
-            <div id="five" class="color">5</div>
-            <div id="ten" class="color">10</div>
-            <div id="fifteen" class="color">15</div>
-            <div id="twenty" class="color">20</div>
-            <div id="eraser" class="color">
-                <img src="images/Eraser.jpg">
-            </div>
-        </div>
         <div id="GameMessage"></div>
         <div id="GamePlay" style="z-index: -1;"></div>
     </div>
@@ -226,10 +201,13 @@
     <script src="javascripts/Game/World.js"></script>
 
     <script src="/socket.io/socket.io.js"></script> <!-- //This is Socket -->
-    <script src="javascripts/js.cookie.js"></script>    
+    <script src="javascripts/js.cookie.js"></script>
     <script src="/socket.io/socket.io.js"></script>
+    <script src="javascripts/checkCharacter.js"></script>
+    <script src="javascripts/hash.js"></script>
     <script src="javascripts/index.js"></script>
-   
+    <!-- <script src="javascripts/Game/Main.js"></script> -->
+
 </body>
 
 </html>

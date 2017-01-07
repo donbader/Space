@@ -1,4 +1,5 @@
 var mongoose = require('./dbconnection');
+var Item = require('./item');
 
 var RoomSchema = new mongoose.Schema({
   owner : String,
@@ -94,7 +95,17 @@ RoomSchema.statics.render = function(roomID, username, renderItem, renderUser){
         function(err, room){
             if(err)return console.error(err);
             if(room){
-                renderItem && room.items.forEach(renderItem);
+                renderItem && room.items.forEach((item)=>{
+                    Item.findOne(
+                        {id: item.id},
+                        (err, data)=>{
+                            if(err || !data)return console.error(err);
+                            item.type = data.type;
+                            item.data = data.data;
+                            renderItem(item);
+                        }
+                    )
+                });
                 renderUser && room.users.forEach((user)=>{
                     if(!user.name || !user.type || user.name == username)
                         return;

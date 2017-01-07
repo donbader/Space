@@ -47,17 +47,7 @@ router.post('/add', function(req, res) {
                     owner: in_name,
                     name: in_name + "\'s room",
                     items: [{
-                        id: "Room_000",
-                        position: {
-                            x: 0,
-                            y: 0,
-                            z: 0
-                        },
-                        rotation: {
-                            x: 0,
-                            y: 0,
-                            z: 0
-                        }
+                        id: "Room_000"
                     }],
                     users: []
                 });

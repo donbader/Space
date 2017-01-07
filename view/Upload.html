@@ -7,26 +7,69 @@
 </head>
 
 <body>
-
-    <textarea style="width: 700px; height: 700px;" id="text"> </textarea>
+    密碼:<input id="passwd" type="password"><br> id:
+    <input id="id" type="text"><br> type:
+    <select id="select">
+        <option value="script">script</option>
+        <option value="file">file</option>
+    </select>
+    <div id="datadiv"></div>
+    <button type="submit">新增至資料庫</button>
 
     <script type="text/javascript">
-        $("#text").on("keypress", function(e) {
-            if (e.keyCode == 13) {
-                var send_data =  document.getElementById("text").value;
-                console.log(send_data);
-                $.ajax({
-                    type: 'post',
-                    url: "Upload/do",
-                    dataTpye: "json",
-                    data: send_data,
-                    success: function(JSONData) {
-                        window.location = "/Upload";
-                    }
-                });
-
+        $("#select").on('change', changeDataDisplay);
+        $("button[type=submit]").on("click", function(e) {
+            var object = {
+                id: $("#id").val(),
+                type: $("#select").find(":selected").val(),
+                data: {}
+            };
+            switch (object.type) {
+                case "script":
+                    var arr = $("#scripts").val().split('\n').join('');
+                    var scripts = eval(arr);
+                    object.data.scripts = scripts;
+                    object.data.type = $('#datatype').val();
+                    break;
+                case "file":
+                    object.data.path = $("#path").val();
+                    break;
             }
+            object.password = $("#passwd").val();
+
+
+            console.log(object);
+
+
+            $.ajax({
+                type: 'post',
+                url: 'Upload/do',
+                data: JSON.stringify(object),
+                success: function() {
+                    alert("上傳成功!");
+
+                }
+            });
         });
+
+        function changeDataDisplay() {
+            switch ($("#select").find(":selected").val()) {
+                case "script":
+                    $("#datadiv").empty();
+                    $("#datadiv").prepend("Data:<br>");
+                    $("#datadiv").append("DataType:");
+                    $("#datadiv").append($("<input id='datatype' type='text' value='Mesh'>"));
+                    $("#datadiv").append("<br>Scripts:<br>");
+                    $("#datadiv").append($("<textarea id='scripts' style='width:500px; height:200px;'>[\"\"\n,\n\"\"]</textarea>"))
+                    break;
+                case "file":
+                    $("#datadiv").empty();
+                    $("#datadiv").prepend("Path:");
+                    $("#datadiv").append($("<input id='path' style='width:500px' type='text'/>"));
+                    break;
+            }
+        }
+        changeDataDisplay();
     </script>
 </body>
 

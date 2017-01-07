@@ -54,6 +54,7 @@
             ///////////
             this.setController(player);
 
+
             // DO
             // TODO: Think the better way to store
             // player.canMoveOn(world.ground);
@@ -290,7 +291,7 @@
             // this.CssScene.add(cssObj2);
 
             //web RTC
-            var rtc = new RTC(null, player);
+            //var rtc = new RTC(null, player);
             //to get the web camera
             // navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
             // window.URL = window.URL || window.webkitURL;
@@ -298,7 +299,7 @@
             // var video = this.video = document.getElementById('monitor');
             // var constraints = {audio: true, video: true};
 
-            // // var constrains = {
+            // // var constraints = {
             // //     'audio': true,
             // //     'video': {
             // //         'width': {
@@ -313,14 +314,14 @@
             // // };
 
             // if(navigator.getUserMedia) {
-            //     navigator.getUserMedia(constarints, successCallback, errorCallback);
+            //     navigator.getUserMedia(constraints, successCallback, errorCallback);
             // }
             // else {
             //     console.log('webcam GG');
             // }
 
             // function successCallback(stream) {
-            //     console.log(stream);
+            //     console.log('stream = ' + stream);
             //     console.log(video);
             //     if(window.URL) {
             //         video.src = window.URL.createObjectURL(stream);
@@ -373,9 +374,9 @@
             // var videoGeometry = new THREE.PlaneGeometry(100, 100, 1, 1);
             // var videoMesh = new THREE.Mesh(videoGeometry, videoMaterial);
 
-            // // videoMesh.position.set(0, 50, 0);
-            // // this.scene.add(videoMesh);
-            // player.addObj(videoMesh, new THREE.Vector3(0, player.height - 10, 0));
+            // videoMesh.position.set(0, 50, 0);
+            // this.scene.add(videoMesh);
+            // // player.addObj(videoMesh, new THREE.Vector3(0, player.height - 10, 0));
 
 
             //important
@@ -392,7 +393,7 @@
             /////////////////////
             this.render = function() {
                 var delta = scope.clock.getDelta();
-                scope.ObjectsToUpdate.forEach((obj)=>obj.update(delta));
+                scope.ObjectsToUpdate.forEach((obj)=>obj.update(delta < 0.03 ? delta : 0.03));
                 scope.stats.update();
 
                 // if( scope.video.readyState === scope.video.HAVE_ENOUGH_DATA ) {
@@ -431,8 +432,15 @@
                 // else if(this.state == GAME_STATE.STOP)
                     // cancelAnimationFrame(this.requestId);
             }
+            this.pause = function(){
+                console.log("PAUSE");
+                scope.state = GAME_STATE.PAUSE;
+            }
             this.start = function() {
+                console.log("START");
                 scope.state = GAME_STATE.RUNNING;
+                // Avoid delta being large while not running
+                scope.clock.getDelta();
                 requestAnimationFrame(scope.render);
             }
             this.stop = function() {
@@ -444,6 +452,9 @@
             }
 
             this.state = GAME_STATE.READY;
+        },
+        isRunning: function(){
+            return this.state === GAME_STATE.RUNNING;
         },
         add: function(obj) {
             this.scene.add(obj);
@@ -460,12 +471,21 @@
             this.scene.add(model ? model : obj);
             this.ObjectsToUpdate.push(obj);
         },
+        addCSSObject: function(obj, model){
+            if(!obj.update){
+                console.error("There is no update() in", obj);
+                return ;
+            }
+            // TODO: CssScene Must be added.
+            this.CssScene.add(obj);
+            this.ObjectsToUpdate.push(obj);
+        },
         children: function() {
             return scene.children;
         },
         setController: function(controller){
             if(this.Controller)
-                this.Controller.controls.enable(false);
+                this.Controller.controls.enable(false, this.container);
 
             // controller.in(this.scene, this.renderer);
             this.add(controller);
@@ -475,7 +495,7 @@
             if(this.socket)
                 controller.socket = this.socket;
 
-            this.camera = controller.controls.camera;
+            this.camera = controller.camera;
             this.addDynamicObject(controller);
 
             this.Controller = controller;
