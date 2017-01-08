@@ -73,18 +73,20 @@ socket.on('render item', function(data){
 socket.on('add user', function(userdata){
     console.log("[Add user]", userdata.name, ":",Users );
 
-    Users[userdata.name] = userdata;
-    // Users[userdata.name].object = (new Character()).model;
-    Users[userdata.name].object = eval('new '+userdata.type+'()');
-    Users[userdata.name].object.name = userdata.name;
-    game.add(Users[userdata.name].object);
+    Users[userdata.id] = userdata;
+    // Users[userdata.id].object = (new Character()).model;
+    Users[userdata.id].object = eval('new '+userdata.type+'()');
+    Users[userdata.id].object.name = userdata.name;
+    game.add(Users[userdata.id].object);
+    console.log(Users);
     // because pos,rot is all 0 , so we don't set them
 })
-socket.on('remove user', function(username){
+socket.on('remove user', function(userid){
     console.log('[remove user]',Users);
-    if(Users[username]){
-        game.remove(Users[username].object);
-        delete Users[username];
+    if(Users[userid]){
+        game.remove(Users[userid].object);
+        delete Users[userid];
+        console.log('now Users, ',Users);
     }
 });
 
@@ -100,15 +102,15 @@ socket.on('fetch userdata', function(receiver){
 
 
 socket.on('update user', function(userdata){
-    console.log("["+userdata.name+" Move]", userdata);
-    if(Users[userdata.name]){
-        Users[userdata.name].object.position.x = userdata.position.x;
-        Users[userdata.name].object.position.y = userdata.position.y;
-        Users[userdata.name].object.position.z = userdata.position.z;
-        Users[userdata.name].object.rotation.y = userdata.rotation._y;
-        // Users[userdata.name].object.rotation.x = userdata.rotation.x;
-        // Users[userdata.name].object.rotation.y = userdata.rotation.y;
-        // Users[userdata.name].object.rotation.z = userdata.rotation.z;
+    // console.log("["+userdata.name+" Move]", userdata);
+    if(Users[userdata.id]){
+        Users[userdata.id].object.position.x = userdata.position.x;
+        Users[userdata.id].object.position.y = userdata.position.y;
+        Users[userdata.id].object.position.z = userdata.position.z;
+        Users[userdata.id].object.rotation.y = userdata.rotation._y;
+        // Users[userdata.id].object.rotation.x = userdata.rotation.x;
+        // Users[userdata.id].object.rotation.y = userdata.rotation.y;
+        // Users[userdata.id].object.rotation.z = userdata.rotation.z;
     }
 
 });

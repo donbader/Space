@@ -18,7 +18,7 @@ var Character = this.Character = THREE.Object3D.extend({
         this.type = "Character";
         this.info = info || {};
         this.info.height = this.info.height || 170;
-        this.info.width = this.info.width || 100;
+        this.info.width = this.info.width || 50;
         this.info.thickness = this.info.thickness || 50;
 
         this.position.set(0,this.info.height / 2,500);

@@ -116,6 +116,29 @@ RoomSchema.statics.render = function(roomID, username, renderItem, renderUser){
     );
 }
 
+RoomSchema.statics.findRoom = function(owner, callback){
+    this.findOne(
+        {owner: owner},
+        function(err, room){
+            if(err)return console.error(err);
+            if(!room)
+                console.log("No room: ",owner);
+            return callback(room);
+        }
+    );
+}
+
+RoomSchema.statics.update = function(owner, roomdata){
+    this.update(
+        {owner:roomdata.owner},
+        {$set:
+            {items: roomdata.items}},
+        (err, msg)=>{err && console.error(err);}
+    );
+}
+
 
 var Room = mongoose.model('Room', RoomSchema);
+
+
 module.exports = Room;

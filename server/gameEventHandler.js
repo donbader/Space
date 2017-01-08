@@ -5,10 +5,14 @@ var handler = {};
 var User = require('./../db/user');
 var Item = require('./../db/item');
 var Room = require('./../db/room');
+var RoomManager = new (require('./RoomManager'))();
+
+
 // var mongoose = require('mongoose');
 
 
 var server;
+
 
 handler.setServer = function(s) {
     server = s;
@@ -41,7 +45,9 @@ handler.connection = function(client) {
     client.on('disconnect', () => {
         var user = USER || {};
         log("[Disconnect]",user.name," Has disconnected, room:",ROOMID);
-        Room.KickUser("id",user, ROOMID, kickUserCallback);
+
+        // Room.KickUser("id",user, ROOMID, kickUserCallback);
+        RoomManager.kickUser(ROOMID, user, kickUserCallback);
     });
 
     client.on('drawClick', function(data) {
@@ -105,16 +111,16 @@ handler.connection = function(client) {
 
 
 
-    function kickUserCallback(userdata, roomID){
-        if(!userdata || !roomID)return;
-        log('[Kick User]', userdata.name, userdata.id);
-        server.to(roomID).emit('remove user', client.id);
-        server.to(userdata.id).emit('logout');
+    function kickUserCallback(roomID, user){
+        if(!user || !roomID)return;
+        log('[Kick User]', user.name, user.id);
+        server.to(roomID).emit('remove user', user.id);
+        server.to(user.id).emit('logout');
     }
-    function addUserCallback(userdata, roomID){
-        if(!userdata || !roomID)return ;
-        log('[Add User]', userdata.name, userdata.id, " to ", roomID);
-        client.broadcast.to(roomID).emit('add user', userdata);
+    function addUserCallback(roomID, user){
+        if(!user || !roomID)return ;
+        log('[Add User]', user.name, user.id, " to ", roomID);
+        client.broadcast.to(roomID).emit('add user', user);
     }
 
 
@@ -127,18 +133,33 @@ handler.connection = function(client) {
             // create Game with user, usertype
             client.emit('create game', user);
 
-            Room.AddUser(user, roomID, true, kickUserCallback, addUserCallback);
-            // render items and users
-            Room.render(roomID, user.name,
-                (item)=>{
-                    client.emit('render item', item);
-                },
-                (anotherUser)=>{
-                    console.log("Found Another User");
-                    client.emit('add user', anotherUser);
-                    client.broadcast.to(roomID).emit('fetch userdata', user.id);
+            RoomManager.addUser(roomID, user, addUserCallback, kickUserCallback);
+            RoomManager.render(roomID, user.name,
+                {
+                    item: (item)=>client.emit('render item', item),
+                    user: (anotherUser)=>{
+                        client.emit('add user', anotherUser);
+                        client.broadcast.to(roomID).emit('fetch userdata', user.id);
+                    }
                 }
             );
+            RoomManager.getRoom("corey").do((room)=>{
+                room.users.forEach((user)=>{
+                    console.log(user.name);
+                });
+            });
+            // Room.AddUser(user, roomID, true, kickUserCallback, addUserCallback);
+            // // render items and users
+            // Room.render(roomID, user.name,
+            //     (item)=>{
+            //         client.emit('render item', item);
+            //     },
+            //     (anotherUser)=>{
+            //         console.log("Found Another User");
+            //         client.emit('add user', anotherUser);
+            //         client.broadcast.to(roomID).emit('fetch userdata', user.id);
+            //     }
+            // );
             client.emit("start game");
         });
     }
