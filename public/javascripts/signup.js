@@ -9,8 +9,18 @@ $("#submitbutton").click(function() {
     if (checkCharacter(send_data.Account) == false || checkCharacter(send_data.Password) == false)
     {
         console.log("false");
-        alert("請輸入正確的字元 (僅接受數字及大小寫英文字母!)");
-        window.location = "/Signup";
+        swal({
+                            title: "Oops!",
+                            text: "請輸入正確的字元 (僅接受數字及大小寫英文字母!)",
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: " #2C3E50",
+                            confirmButtonText: "OK",
+                            closeOnConfirm: false
+                        },
+                        function() {
+                            window.location = "/Signup";
+                        });
     }else
 
     if ($('#inputEmail').val() != "" && $('#inputPassword').val() != "") {
@@ -22,11 +32,31 @@ $("#submitbutton").click(function() {
             success: function(JSONData) {
                 console.log(JSONData.msg);
                 if (JSONData.msg == "success") {
-                    alert("Sign up successfully!");
-                    window.location = "/";
+                    swal({
+                            title: "Bravo!",
+                            text: "Sign up successfully!",
+                            type: "success",
+                            showCancelButton: false,
+                            confirmButtonColor: " #2C3E50",
+                            confirmButtonText: "OK",
+                            closeOnConfirm: false
+                        },
+                        function() {
+                            window.location = "/";
+                        });
                 } else {
-                    alert("This Username is existed, or something is wrong!")
-                    window.location = "/Signup";
+                    swal({
+                            title: "Oops!",
+                            text: "This Username is existed, or something is wrong!",
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: " #2C3E50",
+                            confirmButtonText: "OK",
+                            closeOnConfirm: false
+                        },
+                        function() {
+                            window.location = "/Signup";
+                        });
                 }
             }
         });

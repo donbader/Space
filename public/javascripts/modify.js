@@ -10,8 +10,18 @@ $("#enter").click(function() {
     if (checkCharacter(send_data.Account) == false || checkCharacter(send_data.old_Password) == false || checkCharacter(send_data.new_Password) == false)
     {
         console.log("false");
-        alert("請輸入正確的字元 (僅接受數字及大小寫英文字母!)");
-        window.location = "/Modify";
+        swal({
+                            title: "Oops!",
+                            text: "請輸入正確的字元 (僅接受數字及大小寫英文字母!)",
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: " #2C3E50",
+                            confirmButtonText: "OK",
+                            closeOnConfirm: false
+                        },
+                        function() {
+                            window.location = "/Modify";
+                        });
     }else
 
     if ($('#inputEmail').val() != "" && $('#old_inputPassword').val() != "" && $('#new_inputPassword').val() != "") {
@@ -24,11 +34,31 @@ $("#enter").click(function() {
             success: function(JSONData) {
                 console.log(JSONData);
                 if (JSONData.msg == "success") {
-                    alert("Change successfully!");
-                    window.location = "/";
+                    swal({
+                            title: "Bravo!",
+                            text: "Change successfully!",
+                            type: "success",
+                            showCancelButton: false,
+                            confirmButtonColor: " #2C3E50",
+                            confirmButtonText: "OK",
+                            closeOnConfirm: false
+                        },
+                        function() {
+                            window.location = "/";
+                        });
                 } else {
-                    alert("Username or Password is wrong!")
-                    window.location = "/Modify";
+                    swal({
+                            title: "Oops!",
+                            text: "Username or Password is wrong!",
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: " #2C3E50",
+                            confirmButtonText: "OK",
+                            closeOnConfirm: false
+                        },
+                        function() {
+                            window.location = "/Modify";
+                        });
                 }
             }
         });

@@ -20,7 +20,7 @@ if (navigator.cookieEnabled) {
             dataTpye: "json",
             data: send_data,
             success: function(JSONData) {
-                
+
 
                 if (JSONData.msg == "success") {
 
@@ -46,10 +46,10 @@ if (navigator.cookieEnabled) {
                         });
                         console.log("Entered");
 
-                        
+
 
                         AfterLogIn(Cookies.get("ID"));
-                  
+
 
 
 
@@ -62,8 +62,18 @@ if (navigator.cookieEnabled) {
                         });
                     });
                 } else {
-                    sweetAlert("Wrong In Username Or Password");
-                    window.location = "/";
+                    swal({
+                            title: "Oops!",
+                            text: "Wrong In Username Or Password!",
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: " #2C3E50",
+                            confirmButtonText: "OK",
+                            closeOnConfirm: false
+                        },
+                        function() {
+                            window.location = "/";
+                        });
                     //加一個清除cookie?
                 }
             }
@@ -72,7 +82,18 @@ if (navigator.cookieEnabled) {
     }
 } else {
     document.write("Cookie 功能尚未啟動！");
-    alert("你的瀏覽器設定不支援 Cookie，請先開啟瀏覽器的 Cookie 功能後，才能得到瀏覽本網頁的最佳效果！");
+    swal({
+                            title: "Oops!",
+                            text: "你的瀏覽器設定不支援 Cookie，請先開啟瀏覽器的 Cookie 功能後，才能得到瀏覽本網頁的最佳效果！",
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: " #2C3E50",
+                            confirmButtonText: "OK",
+                            closeOnConfirm: false
+                        },
+                        function() {
+                            window.location = "/";
+                        });
     // 在此加入不使用 Cookie 的程式碼
 }
 
@@ -93,8 +114,18 @@ $("#enter").click(function() {
     console.log(send_data.Account.length);
     if (checkCharacter(send_data.Account) == false || checkCharacter(send_data.Password) == false) {
         console.log("false");
-        alert("請輸入正確的字元 (僅接受數字及大小寫英文字母!)");
-        window.location = "/";
+        swal({
+                            title: "Oops!",
+                            text: "請輸入正確的字元 (僅接受數字及大小寫英文字母!)",
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: " #2C3E50",
+                            confirmButtonText: "OK",
+                            closeOnConfirm: false
+                        },
+                        function() {
+                            window.location = "/";
+                        });
     } else {
         $.ajax({
             type: 'post',
@@ -102,7 +133,7 @@ $("#enter").click(function() {
             dataTpye: "json",
             data: send_data,
             success: function(JSONData) {
-            
+
 
                 if (JSONData.msg == "success") {
                     //cookie儲存
@@ -146,22 +177,22 @@ $("#enter").click(function() {
                         });
                     });
                 } else {
-                    
+
 
                     swal({
-  title: "Are you sure?",
-  text: "You will not be able to recover this imaginary file!",
-  type: "warning",
-  showCancelButton: true,
-  confirmButtonColor: "#DD6B55",
-  confirmButtonText: "Yes, delete it!",
-  closeOnConfirm: false
-},
-function(){
-  window.location = "/";
-});
+                            title: "Oops!",
+                            text: "Wrong In Username Or Password!",
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: " #2C3E50",
+                            confirmButtonText: "OK",
+                            closeOnConfirm: false
+                        },
+                        function() {
+                            window.location = "/";
+                        });
                     // function(){
-                        // window.location = "/";
+                    // window.location = "/";
                     //  swal("Deleted!", "Your imaginary file has been deleted.", "success");
                     // };
                 }
