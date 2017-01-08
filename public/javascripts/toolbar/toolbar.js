@@ -5,7 +5,7 @@
       {
         name : function(){},
         room : roomID,
-        friend1 : function(){},
+        friend1 : function(){alert("hi")},
         friend2 : function(){},
         friend3 : function(){}, // numeric
         // b: 200, // numeric slider
