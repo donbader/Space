@@ -24,7 +24,7 @@
             this.server = { 'iceServers': [{ 'urls': 'stun:stun.iptel.org' }] };
             this.player = player;
 
-            console.log('this.server in init = ' + this.server);
+            // console.log('this.server in init = ' + this.server);
 
             this.planeWidth = 100;
             this.planeHeight = 100;
@@ -82,7 +82,7 @@
                     }
                 );
             } else {
-                console.log('gg');
+                this.trace('navigator.getUserMedia is null');
             }
 
         },
@@ -97,16 +97,25 @@
                 this.trace('Using audio device: ' + this.localStream.getAudioTracks()[0].label);
             }
 
-            console.log('this.server in calll = ' + this.server);
+            // console.log('this.server in calll = ' + this.server);
 
             this.localPeerConnection = new RTCPeerConnection(this.server);
             this.trace('Created local peer connection object localPeerConnection');
             this.localPeerConnection.onicecandidate = (event) => this.gotLocalIceCandidate(event);
 
-            this.remotePeerConnection = new RTCPeerConnection(this.server);
-            this.trace('Created remote peer connection object remotePeerConnection');
-            this.remotePeerConnection.onicecandidate = (event) => this.gotRemoteIceCandidate(event);
-            this.remotePeerConnection.onaddstream = (event) => this.gotRemoteStream(event);
+            this.localPeerConnection.onaddstream = (event) => this.gotRemoteStream(evnet);
+            this.localPeerConnection.onnegotiationneeded = () => {
+                this.localPeerConnection.createOffer((description) => this.gotLocalDescription(description),
+                function(error) {
+                    this.trace('localPeerConnection.createOffer error: ', error);
+                }
+            );
+            }
+
+            // this.remotePeerConnection = new RTCPeerConnection(this.server);
+            // this.trace('Created remote peer connection object remotePeerConnection');
+            // this.remotePeerConnection.onicecandidate = (event) => this.gotRemoteIceCandidate(event);
+            // this.remotePeerConnection.onaddstream = (event) => this.gotRemoteStream(event);
 
             this.localPeerConnection.addStream(this.localStream);
             this.trace('Added localStream to localPeerConnection');
@@ -139,18 +148,20 @@
         },
         gotRemoteStream: function(event) {
             // this.remoteVideo.src = window.URL.createObjectURL(stream);
-            console.log('remote video in got remote stream = ' + this.remoteVideo);
-            console.log('this in got remote stream = ' + this);
+            // console.log('remote video in got remote stream = ' + this.remoteVideo);
+            // console.log('this in got remote stream = ' + this);
             this.remoteVideo.src = window.URL.createObjectURL(event.stream);
             this.trace('Received remote stream');
         },
         gotLocalIceCandidate: function(event) {
             //???
-            console.log('this in got local ice candidate = ' + this);
+            // console.log('this in got local ice candidate = ' + this);
 
             if (event.candidate) {
-                this.remotePeerConnection.addIceCandidate(new RTCIceCandidate(event.candidate));
-                this.trace('Local ICE candidate: \n' + event.candidate.candidate);
+                // this.remotePeerConnection.addIceCandidate(new RTCIceCandidate(event.candidate));
+                // this.trace('Local ICE candidate: \n' + event.candidate.candidate);
+
+                this.trace('Local ICE candidate');
             }
         },
         gotRemoteIceCandidate: function(event) {

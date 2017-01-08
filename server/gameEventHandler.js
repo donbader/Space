@@ -160,6 +160,17 @@ handler.connection = function(client) {
             //         client.broadcast.to(roomID).emit('fetch userdata', user.id);
             //     }
             // );
+
+            RoomManager.getRoom(roomID).do((room) => {
+                room.users.forEach((roomUser) => {
+                    console.log('roomUser ' + roomUser.name + ' in ' + room);
+
+                    if(roomUser.name != USER.name) {
+                        client.emit('p2pConnection', )
+                    }
+                });
+            });
+
             client.emit("start game");
         });
     }
