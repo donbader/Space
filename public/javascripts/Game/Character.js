@@ -6,7 +6,7 @@ const VIEW_ANGLE = 45,
     PI_2 = Math.PI /2;
 
 
-const MODE_VIEW = {FIRST_PERSON: 0, THIRD_PERSON: 1};
+
 
 var Character = this.Character = THREE.Object3D.extend({
     init: function(info){
@@ -33,22 +33,8 @@ var Character = this.Character = THREE.Object3D.extend({
         this.eye.add(camera);
         this.body.add(this.eye);
 
-        // mode
-        this.mode = {
-            set view(v){
-                switch (v) {
-                    case MODE_VIEW.FIRST_PERSON:
-                        scope.eye.position.set(0,scope.info.height-10,0);
-                        break;
-                    case MODE_VIEW.THIRD_PERSON:
-                        scope.eye.position.set(0,scope.info.height+300,500);
-                        scope.turn(0, -0.7);
-                        break;
-                }
-            }
-        };
-        this.mode.view = MODE_VIEW.THIRD_PERSON;
-
+        this._view = "THIRD_PERSON";
+        this.view(this._view);
         ////////////////////////////
         ///// Controls /////////////
         ////////////////////////////
@@ -94,6 +80,15 @@ var Character = this.Character = THREE.Object3D.extend({
             this.ServerUpdate();
         }
     },
+    turnTo: function(x,y){
+        x = x || 0;
+        y = y || 0;
+        this.rotation.y = x;
+        this.eye.rotation.x = y;
+        if(x || y && this.socket){
+            this.ServerUpdate();
+        }
+    },
     manipulate: function(item){
         if(item.Objects){
             for(var manipulate in item.Objects){
@@ -109,6 +104,26 @@ var Character = this.Character = THREE.Object3D.extend({
     },
     can: function(manipulate, arr){
         this.controls.can(manipulate, arr);
+    },
+    view: function(v){
+        if(!v){
+            if(this._view === "FIRST_PERSON")
+                v = "THIRD_PERSON";
+            else
+                v = "FIRST_PERSON";
+            this._view = v;
+        }
+        v = v.toUpperCase();
+        this._view = v;
+        switch (this._view) {
+            case "FIRST_PERSON":
+            this.eye.position.set(0,this.info.height-10,0);
+            break;
+            case "THIRD_PERSON":
+            this.eye.position.set(0,this.info.height+300,500);
+            this.turnTo(0, -0.5);
+            break;
+        }
     }
 });
 
