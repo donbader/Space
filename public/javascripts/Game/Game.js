@@ -69,7 +69,7 @@
 
 			//to create the dom element
 
-            
+
    //          var paintWidth = 160, paintHeight = 120;
    //          var dummyPaint = document.createElement('canvas');
    //          // element.src = '/Paint';
@@ -399,7 +399,7 @@
                 // if( scope.video.readyState === scope.video.HAVE_ENOUGH_DATA ) {
                 //     scope.videoImageContext.drawImage(scope.video, 0, 0, scope.videoImage.width, scope.videoImage.height);
                 //     // scope.paintContext.drawImage(scope.video, 0, 0, paintWidth, paintHeight);
-                
+
 
 
                 //     if( scope.videoTexture ){

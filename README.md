@@ -44,6 +44,4 @@ Our team comprises four students from National Cheng Kung University.
 **summer51202** &lt;Summer51202@gmail.com&gt;
 
 
-
-### Our Website
-[![kickbutton](public/images/Group2.jpg)](http://luffy.ee.ncku.edu.tw:3001/)
+### **[Our Website](http://luffy.ee.ncku.edu.tw:3001/)**
