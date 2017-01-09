@@ -26,8 +26,12 @@ socket.on('create game', function(user){
     if(game)return ;
     console.log("[Create Game By User]" , user, user.type);
     // player = eval("new "+user.type+"()");
-    player = new Saiyan();
+    // player = new Saiyan();
     // player = new Character();
+
+    //for rtc
+    player = new Character(username, socket);
+    //
     game = new Game("GamePlay", player, socket);
 
     // rtc = new RTC(socket, player);
@@ -151,3 +155,14 @@ socket.on('welcome',function(){
 //         this.body.material.color.setHex( 0x000000 );
 //     }
 // });
+
+//for rtc
+socket.on('get local stream', function() {
+    var stream = player.webcam.getLocalStream();
+    socket.emit('add local stream in pc', stream);
+});
+
+socket.on('set new remote stream', function(event) {
+    player.webcam.setRemoteStream(event);
+});
+//

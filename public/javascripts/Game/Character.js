@@ -9,7 +9,7 @@ const VIEW_ANGLE = 45,
 const MODE_VIEW = {FIRST_PERSON: 0, THIRD_PERSON: 1};
 
 var Character = this.Character = THREE.Object3D.extend({
-    init: function(info){
+    init: function(username, server, info){
         'use strict';
         this._super();
         var scope = this;
@@ -19,6 +19,11 @@ var Character = this.Character = THREE.Object3D.extend({
         this.info.height = this.info.height || 170;
         this.info.width = this.info.width || 50;
         this.info.thickness = this.info.thickness || 50;
+
+        //for rtc
+        this.name = username;
+        this.server = server;
+        //
 
         // this.socket = {};
 
@@ -53,7 +58,7 @@ var Character = this.Character = THREE.Object3D.extend({
         ///// Controls /////////////
         ////////////////////////////
         this.controls = new Controls(this).mode("normal");
-        this.webcam = new RTC(this.socket, this);
+        this.webcam = new RTC(this, this.server);
     },
     update: function(delta){
         // Control moving
