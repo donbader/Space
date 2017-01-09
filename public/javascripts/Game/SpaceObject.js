@@ -38,6 +38,7 @@
                 var rollOverGeo = new THREE.BoxGeometry( 1, 1, 1 );
 				var rollOverMaterial = new THREE.MeshBasicMaterial( { color: color, opacity: 0.5, transparent: true } );
                 this.helper = new THREE.Mesh( rollOverGeo, rollOverMaterial );
+                this.Objects = new THREE.Object3D;
                 this.add(this.helper);
                 this.setScale(width);
 
@@ -80,19 +81,24 @@
             setColor: function(hex){
                 this.cubeMaterial.color.setHex(hex);
             },
-            create: function(scene, material){
+            setScene: function(scene){
+                this.scene && this.scene.remove(this.Objects);
+                this.scene = scene;
+                this.scene.add(this.Objects);
+            },
+            create: function(material){
                 material = material || this.cubeMaterial;
                 var voxel = new THREE.Mesh( this.cubeGeo, material );
                 voxel.scale.set(this.voxelWidth, this.voxelWidth, this.voxelWidth );
                 voxel.position.copy( this.intersect.point ).add( this.intersect.face.normal );
                 voxel.position.divideScalar( this.voxelWidth ).floor().multiplyScalar( this.voxelWidth ).addScalar( this.voxelWidth/2 );
-                scene.add(voxel);
+                this.Objects.add(voxel);
                 voxel.name = "voxel";
-                console.log("CREATE", voxel);
+                // console.log("CREATE", voxel);
                 return voxel;
             },
-            destroy: function(scene, voxel){
-                scene.remove(voxel);
+            destroy: function(voxel){
+                this.Objects.remove(voxel);
             },
             updateHelper: function(intersect){
 
@@ -113,12 +119,18 @@
                 this.helper.position.divideScalar( this.voxelWidth ).floor().multiplyScalar( this.voxelWidth ).addScalar( this.voxelWidth/2 );
                 this.intersect = intersect;
             },
-            clear: function(scene, objs){
+            clear: function(objs){
+                var scope = this;
                 objs.filter((element)=>{
                     if(element.name === "voxel")
-                        scene.remove(element);
+                        scope.Objects.remove(element);
                     return element.name !== "voxel";
                 })
+            },
+            save: function(name){
+                this.Objects.name = name;
+                console.log(this.Objects.children.length);
+                // upload???
             },
             mode: function(m){
                 m = m.toUpperCase();

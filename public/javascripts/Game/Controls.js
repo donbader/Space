@@ -167,7 +167,7 @@
         hotkey["Z"] = function(event, bool){
             if(!bool)return ; //Disable When KeyDown
             if(scope._mode === "VOXEL")
-                scope.voxelPainter.clear(scope.scene, scope.Objects['stepOn']);
+                scope.voxelPainter.clear(scope.Objects['stepOn']);
         }
         hotkey["X"] = function(event, bool){
             if(!bool)return ; //Disable When KeyDown
@@ -178,6 +178,11 @@
             if(!bool)return ; //Disable When KeyDown
             if(scope._mode === "VOXEL")
                 scope.voxelPainter.mode("CREATE");
+        }
+        hotkey["N"] = function(event, bool){
+            if(!bool)return;
+            if(scope._mode === "VOXEL")
+                scope.voxelPainter.save();
         }
     };
 
@@ -230,8 +235,9 @@
             return this;
         },
         can: function(manipulate, arr){
-            if(this.Objects[manipulate])
+            if(this.Objects[manipulate]){
                 this.Objects[manipulate] = this.Objects[manipulate].concat(arr);
+            }
         },
         getObjectOnMouse: function(event, objs, recursive){
             var mousePosition = new THREE.Vector2();
@@ -239,6 +245,26 @@
             mousePosition.y = 1 - ( event.clientY / window.innerHeight ) * 2;
             this.raycaster.setFromCamera(mousePosition, this.player.camera);
             return this.raycaster.intersectObjects(objs, recursive);
+        },
+        collisionOccur: function(target, distance){
+            var targetBox = new THREE.Box3().setFromObject(target).expandByScalar(distance/2);
+            for(var i in this.Objects['collide']){
+                var objBox = new THREE.Box3().setFromObject(this.Objects['collide'][i]).expandByScalar(distance/2);
+                if(targetBox.intersectsBox(objBox)){
+                    delete objBox;
+                    return true;
+                }
+                delete objBox;
+            }
+            delete targetBox;
+
+            return false;
+        },
+        freeToMove: function(dummy, distance, delta){
+            dummy.translateX(this.velocity.x * delta);
+            dummy.translateY(this.velocity.y * delta);
+            dummy.translateZ(this.velocity.z * delta);
+            return !this.collisionOccur(dummy, distance);
         },
         onKey: function(dir, event) {
             event.stopPropagation();
@@ -275,15 +301,15 @@
             }
             else if(this._mode === "VOXEL" && event.which !== 3){
                 if(this.voxelPainter._mode === "CREATE" && this.voxelPainter.prevIntersect !== this.voxelPainter.intersect){
-                    //TODO: Do not duplicate create
-                    var voxel = this.voxelPainter.create(this.scene);
+                    if(!this.voxelPainter.scene) this.voxelPainter.setScene(this.scene);
+                    var voxel = this.voxelPainter.create();
                     this.Objects['stepOn'].push(voxel);
                     this.voxelPainter.prevIntersect = this.voxelPainter.intersect;
                 }
                 else if(this.voxelPainter._mode === "DESTROY"){
                     var intersects = this.getObjectOnMouse(event, this.Objects['stepOn'], false);
                     if(intersects.length){
-                        this.voxelPainter.destroy(this.scene, intersects[0].object);
+                        this.voxelPainter.destroy(intersects[0].object);
                         this.Objects['stepOn'].splice(this.Objects['stepOn'].indexOf(intersects[0].object), 1);
                     }
                 }
@@ -385,15 +411,22 @@
             if(Math.abs(this.velocity.x) < 0.1) this.velocity.x = 0;
             if(Math.abs(this.velocity.z) < 0.1) this.velocity.z = 0;
 
+            this.player.dummyBody.position.copy(this.player.position);
+            this.player.dummyBody.rotation.copy(this.player.rotation);
             // Moving method
             if(this.move.method === "KEYPRESS"){
                 if ( this.move.forward )this.velocity.z -= this.move.velocity * delta;
                 if ( this.move.backward )this.velocity.z += this.move.velocity * delta;
                 if ( this.move.left )this.velocity.x -= this.move.velocity * delta;
                 if ( this.move.right )this.velocity.x += this.move.velocity * delta;
-                this.player.translate(this.velocity.x * delta, this.velocity.y * delta, this.velocity.z * delta);
+
+                if(this.freeToMove(this.player.dummyBody, 4, delta))
+                    this.player.translate(this.velocity.x * delta, this.velocity.y * delta, this.velocity.z * delta);
+                else
+                    this.player.translate(0, this.velocity.y * delta, 0);
             }
             else if(this.move.method === "MOUSECLICK"){
+                // TODO: simplify distance (Vector3()'s method)
                 var deltaX = this.move.to.destination.x - this.player.position.x;
                 var deltaY = this.move.to.destination.y - this.player.position.y;
                 var deltaZ = this.move.to.destination.z - this.player.position.z;
@@ -408,7 +441,11 @@
                     this.velocity.y = 0;
                     this.velocity.z = 0;
                 }
-                this.player.move(this.velocity.x * delta, this.velocity.y * delta, this.velocity.z * delta);
+
+                if(this.freeToMove(this.player.dummyBody, 4, delta))
+                    this.player.move(this.velocity.x * delta, this.velocity.y * delta, this.velocity.z * delta);
+                else
+                    this.player.move(0, this.velocity.y * delta, 0);
             }
 
             // this.player move

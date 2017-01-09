@@ -20,7 +20,7 @@ socket.on('sys', function(data){
     console.log('sys:' + data);
 });
 
-console.log('YO socekt connection');
+
 
 socket.on('create game', function(user){
     if(game)return ;

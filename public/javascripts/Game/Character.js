@@ -33,6 +33,10 @@ var Character = this.Character = THREE.Object3D.extend({
         this.eye.add(camera);
         this.body.add(this.eye);
 
+        // dummyMesh (for detecting collision)
+        this.dummyBody = new THREE.Mesh(this.body.geometry, this.body.material);
+
+
         this._view = "THIRD_PERSON";
         this.view(this._view);
         ////////////////////////////
