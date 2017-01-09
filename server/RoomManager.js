@@ -72,6 +72,7 @@ RoomManager.prototype.render = function(owner, username, callbacks){
     this.getRoom(owner).do(function(room){
         room.items.forEach((item)=>{
             ItemDB.getById(item.id, (err, itemdata)=>{
+                if(!itemdata)return;
                 Object.assign(item, itemdata._doc);
                 callbacks.item && callbacks.item(item);
             });

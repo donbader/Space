@@ -378,6 +378,10 @@
         },
         onRightClick:function(event){
         	event.preventDefault();
+
+          console.log(this._mode);
+
+          if (this._mode === "NORMAL"){
         	var mousePosition = new THREE.Vector2();
         	mousePosition.x = ( event.clientX / window.innerWidth ) * 2 - 1;
         	mousePosition.y = 1 - ( event.clientY / window.innerHeight ) * 2;
@@ -386,16 +390,53 @@
         	var intersects = this.raycaster.intersectObjects(this.Objects['stepOn'], true);
 
         	if(intersects.length){
-        		var positionFlag = this.positionFlag;
-                positionFlag.visible = true;
-        		positionFlag.position.set(intersects[0].point.x, intersects[0].point.y + positionFlag.height/2, intersects[0].point.z);
-                this.move.method = "MOUSECLICK";
-                this.move.to.enabled = true;
-                this.move.to.destination.x = intersects[0].point.x;
-                this.move.to.destination.y = intersects[0].point.y;
-                this.move.to.destination.z = intersects[0].point.z;
+        		  var positionFlag = this.positionFlag;
+                  positionFlag.visible = true;
+        		        positionFlag.position.set(intersects[0].point.x, intersects[0].point.y + positionFlag.height/2, intersects[0].point.z);
+                    this.move.method = "MOUSECLICK";
+                    this.move.to.enabled = true;
+                    this.move.to.destination.x = intersects[0].point.x;
+                    this.move.to.destination.y = intersects[0].point.y;
+                    this.move.to.destination.z = intersects[0].point.z;
         	}
-            // if(this._mode === "NORMAL")
+        }
+        if (this._mode === "CS"){
+
+          var objs = [];
+          for(var i in Users){
+            objs.push(Users[i].object.body);
+          }
+          var intersects = this.getObjectOnMouse(event, objs);
+          if(intersects.length){
+            console.log(intersects[0].object.parent.name);
+          }
+
+
+              $(function() {
+                  $.contextMenu({
+                      selector: 'intersects[0].object',
+                      callback: function(key, options) {
+                          var m = "clicked: " + key;
+                          window.console && console.log(m) || alert(m);
+                      },
+                      items: {
+                          "edit": {name: "Edit", icon: "edit"},
+                          "cut": {name: "Cut", icon: "cut"},
+                         copy: {name: "Copy", icon: "copy"},
+                          "paste": {name: "Paste", icon: "paste"},
+                          "delete": {name: "Delete", icon: "delete"},
+                          "sep1": "---------"
+                      }
+                  });
+
+                  $('intersects[0].object').on('click', function(e){
+                      console.log('clicked', this);
+                  })
+              });
+
+
+        }
+          // if(this._mode === "NORMAL")
         },
         onMouseWheel:function(event){
         	event.preventDefault();
