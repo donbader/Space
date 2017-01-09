@@ -57,6 +57,7 @@
             console.log('this.server in init = ' + this.server);
 
             this.addHandlers();
+            this.getLocalStream();
 
             // this.start(() => this.call());
             //this.call();
@@ -81,9 +82,9 @@
             var pc = new RTCPeerConnection(iceConfig);
             this.peers[name][pc] = pc;
 
-            //to get local stream
-            this.localStream = this.getLocalStream();
-            pc.addStream(this.localStream);
+            // //to get local stream
+            // this.localStream = this.getLocalStream();
+            // pc.addStream(this.localStream);
 
             pc.onicecandidate = (event) => {
                 this.server.emit('RTC msg to server', { from: this.name, to: name, ice: event.candidate, type: 'ice' });
@@ -155,7 +156,7 @@
             }
         },
         addHandlers: function() {
-            console.log('this.server in addHandlers = ' + this.server);
+            // this.server.on('RTC start', function())
 
             this.server.on('RTC peer connection', function(msg) {
                 makeOffer(msg.name);
@@ -190,15 +191,14 @@
             this.localStream = stream;
         },
         getLocalStream: function() {
-            this.trace('Requesting local stream');
+            this.trace('requesting local stream');
 
             navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
             if (navigator.getUserMedia) {
                 navigator.getUserMedia(constraints, (stream) => {
-                        this.trace('receive local stream');
+                        this.trace('receiving local stream');
                         this.setLocalStream(stream);
-                        return stream;
                     },
                     function(error) {
                         //??
@@ -208,8 +208,6 @@
             } else {
                 this.trace('navigator.getUserMedia is null');
             }
-
-            return null;
         },
         setLocalStream: function(stream) {
             this.trace('set local stream');
@@ -243,7 +241,27 @@
                 this.trace('Received remote stream');
             }
         },
-        start: function(call) {
+        start: function() {
+            this.trace('requesting local stream');
+
+            navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
+            if (navigator.getUserMedia) {
+                navigator.getUserMedia(constraints, (stream) => {
+                        this.gotStream(stream);
+                        call();
+                    },
+                    function(error) {
+                        //??
+                        this.trace('getUserMedia error: ', error);
+                    }
+                );
+            } else {
+                this.trace('navigator.getUserMedia is null');
+            }
+
+        },
+        start1: function(call) {
             this.trace('Requesting local stream');
 
             navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;

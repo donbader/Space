@@ -157,12 +157,12 @@ socket.on('welcome',function(){
 // });
 
 //for rtc
-socket.on('get local stream', function() {
-    var stream = player.webcam.getLocalStream();
-    socket.emit('add local stream in pc', stream);
-});
+// socket.on('get local stream', function() {
+//     var stream = player.webcam.getLocalStream();
+//     socket.emit('add local stream in pc', stream);
+// });
 
-socket.on('set new remote stream', function(event) {
-    player.webcam.setRemoteStream(event);
-});
+// socket.on('set new remote stream', function(event) {
+//     player.webcam.setRemoteStream(event);
+// });
 //

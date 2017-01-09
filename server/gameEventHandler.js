@@ -249,6 +249,8 @@ handler.connection = function(client) {
                     }
                 });
             });
+
+            // client.emit('RTC start');
             //
 
             client.emit("start game");
