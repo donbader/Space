@@ -3,17 +3,13 @@
     const gravity = 980;
 
 
-
     const MOUSE_STATE = {
         NONE: 0,
         KEYDOWN: 1,
         KEYUP: 2
     };
 
-    const MODE_VIEW = {
-        FIRST_PERSON: 0,
-        THIRD_PERSON: 1
-    };
+    const VOXEL_WIDTH = 20;
 
 
     Controls = function(player) {
@@ -28,6 +24,7 @@
                 x: 0, y:0
             }
         };
+        this.raycaster = new THREE.Raycaster();
         /*====================
             Zoom
         ====================*/
@@ -92,8 +89,7 @@
         /*====================
             Game Object
         ====================*/
-        this.positionFlag = new PositionFlag();
-        // this.contextmemu = $("");
+        this.positionFlag = new SPACE_OBJECT.PositionFlag();
         this.Objects = {
             stepOn: [],
             select: [],
@@ -104,7 +100,10 @@
             rotation: false,
             objects: []
         }
-
+        /*====================
+            Voxel Painter
+        ====================*/
+        this.voxelPainter = new SPACE_OBJECT.VoxelPainter();
 
         /*====================
             Deployment
@@ -159,10 +158,40 @@
         hotkey["R"] = function(event, bool){
             scope.Controlling.rotation = bool;
         }
+        hotkey["V"] = function(event, bool){
+            if(!bool)return ; //Disable When KeyDown
+            (scope._mode !== "VOXEL") ?
+                scope.mode('VOXEL') :
+                scope.mode(scope._prevMode);
+        }
+        hotkey["Z"] = function(event, bool){
+            if(!bool)return ; //Disable When KeyDown
+            if(scope._mode === "VOXEL")
+                scope.voxelPainter.clear(scope.scene, scope.Objects['stepOn']);
+        }
+        hotkey["X"] = function(event, bool){
+            if(!bool)return ; //Disable When KeyDown
+            if(scope._mode === "VOXEL")
+                scope.voxelPainter.mode("DESTROY");
+        }
+        hotkey["C"] = function(event, bool){
+            if(!bool)return ; //Disable When KeyDown
+            if(scope._mode === "VOXEL")
+                scope.voxelPainter.mode("CREATE");
+        }
     };
 
     Controls.prototype = {
-        enable: function(e,dom){
+        enable: function(e, scene, dom){
+            if(e && scene){
+                this.scene = scene;
+                scene.add(this.positionFlag);
+                scene.add(this.voxelPainter.helper);
+            }
+            else if(!e && scene){
+                scene.remove(this.positionFlag);
+                scene.remove(this.voxelPainter.helper);
+            }
             var scope = this;
             dom = dom || document;
             var handle = e ? dom.addEventListener : dom.removeEventListener;
@@ -185,21 +214,31 @@
 
             m = m.toUpperCase();
             switch (m) {
-                case "NORMAL":
-                case "CS":
-                case "TYPING":
-                case "OBJ_EDITING":
-                    this._prevMode = this._mode;
-                    this._mode = m;
-                    console.log("Switch To ", m , " mode.");
-                    return this;
+                case "NORMAL":case "CS":
+                case "TYPING":case "OBJ_EDITING":
+                this.voxelPainter.helper.visible = false;
+                break;
+                case "VOXEL":
+                    this.voxelPainter.helper.visible = true;
+                break;
                 default:
                     return console.error("Invalid Mode in Controls: ", m);
             }
+            this._prevMode = this._mode;
+            this._mode = m;
+            console.log("Switch To ", m , " mode.");
+            return this;
         },
         can: function(manipulate, arr){
             if(this.Objects[manipulate])
                 this.Objects[manipulate] = this.Objects[manipulate].concat(arr);
+        },
+        getObjectOnMouse: function(event, objs, recursive){
+            var mousePosition = new THREE.Vector2();
+            mousePosition.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+            mousePosition.y = 1 - ( event.clientY / window.innerHeight ) * 2;
+            this.raycaster.setFromCamera(mousePosition, this.player.camera);
+            return this.raycaster.intersectObjects(objs, recursive);
         },
         onKey: function(dir, event) {
             event.stopPropagation();
@@ -214,13 +253,8 @@
         onMouseDown:function(event){
             this.mouse.state = MOUSE_STATE.KEYDOWN;
             if(this._mode === "OBJ_EDITING"){
-                var mousePosition = new THREE.Vector2();
-                mousePosition.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-                mousePosition.y = 1 - ( event.clientY / window.innerHeight ) * 2;
+                var intersects = this.getObjectOnMouse(event, this.Objects['move'], true);
 
-                var ray = new THREE.Raycaster();
-                ray.setFromCamera(mousePosition, this.player.camera);
-                var intersects = ray.intersectObjects(this.Objects['move'],true);
                 if(intersects.length){
                     while(intersects[0].object.parent.type != "Scene"){
                         intersects[0].object = intersects[0].object.parent;
@@ -228,6 +262,8 @@
                     this.Controlling['objects'].push(intersects[0].object);
                 }
             }
+
+
         },
         onMouseUp:function(event){
             this.mouse.state = MOUSE_STATE.KEYUP;
@@ -236,6 +272,21 @@
             }
             else if(this._mode === 'OBJ_EDITING'){
                 this.Controlling['objects'] = [];
+            }
+            else if(this._mode === "VOXEL" && event.which !== 3){
+                if(this.voxelPainter._mode === "CREATE" && this.voxelPainter.prevIntersect !== this.voxelPainter.intersect){
+                    //TODO: Do not duplicate create
+                    var voxel = this.voxelPainter.create(this.scene);
+                    this.Objects['stepOn'].push(voxel);
+                    this.voxelPainter.prevIntersect = this.voxelPainter.intersect;
+                }
+                else if(this.voxelPainter._mode === "DESTROY"){
+                    var intersects = this.getObjectOnMouse(event, this.Objects['stepOn'], false);
+                    if(intersects.length){
+                        this.voxelPainter.destroy(this.scene, intersects[0].object);
+                        this.Objects['stepOn'].splice(this.Objects['stepOn'].indexOf(intersects[0].object), 1);
+                    }
+                }
             }
         },
         onMouseMove: function(event){
@@ -254,12 +305,7 @@
                     return;
                 case "OBJ_EDITING":
                     if(this.mouse.state !== MOUSE_STATE.KEYDOWN)return;
-                    var mousePosition = new THREE.Vector2();
-                	mousePosition.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-                	mousePosition.y = 1 - ( event.clientY / window.innerHeight ) * 2;
-                    var ray = new THREE.Raycaster();
-                    ray.setFromCamera(mousePosition, this.player.camera);
-                    var intersects = ray.intersectObjects(this.Objects['stepOn']);
+                    var intersects = this.getObjectOnMouse(event, this.Objects['stepOn'], true);
 
                     if(intersects.length && this.Controlling['objects'].length){
                         if(!this.Controlling.rotation){ // move position
@@ -295,7 +341,13 @@
                         }
                     }
                     break;
+                case "VOXEL":
+                    var intersects = this.getObjectOnMouse(event, this.Objects['stepOn'], true);
+                    if(intersects.length)
+                        this.voxelPainter.updateHelper(intersects[0]);
 
+
+                break;
             }
         },
         onRightClick:function(event){
@@ -304,9 +356,8 @@
         	mousePosition.x = ( event.clientX / window.innerWidth ) * 2 - 1;
         	mousePosition.y = 1 - ( event.clientY / window.innerHeight ) * 2;
 
-        	var ray = new THREE.Raycaster();
-        	ray.setFromCamera(mousePosition, this.player.camera);
-        	var intersects = ray.intersectObjects(this.Objects['stepOn'], true);
+        	this.raycaster.setFromCamera(mousePosition, this.player.camera);
+        	var intersects = this.raycaster.intersectObjects(this.Objects['stepOn'], true);
 
         	if(intersects.length){
         		var positionFlag = this.positionFlag;

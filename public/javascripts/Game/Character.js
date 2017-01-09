@@ -39,12 +39,12 @@ var Character = this.Character = THREE.Object3D.extend({
         ///// Controls /////////////
         ////////////////////////////
         this.controls = new Controls(this).mode("normal");
-        this.webcam = new RTC(this.socket, this);
+        // this.webcam = new RTC(this.socket, this);
     },
     update: function(delta){
         // Control moving
         this.controls.update(delta);
-        this.webcam.update();
+        // this.webcam.update();
     },
     ServerUpdate: function(){
         if(!this.socket)return;

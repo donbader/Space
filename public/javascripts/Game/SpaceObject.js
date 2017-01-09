@@ -1,58 +1,139 @@
-// make an extend function
-// Prop must have init();
-(function(){
-    this.MakeExtendable = function(ancestor){
-        var fnTest = /xyz/.test(function() {
-            console.log(xyz);
-            xyz;
-        }) ? /\b_super\b/ : /.*/;
-        var initializing = false;
+(function(global, factory){
+    if (global.SPACE_OBJECT === undefined) {
+		global.SPACE_OBJECT = factory();
+	}
+})(window, function(){
+    'use strict';
 
-        // Override init and constructor
-        ancestor.prototype.init = ancestor.prototype.init || ancestor.prototype.constructor;
-        ancestor.prototype.constructor = function(){
-            if(!initializing && this.init)
-                this.init.apply(this, arguments);
-        }
-        //
-        ancestor.extend = function(prop){
-            var _super = this.prototype;
-            initializing = true;
-            var prototype = new this();
-            initializing = false;
+    var OBJ = {
+        /**************************************
+                    Game Objects
+        **************************************/
+        PositionFlag: THREE.Object3D.extend({
+            init:function(){
+                this._super();
+                this.height = 1;
+                /*============================
+                            MODEL
+                ============================*/
+                this.model = new THREE.Mesh(
+                    new THREE.BoxGeometry( 90, this.height, 90),
+                    new THREE.MeshPhongMaterial( { color: 0xffffff } ));
 
-            // clone all prop to prototype
-            for(var name in prop){
-                prototype[name] = typeof prop[name] === "function" &&
-                    typeof _super[name] === "function"  && fnTest.test(prop[name]) ?
-                    (function(name, fn) { // if it is a function
-                        return function(){
-                            var tmp = this._super;
-                            // call the method on ._super class
-                            this._super = _super[name];
-                            var ret = fn.apply(this, arguments);
-                            this._super = tmp;
-                            return ret;
-                        };
-                    })(name, prop[name])
-                    : prop[name]; // else
+                this.visible = false;
+                this.model.material.transparent = true;
+                this.model.material.opacity = 0.3;
+                this.model.position.set(0,this.height/2,0);
+                this.add(this.model);
             }
+        }),
+        VoxelPainter: THREE.Object3D.extend({
+            init: function(width, color, opacity){
+                width = width || 50;
+                color = color || 0x00ff00;
+                opacity = opacity || 0.5;
+                this._super();
 
-            function SpaceClass(){
-                if(!initializing && this.init)
-                    this.init.apply(this, arguments);
+                // Model
+                var rollOverGeo = new THREE.BoxGeometry( 1, 1, 1 );
+				var rollOverMaterial = new THREE.MeshBasicMaterial( { color: color, opacity: 0.5, transparent: true } );
+                this.helper = new THREE.Mesh( rollOverGeo, rollOverMaterial );
+                this.add(this.helper);
+                this.setScale(width);
+
+
+                // Grid
+                // var size = 5, step = width;
+                //
+                // var geometry = new THREE.Geometry();
+                //
+                // for(var i = - step*size - step/2; i <= step*size - step/2; i+=step){
+                //
+                //     geometry.vertices.push( new THREE.Vector3( -  step*size - step/2, 0, i ) );
+                //     geometry.vertices.push( new THREE.Vector3(    step*size - step/2, 0, i ) );
+                //
+                //     geometry.vertices.push( new THREE.Vector3( i, 0, -  step*size - step/2 ) );
+                //     geometry.vertices.push( new THREE.Vector3( i, 0,    step*size - step/2 ) );
+                //
+                // }
+                //
+                // var material = new THREE.LineBasicMaterial( { color: 0x000000, opacity: 0.2, transparent: true } );
+                //
+                // var line = new THREE.LineSegments( geometry, material );
+                // line.position.set(0, -width/2 + 2,0);
+                // this.helper.add( line );
+
+
+
+                // Manager
+                this.voxelWidth = width;
+                this._mode = "CREATE";
+                this.cubeGeo = this.helper.geometry;
+                this.cubeMaterial = new THREE.MeshLambertMaterial({ color: 0xfeb74c});
+                //
+                this.visible = false;
+            },
+            setScale: function(width){
+                this.helper.scale.set(width,width,width);
+                return this;
+            },
+            setColor: function(hex){
+                this.cubeMaterial.color.setHex(hex);
+            },
+            create: function(scene, material){
+                material = material || this.cubeMaterial;
+                var voxel = new THREE.Mesh( this.cubeGeo, material );
+                voxel.scale.set(this.voxelWidth, this.voxelWidth, this.voxelWidth );
+                voxel.position.copy( this.intersect.point ).add( this.intersect.face.normal );
+                voxel.position.divideScalar( this.voxelWidth ).floor().multiplyScalar( this.voxelWidth ).addScalar( this.voxelWidth/2 );
+                scene.add(voxel);
+                voxel.name = "voxel";
+                console.log("CREATE", voxel);
+                return voxel;
+            },
+            destroy: function(scene, voxel){
+                scene.remove(voxel);
+            },
+            updateHelper: function(intersect){
+
+                if(this._mode === "CREATE"){
+                    this.visible = true;
+                    this.helper.visible = true;
+                    this.helper.position.copy( intersect.point ).add( intersect.face.normal );
+                }
+                else if(this._mode === "DESTROY"){
+                    if(intersect.object.name === "voxel"){
+                        this.helper.visible = true;
+                        this.helper.position.copy( intersect.object.position );
+                    }
+                    else{
+                        this.helper.visible = false;
+                    }
+                }
+                this.helper.position.divideScalar( this.voxelWidth ).floor().multiplyScalar( this.voxelWidth ).addScalar( this.voxelWidth/2 );
+                this.intersect = intersect;
+            },
+            clear: function(scene, objs){
+                objs.filter((element)=>{
+                    if(element.name === "voxel")
+                        scene.remove(element);
+                    return element.name !== "voxel";
+                })
+            },
+            mode: function(m){
+                m = m.toUpperCase();
+                switch (m) {
+                    case "CREATE":
+                    this.helper.material.color.setHex(0x00FF00);
+                    break;
+                    case "DESTROY":
+                    this.helper.material.color.setHex(0xFF0000);
+                    break;
+                    default: return;
+                }
+                this._mode = m;
             }
-
-            // Populate our constructed prototype object
-            SpaceClass.prototype = prototype;
-            // Enforce the constructor to be what we expect
-            SpaceClass.prototype.constructor = Class;
-            // Make it extendable
-            SpaceClass.extend = arguments.callee;
-            return SpaceClass;
-        }
+        })
     }
-
-    MakeExtendable(THREE.Object3D);
-
-})();
+    return OBJ;
+});

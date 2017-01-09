@@ -56,11 +56,12 @@ RoomManager.prototype.addUser = function(owner, user, addUserCallback, kickUserC
 
 RoomManager.prototype.kickUser = function(owner, user, kickUserCallback){
     this.getRoom(owner).do(function(room){
-
-        var index = room.users.findIndex((element)=>(element.name === user.name) && (element.id === user.id));
-        if(index !== -1){
-            kickUserCallback && kickUserCallback(owner, room.users[index]);
-            room.users.splice(index, 1);
+        if(room.users && room.users.length){
+            var index = room.users.findIndex((element)=>(element.name === user.name) && (element.id === user.id));
+            if(index !== -1){
+                kickUserCallback && kickUserCallback(owner, room.users[index]);
+                room.users.splice(index, 1);
+            }
         }
 
     });

@@ -132,7 +132,6 @@ handler.connection = function(client) {
             client.join(roomID);
             // create Game with user, usertype
             client.emit('create game', user);
-
             RoomManager.addUser(roomID, user, addUserCallback, kickUserCallback);
             RoomManager.render(roomID, user.name,
                 {

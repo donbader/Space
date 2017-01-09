@@ -489,8 +489,7 @@
 
             // controller.in(this.scene, this.renderer);
             this.add(controller);
-            this.add(controller.controls.positionFlag);
-            controller.controls.enable(true, this.container);
+            controller.controls.enable(true, this.scene, this.container);
 
             if(this.socket)
                 controller.socket = this.socket;
