@@ -4,8 +4,11 @@
       {
         name : function(){},
         room :roomID,
-        firstPerson: function(){
+        view: function(){
+
             player.view();
+            console.log(parameters.view);
+
         },
         friend1 : function(){alert("hi")},
         friend2 : function(){},
@@ -13,7 +16,7 @@
 
         // b: 200, // numeric slider
         // c: "Hello, GUI!", // string
-        // d: false, // boolean (checkbox)
+        //   d: false, // boolean (checkbox)
         // e: "#ff8800", // color (hex)
         // f: function() { alert("Hello!") },
         // g: function() { alert( parameters ) },
@@ -22,15 +25,17 @@
         // x: 0, y: 0, z: 0
       };
 
-      gui.add( parameters, 'firstPerson').name("ZZZ");
+      gui.add( parameters, 'view').name("First-Person");
       gui.add( parameters, 'name').name("Hello " + username);
       var switchRoom = gui.add( parameters, 'room' ).name("Switch Room");
       switchRoom.onChange(function(value){
           player.controls.mode('TYPING');
       })
+
       switchRoom.onFinishChange(function(value){
           player.controls.mode('NORMAL');
       });
+
       switchRoom.domElement.addEventListener('click', function(event){
           console.log(event);
           player.controls.mode("TYPING");
