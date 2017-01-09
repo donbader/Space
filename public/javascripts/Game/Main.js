@@ -12,6 +12,7 @@ var player;
 var world;
 
 var rtc;
+var stream;
 
 console.log('YO main.js');
 
@@ -30,11 +31,15 @@ socket.on('create game', function(user){
     // player = new Character();
 
     //for rtc
-    player = new Character(username, socket);
+    player = new Character(user);
+    // player.getLocalStream(stream);
+    // console.log('stream in main = ', stream);
     //
     game = new Game("GamePlay", player, socket);
 
-    // rtc = new RTC(socket, player);
+    //for rtc
+    rtc = new RTC(socket, player, Users);
+    //
 
     console.log("[game created]", game.scene);
 });
@@ -85,6 +90,20 @@ socket.on('render item', function(data){
 socket.on('add user', function(userdata){
     console.log("[Add user]", userdata.name, ":",Users );
 
+    //for rtc
+    var other;
+    console.log('added userdata.id = ' + userdata.id);
+    Users[userdata.id] = userdata;
+    Users[userdata.id].object = other = new Character(userdata);
+    Users[userdata.id].object.name = userdata.name;
+    game.add(Users[userdata.id].object);
+
+    // socket.emit('')
+
+    console.log(Users);
+    //
+
+    /*
     Users[userdata.id] = userdata;
     // Users[userdata.id].object = (new Character()).model;
     Users[userdata.id].object = eval('new '+userdata.type+'()');
@@ -92,6 +111,7 @@ socket.on('add user', function(userdata){
     game.add(Users[userdata.id].object);
     console.log(Users);
     // because pos,rot is all 0 , so we don't set them
+    */
 })
 socket.on('remove user', function(userid){
     console.log('[remove user]',Users);
@@ -120,6 +140,7 @@ socket.on('update user', function(userdata){
         Users[userdata.id].object.position.y = userdata.position.y;
         Users[userdata.id].object.position.z = userdata.position.z;
         Users[userdata.id].object.rotation.y = userdata.rotation._y;
+        Users[userdata.id].object.update();
         // Users[userdata.id].object.rotation.x = userdata.rotation.x;
         // Users[userdata.id].object.rotation.y = userdata.rotation.y;
         // Users[userdata.id].object.rotation.z = userdata.rotation.z;

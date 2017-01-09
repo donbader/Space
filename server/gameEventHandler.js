@@ -5,7 +5,7 @@ var handler = {};
 var User = require('./../db/user');
 var Item = require('./../db/item');
 var Room = require('./../db/room');
-var RoomManager = new (require('./RoomManager'))();
+var RoomManager = new(require('./RoomManager'))();
 
 
 // var mongoose = require('mongoose');
@@ -29,15 +29,16 @@ handler.setServer = function(s) {
 
 handler.connection = function(client) {
     var USER, ROOMID;
-    User.getByName(client.handshake.query.username, (err, user)=>{
+    User.getByName(client.handshake.query.username, (err, user) => {
         USER = user;
-        log("[Connection]", "(",user.name,")", client.id);
-        if(!user) return console.error("No this user");
+        log("[Connection]", "(", user.name, ")", client.id);
+        if (!user) return console.error("No this user");
         user.id = client.id;
         //for rtc
-        if(!clients[user.name]) {
-            clients[user.name] = client;
-        }
+        clients[user.id] = client;
+        // if(!clients[user.id]) {
+        //     clients[user.id] = client;
+        // }
         //
         GameSet(user);
         client.emit('welcome');
@@ -58,25 +59,32 @@ handler.connection = function(client) {
 
     client.on('disconnect', () => {
         var user = USER || {};
-        log("[Disconnect]",user.name," Has disconnected, room:",ROOMID);
+        log("[Disconnect]", user.name, " Has disconnected, room:", ROOMID);
 
         //for rtc
-        if(clients[user.name]) {
+        if (clients[user.id]) {
             // need??
-            clients[user.name].emit('RTC close');
-            delete clients[user.name];
-            
-            RoomManager.getRoom(roomID).do((room) => {
+            clients[user.id].emit('RTC close');
+            delete clients[user.id];
+
+            // Room.KickUser("id",user, ROOMID, kickUserCallback);
+            RoomManager.kickUser(ROOMID, user, kickUserCallback);
+
+            RoomManager.getRoom(ROOMID).do((room) => {
                 room.users.forEach((roomUser) => {
                     console.log('roomUser ' + roomUser.name + ' in ' + room + ' now');
-                    clients[roomUser.name].emit('RTC peer disconnection', {name: user.name});
+
+                    if (clients[roomUser.id]) {
+                        //to prevent the disconnection before connection??
+                        clients[roomUser.id].emit('RTC peer disconnection', { id: user.id });
+                    }
                 });
             });
         }
         //
 
-        // Room.KickUser("id",user, ROOMID, kickUserCallback);
-        RoomManager.kickUser(ROOMID, user, kickUserCallback);
+        // // Room.KickUser("id",user, ROOMID, kickUserCallback);
+        // RoomManager.kickUser(ROOMID, user, kickUserCallback);
     });
 
     client.on('drawClick', function(data) {
@@ -133,7 +141,7 @@ handler.connection = function(client) {
     function checkValid(id) {
         id = id || ROOMID;
         var user = USER || {};
-        if ( !user.name || !id) {
+        if (!user.name || !id) {
             sysMsg(client, 'Invalid user.name or room(' + user.name + "," + id + ')');
             return false;
         }
@@ -142,51 +150,65 @@ handler.connection = function(client) {
 
 
 
-    function kickUserCallback(roomID, user){
-        if(!user || !roomID)return;
+    function kickUserCallback(roomID, user) {
+        if (!user || !roomID) return;
         log('[Kick User]', user.name, user.id);
         server.to(roomID).emit('remove user', user.id);
         server.to(user.id).emit('logout');
     }
-    function addUserCallback(roomID, user){
-        if(!user || !roomID)return ;
+
+    function addUserCallback(roomID, user) {
+        if (!user || !roomID) return;
         log('[Add User]', user.name, user.id, " to ", roomID);
         client.broadcast.to(roomID).emit('add user', user);
+
+        //for rtc
+        // RoomManager.getRoom(ROOMID).do((room) => {
+        //     room.users.forEach((roomUser) => {
+        //         console.log('roomUser ' + roomUser.name + ' in ' + room);
+
+        //         if(roomUser.id !== USER.id) {
+        //             console.log('YOOO ' + roomUser.id + ' to ' + USER.id);
+        //             clients[roomUser.id].emit('RTC peer connection', {id: USER.id});
+        //         }
+        //     });
+        // });
+        //
     }
 
     //for rtc
-    function getPeerConnection(name) {
-        if(peerConnections[name]) {
-            //be created in advance
-            return peerConnections[name];
-        }
+    // function getPeerConnection(name) {
+    //     if(peerConnections[name]) {
+    //         //be created in advance
+    //         return peerConnections[name];
+    //     }
 
-        //to create new peer connection
-        var pc = new RTCPeerConnection(iceConfig);
-        peerConnections[name] = pc;
+    //     //to create new peer connection
+    //     var pc = new RTCPeerConnection(iceConfig);
+    //     peerConnections[name] = pc;
 
-        client.on('add local stream in pc', function(stream) {
-            pc.addStream(stream);
-        })
+    //     client.on('add local stream in pc', function(stream) {
+    //         pc.addStream(stream);
+    //     })
 
-        client.emit('get local stream');
+    //     client.emit('get local stream');
 
-        pc.onicecandidate = function(event) {
-            client.emit('msg', {})
-        };
+    //     pc.onicecandidate = function(event) {
+    //         client.emit('msg', {})
+    //     };
 
-        pc.onaddstream = function(event) {
-            console.log('Received new stream');
-            client.emit('set new remote stream', event);
-        };
+    //     pc.onaddstream = function(event) {
+    //         console.log('Received new stream');
+    //         client.emit('set new remote stream', event);
+    //     };
 
-        return pc;
-    }
+    //     return pc;
+    // }
     //
 
-    function GameSet(user){
-        client.on("join", (roomID)=>{
-            if(!roomID || !user || !client)return;
+    function GameSet(user) {
+        client.on("join", (roomID) => {
+            if (!roomID || !user || !client) return;
             ROOMID = JSON.parse(JSON.stringify(roomID));
             log("[Join]", roomID);
             client.join(roomID);
@@ -194,17 +216,15 @@ handler.connection = function(client) {
             client.emit('create game', user);
 
             RoomManager.addUser(roomID, user, addUserCallback, kickUserCallback);
-            RoomManager.render(roomID, user.name,
-                {
-                    item: (item)=>client. emit('render item', item),
-                    user: (anotherUser)=>{
-                        client.emit('add user', anotherUser);
-                        client.broadcast.to(roomID).emit('fetch userdata', user.id);
-                    }
+            RoomManager.render(roomID, user.name, {
+                item: (item) => client.emit('render item', item),
+                user: (anotherUser) => {
+                    client.emit('add user', anotherUser);
+                    client.broadcast.to(roomID).emit('fetch userdata', user.id);
                 }
-            );
-            RoomManager.getRoom("corey").do((room)=>{
-                room.users.forEach((user)=>{
+            });
+            RoomManager.getRoom("corey").do((room) => {
+                room.users.forEach((user) => {
                     console.log(user.name);
                 });
             });
@@ -232,23 +252,46 @@ handler.connection = function(client) {
             // }
 
             client.on('RTC msg to server', function(msg) {
-                if(!clients[msg.to]) {
+                if (!clients[msg.to]) {
                     console.log('no client ' + msg.to);
                     return;
                 }
+                console.log('get msg from ' + msg.by + ' to ' + msg.to);
 
+                if(!msg.ice)
+                    console.log('msg = ', msg);
+                
                 clients[msg.to].emit('RTC msg to client', msg);
             });
 
-            RoomManager.getRoom(roomID).do((room) => {
-                room.users.forEach((roomUser) => {
-                    console.log('roomUser ' + roomUser.name + ' in ' + room);
+            client.on('RTC new connection', function(id) {
+                console.log('rtc new connection');
 
-                    if(roomUser.name != USER.name) {
-                        clients[roomUser.name].emit('RTC peer connection', {name: roomUser.name});
-                    }
+                RoomManager.getRoom(ROOMID).do((room) => {
+                    room.users.forEach((roomUser) => {
+                        console.log('roomUser ' + roomUser.name + ' in ' + room);
+
+                        if (roomUser.id !== id) {
+                            console.log('YOOO ' + roomUser.id + ' to ' + id);
+                            clients[roomUser.id].emit('RTC peer connection', { id: id });
+                        }
+                    });
                 });
+
+
+                // client.broadcast.to(ROOMID).emit('RTC peer connection', {id: id});
             });
+
+            // RoomManager.getRoom(roomID).do((room) => {
+            //     room.users.forEach((roomUser) => {
+            //         console.log('roomUser ' + roomUser.name + ' in ' + room);
+
+            //         if(roomUser.name != USER.name) {
+            //             console.log('YOOO ' + roomUser.name);
+            //             clients[roomUser.name].emit('RTC peer connection', {name: USER.name});
+            //         }
+            //     });
+            // });
 
             // client.emit('RTC start');
             //
