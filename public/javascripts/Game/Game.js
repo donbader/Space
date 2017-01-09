@@ -489,6 +489,8 @@
 
             // controller.in(this.scene, this.renderer);
             this.add(controller);
+            this.add(controller.feet);
+            this.add(controller.dummyBody);
             controller.controls.enable(true, this.scene, this.container);
 
             if(this.socket)

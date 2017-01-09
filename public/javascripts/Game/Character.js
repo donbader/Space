@@ -33,9 +33,20 @@ var Character = this.Character = THREE.Object3D.extend({
         this.eye.add(camera);
         this.body.add(this.eye);
 
+        // feets (plane)
+        this.feet = new THREE.Mesh(new THREE.CubeGeometry(this.info.width, this.info.height/6, this.info.thickness+1), new THREE.MeshBasicMaterial( { color: 0xff0000, transparent: true, opacity:1} ));
+        this.feet.visible = false;
+        this.feet.name = "feet";
+        // this.body.add(this.feet);
+
+
         // dummyMesh (for detecting collision)
         this.dummyBody = new THREE.Mesh(this.body.geometry, this.body.material);
+        this.dummyBody.visible = false;
+        this.dummyBody.name = "dummy";
 
+        // feetRay (for detecting the object underfeet)
+        // this.feetRaycaster = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 );
 
         this._view = "THIRD_PERSON";
         this.view(this._view);
@@ -47,7 +58,8 @@ var Character = this.Character = THREE.Object3D.extend({
     },
     update: function(delta){
         // Control moving
-        this.controls.update(delta);
+        if(this.controls)
+            this.controls.update(delta);
         // this.webcam.update();
     },
     ServerUpdate: function(){
@@ -94,20 +106,13 @@ var Character = this.Character = THREE.Object3D.extend({
         }
     },
     manipulate: function(item){
-        if(item.Objects){
-            for(var manipulate in item.Objects){
-                this.can(manipulate, item.Objects[manipulate]);
-            }
-        }
-        if(item.prop){
-            for(var manipulate in item.prop){
-                if(item.prop[manipulate])
-                    this.can(manipulate, [item]);
-            }
-        }
+        this.controls.manipulate(item);
     },
-    can: function(manipulate, arr){
-        this.controls.can(manipulate, arr);
+    isOnObject: function(objs, distance){
+        this.feet.position.copy(this.position);
+        // this.feet.position.y += this.info.height/12;
+        this.isOn = SPACE_OBJECT.collisionOccur(this.feet, objs, distance);
+        return this.isOn;
     },
     view: function(v){
         if(!v){

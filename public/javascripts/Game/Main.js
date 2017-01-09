@@ -53,7 +53,6 @@ socket.on('render item', function(data){
             if(data.rotation)
                 item.rotation.set(data.rotation.x, data.rotation.y, data.rotation.z);
             game.add(item);
-            item.prop = data.data.prop;
             item.name = data.id;
 
             player.manipulate(item);
@@ -65,13 +64,19 @@ socket.on('render item', function(data){
                 if(data.rotation)item.rotation.set(data.rotation.x, data.rotation.y, data.rotation.z);
                 game.add(item);
                 // Property
-                item.prop = data.data.prop;
+                item.userData.prop = data.data.prop;
                 item.name = data.id;
 
                 player.manipulate(item);
 
             });
             break;
+        default:
+            SPACE_OBJECT.load(game, data, (obj)=>{
+                player.manipulate(obj);
+                // obj.position.set(resetVector.x, resetVector.y, resetVector.z);
+                // obj.position.set(resetVector);
+            });
     }
 
 

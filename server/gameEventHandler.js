@@ -160,12 +160,19 @@ handler.connection = function(client) {
             //     }
             // );
             client.emit("start game");
+
+            // Event handler
+            client.on('Voxel upload', function(data){
+                data = JSON.parse(data);
+                User.appendVoxel(user.name, data);
+            });
+
+            client.on('Voxel delete', function(name){
+                User.deleteVoxel(user.name, name);
+            })
         });
     }
 }
-
-
-
 
 
 

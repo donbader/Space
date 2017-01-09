@@ -84,7 +84,7 @@
             Velocity
         ====================*/
         this.velocity = new THREE.Vector3();
-        this.jumpVelocity = 450.0;
+        this.jumpVelocity = 600.0;
 
         /*====================
             Game Object
@@ -104,6 +104,7 @@
             Voxel Painter
         ====================*/
         this.voxelPainter = new SPACE_OBJECT.VoxelPainter();
+        this.manipulate(this.voxelPainter.Objects);
 
         /*====================
             Deployment
@@ -167,7 +168,7 @@
         hotkey["Z"] = function(event, bool){
             if(!bool)return ; //Disable When KeyDown
             if(scope._mode === "VOXEL")
-                scope.voxelPainter.clear(scope.Objects['stepOn']);
+                scope.voxelPainter.clear();
         }
         hotkey["X"] = function(event, bool){
             if(!bool)return ; //Disable When KeyDown
@@ -182,7 +183,12 @@
         hotkey["N"] = function(event, bool){
             if(!bool)return;
             if(scope._mode === "VOXEL")
-                scope.voxelPainter.save();
+                scope.voxelPainter.save("SONG", scope.player.socket);
+        }
+        hotkey["M"] = function(event, bool){
+            if(!bool)return;
+            if(scope._mode === "VOXEL")
+                scope.voxelPainter.delete("SONG", scope.player.socket);
         }
     };
 
@@ -234,6 +240,19 @@
             console.log("Switch To ", m , " mode.");
             return this;
         },
+        manipulate: function(item){
+            if(item.userData.Objects){
+                for(var manipulate in item.userData.Objects){
+                    this.can(manipulate, item.userData.Objects[manipulate]);
+                }
+            }
+            if(item.userData.prop){
+                for(var manipulate in item.userData.prop){
+                    if(item.userData.prop[manipulate])
+                        this.can(manipulate, [item]);
+                }
+            }
+        },
         can: function(manipulate, arr){
             if(this.Objects[manipulate]){
                 this.Objects[manipulate] = this.Objects[manipulate].concat(arr);
@@ -246,25 +265,28 @@
             this.raycaster.setFromCamera(mousePosition, this.player.camera);
             return this.raycaster.intersectObjects(objs, recursive);
         },
-        collisionOccur: function(target, distance){
-            var targetBox = new THREE.Box3().setFromObject(target).expandByScalar(distance/2);
-            for(var i in this.Objects['collide']){
-                var objBox = new THREE.Box3().setFromObject(this.Objects['collide'][i]).expandByScalar(distance/2);
-                if(targetBox.intersectsBox(objBox)){
-                    delete objBox;
-                    return true;
-                }
-                delete objBox;
-            }
-            delete targetBox;
-
-            return false;
-        },
         freeToMove: function(dummy, distance, delta){
             dummy.translateX(this.velocity.x * delta);
             dummy.translateY(this.velocity.y * delta);
             dummy.translateZ(this.velocity.z * delta);
-            return !this.collisionOccur(dummy, distance);
+            var collideObj = SPACE_OBJECT.collisionOccur(dummy, this.Objects['collide'], distance);
+            var onObj = this.player.isOn;
+
+            if(onObj === collideObj){
+                // console.log("1FREE");
+                // onObj && console.log("OnObj:",onObj.name);
+                // collideObj && console.log("Collid:",collideObj.name);
+                // console.log("---------");
+                return true;
+            }
+            else{
+                // console.log(!collideObj ? "2Free": "2NOT");
+                // onObj && console.log("OnObj:",onObj.name);
+                // collideObj && console.log("Collid:",collideObj.name);
+                // console.log("---------");
+                return !collideObj;
+            }
+
         },
         onKey: function(dir, event) {
             event.stopPropagation();
@@ -282,10 +304,11 @@
                 var intersects = this.getObjectOnMouse(event, this.Objects['move'], true);
 
                 if(intersects.length){
-                    while(intersects[0].object.parent.type != "Scene"){
-                        intersects[0].object = intersects[0].object.parent;
-                    }
-                    this.Controlling['objects'].push(intersects[0].object);
+                    var intersect = SPACE_OBJECT.getTheOuttest(intersects[0].object);
+                    var anchor = intersects[0].point.clone();
+                    anchor.y = 0;
+                    SPACE_OBJECT.allChildrenMoveToAnchor(intersect, anchor);
+                    this.Controlling['objects'].push(intersect);
                 }
             }
 
@@ -302,15 +325,14 @@
             else if(this._mode === "VOXEL" && event.which !== 3){
                 if(this.voxelPainter._mode === "CREATE" && this.voxelPainter.prevIntersect !== this.voxelPainter.intersect){
                     if(!this.voxelPainter.scene) this.voxelPainter.setScene(this.scene);
-                    var voxel = this.voxelPainter.create();
-                    this.Objects['stepOn'].push(voxel);
+                    this.voxelPainter.create();
                     this.voxelPainter.prevIntersect = this.voxelPainter.intersect;
                 }
                 else if(this.voxelPainter._mode === "DESTROY"){
-                    var intersects = this.getObjectOnMouse(event, this.Objects['stepOn'], false);
+                    var voxels = this.voxelPainter.Objects.children;
+                    var intersects = this.getObjectOnMouse(event, voxels, false);
                     if(intersects.length){
                         this.voxelPainter.destroy(intersects[0].object);
-                        this.Objects['stepOn'].splice(this.Objects['stepOn'].indexOf(intersects[0].object), 1);
                     }
                 }
             }
@@ -334,12 +356,18 @@
                     var intersects = this.getObjectOnMouse(event, this.Objects['stepOn'], true);
 
                     if(intersects.length && this.Controlling['objects'].length){
+                        var intersect, index;
+                        for(index in intersects){
+                            intersect = SPACE_OBJECT.getTheOuttest(intersects[index].object);
+                            if(intersect !== this.Controlling['objects'][0])
+                                break;
+                        }
                         if(!this.Controlling.rotation){ // move position
                             for(var i in this.Controlling['objects']){
                                 this.Controlling['objects'][i].position.set(
-                                    intersects[0].point.x
+                                    intersects[index].point.x
                                     , this.Controlling['objects'][i].position.y
-                                    , intersects[0].point.z
+                                    , intersects[index].point.z
                                 );
                             }
                         }
@@ -368,7 +396,8 @@
                     }
                     break;
                 case "VOXEL":
-                    var intersects = this.getObjectOnMouse(event, this.Objects['stepOn'], true);
+                    var voxels = this.voxelPainter.Objects.children;
+                    var intersects = this.getObjectOnMouse(event, this.Objects['stepOn'].concat(voxels), true);
                     if(intersects.length)
                         this.voxelPainter.updateHelper(intersects[0]);
 
@@ -406,24 +435,37 @@
             if(!this.enabled)return ;
             // Gravity and Friction
             this.velocity.x -= this.velocity.x * 5 * delta;
-            this.velocity.z -= this.velocity.z * 5 * delta;
             this.velocity.y -= gravity * delta; // v = v0 + at
+            this.velocity.z -= this.velocity.z * 5 * delta;
             if(Math.abs(this.velocity.x) < 0.1) this.velocity.x = 0;
+            if(Math.abs(this.velocity.y) < 0.1) this.velocity.y = 0;
             if(Math.abs(this.velocity.z) < 0.1) this.velocity.z = 0;
 
             this.player.dummyBody.position.copy(this.player.position);
+            this.player.dummyBody.position.y += this.player.info.height/2;
             this.player.dummyBody.rotation.copy(this.player.rotation);
             // Moving method
+
+            // TODO: dynamic decide distance
+            var on = this.player.isOnObject(this.Objects['collide'], 0);
+            if (on) {
+                this.velocity.y = Math.max(0, this.velocity.y);
+                this.move.jump = true;
+                // console.log("ON",this.player.isOn.name);
+            }
+            else this.move.jump = false;
+
+            // TODO: can step On Object with collision
             if(this.move.method === "KEYPRESS"){
                 if ( this.move.forward )this.velocity.z -= this.move.velocity * delta;
                 if ( this.move.backward )this.velocity.z += this.move.velocity * delta;
                 if ( this.move.left )this.velocity.x -= this.move.velocity * delta;
                 if ( this.move.right )this.velocity.x += this.move.velocity * delta;
 
-                if(this.freeToMove(this.player.dummyBody, 4, delta))
+                if(this.freeToMove(this.player.dummyBody, 0, delta))
                     this.player.translate(this.velocity.x * delta, this.velocity.y * delta, this.velocity.z * delta);
                 else
-                    this.player.translate(0, this.velocity.y * delta, 0);
+                    this.player.translate(0, 0, 0);
             }
             else if(this.move.method === "MOUSECLICK"){
                 // TODO: simplify distance (Vector3()'s method)
@@ -442,10 +484,10 @@
                     this.velocity.z = 0;
                 }
 
-                if(this.freeToMove(this.player.dummyBody, 4, delta))
-                    this.player.move(this.velocity.x * delta, this.velocity.y * delta, this.velocity.z * delta);
-                else
-                    this.player.move(0, this.velocity.y * delta, 0);
+                // if(this.freeToMove(this.player.dummyBody, 0, delta))
+                //     this.player.move(this.velocity.x * delta, this.velocity.y * delta, this.velocity.z * delta);
+                // else
+                //     this.player.move(0, 0, 0);
             }
 
             // this.player move
@@ -455,17 +497,10 @@
                 this.headDirection.enabled = false;
             }
 
-            // IF Stepped on floor (???)
-            if ( this.player.position.y <= 0 ) {
-                this.velocity.y = 0;
-                this.player.position.y = 0;
-                this.move.jump = true;
-            }
         }
     };
 
     // c = new Controls().mode("normal").enable(true);
-
 
 
 
