@@ -65,27 +65,25 @@ var parameters = {
     // x: 0, y: 0, z: 0
 };
 
-gui.add(parameters, 'name').name("Hello " + username);
-
-var ViewsFloder = gui.addFolder('Views Mode');
-ViewsFloder.add(parameters, 'FirstPerson_view').name("First-Person");
-ViewsFloder.add(parameters, 'ThirdPerson_view').name("Third-Person");
+gui.add(parameters, 'name').name("HELLO " + username);
 
 var ToolsFolder = gui.addFolder('TOOLS');
 ToolsFolder.add(parameters, 'Painting_Brush').name('Brush');
 
 ToolsFolder.addColor(parameters, 'color');
 
-
 var controller = ToolsFolder.add(parameters,'FontSize',0,25);
 controller.onChange(function(value){});
 
-
 ToolsFolder.add(parameters, 'Painting_Eraser').name('Eraser');
 
+var ViewsFloder = gui.addFolder('VIEWS');
+ViewsFloder.add(parameters, 'FirstPerson_view').name("First-Person");
+ViewsFloder.add(parameters, 'ThirdPerson_view').name("Third-Person");
 
 
-var ControlsFloder = gui.addFolder('Control Mode')
+
+var ControlsFloder = gui.addFolder('MANIPULATE')
 ControlsFloder.add(parameters, 'Normal_Mode').name("Normal");
 ControlsFloder.add(parameters, 'CS_Mode').name("CS");
 ControlsFloder.add(parameters, 'Edit_Mode').name("Edit");
