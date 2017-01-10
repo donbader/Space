@@ -98,16 +98,7 @@ Room.prototype.render = function(username, callbacks){
 //for paint
 Room.prototype.uploadPaint = function(url, callback) {
     if(!callback) return;
-
-    // RoomDB.update(
-    //     {owner: owner},
-    //     {$set: {'paint': url}},
-    //     {safe: true, upsert: true, new : true},
-    //     function(err, result) {
-    //         callback && callback();
-    //     }
-    // );
-
+    
     this.do(function(room) {
         room.paint = url;
     });

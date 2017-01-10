@@ -208,6 +208,22 @@
                 scope.mode(scope._prevMode);
         }
         //
+
+        //for friend
+        // hotkey['F'] = function(event, bool) {
+        //     if(!bool) return;
+
+        //     console.log('add friend');
+        //     scope.player.socket.emit('adding friend', {name: scope.player.name, friendName: 'corey'});
+        // }
+
+        // hotkey['G'] = function(event, bool) {
+        //     if(!bool) return;
+
+        //     console.log('remove friend');
+        //     scope.player.socket.emit('removing friend', {name: scope.player.name, friendName: 'lam'});
+        // }
+        //
     };
 
     Controls.prototype = {
@@ -219,7 +235,6 @@
 
                 //for paint
                 scene.add(this.paint);
-                // scene.parent.addDynamicObject(this.paint, 'paint');
                 //
             }
             else if(!e && scene){
@@ -270,16 +285,12 @@
             switch (m) {
                 case "NORMAL":case "CS":
                 case "TYPING":case "OBJ_EDITING":
+                case 'PAINTER':
                 this.voxelPainter.helper.visible = false;
                 break;
                 case "VOXEL":
                     this.voxelPainter.helper.visible = true;
                 break;
-
-                //for paint
-                case 'PAINTER':
-                break;
-                //
 
                 default:
                     return console.error("Invalid Mode in Controls: ", m);
@@ -339,13 +350,11 @@
             }
             else if(this._mode === 'PAINTER') {
                 //for paint
-                console.log('painter mouse down');
                 var intersects = this.getObjectOnMouse(event, this.Objects['paint'], true);
 
                 if(intersects.length) {
                     var length = intersects.length;
                     for(var i = 0; i < length; ++i) {
-                        // intersects[i].point
                         var intersect = intersects[i],
                             obj = intersect.object;
                         
@@ -354,18 +363,8 @@
                                 parent = obj.parent,
                                 context = parent.context;
 
-                            console.log('point = ', point);
-                            
                             parent.mouseOnCanvas(point, 'mousedown');
                         }
-
-                        // console.log('intersects point = ', obj.point);
-                        // console.log('intersects obj name = ', obj.object.name);
-                        // var point = intersects[i].object.geometry.vertices[intersects[i].face.a];
-                        // console.log('point = ', point);
-
-                        // point.applyMatrix4(intersects[i].object.matrixWorld);
-                        // console.log('point world = ', point);
                     }
                 }
             }
@@ -395,13 +394,11 @@
             }
             else if(this._mode === 'PAINTER') {
                 //for paint
-                console.log('painter mouse up');
                 var intersects = this.getObjectOnMouse(event, this.Objects['paint'], true);
 
                 if(intersects.length) {
                     var length = intersects.length;
                     for(var i = 0; i < length; ++i) {
-                        // intersects[i].point
                         var intersect = intersects[i],
                             obj = intersect.object;
                         
@@ -410,18 +407,8 @@
                                 parent = obj.parent,
                                 context = parent.context;
 
-                            console.log('point = ', point);
-                            
                             parent.mouseOnCanvas(point, 'mouseup');
                         }
-
-                        // console.log('intersects point = ', obj.point);
-                        // console.log('intersects obj name = ', obj.object.name);
-                        // var point = intersects[i].object.geometry.vertices[intersects[i].face.a];
-                        // console.log('point = ', point);
-
-                        // point.applyMatrix4(intersects[i].object.matrixWorld);
-                        // console.log('point world = ', point);
                     }
                 }
             }
@@ -492,7 +479,6 @@
                 if(intersects.length) {
                     var length = intersects.length;
                     for(var i = 0; i < length; ++i) {
-                        // intersects[i].point
                         var intersect = intersects[i],
                             obj = intersect.object;
                         
@@ -503,14 +489,6 @@
                             
                             parent.mouseOnCanvas(point, 'mousemove');
                         }
-
-                        // console.log('intersects point = ', obj.point);
-                        // console.log('intersects obj name = ', obj.object.name);
-                        // var point = intersects[i].object.geometry.vertices[intersects[i].face.a];
-                        // console.log('point = ', point);
-
-                        // point.applyMatrix4(intersects[i].object.matrixWorld);
-                        // console.log('point world = ', point);
                     }
                 }
                 break;

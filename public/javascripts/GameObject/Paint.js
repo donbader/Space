@@ -1,6 +1,6 @@
 (function() {
     const toolMode = { Brush: 0, Eraser: 1 },
-        fontColors = ['red', 'blue', 'green', 'purple', 'yellow', 'orange', 'pink', 'black', 'white', 'ebebeb'],
+        fontColors = ['red', 'blue', 'green', 'purple', 'yellow', 'orange', 'pink', 'black', 'white'],
         fontSizes = [1, 3, 5, 10, 15, 20],
         fontSizeNames = ['default', 'three', 'five', 'ten', 'fifteen', 'twenty'];
 

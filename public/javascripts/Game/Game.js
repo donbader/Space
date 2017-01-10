@@ -41,62 +41,6 @@
             // this.CssRenderer.domElement.appendChild(this.renderer.domElement);
             // this.renderer.domElement.appendChild(this.CssRenderer.domElement);
 
-            // //test
-            // var w = 500;
-            // var h = 200;
-            // var position = new THREE.Vector3(0, 200, -200);
-            // var rotation = new THREE.Vector3(0, 0, 0);
-            // var url = '/Paint';
-
-            // var material = new THREE.MeshBasicMaterial({
-            //     color: 0x000000,
-            //     opacity: 0.0,
-            //     side: THREE.DoubleSide
-            // });
-            // var geometry = new THREE.PlaneGeometry(w, h);
-            // var plane = new THREE.Mesh(geometry, material);
-            // plane.position.x = position.x;
-            // plane.position.y = position.y;
-            // plane.position.z = position.z;
-            // plane.rotation.x = rotation.x;
-            // plane.rotation.y = rotation.y;
-            // plane.rotation.z = rotation.z;
-            // this.scene.add(plane);
-
-            // var element1 = document.createElement('iframe');
-            // element1.src = '/Paint';
-            // element1.setAttribute('width', w);
-            // element1.setAttribute('height', h);
-            // element1.scrolling = 'no';
-            // var cssObj = new THREE.CSS3DObject(element1);
-            // cssObj.position.x = position.x;
-            // cssObj.position.y = position.y;
-            // cssObj.position.z = position.z;
-            // cssObj.rotation.x = rotation.x;
-            // cssObj.rotation.y = rotation.y;
-            // cssObj.rotation.z = rotation.z;
-            // this.CssScene.add(cssObj);
-            // //
-
-            // var html = [
-            //     '<div style="width:' + w + 'px; height:' + h + 'px;">',
-            //     '<iframe src="' + url + '" width="' + w + '" height="' + h + '">',
-            //     '</iframe>',
-            //     '</div>'
-            // ].join('\n');
-
-            // var div = document.createElement('div');
-            // $(div).html(html);
-            // var cssObj = new THREE.CSS3DObject(div);
-            // cssObj.position.x = position.x;
-            // cssObj.position.y = position.y;
-            // cssObj.position.z = position.z;
-            // cssObj.rotation.x = rotation.x;
-            // cssObj.rotation.y = rotation.y;
-            // cssObj.rotation.z = rotation.z;
-            // this.CssScene.add(cssObj);
-            //
-
             ///////////
             // STATS //
             ///////////
@@ -174,28 +118,11 @@
                 return;
             }
 
-            //for paint
-            if (model === 'paint') {
-                // this.scene.add(obj);
-                this.scene.add(obj);
-                // this.CssScene.add(obj.dummyPaintCSSObj);
-                this.ObjectsToUpdate.push(obj);
-                return;
-            }
-            //
-
             // WARNING: This obj must have update();
             this.scene.add(model ? model : obj);
             this.ObjectsToUpdate.push(obj);
         },
         addCSSObject: function(obj, model) {
-            //for paint
-            if (model === 'paint') {
-                this.CssScene.add(obj);
-                return;
-            }
-            //
-
             // TODO: CssScene Must be added.
             this.CssScene.add(obj);
         },

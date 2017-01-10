@@ -41,14 +41,6 @@ socket.on('create game', function(user){
 
     game = new Game("GamePlay", player, socket);
 
-    //for paint
-    // paint = new Paint(1000, 500, new THREE.Vector3(0, 300, -500), socket);
-    // player.manipulate(paint)
-    // game.add(paint.mesh);
-    // game.addDynamicObject(paint, 'paint');
-    // game.addCSSObject(paint.dummyPaintCSSObj, 'paint');
-    //
-
     //for rtc
     rtc = new RTC(socket, player, Users);
     //
@@ -108,7 +100,6 @@ socket.on('add user', function(userdata){
     console.log("[Add user]", userdata.name, ":",Users );
 
     //for rtc
-    console.log('added userdata.id = ' + userdata.id);
     Users[userdata.id] = userdata;
     Users[userdata.id].object = new Character(userdata);
     Users[userdata.id].object.name = userdata.name;
@@ -116,17 +107,7 @@ socket.on('add user', function(userdata){
     game.add(Users[userdata.id].object);
     player.manipulate(Users[userdata.id].object);
     //
-
-    /*
-    Users[userdata.id] = userdata;
-    // Users[userdata.id].object = (new Character()).model;
-    Users[userdata.id].object = eval('new '+userdata.type+'()');
-    Users[userdata.id].object.name = userdata.name;
-    game.add(Users[userdata.id].object);
-    console.log(Users);
-    // because pos,rot is all 0 , so we don't set them
-    */
-})
+});
 socket.on('remove user', function(userid){
     console.log('[remove user]',Users);
 

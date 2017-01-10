@@ -59,15 +59,6 @@ handler.connection = function(client) {
 
             RoomManager.getRoom(ROOMID).kickUser(user, kickUserCallback);
         });
-        //for rtc
-        // if (clients[user.id]) {
-        //     // need??
-        //     clients[user.id].emit('RTC close');
-        //     delete clients[user.id];
-        //
-        //     RoomManager.kickUser(ROOMID, user, kickUserCallback);
-        // }
-        //
 
         // // Room.KickUser("id",user, ROOMID, kickUserCallback);
         // RoomManager.kickUser(ROOMID, user, kickUserCallback);
@@ -107,16 +98,6 @@ handler.connection = function(client) {
             height: data.height
         });
     });
-
-    //for webcam
-
-    client.on('pushStream', function(data) {
-        client.broadcast.emit('getStream', {
-            mediaStream: data.mediaStream
-        });
-    });
-
-    //
 
     function log() {
         console.log('[' + client.handshake.query.username + ']---------------------------------------(' + client.id + ')');
@@ -273,6 +254,16 @@ handler.connection = function(client) {
                 RoomManager.uploadPaint(ROOMID, data, () => {
                     console.log('room manager upload paint call back');
                 });
+            });
+            //
+
+            //for friend
+            client.on('adding friend', function(data) {
+                User.appendFriend(data.name, data.friendName);
+            });
+
+            client.on('removing friend', function(data) {
+                User.removeFriend(data.name, data.friendName);
             });
             //
 
