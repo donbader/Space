@@ -4,6 +4,7 @@ var Item = require('./item');
 var RoomSchema = new mongoose.Schema({
   owner : String,
   name : String,
+  paint: String,
   items : [],
   users: []
   });
@@ -128,14 +129,14 @@ RoomSchema.statics.findRoom = function(owner, callback){
     );
 }
 
-RoomSchema.statics.update = function(owner, roomdata){
-    this.update(
-        {owner:roomdata.owner},
-        {$set:
-            {items: roomdata.items}},
-        (err, msg)=>{err && console.error(err);}
-    );
-}
+// RoomSchema.statics.update = function(owner, roomdata){
+//     this.update(
+//         {owner:roomdata.owner},
+//         {$set:
+//             {items: roomdata.items}},
+//         (err, msg)=>{err && console.error(err);}
+//     );
+// }
 
 
 var Room = mongoose.model('Room', RoomSchema);

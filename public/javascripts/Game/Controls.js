@@ -92,7 +92,8 @@
             stepOn: [],
             select: [],
             collide: [],
-            move: []
+            move: [],
+            paint: []
         };
         this.Controlling = {
             rotation: false,
@@ -103,6 +104,11 @@
         ====================*/
         this.voxelPainter = new SPACE_OBJECT.VoxelPainter();
         this.manipulate(this.voxelPainter.Objects);
+
+        //for paint
+        this.paint = new Paint(1000, 500, new THREE.Vector3(0, 300, -500), scope.player.socket);
+        this.manipulate(this.paint);
+        //
 
         /*====================
             Deployment
@@ -183,12 +189,26 @@
             if(!bool)return;
             if(scope._mode === "VOXEL")
                 scope.voxelPainter.save("SONG", scope.player.socket);
+            else if(scope._mode === 'PAINTER') {
+                //for paint
+                scope.paint.save('paint', scope.player.socket);
+            }
         }
         hotkey["M"] = function(event, bool){
             if(!bool)return;
             if(scope._mode === "VOXEL")
                 scope.voxelPainter.delete("SONG", scope.player.socket);
         }
+
+        //for paint
+        hotkey["P"] = function(event, bool){
+            if(!bool)return;
+            
+            (scope._mode !== 'PAINTER') ?
+                scope.mode('PAINTER') :
+                scope.mode(scope._prevMode);
+        }
+        //
     };
 
     Controls.prototype = {
@@ -197,6 +217,11 @@
                 this.scene = scene;
                 scene.add(this.positionFlag);
                 scene.add(this.voxelPainter.helper);
+
+                //for paint
+                scene.add(this.paint);
+                // scene.parent.addDynamicObject(this.paint, 'paint');
+                //
             }
             else if(!e && scene){
                 scene.remove(this.positionFlag);
@@ -231,6 +256,12 @@
                 case "VOXEL":
                     this.voxelPainter.helper.visible = true;
                 break;
+
+                //for paint
+                case 'PAINTER':
+                break;
+                //
+
                 default:
                     return console.error("Invalid Mode in Controls: ", m);
             }
@@ -287,8 +318,39 @@
                     this.Controlling['objects'].push(intersect);
                 }
             }
+            else if(this._mode === 'PAINTER') {
+                //for paint
+                console.log('painter mouse down');
+                var intersects = this.getObjectOnMouse(event, this.Objects['paint'], true);
 
+                if(intersects.length) {
+                    var length = intersects.length;
+                    for(var i = 0; i < length; ++i) {
+                        // intersects[i].point
+                        var intersect = intersects[i],
+                            obj = intersect.object;
+                        
+                        if(obj.name === 'paintMesh') {
+                            var point = intersect.point,
+                                parent = obj.parent,
+                                context = parent.context;
 
+                            console.log('point = ', point);
+                            
+                            parent.mouseOnCanvas(point, 'mousedown');
+                        }
+
+                        // console.log('intersects point = ', obj.point);
+                        // console.log('intersects obj name = ', obj.object.name);
+                        // var point = intersects[i].object.geometry.vertices[intersects[i].face.a];
+                        // console.log('point = ', point);
+
+                        // point.applyMatrix4(intersects[i].object.matrixWorld);
+                        // console.log('point world = ', point);
+                    }
+                }
+            }
+            //
         },
         onMouseUp:function(event){
             this.mouse.state = MOUSE_STATE.KEYUP;
@@ -309,6 +371,38 @@
                     var intersects = this.getObjectOnMouse(event, voxels, false);
                     if(intersects.length){
                         this.voxelPainter.destroy(intersects[0].object);
+                    }
+                }
+            }
+            else if(this._mode === 'PAINTER') {
+                //for paint
+                console.log('painter mouse up');
+                var intersects = this.getObjectOnMouse(event, this.Objects['paint'], true);
+
+                if(intersects.length) {
+                    var length = intersects.length;
+                    for(var i = 0; i < length; ++i) {
+                        // intersects[i].point
+                        var intersect = intersects[i],
+                            obj = intersect.object;
+                        
+                        if(obj.name === 'paintMesh') {
+                            var point = intersect.point,
+                                parent = obj.parent,
+                                context = parent.context;
+
+                            console.log('point = ', point);
+                            
+                            parent.mouseOnCanvas(point, 'mouseup');
+                        }
+
+                        // console.log('intersects point = ', obj.point);
+                        // console.log('intersects obj name = ', obj.object.name);
+                        // var point = intersects[i].object.geometry.vertices[intersects[i].face.a];
+                        // console.log('point = ', point);
+
+                        // point.applyMatrix4(intersects[i].object.matrixWorld);
+                        // console.log('point world = ', point);
                     }
                 }
             }
@@ -370,6 +464,36 @@
                         this.voxelPainter.updateHelper(intersects[0]);
 
 
+                break;
+
+                case 'PAINTER':
+                //for paint
+                var intersects = this.getObjectOnMouse(event, this.Objects['paint'], true);
+
+                if(intersects.length) {
+                    var length = intersects.length;
+                    for(var i = 0; i < length; ++i) {
+                        // intersects[i].point
+                        var intersect = intersects[i],
+                            obj = intersect.object;
+                        
+                        if(obj.name === 'paintMesh') {
+                            var point = intersect.point,
+                                parent = obj.parent,
+                                context = parent.context;
+                            
+                            parent.mouseOnCanvas(point, 'mousemove');
+                        }
+
+                        // console.log('intersects point = ', obj.point);
+                        // console.log('intersects obj name = ', obj.object.name);
+                        // var point = intersects[i].object.geometry.vertices[intersects[i].face.a];
+                        // console.log('point = ', point);
+
+                        // point.applyMatrix4(intersects[i].object.matrixWorld);
+                        // console.log('point world = ', point);
+                    }
+                }
                 break;
             }
         },
@@ -459,6 +583,8 @@
                 this.headDirection.enabled = false;
             }
 
+
+            this.paint.update();
         }
     };
 

@@ -199,7 +199,7 @@ handler.connection = function(client) {
                     room.users.forEach((roomUser) => {
                         console.log('roomUser ' + roomUser.name + ' in ' + room);
 
-                        if (roomUser.id !== id) {
+                        if (roomUser.id !== client.id) {
                             console.log(roomUser.id + ' connect to ' + id);
                             clients[roomUser.id].emit('RTC peer connection', { id: id });
                         }
@@ -209,6 +209,83 @@ handler.connection = function(client) {
 
                 // client.broadcast.to(ROOMID).emit('RTC peer connection', {id: id});
             });
+
+            //for paint
+            //to set paint when entering room
+            RoomManager.getPaint(ROOMID, (url) => {
+                if(!url) return;
+
+                console.log('get paint from room manager = ', url);
+
+                client.emit('set paint url', url);
+            });
+
+            client.on('draw start', (info) => {
+                console.log('draw start');
+                RoomManager.getRoom(ROOMID).do((room) => {
+                    room.users.forEach((roomUser) => {
+                        // console.log('roomUser ' + roomUser.name + ' in ' + room);
+
+                        if (roomUser.id !== client.id) {
+                            // console.log(roomUser.id + ' connect to ' + id);
+                            console.log(client.id + ' to ' + roomUser.id);
+                            clients[roomUser.id].emit('drawn start', info);
+                        }
+                    });
+                });
+            });
+
+            client.on('drawing paint', (info) => {
+                RoomManager.getRoom(ROOMID).do((room) => {
+                    room.users.forEach((roomUser) => {
+                        // console.log('roomUser ' + roomUser.name + ' in ' + room);
+
+                        if (roomUser.id !== client.id) {
+                            // console.log(roomUser.id + ' connect to ' + id);
+                            clients[roomUser.id].emit('drawn paint', info);
+                        }
+                    });
+                });
+            });
+
+            client.on('erasing paint', (info) => {
+                RoomManager.getRoom(ROOMID).do((room) => {
+                    room.users.forEach((roomUser) => {
+                        // console.log('roomUser ' + roomUser.name + ' in ' + room);
+
+                        if (roomUser.id !== client.id) {
+                            // console.log(roomUser.id + ' connect to ' + id);
+                            clients[roomUser.id].emit('erased paint', info);
+                        }
+                    });
+                });
+            });
+
+            client.on('draw end', (info) => {
+                console.log('draw end');
+                RoomManager.getRoom(ROOMID).do((room) => {
+                    room.users.forEach((roomUser) => {
+                        // console.log('roomUser ' + roomUser.name + ' in ' + room);
+
+                        if (roomUser.id !== client.id) {
+                            // console.log(roomUser.id + ' connect to ' + id);
+                            clients[roomUser.id].emit('drawn end', info);
+                        }
+                    });
+                });
+            });
+
+            client.on('paint upload', function(data){
+                console.log('paint upload');
+                // data = JSON.parse(data);
+                console.log('url in server = ', data);
+                // User.appendVoxel(user.name, data);
+
+                RoomManager.uploadPaint(ROOMID, data, () => {
+                    console.log('room manager upload paint call back');
+                });
+            });
+            //
 
             // RoomManager.getRoom(roomID).do((room) => {
             //     room.users.forEach((roomUser) => {

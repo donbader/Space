@@ -44,10 +44,11 @@ socket.on('create game', function(user){
     game = new Game("GamePlay", player, socket);
 
     //for paint
-    paint = new Paint(1000, 500, new THREE.Vector3(0, 300, -500), Users);
+    // paint = new Paint(1000, 500, new THREE.Vector3(0, 300, -500), socket);
+    // player.manipulate(paint)
     // game.add(paint.mesh);
     // game.addDynamicObject(paint, 'paint');
-    game.addCSSObject(paint.dummyPaintCSSObj, 'paint');
+    // game.addCSSObject(paint.dummyPaintCSSObj, 'paint');
     //
 
     //for rtc

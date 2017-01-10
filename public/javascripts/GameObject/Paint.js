@@ -5,13 +5,15 @@
         fontSizeNames = ['default', 'three', 'five', 'ten', 'fifteen', 'twenty'];
 
     var Paint = this.Paint = THREE.Object3D.extend({
-        init: function(width, height, position, users) {
+        init: function(width, height, position, server) {
             'use strict';
+            this._super();
 
             this.width = width;
             this.height = height;
             this.paintPosition = position;
-            this.users = users;
+            this.server = server;
+            this.pivot = new THREE.Vector3(this.paintPosition.x - this.width * 0.5, this.paintPosition.y + this.height * 0.5, this.paintPosition.z);
 
             //to create reset button
             var button = document.createElement('input');
@@ -23,7 +25,7 @@
             //to create color button
             this.colorButtons = [];
             var length = fontColors.length;
-            for(var i = 0; i < length; ++i) {
+            for (var i = 0; i < length; ++i) {
                 var div = document.createElement('div');
                 div.setAttribute('id', fontColors[i]);
                 div.setAttribute('class', 'color');
@@ -33,7 +35,7 @@
             //to create size button
             this.sizeButtons = [];
             length = fontSizes.length;
-            for(var i = 0; i < length; ++i) {
+            for (var i = 0; i < length; ++i) {
                 var div = document.createElement('div');
                 div.setAttribute('id', fontSizeNames[i]);
                 div.setAttribute('class', 'color');
@@ -48,110 +50,103 @@
             $(div).html('<img src = "images/Eraser.jpg">');
             this.eraser = div;
 
-            //to create the dummy paint
-            this.dummyPaint = document.createElement('canvas');
-            // this.dummyPaint.src = '/Paint';
-            this.dummyPaint.setAttribute('width', this.width);
-            this.dummyPaint.setAttribute('height', this.height);
-            // this.dummyPaint.scrolling = 'no';
-                        var context = this.dummyPaint.getContext('2d');
-            context.fillStyle = '#000000';
-            context.fillRect(0, 0, this.width, this.height);
-            this.dummyPaint.style['opacity'] = 0.3;
+            this.userData.prop = {
+                paint: true
+            };
 
-            this.dummyPaintCSSObj = new THREE.CSS3DObject(this.dummyPaint);
-            this.dummyPaintCSSObj.position.set(this.paintPosition.x, this.paintPosition.y, this.paintPosition.z);
+            //to create the paint
+            this.paint = document.createElement('canvas');
+            this.paint.setAttribute('width', this.width);
+            this.paint.setAttribute('height', this.height);
 
-            // //to create the dummy paint
-            // this.dummyPaint = document.createElement('canvas');
-            // this.dummyPaint.setAttribute('width', this.width);
-            // this.dummyPaint.setAttribute('height', this.height);
-            // this.dummyPaint.style['opacity'] = 0.3;
+            this.paintJObj = $(this.paint);
 
-            // var context = this.dummyPaint.getContext('2d');
-            // context.fillStyle = '#000000';
-            // context.fillRect(0, 0, this.width, this.height);
+            this.context = this.paint.getContext('2d');
+            this.context.lineCap = 'round';
+            this.context.fillStyle = '#ffffff';
+            this.context.fillRect(0, 0, this.width, this.height);
 
-            // this.dummyPaintJObj = $(this.dummyPaint);
-            // this.dummyPaintCSSObj = new THREE.CSS3DObject(this.dummyPaint);
+            //to create the paint texture
+            this.texture = new THREE.Texture(this.paint);
+            this.texture.minFilter = THREE.LinearFilter;
+            this.texture.magFilter = THREE.LinearFilter;
 
-            // this.dummyPaintCSSObj.position.set(this.paintPosition.x, this.paintPosition.y, this.paintPosition.z);
+            //to create the paint mesh
+            var paintMaterial = new THREE.MeshBasicMaterial({
+                map: this.texture,
+                overdraw: true,
+                side: THREE.DoubleSide
+            });
 
-            // //to create the true paint
-            // this.paint = document.createElement('canvas');
-            // this.paint.setAttribute('width', this.width);
-            // this.paint.setAttribute('height', this.height);
+            var paintGeometry = new THREE.PlaneGeometry(this.width, this.height, 1, 1);
+            this.mesh = new THREE.Mesh(paintGeometry, paintMaterial);
+            this.mesh.name = 'paintMesh';
 
-            // this.paintJObj = $(this.paint);
+            //to add to scene
+            this.mesh.position.set(this.paintPosition.x, this.paintPosition.y, this.paintPosition.z);
+            // this.mesh.context = this.context;
+            this.add(this.mesh);
 
-            // this.context = this.paint.getContext('2d');
-            // this.context.lineCap = 'round';
-            // this.context.fillStyle = '#ffffff';
-            // this.context.fillRect(0, 0, this.width, this.height);
+            //to init
+            //to set button click evnet
+            length = fontColors.length;
+            for (var i = 0; i < length; ++i) {
+                this.fontColorClick(i);
+                // this.setContext('strokeStyle', fontColors[i]);
+            }
 
-            // //to create the paint texture
-            // this.texture = new THREE.Texture(this.paint);
-            // this.texture.minFilter = THREE.LinearFilter;
-            // this.texture.magFilter = THREE.LinearFilter;
+            length = fontSizes.length;
+            for (var i = 0; i < length; ++i) {
+                this.fontSizeClick(i);
+                // this.setContext('lineWidth', fontSizes[i]);
+            }
 
-            // //to create the paint mesh
-            // var paintMaterial = new THREE.MeshBasicMaterial({
-            //     map: this.texture,
-            //     overdraw: true,
-            //     side: THREE.DoubleSide
-            // });
+            $('#eraser').on('click', () => {
+                this.setTool(toolMode.Eraser);
+            });
 
-            // var paintGeometry = new THREE.PlaneGeometry(this.width, this.height, 1, 1);
-            // this.mesh = new THREE.Mesh(paintGeometry, paintMaterial);
-            // //to add to scene
+            $('#reset').on('click', () => {
+                this.clear(0, 0, this.width, this.height);
+            });
 
-            // this.mesh.position.set(this.paintPosition.x, this.paintPosition.y, this.paintPosition.z);
-        
-            // //to init
+            this.setTool(toolMode.Brush);
+            this.setContext('lineWidth', fontSizes[3]);
+            this.setContext('strokeStyle', fontColors[7]);
 
-            // //to set dummy paint event
-            // this.dummyPaintJObj.on('mousedown mouseup', (event) => this.mouseOnCanvas(event));
-
-            // //to set button click evnet
-            // length = fontColors.length;
-            // for(var i = 0; i < length; ++i) {
-            //     this.fontColorClick(i);
-            //     // this.setContext('strokeStyle', fontColors[i]);
-            // }
-
-            // length = fontSizes.length;
-            // for(var i = 0; i < length; ++i) {
-            //     this.fontSizeClick(i);
-            //     // this.setContext('lineWidth', fontSizes[i]);
-            // }
-
-            // $('#eraser').on('click', () => {
-            //     this.setTool(toolMode.Eraser);
-            // });
-
-            // $('#reset').on('click', () => {
-            //     this.clear(0, 0, this.width, this.height);
-            // });
-
-
-            // this.setTool(toolMode.Brush);
-            // this.setContext('lineWidth', fontSizes[3]);
-            // this.setContext('strokeStyle', fontColors[7]);
+            this.addHandlers();
+        },
+        drawStart: function(x, y) {
+            this.context.beginPath();
+            this.context.moveTo(x, y);
+        },
+        drawing: function(x, y) {
+            this.context.lineTo(x, y);
+            this.context.stroke();
+        },
+        erasing: function(x, y) {
+            var halfWidth = this.context.lineWidth * 0.5;
+            this.clear(x - halfWidth, y - halfWidth, this.context.lineWidth, this.context.lineWidth);
+        },
+        drawEnd: function() {
+            this.context.closePath();
         },
         draw: function(x, y, type) {
             console.log('draw type = ', type);
 
             if (type === 'mousedown') {
-                this.context.beginPath();
-                this.context.moveTo(x, y);
-                this.dummyPaintJObj.on('mousemove', (event) => this.mouseOnCanvas(event));
-            } else if (type === 'mousemove') {
+                // this.context.beginPath();
+                // this.context.moveTo(x, y);
+                this.drawStart(x, y);
+                this.isDraw = true;
+
+                this.server.emit('draw start', { x: x, y: y });
+            } else if (type === 'mousemove' && this.isDraw) {
                 this.mouseMove(x, y);
             } else if (type === 'mouseup') {
-                this.context.closePath();
-                this.dummyPaintJObj.off('mousemove', (event) => this.mouseOnCanvas(event));
-            } else {
-                console.error('draw type error');
+                this.drawEnd();
+                this.isDraw = false;
+
+                this.server.emit('draw end');
             }
         },
         setContext: function(attr, value) {
@@ -181,24 +176,48 @@
             };
         },
         mouseMove: function(x, y) {
-            switch(this.tool) {
+            switch (this.tool) {
                 case toolMode.Brush:
-                    this.context.lineTo(x, y);
-                    this.context.stroke();
+                    this.drawing(x, y);
+                    this.server.emit('drawing paint', { x: x, y: y });
                     break;
                 case toolMode.Eraser:
-                    var halfWidth = this.context.lineWidth * 0.5;
-                    this.clear(x - halfWidth, y - halfWidth, this.context.lineWidth, this.context.lineWidth);
+                    this.erasing(x, y);
+                    this.server.emit('erasing paint', { x: x, y: y });
                     break;
             }
         },
-        mouseOnCanvas: function(event) {
-            var pos = this.getMousePos(this.dummyPaint, event);
+        mouseOnCanvas: function(position, type) {
+            var pos = new THREE.Vector2(position.x - this.pivot.x, this.pivot.y - position.y);
+            this.draw(pos.x, pos.y, type);
+        },
+        addHandlers: function() {
+            this.server.on('drawn start', (info) => {
+                this.drawStart(info.x, info.y);
+            });
 
-            if(event.handleObj.type !== 'mousemove')
-                console.log('mouse position = ', pos);
-            
-            this.draw(pos.x, pos.y, event.handleObj.type);
+            this.server.on('drawn paint', (info) => {
+                this.drawing(info.x, info.y);
+            });
+
+            this.server.on('erased paint', (info) => {
+                this.erasing(info.x, info.y);
+            });
+
+            this.server.on('drawn end', (info) => {
+                this.drawEnd();
+            });
+
+            this.server.on('set paint url', (url) => {
+                var image = new Image();
+                image.src = url;
+                this.context.drawImage(image, 0, 0, this.width, this.height);
+
+                if (this.texture) {
+                    // console.log('update paint texture');
+                    this.texture.needsUpdate = true;
+                }
+            });
         },
         fontColorClick: function(i) {
             $(this.colorButtons[i]).on('click', () => {
@@ -229,143 +248,20 @@
                 // console.log('update paint texture');
                 this.texture.needsUpdate = true;
             }
-        }
+        },
+        save: function(name, socket) {
+            if (!name || !socket) return;
 
+            // var image = new Image();
+            var url = this.paint.toDataURL('image/png');
+
+            console.log('url in local = ', url);
+            // console.log('url string in local = ', JSON.stringify(url));
+
+            // socket.emit('paint upload', JSON.stringify(url));
+            socket.emit('paint upload', url);
+            console.log('paint has saved');
+        }
     });
 
 })();
-
-// this.CssScene.add(dummyPaintCSSObj);
-// this.scene.add(mesh);
-
-// function draw (x, y, type) {
-//     if(type === 'mousedown') {
-//         console.log('mousedown');
-//         paintContext.beginPath();
-//         paintContext.moveTo(x, y);
-//         dummyPaintJObj.on('mousemove', mouseOnCanvas);
-//     } else if (type === 'mousemove') {
-//         console.log('mousemove');
-//         mouseMove(x, y);
-//     } else if (type === 'mouseup') {
-//         console.log('mouseup');
-//         paintContext.closePath();
-//         dummyPaintJObj.off('mousemove', mouseOnCanvas);
-//     }
-//     else {
-//         console.log('draw error');
-//     }
-// };
-// set("strokeStyle", paintFontColors[i])
-// function set(attr, value){
-//  paintContext[attr] = value;
-// }
-
-// function setPaintTool (tool) {
-//     paintTool = tool;
-// };
-
-// function setPaintFontColor (i) {
-//     paintContext.strokeStyle = paintFontColors[i];
-// };
-
-// function setPaintFontSize (i) {
-//     paintContext.lineWidth = paintFontSizess[i];
-// };
-
-// function clearPaint (x, y, width, height) {
-//     paintContext.clearRect(x, y, width, height);
-// };
-
-// function paintFontColorClick (i) {
-//     $('#' + paintFontColors[i]).on('click', function() {
-//         SetColor(i);
-//         SetTool(paintToolMode.Brush);
-//     })
-// }
-
-// function paintFontSizeClick (i) {
-//     $('#' + paintFontSizeNames[i]).on('click', function() {
-//         SetSize(i);
-//     });
-// }
-
-// function SetPaintFontColor (i) {
-//     setColor(i);
-//     //socket
-// }
-
-// function SetPaintTool (i) {
-//     setTool(tool);
-//     //socket
-// }
-
-// function ClearPaint (x, y, width, height) {
-//     clearPaint(x, y, width, height);
-//     //socket
-// }
-
-// //to set paint event
-
-// //to use dummyPaint event
-// dummyPaintJObj.on('mousedown mouseup', mouseOnCanvas);
-
-// for(var i = 0; i < paintFontColors.length; ++i) {
-//     paintFontColorClick(i);
-// }
-
-// for(var i = 0; i < paintFontSizes.length; ++i) {
-//     paintFontSizeClick(i);
-// }
-
-// $('#eraser').on('click', function() {
-//     SetTool(paintToolMode.Eraser);
-// });
-
-// $('#reset').on('click', function() {
-//     ClearPaint(0, 0, paint.width, paint.height);
-// });
-
-// function getMousePos(canvas, evt) {
-//     console.log('get mouse position');
-//     var rect = canvas.getBoundingClientRect();
-
-//         // console.log()
-//     return {
-//         x: evt.clientX - rect.left,
-//         y: evt.clientY - rect.top
-//     };
-// };
-
-// function mouseMove(x, y) {
-//     switch(paintTool) {
-//         case paintToolMode.Brush:
-//             paintContext.lineTo(x, y);
-//             paintContext.stroke();
-//             break;
-//         case paintToolMode.Eraser:
-//             var halfWidth = paintContext.lineWidth * 0.5;
-//             paintContext.clearRect(x - halfWidth, y - halfWidth, paintContext.lineWidth, paintContext.lineWidth);
-//             break;
-//     }
-// };
-
-// function mouseOnCanvas(e) {
-//     console.log('event');
-//     var type = e.handleObj.type,
-//         mousePos = getMousePos(dummyPaint, e);
-//         // mousePos = getMousePos(paint, e);
-
-//     console.log(mousePos);
-//     draw(mousePos.x, mousePos.y, type);
-//     //socket
-// }
-
-//             var image = new Image();
-// image.src = this.paint.toDataURL('image/png');
-// this.context.drawImage(image, 0, 0, paintWidth, paintHeight);
-
-// if(this.texture) {
-//     this.texture.needsUpdate = true;
-//     // console.log('YO');
-// }

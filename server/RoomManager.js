@@ -67,6 +67,31 @@ RoomManager.prototype.kickUser = function(owner, user, kickUserCallback){
     });
 }
 
+//for paint
+RoomManager.prototype.getPaint = function(owner, callback) {
+    if(!owner) return;
+
+    // console.log('paint in get paint = ', this.rooms[owner].paint);
+
+    return callback(this.rooms[owner].paint);
+}
+
+RoomManager.prototype.uploadPaint = function(owner, url, callback) {
+    if(!owner || !url) return;
+
+    RoomDB.update(
+        {owner: owner},
+        {$set: {'paint': url}},
+        {safe: true, upsert: true, new : true},
+        function(err, result) {
+            callback && callback();
+        }
+    );
+
+    
+}
+//
+
 RoomManager.prototype.render = function(owner, username, callbacks){
     if(!callbacks)return;
     this.getRoom(owner).do(function(room){

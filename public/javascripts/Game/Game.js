@@ -24,59 +24,59 @@
                 alpha: true
             });
 
-
-            this.renderer.setClearColor(0xECF8ff);
+            this.renderer.setClearColor(0x000);
             this.renderer.setPixelRatio(window.devicePixelRatio);
             this.renderer.setSize(window.innerWidth, window.innerHeight);
             this.renderer.domElement.style.position = 'absolute';
-            this.renderer.domElement.style.zIndex = 0;
+            this.renderer.domElement.style.zIndex = 1;
             this.renderer.domElement.style.top = 0;
             this.container.appendChild(this.renderer.domElement);
 
             this.CssRenderer = new THREE.CSS3DRenderer();
             this.CssRenderer.setSize(window.innerWidth, window.innerHeight);
             this.CssRenderer.domElement.style.position = 'absolute';
-            this.CssRenderer.domElement.style.zIndex = 1;
+            this.CssRenderer.domElement.style.zIndex = 0;
             this.CssRenderer.domElement.style.top = 0;
             this.container.appendChild(this.CssRenderer.domElement);
             // this.CssRenderer.domElement.appendChild(this.renderer.domElement);
             // this.renderer.domElement.appendChild(this.CssRenderer.domElement);
 
-            //test
-            var w = 500;
-            var h = 200;
-            var position = new THREE.Vector3(0, 200, -200);
-            var rotation = new THREE.Vector3(0, 0, 0);
-            var url = '/Paint';
+            // //test
+            // var w = 500;
+            // var h = 200;
+            // var position = new THREE.Vector3(0, 200, -200);
+            // var rotation = new THREE.Vector3(0, 0, 0);
+            // var url = '/Paint';
 
-            var material = new THREE.MeshBasicMaterial({
-                color: 0x000000,
-                opacity: 0.0,
-                side: THREE.DoubleSide
-            });
-            var geometry = new THREE.PlaneGeometry(w, h);
-            var plane = new THREE.Mesh(geometry, material);
-            plane.position.x = position.x;
-            plane.position.y = position.y;
-            plane.position.z = position.z;
-            plane.rotation.x = rotation.x;
-            plane.rotation.y = rotation.y;
-            plane.rotation.z = rotation.z;
-            this.scene.add(plane);
+            // var material = new THREE.MeshBasicMaterial({
+            //     color: 0x000000,
+            //     opacity: 0.0,
+            //     side: THREE.DoubleSide
+            // });
+            // var geometry = new THREE.PlaneGeometry(w, h);
+            // var plane = new THREE.Mesh(geometry, material);
+            // plane.position.x = position.x;
+            // plane.position.y = position.y;
+            // plane.position.z = position.z;
+            // plane.rotation.x = rotation.x;
+            // plane.rotation.y = rotation.y;
+            // plane.rotation.z = rotation.z;
+            // this.scene.add(plane);
 
-            var element1 = document.createElement('iframe');
-            element1.src = '/Paint';
-            element1.setAttribute('width', w);
-            element1.setAttribute('height', h);
-            element1.scrolling = 'no';
-            var cssObj = new THREE.CSS3DObject(element1);
-            cssObj.position.x = position.x;
-            cssObj.position.y = position.y;
-            cssObj.position.z = position.z;
-            cssObj.rotation.x = rotation.x;
-            cssObj.rotation.y = rotation.y;
-            cssObj.rotation.z = rotation.z;
-            this.CssScene.add(cssObj);
+            // var element1 = document.createElement('iframe');
+            // element1.src = '/Paint';
+            // element1.setAttribute('width', w);
+            // element1.setAttribute('height', h);
+            // element1.scrolling = 'no';
+            // var cssObj = new THREE.CSS3DObject(element1);
+            // cssObj.position.x = position.x;
+            // cssObj.position.y = position.y;
+            // cssObj.position.z = position.z;
+            // cssObj.rotation.x = rotation.x;
+            // cssObj.rotation.y = rotation.y;
+            // cssObj.rotation.z = rotation.z;
+            // this.CssScene.add(cssObj);
+            // //
 
             // var html = [
             //     '<div style="width:' + w + 'px; height:' + h + 'px;">',
@@ -95,6 +95,7 @@
             // cssObj.rotation.y = rotation.y;
             // cssObj.rotation.z = rotation.z;
             // this.CssScene.add(cssObj);
+            //
 
             ///////////
             // STATS //
@@ -175,8 +176,9 @@
 
             //for paint
             if (model === 'paint') {
-                this.scene.add(obj.mesh);
-                this.CssScene.add(obj.dummyPaintCSSObj);
+                // this.scene.add(obj);
+                this.scene.add(obj);
+                // this.CssScene.add(obj.dummyPaintCSSObj);
                 this.ObjectsToUpdate.push(obj);
                 return;
             }
@@ -204,14 +206,14 @@
             if (this.Controller)
                 this.Controller.controls.enable(false, this.container);
 
+            if (this.socket)
+                controller.socket = this.socket;
+
             // controller.in(this.scene, this.renderer);
             this.add(controller);
             this.add(controller.feet);
             this.add(controller.dummyBody);
             controller.controls = new Controls(controller).mode("normal").enable(true, this.scene, this.container);
-
-            if (this.socket)
-                controller.socket = this.socket;
 
             this.camera = controller.camera;
             this.addDynamicObject(controller);
