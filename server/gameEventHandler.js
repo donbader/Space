@@ -25,10 +25,12 @@ handler.setServer = function(s) {
 handler.connection = function(client) {
     var USER, ROOMID;
     User.getByName(client.handshake.query.username, (err, user) => {
+        if (!user) return console.error("No this user");
         USER = user;
         log("[Connection]", "(", user.name, ")", client.id);
-        if (!user) return console.error("No this user");
         user.id = client.id;
+
+        clients[client.id] = client;
 
         GameSet(user);
         client.emit('welcome');
@@ -212,15 +214,6 @@ handler.connection = function(client) {
             });
 
             //for paint
-            //to set paint when entering room
-            RoomManager.getPaint(ROOMID, (url) => {
-                if(!url) return;
-
-                console.log('get paint from room manager = ', url);
-
-                client.emit('set paint url', url);
-            });
-
             client.on('draw start', (info) => {
                 console.log('draw start');
                 RoomManager.getRoom(ROOMID).do((room) => {
@@ -277,11 +270,6 @@ handler.connection = function(client) {
             });
 
             client.on('paint upload', function(data){
-                console.log('paint upload');
-                // data = JSON.parse(data);
-                console.log('url in server = ', data);
-                // User.appendVoxel(user.name, data);
-
                 RoomManager.uploadPaint(ROOMID, data, () => {
                     console.log('room manager upload paint call back');
                 });
@@ -320,7 +308,15 @@ handler.connection = function(client) {
 
             client.on('Voxel delete', function(name){
                 User.deleteVoxel(user.name, name);
-            })
+            });
+
+            //for paint
+            //to set paint when entering room
+            RoomManager.getPaint(ROOMID, (url) => {
+                if(!url) return;
+                client.emit('set paint url', url);
+            });
+            //
         });
     }
 }

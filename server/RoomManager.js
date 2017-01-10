@@ -112,6 +112,13 @@ Room.prototype.uploadPaint = function(url, callback) {
         room.paint = url;
     });
 }
+
+Room.prototype.getPaint = function(callback) {
+    if(!callback) return;
+    this.do(function(room) {
+        return callback(room.paint);
+    });
+}
 //
 
 //Manager
@@ -141,8 +148,7 @@ RoomManager.prototype.render = function(owner, username, callbacks){
 
 //for paint
 RoomManager.prototype.getPaint = function(owner, callback) {
-    if(!owner) return;
-    return callback(this.rooms[owner].paint);
+    this.getRoom(owner).getPaint(callback);
 }
 
 RoomManager.prototype.uploadPaint = function(owner, url, callback) {
