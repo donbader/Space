@@ -1,7 +1,7 @@
 (function() {
     const PI_2 = Math.PI / 2;
     const gravity = 980;
-
+    const collision_coeff = 0.3;
 
     const MOUSE_STATE = {
         NONE: 0,
@@ -387,7 +387,6 @@
                 positionFlag.visible = true;
         		positionFlag.position.set(intersects[0].point.x, intersects[0].point.y + positionFlag.height/2, intersects[0].point.z);
                 this.move.method = "MOUSECLICK";
-                this.move.to.enabled = true;
                 this.move.to.destination.copy(intersects[0].point);
         	}
             // if(this._mode === "NORMAL")
@@ -410,7 +409,7 @@
             // Moving method
 
             if(this.player.isOnObject(this.Objects['collide'], -this.velocity.y*delta)){
-                this.velocity.y = Math.max(0, this.velocity.y);
+                this.velocity.y = Math.max(-this.velocity.y*collision_coeff, this.velocity.y);
                 this.move.jump = true;
             }
             if(this.move.method === "KEYPRESS"){
@@ -423,6 +422,7 @@
                     var tendency = new THREE.Vector3(this.velocity.x * delta, this.velocity.y * delta, this.velocity.z * delta);
                     if(this.player.willCollideObject(tendency, this.Objects['collide'], 0)){
                         this.player.translate(0, tendency.y, 0);
+                        this.velocity.set(-this.velocity.x*collision_coeff, this.velocity.y, -this.velocity.z*collision_coeff);
                     }
                     else{
                         this.player.translate(tendency.x, tendency.y, tendency.z);
@@ -437,15 +437,14 @@
                 moveDelta.multiplyScalar(this.move.velocity / distance);
                 this.velocity.copy(moveDelta);
                 this.velocity.y = heightVelocity;
-                if(distance <= 10){
+                if(distance <= 20)
                     this.positionFlag.visible = false;
-                    this.move.to.enabled = false;
-                    this.velocity.set(0, 0, 0);
-                }
+
                 if(!this.velocity.equals(new THREE.Vector3(0,0,0))){
                     var tendency = new THREE.Vector3().copy(this.velocity).multiplyScalar(delta);
                     if(this.player.willCollideObject(tendency, this.Objects['collide'], 0)){
                         this.player.move(0, tendency.y, 0);
+                        this.velocity.set(-this.velocity.x*collision_coeff, this.velocity.y,-this.velocity.z*collision_coeff);
                     }
                     else{
                         this.player.move(tendency.x, tendency.y, tendency.z);

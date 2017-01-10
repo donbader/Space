@@ -491,7 +491,7 @@
             this.add(controller);
             this.add(controller.feet);
             this.add(controller.dummyBody);
-            controller.controls.enable(true, this.scene, this.container);
+            controller.controls = new Controls(controller).mode("normal").enable(true, this.scene, this.container);
 
             if(this.socket)
                 controller.socket = this.socket;

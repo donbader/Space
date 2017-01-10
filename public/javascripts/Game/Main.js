@@ -25,8 +25,8 @@ socket.on('sys', function(data){
 socket.on('create game', function(user){
     if(game)return ;
     console.log("[Create Game By User]" , user, user.type);
-    // player = eval("new "+user.type+"()");
-    player = new Saiyan();
+    player = eval("new "+user.type+"()");
+    // player = new Saiyan();
     // player = new Character();
     game = new Game("GamePlay", player, socket);
 

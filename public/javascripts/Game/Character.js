@@ -34,8 +34,8 @@ var Character = this.Character = THREE.Object3D.extend({
         this.body.add(this.eye);
 
         // feets (plane)
-        this.feet = new THREE.Mesh(new THREE.CubeGeometry(this.info.width - 10, this.info.height, this.info.thickness - 10), new THREE.MeshBasicMaterial( { color: 0xff0000, transparent: true, opacity:1} ));
-        this.feet.visible = false;
+        this.feet = new THREE.Mesh(new THREE.CubeGeometry(this.info.width - 20, this.info.height, this.info.thickness - 20), new THREE.MeshBasicMaterial( { color: 0xff0000, transparent: true, opacity:1} ));
+        // this.feet.visible = false;
         this.feet.name = "feet";
         // this.body.add(this.feet);
 
@@ -53,7 +53,7 @@ var Character = this.Character = THREE.Object3D.extend({
         ////////////////////////////
         ///// Controls /////////////
         ////////////////////////////
-        this.controls = new Controls(this).mode("normal");
+        // this.controls = new Controls(this).mode("normal");
         // this.webcam = new RTC(this.socket, this);
     },
     update: function(delta){
