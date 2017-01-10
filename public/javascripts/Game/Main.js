@@ -51,7 +51,7 @@ socket.on('create game', function(user){
     //
 
     //for rtc
-    // rtc = new RTC(socket, player, Users);
+    rtc = new RTC(socket, player, Users);
     //
 
     console.log("[game created]", game.scene);

@@ -13,7 +13,6 @@
 
 
     Controls = function(player) {
-        this.i=0;
 
         if(!player.camera)return console.error("This player didn't have camera (eye).");
         var scope = this;

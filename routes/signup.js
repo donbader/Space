@@ -47,9 +47,11 @@ router.post('/add', function(req, res) {
                     owner: in_name,
                     name: in_name + "\'s room",
                     items: [{
-                        id: "Room_000"
+                        id: "Room_000",
+                        from: "public"
                     }],
-                    users: []
+                    users: [],
+                    paint: "",
                 });
                 roomdata.save(function(err) {
                     if (err) return console.error(err);

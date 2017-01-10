@@ -4,6 +4,7 @@ var Item = require('./item');
 var RoomSchema = new mongoose.Schema({
   owner : String,
   name : String,
+  paint: String,
   items : [],
   users: []
   });
