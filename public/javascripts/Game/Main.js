@@ -1,11 +1,9 @@
-// TODO: Kick the user while he is logined;
-var query = window.location.href.split('?')[1].split("&");
-var username = query[0].split("=")[1];
-var roomID = query[1].split("=")[1];
-
+function AfterLogIn(username, roomID){
 ////////////////////
 //////SOCKET////////
 ////////////////////
+window.username = username;
+window.roomID = roomID;
 var Users = {};
 var game;
 var player;
@@ -206,3 +204,5 @@ socket.on('welcome',function(){
 //         this.body.material.color.setHex( 0x000000 );
 //     }
 // });
+
+}

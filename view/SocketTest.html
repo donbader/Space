@@ -47,6 +47,13 @@
     <script src="/javascripts/GameObject/adapter.js"></script>
     <script src="/javascripts/GameObject/RTC.js"></script>
     <script src="/javascripts/Game/Main.js"></script>
+    <script>
+    // TODO: Kick the user while he is logined;
+    var query = window.location.href.split('?')[1].split("&");
+    var username = query[0].split("=")[1];
+    var roomID = query[1].split("=")[1];
+    AfterLogIn(username, roomID);
+    </script>
 
 
 </body>
