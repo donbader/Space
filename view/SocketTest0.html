@@ -19,6 +19,57 @@
     <video id = 'monitor' autoplay width = '160' height = '120' style = 'visibility: hidden; float: left; position: fixed;'></video>
         <canvas id = 'videoImage' width = '160' height = '120' style = 'visibility: hidden; float: left; position: fixed;'></canvas>
         <canvas id = 'paint' width = '160' height = '120' style = ' visibility: visible; float: right; position: fixed; z-index: 5'></canvas>
+
+
+        <script>
+            console.log("we are in CS Mode");
+
+
+            // $(function() {
+            //     $.contextMenu({
+            //         selector: '#GamePlay',
+            //         callback: function(key, options) {
+            //             var m = "clicked: " + key;
+            //             window.console && console.log(m) || alert(m);
+            //         },
+            //         items: {
+            //             "edit": {
+            //                 name: "Edit",
+            //                 icon: "edit"
+            //             },
+            //             "cut": {
+            //                 name: "Cut",
+            //                 icon: "cut"
+            //             },
+            //             copy: {
+            //                 name: "Copy",
+            //                 icon: "copy"
+            //             },
+            //             "paste": {
+            //                 name: "Paste",
+            //                 icon: "paste"
+            //             },
+            //             "delete": {
+            //                 name: "Delete",
+            //                 icon: "delete"
+            //             },
+            //             "sep1": "---------",
+            //             "quit": {
+            //                 name: "Quit",
+            //                 icon: function() {
+            //                     return 'context-menu-icon context-menu-icon-quit';
+            //                 }
+            //             }
+            //         }
+            //     });
+            $('#GamePlay').on('keydown', function(e){
+         console.log('clicked', this);
+     })
+     
+
+            console.log("ZZZ");
+        </script>
+
         <!-- <div id="buttons">
             <input type="button" id="reset" value="Reset" />
             <div id='red' class="color"></div>
