@@ -7,6 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('space:server');
 var http = require('http');
+var https = require('https');
 // Socket EventHandler
 var io = require('socket.io')
 var gameEventHandler = require('../server/gameEventHandler');

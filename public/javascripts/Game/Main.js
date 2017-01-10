@@ -184,6 +184,10 @@ socket.on('logout', function(){
     socket.disconnect();
 });
 
+socket.on('fuck', function(){
+  console.log("i am in socket");
+});
+
 
 ////////////////////
 ////////MAIN////////

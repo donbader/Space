@@ -393,40 +393,6 @@
                 this.move.to.destination.copy(intersects[0].point);
         }
         if (this._mode === "CS"){
-
-          var objs = [];
-          for(var i in Users){
-            objs.push(Users[i].object.body);
-          }
-          var intersects = this.getObjectOnMouse(event, objs);
-          if(intersects.length){
-            console.log(intersects[0].object.parent.name);
-          }
-
-
-              $(function() {
-                  $.contextMenu({
-                      selector: 'intersects[0].object',
-                      callback: function(key, options) {
-                          var m = "clicked: " + key;
-                          window.console && console.log(m) || alert(m);
-                      },
-                      items: {
-                          "edit": {name: "Edit", icon: "edit"},
-                          "cut": {name: "Cut", icon: "cut"},
-                         copy: {name: "Copy", icon: "copy"},
-                          "paste": {name: "Paste", icon: "paste"},
-                          "delete": {name: "Delete", icon: "delete"},
-                          "sep1": "---------"
-                      }
-                  });
-
-                  $('intersects[0].object').on('click', function(e){
-                      console.log('clicked', this);
-                  })
-              });
-
-
         }
           // if(this._mode === "NORMAL")
         },
