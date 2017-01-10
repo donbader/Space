@@ -57,7 +57,7 @@ UserSchema.statics.getVoxel = function(username, itemName, callback){
             result = VoxelWarehouse.find((element)=>{
                 return element.object.name === itemName;
             });
-            result && callback && callback(result);
+            callback && callback(result);
         }
     )
 }

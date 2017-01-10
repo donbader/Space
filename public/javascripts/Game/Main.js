@@ -51,7 +51,7 @@ socket.on('create game', function(user){
     //
 
     //for rtc
-    rtc = new RTC(socket, player, Users);
+    // rtc = new RTC(socket, player, Users);
     //
 
     console.log("[game created]", game.scene);
@@ -113,7 +113,9 @@ socket.on('add user', function(userdata){
     Users[userdata.id] = userdata;
     Users[userdata.id].object = new Character(userdata);
     Users[userdata.id].object.name = userdata.name;
+    Users[userdata.id].object.userData.prop = {collide:true};
     game.add(Users[userdata.id].object);
+    player.manipulate(Users[userdata.id].object);
     //
 
     /*
@@ -130,7 +132,8 @@ socket.on('remove user', function(userid){
     console.log('[remove user]',Users);
 
     //for rtc
-    rtc.deletePeerConnection(userid);
+    if(rtc)
+        rtc.deletePeerConnection(userid);
     console.log('[remove rtc peer connection] ', userid);
     //
 
