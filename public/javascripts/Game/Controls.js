@@ -84,7 +84,7 @@
             Velocity
         ====================*/
         this.velocity = new THREE.Vector3();
-        this.jumpVelocity = 600.0;
+        this.jumpVelocity = 500.0;
 
         /*====================
             Game Object
@@ -148,6 +148,7 @@
             if(scope.move.jump){
                 scope.velocity.y = scope.jumpVelocity;
                 scope.move.jump = false;
+                scope.player.position.y += 10;
             }
         };
         hotkey["E"] = function(event, bool){
@@ -264,29 +265,6 @@
             mousePosition.y = 1 - ( event.clientY / window.innerHeight ) * 2;
             this.raycaster.setFromCamera(mousePosition, this.player.camera);
             return this.raycaster.intersectObjects(objs, recursive);
-        },
-        freeToMove: function(dummy, distance, delta){
-            dummy.translateX(this.velocity.x * delta);
-            dummy.translateY(this.velocity.y * delta);
-            dummy.translateZ(this.velocity.z * delta);
-            var collideObj = SPACE_OBJECT.collisionOccur(dummy, this.Objects['collide'], distance);
-            var onObj = this.player.isOn;
-
-            if(onObj === collideObj){
-                // console.log("1FREE");
-                // onObj && console.log("OnObj:",onObj.name);
-                // collideObj && console.log("Collid:",collideObj.name);
-                // console.log("---------");
-                return true;
-            }
-            else{
-                // console.log(!collideObj ? "2Free": "2NOT");
-                // onObj && console.log("OnObj:",onObj.name);
-                // collideObj && console.log("Collid:",collideObj.name);
-                // console.log("---------");
-                return !collideObj;
-            }
-
         },
         onKey: function(dir, event) {
             event.stopPropagation();
@@ -441,20 +419,14 @@
             if(Math.abs(this.velocity.y) < 0.1) this.velocity.y = 0;
             if(Math.abs(this.velocity.z) < 0.1) this.velocity.z = 0;
 
-            this.player.dummyBody.position.copy(this.player.position);
-            this.player.dummyBody.position.y += this.player.info.height/2;
-            this.player.dummyBody.rotation.copy(this.player.rotation);
             // Moving method
 
             // TODO: dynamic decide distance
-            var on = this.player.isOnObject(this.Objects['collide'], 0);
-            if (on) {
+            if(this.player.isOnObject(this.Objects['collide'], -this.velocity.y*delta)){
                 this.velocity.y = Math.max(0, this.velocity.y);
                 this.move.jump = true;
-                // console.log("ON",this.player.isOn.name);
+                // console.log("On", this.player.onObject.name);
             }
-            else this.move.jump = false;
-
             // TODO: can step On Object with collision
             if(this.move.method === "KEYPRESS"){
                 if ( this.move.forward )this.velocity.z -= this.move.velocity * delta;
@@ -462,10 +434,14 @@
                 if ( this.move.left )this.velocity.x -= this.move.velocity * delta;
                 if ( this.move.right )this.velocity.x += this.move.velocity * delta;
 
-                if(this.freeToMove(this.player.dummyBody, 0, delta))
-                    this.player.translate(this.velocity.x * delta, this.velocity.y * delta, this.velocity.z * delta);
-                else
-                    this.player.translate(0, 0, 0);
+                var tendency = new THREE.Vector3(this.velocity.x * delta, this.velocity.y * delta, this.velocity.z * delta);
+                if(this.player.willCollideObject(tendency, this.Objects['collide'], 4)){
+                    // console.log("Will collide", this.player.collideObject.name);
+                    this.player.translate(0, tendency.y, 0);
+                }
+                else{
+                    this.player.translate(tendency.x, tendency.y, tendency.z);
+                }
             }
             else if(this.move.method === "MOUSECLICK"){
                 // TODO: simplify distance (Vector3()'s method)

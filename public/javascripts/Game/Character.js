@@ -34,7 +34,7 @@ var Character = this.Character = THREE.Object3D.extend({
         this.body.add(this.eye);
 
         // feets (plane)
-        this.feet = new THREE.Mesh(new THREE.CubeGeometry(this.info.width, this.info.height/6, this.info.thickness+1), new THREE.MeshBasicMaterial( { color: 0xff0000, transparent: true, opacity:1} ));
+        this.feet = new THREE.Mesh(new THREE.CubeGeometry(this.info.width - 10, this.info.height, this.info.thickness - 10), new THREE.MeshBasicMaterial( { color: 0xff0000, transparent: true, opacity:1} ));
         this.feet.visible = false;
         this.feet.name = "feet";
         // this.body.add(this.feet);
@@ -57,6 +57,15 @@ var Character = this.Character = THREE.Object3D.extend({
         // this.webcam = new RTC(this.socket, this);
     },
     update: function(delta){
+        // update dummy, feet
+        this.feet.position.copy(this.position);
+        this.feet.position.y += this.info.height / 2 - 10;
+        this.feet.rotation.copy(this.rotation);
+
+        this.dummyBody.position.copy(this.position);
+        this.dummyBody.position.y += this.info.height / 2;
+        this.dummyBody.rotation.copy(this.rotation);
+
         // Control moving
         if(this.controls)
             this.controls.update(delta);
@@ -109,10 +118,15 @@ var Character = this.Character = THREE.Object3D.extend({
         this.controls.manipulate(item);
     },
     isOnObject: function(objs, distance){
-        this.feet.position.copy(this.position);
-        // this.feet.position.y += this.info.height/12;
-        this.isOn = SPACE_OBJECT.collisionOccur(this.feet, objs, distance);
-        return this.isOn;
+        this.onObject = SPACE_OBJECT.collisionOccur(this.feet, objs, distance);
+        return this.onObject;
+    },
+    willCollideObject: function(tendency, objs, distance){
+        this.dummyBody.translateX(tendency.x);
+        this.dummyBody.translateY(tendency.y);
+        this.dummyBody.translateZ(tendency.z);
+        this.collideObject = SPACE_OBJECT.collisionOccur(this.dummyBody, objs, distance);
+        return this.collideObject;
     },
     view: function(v){
         if(!v){
