@@ -2,7 +2,7 @@
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
-var helmet = require('helmet');
+// var helmet = require('helmet');
 // Routes
 var index = require('./routes/index');
 var signup = require('./routes/signup');
@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use(favicon(__dirname + '/public/images/left_top_logo.ico'));
-app.use(helmet());
+// app.use(helmet());
 
 // Route Service
 app.use('/', index);

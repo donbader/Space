@@ -38,7 +38,7 @@ var Character = this.Character = THREE.Object3D.extend({
 
         // feets (plane)
         this.feet = new THREE.Mesh(new THREE.CubeGeometry(this.info.width - 20, this.info.height, this.info.thickness - 20), new THREE.MeshBasicMaterial( { color: 0xff0000, transparent: true, opacity:1} ));
-        // this.feet.visible = false;
+        this.feet.visible = false;
         this.feet.name = "feet";
         // this.body.add(this.feet);
 
@@ -54,41 +54,10 @@ var Character = this.Character = THREE.Object3D.extend({
         this._view = "THIRD_PERSON";
         this.view(this._view);
 
-        //for rtc
-        // this.webcam = new RTC(this, this.server);
+        // webcam
+        this.webcam = new SPACE_OBJECT.WebCam(100,100, new THREE.Vector3(0,this.info.height * 3/2,0));
+        this.add(this.webcam);
 
-        //to set webcam
-        this.webcamWidth = 100;
-        this.webcamHeight = 100;
-        this.webcamPosition = new THREE.Vector3(0, 250, 0);
-
-        //to create the html element
-        this.webcamVideo = document.createElement('video');
-        this.webcamImage = document.createElement('canvas');
-        //<canvas id = 'videowebcamImage' width = '160' height = '120' style = 'visibility: hidden; float: left; position: fixed;'></canvas>
-        this.webcamImageContext = this.webcamImage.getContext('2d');
-
-        //to fill up the background color
-        this.webcamImageContext.fillStyle = '#000000';
-        this.webcamImageContext.fillRect(0, 0, this.webcamImage.width, this.webcamImage.height);
-
-        //to create the video texture
-        this.webcamTexture = new THREE.Texture(this.webcamImage);
-        this.webcamTexture.minFilter = THREE.LinearFilter;
-        this.webcamTexture.magFilter = THREE.LinearFilter;
-
-        var webcamMaterial = new THREE.MeshBasicMaterial({
-            map: this.webcamTexture,
-            overdraw: true,
-            side: THREE.DoubleSide
-        });
-
-        var webcamGeometry = new THREE.PlaneGeometry(this.webcamWidth, this.webcamHeight, 1, 1);
-        var webcamMesh = new THREE.Mesh(webcamGeometry, webcamMaterial);
-
-        webcamMesh.position.set(this.webcamPosition.x, this.webcamPosition.y, this.webcamPosition.z);
-
-        this.add(webcamMesh);
     },
     update: function(delta){
         // update dummy, feet
@@ -105,12 +74,12 @@ var Character = this.Character = THREE.Object3D.extend({
             this.controls.update(delta);
 
         //for rtc
-        if (this.webcamVideo.readyState === this.webcamVideo.HAVE_ENOUGH_DATA) {
+        if (this.webcam.video.readyState === this.webcam.video.HAVE_ENOUGH_DATA) {
 
-            this.webcamImageContext.drawImage(this.webcamVideo, 0, 0, this.webcamImage.width, this.webcamImage.height);
+            this.webcam.imageContext.drawImage(this.webcam.video, 0, 0, this.webcam.image.width, this.webcam.image.height);
 
-            if (this.webcamTexture) {
-                this.webcamTexture.needsUpdate = true;
+            if (this.webcam.texture) {
+                this.webcam.texture.needsUpdate = true;
             }
         }
     },
@@ -199,9 +168,9 @@ var Character = this.Character = THREE.Object3D.extend({
         }
     },
     setStream: function(stream) {
-        console.log('character ' + this.name + ' set stream');
+        // console.log('character ' + this.name + ' set stream');
         window.URL = window.URL || window.webkitURL;
-        this.webcamVideo.src = window.URL.createObjectURL(stream);
+        this.webcam.video.src = window.URL.createObjectURL(stream);
         this.stream = stream;
     }
 });

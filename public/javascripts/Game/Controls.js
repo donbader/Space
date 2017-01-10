@@ -13,7 +13,6 @@
 
 
     Controls = function(player) {
-        this.i=0;
 
         if(!player.camera)return console.error("This player didn't have camera (eye).");
         var scope = this;
@@ -230,6 +229,26 @@
             var scope = this;
             dom = dom || document;
             var handle = e ? dom.addEventListener : dom.removeEventListener;
+
+            // if(e)
+            //     $.contextMenu({
+            //         selector: dom,
+            //         callback: function(key, options) {
+            //             var m = "clicked: " + key;
+            //             window.console && console.log(m) || alert(m);
+            //         },
+            //         items: {
+            //             "edit": {name: "Edit", icon: "edit"},
+            //             "cut": {name: "Cut", icon: "cut"},
+            //            copy: {name: "Copy", icon: "copy"},
+            //             "paste": {name: "Paste", icon: "paste"},
+            //             "delete": {name: "Delete", icon: "delete"},
+            //             "sep1": "---------",
+            //             "quit": {name: "Quit", icon: function(){
+            //                 return 'context-menu-icon context-menu-icon-quit';
+            //             }}
+            //         }
+            //     });
 
             handle('keydown', (event)=>scope.onKey("down", event));
             handle('keyup', (event)=>scope.onKey("up", event));
@@ -499,6 +518,9 @@
         },
         onRightClick:function(event){
         	event.preventDefault();
+
+          console.log(this._mode);
+
         	var mousePosition = new THREE.Vector2();
         	mousePosition.x = ( event.clientX / window.innerWidth ) * 2 - 1;
         	mousePosition.y = 1 - ( event.clientY / window.innerHeight ) * 2;
@@ -512,8 +534,11 @@
         		positionFlag.position.set(intersects[0].point.x, intersects[0].point.y + positionFlag.height/2, intersects[0].point.z);
                 this.move.method = "MOUSECLICK";
                 this.move.to.destination.copy(intersects[0].point);
-        	}
-            // if(this._mode === "NORMAL")
+        }
+        if (this._mode === "CS"){
+
+        }
+          // if(this._mode === "NORMAL")
         },
         onMouseWheel:function(event){
         	event.preventDefault();

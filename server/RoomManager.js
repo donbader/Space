@@ -5,6 +5,7 @@ var ItemDB = require('../db/item');
 var Room = function(owner, done){
     var scope = this;
     this.doQueue = [];
+    this.sockets = {};
     this.initialized = false;
     RoomDB.findRoom(owner, (room)=>{
         room && Object.assign(scope, room._doc);
@@ -21,84 +22,57 @@ Room.prototype.consumeQueue = function(){
     var scope = this;
     this.doQueue.forEach((fn)=>fn(scope));
 }
-
-
-var RoomManager = function(){
-    this.rooms = {};
-}
-
-RoomManager.prototype.getRoom = function(owner){
-    if(!this.rooms[owner])
-        this.rooms[owner] = new Room(owner);
-    return this.rooms[owner];
-};
-
-RoomManager.prototype.addUser = function(owner, user, addUserCallback, kickUserCallback){
-    var scope = this;
-
-    this.getRoom(owner).do(function(room){
+Room.prototype.addUser = function(user, socket, addUserCallback, kickUserCallback){
+    this.do(function(room){
         if(!room.users) room.users = [];
         var index = room.users.findIndex((element)=>element.name === user.name);
 
         if(index !== -1){
-            kickUserCallback && kickUserCallback(owner, room.users[index]);
+            kickUserCallback && kickUserCallback(room.owner, room.users[index]);
             room.users.splice(index, 1);
         }
-        // room.users.filter((userdata)=>{
-        //     if(userdata.name === user.name && userdata.id !== user.id)
-        //         kickUserCallback && kickUserCallback(owner, userdata);
-        //     return userdata.name !== user.name;
-        // });
         room.users.push(user);
-        addUserCallback && addUserCallback(owner, user);
+        room.sockets[socket.id] = socket;
+        addUserCallback && addUserCallback(room.owner, user);
     });
 }
 
-RoomManager.prototype.kickUser = function(owner, user, kickUserCallback){
-    this.getRoom(owner).do(function(room){
+Room.prototype.kickUser = function(user, kickUserCallback){
+    this.do(function(room){
         if(room.users && room.users.length){
             var index = room.users.findIndex((element)=>(element.name === user.name) && (element.id === user.id));
             if(index !== -1){
-                kickUserCallback && kickUserCallback(owner, room.users[index]);
+                kickUserCallback && kickUserCallback(room.owner, room.users[index]);
                 room.users.splice(index, 1);
             }
         }
+    });
+};
 
+Room.prototype.appendItem = function(item, callback){
+    this.do(function(room){
+        if(!item || !item.name ||! item.from)return;
+        var index = room.items.findIndex((element)=>element.name === item.name);
+        if(index !== -1){
+            room.items[index].from = item.from;
+        }
+        else{
+            room.items.push(item);
+        }
+        RoomDB.appendItem(room.owner, item);
+
+        callback && callback();
     });
 }
 
-//for paint
-RoomManager.prototype.getPaint = function(owner, callback) {
-    if(!owner) return;
-
-    // console.log('paint in get paint = ', this.rooms[owner].paint);
-
-    return callback(this.rooms[owner].paint);
-}
-
-RoomManager.prototype.uploadPaint = function(owner, url, callback) {
-    if(!owner || !url) return;
-
-    RoomDB.update(
-        {owner: owner},
-        {$set: {'paint': url}},
-        {safe: true, upsert: true, new : true},
-        function(err, result) {
-            callback && callback();
-        }
-    );
-
-    
-}
-//
-
-RoomManager.prototype.render = function(owner, username, callbacks){
+Room.prototype.render = function(username, callbacks){
     if(!callbacks)return;
-    this.getRoom(owner).do(function(room){
+    this.do(function(room){
         room.items.forEach((item)=>{
             if(!item.from)return;
             if(item.from === "public"){
                 ItemDB.getById(item.id, (err, itemdata)=>{
+                    if(!itemdata)return;
                     Object.assign(item, itemdata._doc);
                     callbacks.item && callbacks.item(item);
                 });
@@ -106,8 +80,8 @@ RoomManager.prototype.render = function(owner, username, callbacks){
             }
             else{
                 var from = item.from.split(".");
-                if(from[0] === "VoxelWarehouse"){
-                    UserDB.getVoxel(from[1], item.name, (item)=>{
+                if(from[1] === "VoxelWarehouse"){
+                    UserDB.getVoxel(from[0], item.name, (item)=>{
                         callbacks.item && callbacks.item(item);
                     });
                 }
@@ -121,6 +95,59 @@ RoomManager.prototype.render = function(owner, username, callbacks){
     });
 }
 
+//for paint
+Room.prototype.uploadPaint = function(url, callback) {
+    if(!callback) return;
 
+    // RoomDB.update(
+    //     {owner: owner},
+    //     {$set: {'paint': url}},
+    //     {safe: true, upsert: true, new : true},
+    //     function(err, result) {
+    //         callback && callback();
+    //     }
+    // );
+
+    this.do(function(room) {
+        room.paint = url;
+    });
+}
+//
+
+//Manager
+
+
+var RoomManager = function(){
+    this.rooms = {};
+}
+
+RoomManager.prototype.getRoom = function(owner){
+    if(!this.rooms[owner])
+        this.rooms[owner] = new Room(owner);
+    return this.rooms[owner];
+};
+
+RoomManager.prototype.addUser = function(owner, user, socket, addUserCallback, kickUserCallback){
+    this.getRoom(owner).addUser(user, socket, addUserCallback, kickUserCallback);
+}
+
+RoomManager.prototype.kickUser = function(owner, user, kickUserCallback){
+    this.getRoom(owner).kickUser(user, kickUserCallback);
+}
+
+RoomManager.prototype.render = function(owner, username, callbacks){
+    this.getRoom(owner).render(username, callbacks);
+}
+
+//for paint
+RoomManager.prototype.getPaint = function(owner, callback) {
+    if(!owner) return;
+    return callback(this.rooms[owner].paint);
+}
+
+RoomManager.prototype.uploadPaint = function(owner, url, callback) {
+    this.getRoom(owner).uploadPaint(url, callback);
+}
+//
 
 module.exports = RoomManager;

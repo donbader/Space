@@ -85,6 +85,43 @@
                 this.add(this.model);
             }
         }),
+        WebCam: THREE.Object3D.extend({
+            init: function(width, height, position){
+                this._super();
+                width = width || 100;
+                height = height || 100;
+                position = position || new THREE.Vector3(0, 250, 0);
+
+                //to create the html element
+                this.video = document.createElement('video');
+                this.image = document.createElement('canvas');
+                //<canvas id = 'videowebcamImage' width = '160' height = '120' style = 'visibility: hidden; float: left; position: fixed;'></canvas>
+                this.imageContext = this.image.getContext('2d');
+
+                //to fill up the background color
+                this.imageContext.fillStyle = '#000000';
+                this.imageContext.fillRect(0, 0, width, height);
+
+                //to create the video texture
+                this.texture = new THREE.Texture(this.image);
+                this.texture.minFilter = THREE.LinearFilter;
+                this.texture.magFilter = THREE.LinearFilter;
+
+                var webcamMaterial = new THREE.MeshBasicMaterial({
+                    map: this.texture,
+                    overdraw: true,
+                    side: THREE.DoubleSide
+                });
+
+                var webcamGeometry = new THREE.PlaneGeometry(width, height, 1, 1);
+                var webcamMesh = new THREE.Mesh(webcamGeometry, webcamMaterial);
+
+                webcamMesh.position.copy(position);
+                webcamMesh.name = "webcam";
+
+                this.add(webcamMesh);
+            }
+        }),
         VoxelPainter: THREE.Object3D.extend({
             init: function(width, color, opacity){
                 width = width || 50;

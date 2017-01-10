@@ -48,7 +48,7 @@ if (navigator.cookieEnabled) {
 
 
 
-                        AfterLogIn(Cookies.get("ID"));
+                        AfterLogIn(Cookies.get("ID"),Cookies.get("ID"));
 
 
 
@@ -164,7 +164,7 @@ $("#enter").click(function() {
                         });
                         console.log("Entered");
 
-                        AfterLogIn($('#inputEmail').val());
+                        AfterLogIn($('#inputEmail').val(),$('#inputEmail').val());
 
 
                         $("#Black").animate({

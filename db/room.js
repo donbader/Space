@@ -10,109 +10,14 @@ var RoomSchema = new mongoose.Schema({
   });
 
 
-RoomSchema.statics.pushUser = function(owner, userdata, callback ){
-    console.log("[Push User]", userdata);
-    this.update({
-        owner: owner
-    }, {
-        $push: {
-            users: userdata
-        }
-    }, function(err, msg) {
-        if (msg.ok && msg.nModified) {
-            callback && callback(userdata, owner);
-        }
-    });
-};
-
-//
-RoomSchema.statics.AddUser = function(user, roomID, exclusive, kickUserCallback, addUserCallback){
-    if(!user || !user.name || !roomID)
-        return console.error("[Error]Invalid input: room:",roomID,",user:", user);
-    var Rooms = this;
-    if(exclusive){
-        Rooms.KickUser("name",user, undefined, kickUserCallback, ()=>{
-            Rooms.pushUser(roomID, user, addUserCallback);
-        });
-    }
-    else{
-        Rooms.pushUser(roomID, user, addUserCallback);
-    }
-};
-
-
-RoomSchema.statics.KickUser = function(attr, userdata, roomID, callback, aftercallback){
-    if(!userdata[attr])return console.error("[Error]Invalid input:"+attr,"--", userdata[attr]);
-    // console.log("[Kick User By "+attr+"]", userdata[attr], roomID);
-    // find roomID in Room
-    var Rooms = this;
-    if(!roomID){ // find all and Kick
-        var query = {};
-        query["users."+attr] = userdata[attr];
-        Rooms.find(
-            query,
-            (err, arr)=>{
-                if(err)return console.error(err);
-                if(arr.length){
-                    arr.forEach((room)=>{
-                        Rooms.KickUser(attr, userdata, room.owner, callback, aftercallback);
-                    });
-                }
-                else {
-                    aftercallback&&aftercallback();
-                }
-            }
-        );
-    }
-    else{
-        var exe = {$pull:{users:{}}};
-        exe.$pull.users[attr] = userdata[attr];
-        // console.log("[EXE]", exe);
-        Rooms.findOneAndUpdate(
-            {"owner":roomID},
-            exe,
-            {new:false},
-            (err, room)=>{
-                if(err)return console.error(err);
-                if(room){
-                    room.users.forEach((user)=>{
-                        if(user[attr] === userdata[attr])
-                            callback && callback(user, roomID);
-                    });
-                    aftercallback && aftercallback();
-                }
-            }
-        )
-    }
-
-
-};
-
-RoomSchema.statics.render = function(roomID, username, renderItem, renderUser){
-    // console.log("[Room Render]",roomID,",",username);
-
-    this.findOne(
-        {owner: roomID},
-        function(err, room){
-            if(err)return console.error(err);
-            if(room){
-                renderItem && room.items.forEach((item)=>{
-                    Item.findOne(
-                        {id: item.id},
-                        (err, data)=>{
-                            if(err || !data)return console.error(err);
-                            item.type = data.type;
-                            item.data = data.data;
-                            renderItem(item);
-                        }
-                    )
-                });
-                renderUser && room.users.forEach((user)=>{
-                    if(!user.name || !user.type || user.name == username)
-                        return;
-                    else renderUser(user);
-                })
-            };
+RoomSchema.statics.appendItem = function(owner, item, callback){
+    if(!item.name || !item.from)return;
+    this.update(
+        {owner:owner},
+        {$push: {"items": item}},
+        {safe: true, upsert: true, new : true},
+        function(err, result){
+            callback && callback(result);
         }
     );
 }
@@ -129,15 +34,14 @@ RoomSchema.statics.findRoom = function(owner, callback){
     );
 }
 
-// RoomSchema.statics.update = function(owner, roomdata){
-//     this.update(
-//         {owner:roomdata.owner},
-//         {$set:
-//             {items: roomdata.items}},
-//         (err, msg)=>{err && console.error(err);}
-//     );
-// }
-
+RoomSchema.statics.refresh = function(owner, roomdata){
+    this.update(
+        {owner:roomdata.owner},
+        {$set:
+            {items: roomdata.items}},
+        (err, msg)=>{err && console.error(err);}
+    );
+}
 
 var Room = mongoose.model('Room', RoomSchema);
 

@@ -1,11 +1,9 @@
-// TODO: Kick the user while he is logined;
-var query = window.location.href.split('?')[1].split("&");
-var username = query[0].split("=")[1];
-var roomID = query[1].split("=")[1];
-
+function AfterLogIn(username, roomID){
 ////////////////////
 //////SOCKET////////
 ////////////////////
+window.username = username;
+window.roomID = roomID;
 var Users = {};
 var game;
 var player;
@@ -114,7 +112,9 @@ socket.on('add user', function(userdata){
     Users[userdata.id] = userdata;
     Users[userdata.id].object = new Character(userdata);
     Users[userdata.id].object.name = userdata.name;
+    Users[userdata.id].object.userData.prop = {collide:true};
     game.add(Users[userdata.id].object);
+    player.manipulate(Users[userdata.id].object);
     //
 
     /*
@@ -131,7 +131,8 @@ socket.on('remove user', function(userid){
     console.log('[remove user]',Users);
 
     //for rtc
-    rtc.deletePeerConnection(userid);
+    if(rtc)
+        rtc.deletePeerConnection(userid);
     console.log('[remove rtc peer connection] ', userid);
     //
 
@@ -185,6 +186,10 @@ socket.on('logout', function(){
     socket.disconnect();
 });
 
+socket.on('fuck', function(){
+  console.log("i am in socket");
+});
+
 
 ////////////////////
 ////////MAIN////////
@@ -200,3 +205,5 @@ socket.on('welcome',function(){
 //         this.body.material.color.setHex( 0x000000 );
 //     }
 // });
+
+}
