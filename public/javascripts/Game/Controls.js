@@ -1,7 +1,7 @@
 (function() {
     const PI_2 = Math.PI / 2;
     const gravity = 980;
-
+    const collision_coeff = 0.3;
 
     const MOUSE_STATE = {
         NONE: 0,
@@ -13,6 +13,8 @@
 
 
     Controls = function(player) {
+        this.i=0;
+
         if(!player.camera)return console.error("This player didn't have camera (eye).");
         var scope = this;
         this.player = player;
@@ -61,11 +63,7 @@
             velocity: 1500.0,
             to: {
                 enable: false,
-                destination: {
-                    x: 0,
-                    y: 0,
-                    z: 0
-                },
+                destination: new THREE.Vector3(),
             },
             set method(m){
                 m = m.toUpperCase();
@@ -84,7 +82,7 @@
             Velocity
         ====================*/
         this.velocity = new THREE.Vector3();
-        this.jumpVelocity = 450.0;
+        this.jumpVelocity = 500.0;
 
         /*====================
             Game Object
@@ -104,6 +102,7 @@
             Voxel Painter
         ====================*/
         this.voxelPainter = new SPACE_OBJECT.VoxelPainter();
+        this.manipulate(this.voxelPainter.Objects);
 
         /*====================
             Deployment
@@ -147,6 +146,7 @@
             if(scope.move.jump){
                 scope.velocity.y = scope.jumpVelocity;
                 scope.move.jump = false;
+                scope.player.position.y += 10;
             }
         };
         hotkey["E"] = function(event, bool){
@@ -167,7 +167,7 @@
         hotkey["Z"] = function(event, bool){
             if(!bool)return ; //Disable When KeyDown
             if(scope._mode === "VOXEL")
-                scope.voxelPainter.clear(scope.Objects['stepOn']);
+                scope.voxelPainter.clear();
         }
         hotkey["X"] = function(event, bool){
             if(!bool)return ; //Disable When KeyDown
@@ -182,7 +182,12 @@
         hotkey["N"] = function(event, bool){
             if(!bool)return;
             if(scope._mode === "VOXEL")
-                scope.voxelPainter.save();
+                scope.voxelPainter.save("SONG", scope.player.socket);
+        }
+        hotkey["M"] = function(event, bool){
+            if(!bool)return;
+            if(scope._mode === "VOXEL")
+                scope.voxelPainter.delete("SONG", scope.player.socket);
         }
     };
 
@@ -234,6 +239,19 @@
             console.log("Switch To ", m , " mode.");
             return this;
         },
+        manipulate: function(item){
+            if(item.userData.Objects){
+                for(var manipulate in item.userData.Objects){
+                    this.can(manipulate, item.userData.Objects[manipulate]);
+                }
+            }
+            if(item.userData.prop){
+                for(var manipulate in item.userData.prop){
+                    if(item.userData.prop[manipulate])
+                        this.can(manipulate, [item]);
+                }
+            }
+        },
         can: function(manipulate, arr){
             if(this.Objects[manipulate]){
                 this.Objects[manipulate] = this.Objects[manipulate].concat(arr);
@@ -245,26 +263,6 @@
             mousePosition.y = 1 - ( event.clientY / window.innerHeight ) * 2;
             this.raycaster.setFromCamera(mousePosition, this.player.camera);
             return this.raycaster.intersectObjects(objs, recursive);
-        },
-        collisionOccur: function(target, distance){
-            var targetBox = new THREE.Box3().setFromObject(target).expandByScalar(distance/2);
-            for(var i in this.Objects['collide']){
-                var objBox = new THREE.Box3().setFromObject(this.Objects['collide'][i]).expandByScalar(distance/2);
-                if(targetBox.intersectsBox(objBox)){
-                    delete objBox;
-                    return true;
-                }
-                delete objBox;
-            }
-            delete targetBox;
-
-            return false;
-        },
-        freeToMove: function(dummy, distance, delta){
-            dummy.translateX(this.velocity.x * delta);
-            dummy.translateY(this.velocity.y * delta);
-            dummy.translateZ(this.velocity.z * delta);
-            return !this.collisionOccur(dummy, distance);
         },
         onKey: function(dir, event) {
             event.stopPropagation();
@@ -282,10 +280,11 @@
                 var intersects = this.getObjectOnMouse(event, this.Objects['move'], true);
 
                 if(intersects.length){
-                    while(intersects[0].object.parent.type != "Scene"){
-                        intersects[0].object = intersects[0].object.parent;
-                    }
-                    this.Controlling['objects'].push(intersects[0].object);
+                    var intersect = SPACE_OBJECT.getTheOuttest(intersects[0].object);
+                    var anchor = intersects[0].point.clone();
+                    anchor.y = 0;
+                    SPACE_OBJECT.allChildrenMoveToAnchor(intersect, anchor);
+                    this.Controlling['objects'].push(intersect);
                 }
             }
 
@@ -302,15 +301,14 @@
             else if(this._mode === "VOXEL" && event.which !== 3){
                 if(this.voxelPainter._mode === "CREATE" && this.voxelPainter.prevIntersect !== this.voxelPainter.intersect){
                     if(!this.voxelPainter.scene) this.voxelPainter.setScene(this.scene);
-                    var voxel = this.voxelPainter.create();
-                    this.Objects['stepOn'].push(voxel);
+                    this.voxelPainter.create();
                     this.voxelPainter.prevIntersect = this.voxelPainter.intersect;
                 }
                 else if(this.voxelPainter._mode === "DESTROY"){
-                    var intersects = this.getObjectOnMouse(event, this.Objects['stepOn'], false);
+                    var voxels = this.voxelPainter.Objects.children;
+                    var intersects = this.getObjectOnMouse(event, voxels, false);
                     if(intersects.length){
                         this.voxelPainter.destroy(intersects[0].object);
-                        this.Objects['stepOn'].splice(this.Objects['stepOn'].indexOf(intersects[0].object), 1);
                     }
                 }
             }
@@ -334,41 +332,40 @@
                     var intersects = this.getObjectOnMouse(event, this.Objects['stepOn'], true);
 
                     if(intersects.length && this.Controlling['objects'].length){
+                        var intersect, index;
+                        for(index in intersects){
+                            intersect = SPACE_OBJECT.getTheOuttest(intersects[index].object);
+                            if(intersect !== this.Controlling['objects'][0])
+                                break;
+                        }
                         if(!this.Controlling.rotation){ // move position
                             for(var i in this.Controlling['objects']){
                                 this.Controlling['objects'][i].position.set(
-                                    intersects[0].point.x
+                                    intersects[index].point.x
                                     , this.Controlling['objects'][i].position.y
-                                    , intersects[0].point.z
+                                    , intersects[index].point.z
                                 );
                             }
                         }
                         else{ // rotation
+                            var x = Math.PI * 2 *( event.offsetX / window.innerWidth);
+                            // x = Math.cos(Math.PI * x);
                             var deltaMove = {
-                                x: event.offsetX-this.mouse.previousPosition.x,
-                                y: event.offsetY-this.mouse.previousPosition.y
+                                x: x-this.mouse.previousPosition.x,
                             };
-                            var deltaRotationQuaternion = new THREE.Quaternion()
-                                .setFromEuler(new THREE.Euler(
-                                    0,
-                                    deltaMove.x * Math.PI / 180.0,
-                                    0,
-                                    'XYZ'
-                                ));
-                            for(var i in this.Controlling['objects']){
-                                var selected = this.Controlling['objects'][i];
-                                selected.quaternion.multiplyQuaternions(deltaRotationQuaternion, selected.quaternion);
-                            }
-
+                            var selected = this.Controlling['objects'][0];
+                            selected.rotation.y += deltaMove.x;
+                            // format to 90 degree
+                            // console.log(Math.floor(selected.rotation.y / (Math.PI / 2) + 1));
                             this.mouse.previousPosition = {
-                                x: event.offsetX,
-                                y: event.offsetY
+                                x: x
                             }
                         }
                     }
                     break;
                 case "VOXEL":
-                    var intersects = this.getObjectOnMouse(event, this.Objects['stepOn'], true);
+                    var voxels = this.voxelPainter.Objects.children;
+                    var intersects = this.getObjectOnMouse(event, this.Objects['stepOn'].concat(voxels), true);
                     if(intersects.length)
                         this.voxelPainter.updateHelper(intersects[0]);
 
@@ -381,7 +378,6 @@
 
           console.log(this._mode);
 
-          if (this._mode === "NORMAL"){
         	var mousePosition = new THREE.Vector2();
         	mousePosition.x = ( event.clientX / window.innerWidth ) * 2 - 1;
         	mousePosition.y = 1 - ( event.clientY / window.innerHeight ) * 2;
@@ -390,15 +386,11 @@
         	var intersects = this.raycaster.intersectObjects(this.Objects['stepOn'], true);
 
         	if(intersects.length){
-        		  var positionFlag = this.positionFlag;
-                  positionFlag.visible = true;
-        		        positionFlag.position.set(intersects[0].point.x, intersects[0].point.y + positionFlag.height/2, intersects[0].point.z);
-                    this.move.method = "MOUSECLICK";
-                    this.move.to.enabled = true;
-                    this.move.to.destination.x = intersects[0].point.x;
-                    this.move.to.destination.y = intersects[0].point.y;
-                    this.move.to.destination.z = intersects[0].point.z;
-        	}
+        		var positionFlag = this.positionFlag;
+                positionFlag.visible = true;
+        		positionFlag.position.set(intersects[0].point.x, intersects[0].point.y + positionFlag.height/2, intersects[0].point.z);
+                this.move.method = "MOUSECLICK";
+                this.move.to.destination.copy(intersects[0].point);
         }
         if (this._mode === "CS"){
 
@@ -447,46 +439,56 @@
             if(!this.enabled)return ;
             // Gravity and Friction
             this.velocity.x -= this.velocity.x * 5 * delta;
-            this.velocity.z -= this.velocity.z * 5 * delta;
             this.velocity.y -= gravity * delta; // v = v0 + at
+            this.velocity.z -= this.velocity.z * 5 * delta;
             if(Math.abs(this.velocity.x) < 0.1) this.velocity.x = 0;
+            if(Math.abs(this.velocity.y) < 0.1) this.velocity.y = 0;
             if(Math.abs(this.velocity.z) < 0.1) this.velocity.z = 0;
 
-            this.player.dummyBody.position.copy(this.player.position);
-            this.player.dummyBody.rotation.copy(this.player.rotation);
             // Moving method
+
+            if(this.player.isOnObject(this.Objects['collide'], -this.velocity.y*delta)){
+                this.velocity.y = Math.max(-this.velocity.y*collision_coeff, this.velocity.y);
+                this.move.jump = true;
+            }
             if(this.move.method === "KEYPRESS"){
                 if ( this.move.forward )this.velocity.z -= this.move.velocity * delta;
                 if ( this.move.backward )this.velocity.z += this.move.velocity * delta;
                 if ( this.move.left )this.velocity.x -= this.move.velocity * delta;
                 if ( this.move.right )this.velocity.x += this.move.velocity * delta;
 
-                if(this.freeToMove(this.player.dummyBody, 4, delta))
-                    this.player.translate(this.velocity.x * delta, this.velocity.y * delta, this.velocity.z * delta);
-                else
-                    this.player.translate(0, this.velocity.y * delta, 0);
+                if(!this.velocity.equals(new THREE.Vector3(0,0,0))){
+                    var tendency = new THREE.Vector3(this.velocity.x * delta, this.velocity.y * delta, this.velocity.z * delta);
+                    if(this.player.willCollideObject(tendency, this.Objects['collide'], 0)){
+                        this.player.translate(0, tendency.y, 0);
+                        this.velocity.set(-this.velocity.x*collision_coeff, this.velocity.y, -this.velocity.z*collision_coeff);
+                    }
+                    else{
+                        this.player.translate(tendency.x, tendency.y, tendency.z);
+                    }
+                }
             }
             else if(this.move.method === "MOUSECLICK"){
                 // TODO: simplify distance (Vector3()'s method)
-                var deltaX = this.move.to.destination.x - this.player.position.x;
-                var deltaY = this.move.to.destination.y - this.player.position.y;
-                var deltaZ = this.move.to.destination.z - this.player.position.z;
-                var distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaZ, 2) + Math.pow(deltaY,2));
-                this.velocity.x = deltaX / distance * this.move.velocity;
-                this.velocity.y = deltaY / distance * this.move.velocity;
-                this.velocity.z = deltaZ / distance * this.move.velocity;
-                if(distance <= 10){
+                var moveDelta = new THREE.Vector3().subVectors(this.move.to.destination, this.player.position);
+                var distance = moveDelta.length();
+                var heightVelocity = this.velocity.y;
+                moveDelta.multiplyScalar(this.move.velocity / distance);
+                this.velocity.copy(moveDelta);
+                this.velocity.y = heightVelocity;
+                if(distance <= 20)
                     this.positionFlag.visible = false;
-                    this.move.to.enabled = false;
-                    this.velocity.x = 0;
-                    this.velocity.y = 0;
-                    this.velocity.z = 0;
-                }
 
-                if(this.freeToMove(this.player.dummyBody, 4, delta))
-                    this.player.move(this.velocity.x * delta, this.velocity.y * delta, this.velocity.z * delta);
-                else
-                    this.player.move(0, this.velocity.y * delta, 0);
+                if(!this.velocity.equals(new THREE.Vector3(0,0,0))){
+                    var tendency = new THREE.Vector3().copy(this.velocity).multiplyScalar(delta);
+                    if(this.player.willCollideObject(tendency, this.Objects['collide'], 0)){
+                        this.player.move(0, tendency.y, 0);
+                        this.velocity.set(-this.velocity.x*collision_coeff, this.velocity.y,-this.velocity.z*collision_coeff);
+                    }
+                    else{
+                        this.player.move(tendency.x, tendency.y, tendency.z);
+                    }
+                }
             }
 
             // this.player move
@@ -496,17 +498,10 @@
                 this.headDirection.enabled = false;
             }
 
-            // IF Stepped on floor (???)
-            if ( this.player.position.y <= 0 ) {
-                this.velocity.y = 0;
-                this.player.position.y = 0;
-                this.move.jump = true;
-            }
         }
     };
 
     // c = new Controls().mode("normal").enable(true);
-
 
 
 

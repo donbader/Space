@@ -1,7 +1,7 @@
 (function() {
 	var World = this.World = THREE.Object3D.extend({
 		init: function(long, width, height, wallcolor, groundcolor) {
-
+			this._super();
 			long = long || 10240;
 			width = width || 10240;
 			height = height || 1000;
@@ -12,6 +12,7 @@
 					color: groundcolor || 0xffffff
 				}));
 			this.ground.rotation.x = -Math.PI / 2;
+			this.ground.name = "ground";
 			this.add(this.ground);
 
 
@@ -31,6 +32,7 @@
 				var mesh = new THREE.Mesh(wallsGeo[i], wallsMaterial);
 				mesh.position.y = height / 2;
 				this.walls.push(mesh);
+				mesh.name = "wall"+ i;
 				this.add(this.walls[i]);
 			}
 			this.walls[0].rotation.y = -Math.PI / 2;
@@ -49,9 +51,9 @@
 			}
 
 			// set objects in it
-			this.Objects = {};
-			this.Objects['collide'] = [].concat(this.walls);
-			this.Objects['stepOn'] = [].concat(this.ground);
+			this.userData.Objects = {};
+			this.userData.Objects['collide'] = [].concat(this.walls).concat([this.ground]);
+			this.userData.Objects['stepOn'] = [].concat(this.ground);
 
 			//20161204
 			//to create a box with texture

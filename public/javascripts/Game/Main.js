@@ -11,7 +11,14 @@ var game;
 var player;
 var world;
 
+//for paint
+var paint;
+//
+
+//for rtc
 var rtc;
+var stream;
+//
 
 console.log('YO main.js');
 
@@ -26,11 +33,26 @@ socket.on('create game', function(user){
     if(game)return ;
     console.log("[Create Game By User]" , user, user.type);
     // player = eval("new "+user.type+"()");
-    player = new Saiyan();
+
+    // player = new Saiyan();
     // player = new Character();
+
+    //for rtc
+    player = new Character(user);
+    //
+
     game = new Game("GamePlay", player, socket);
 
-    // rtc = new RTC(socket, player);
+    //for paint
+    // paint = new Paint(1000, 500, new THREE.Vector3(0, 300, -800), Users);
+    // game.add(paint.mesh);
+    // game.addDynamicObject(paint, 'paint');
+    // game.addCSSObject(paint.dummyPaintCSSObj);
+    //
+
+    //for rtc
+    rtc = new RTC(socket, player, Users);
+    //
 
     console.log("[game created]", game.scene);
 });
@@ -53,7 +75,6 @@ socket.on('render item', function(data){
             if(data.rotation)
                 item.rotation.set(data.rotation.x, data.rotation.y, data.rotation.z);
             game.add(item);
-            item.prop = data.data.prop;
             item.name = data.id;
 
             player.manipulate(item);
@@ -65,13 +86,19 @@ socket.on('render item', function(data){
                 if(data.rotation)item.rotation.set(data.rotation.x, data.rotation.y, data.rotation.z);
                 game.add(item);
                 // Property
-                item.prop = data.data.prop;
+                item.userData.prop = data.data.prop;
                 item.name = data.id;
 
                 player.manipulate(item);
 
             });
             break;
+        default:
+            SPACE_OBJECT.load(game, data, (obj)=>{
+                player.manipulate(obj);
+                // obj.position.set(resetVector.x, resetVector.y, resetVector.z);
+                // obj.position.set(resetVector);
+            });
     }
 
 
@@ -81,6 +108,15 @@ socket.on('render item', function(data){
 socket.on('add user', function(userdata){
     console.log("[Add user]", userdata.name, ":",Users );
 
+    //for rtc
+    console.log('added userdata.id = ' + userdata.id);
+    Users[userdata.id] = userdata;
+    Users[userdata.id].object = new Character(userdata);
+    Users[userdata.id].object.name = userdata.name;
+    game.add(Users[userdata.id].object);
+    //
+
+    /*
     Users[userdata.id] = userdata;
     // Users[userdata.id].object = (new Character()).model;
     Users[userdata.id].object = eval('new '+userdata.type+'()');
@@ -88,9 +124,16 @@ socket.on('add user', function(userdata){
     game.add(Users[userdata.id].object);
     console.log(Users);
     // because pos,rot is all 0 , so we don't set them
+    */
 })
 socket.on('remove user', function(userid){
     console.log('[remove user]',Users);
+
+    //for rtc
+    rtc.deletePeerConnection(userid);
+    console.log('[remove rtc peer connection] ', userid);
+    //
+
     if(Users[userid]){
         game.remove(Users[userid].object);
         delete Users[userid];
@@ -116,6 +159,11 @@ socket.on('update user', function(userdata){
         Users[userdata.id].object.position.y = userdata.position.y;
         Users[userdata.id].object.position.z = userdata.position.z;
         Users[userdata.id].object.rotation.y = userdata.rotation._y;
+
+        //for rtc
+        Users[userdata.id].object.update();
+        //
+
         // Users[userdata.id].object.rotation.x = userdata.rotation.x;
         // Users[userdata.id].object.rotation.y = userdata.rotation.y;
         // Users[userdata.id].object.rotation.z = userdata.rotation.z;
