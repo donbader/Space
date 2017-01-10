@@ -1,9 +1,13 @@
+$("#GamePlay").on('AfterLogIn', ()=>{
 
 var gui = new dat.GUI({
     width: 350,
     height: 700
 });
 gui.domElement.id = 'gui';
+$(gui.domElement).on('dragover',function(event){
+  event.preventDefault();
+})
 var parameters = {
     name: function() {},
     room: roomID,
@@ -38,6 +42,12 @@ var parameters = {
         player.controls.voxelPainter.mode("DESTROY");
     },
     Add_Friend: "",
+    Painting_Brush: function(){},
+    Painting_Eraser: function(){},
+    color : [ 0, 128, 255 ],
+    FontSize : 100,
+
+
     //
     //
     // friend1 : function(){alert("hi")},
@@ -60,6 +70,19 @@ gui.add(parameters, 'name').name("Hello " + username);
 var ViewsFloder = gui.addFolder('Views Mode');
 ViewsFloder.add(parameters, 'FirstPerson_view').name("First-Person");
 ViewsFloder.add(parameters, 'ThirdPerson_view').name("Third-Person");
+
+var ToolsFolder = gui.addFolder('TOOLS');
+ToolsFolder.add(parameters, 'Painting_Brush').name('Brush');
+
+ToolsFolder.addColor(parameters, 'color');
+
+
+var controller = ToolsFolder.add(parameters,'FontSize',0,25);
+controller.onChange(function(value){});
+
+
+ToolsFolder.add(parameters, 'Painting_Eraser').name('Eraser');
+
 
 
 var ControlsFloder = gui.addFolder('Control Mode')
@@ -86,7 +109,7 @@ switchRoom.onFinishChange(function(value) {
 switchRoom.domElement.addEventListener('click', function(event) {
     console.log(event);
     player.controls.mode("TYPING");
-})
+})                        
 /////////////////////////SwitchRoom//////////////////////////
 
 
@@ -135,3 +158,4 @@ Add_Friend.domElement.addEventListener('click', function(event) {
 // folder1.add( parameters, 'y' );
 // folder1.close();
 gui.open();
+});

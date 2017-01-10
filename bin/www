@@ -14,8 +14,8 @@ var gameEventHandler = require('../server/gameEventHandler');
 
 
 var options = {
-  key : fs.readFileSync('./privatekey.pem'),
-  cert : fs.readFileSync('./certificate.pem')
+  key : fs.readFileSync('./https/privatekey.pem'),
+  cert : fs.readFileSync('./https/certificate.pem')
 };
 
 /**hi
