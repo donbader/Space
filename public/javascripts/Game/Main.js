@@ -11,8 +11,10 @@ var game;
 var player;
 var world;
 
+//for rtc
 var rtc;
 var stream;
+//
 
 console.log('YO main.js');
 
@@ -32,8 +34,6 @@ socket.on('create game', function(user){
 
     //for rtc
     player = new Character(user);
-    // player.getLocalStream(stream);
-    // console.log('stream in main = ', stream);
     //
     game = new Game("GamePlay", player, socket);
 
@@ -91,16 +91,11 @@ socket.on('add user', function(userdata){
     console.log("[Add user]", userdata.name, ":",Users );
 
     //for rtc
-    var other;
     console.log('added userdata.id = ' + userdata.id);
     Users[userdata.id] = userdata;
-    Users[userdata.id].object = other = new Character(userdata);
+    Users[userdata.id].object = new Character(userdata);
     Users[userdata.id].object.name = userdata.name;
     game.add(Users[userdata.id].object);
-
-    // socket.emit('')
-
-    console.log(Users);
     //
 
     /*
@@ -115,6 +110,12 @@ socket.on('add user', function(userdata){
 })
 socket.on('remove user', function(userid){
     console.log('[remove user]',Users);
+
+    //for rtc
+    rtc.deletePeerConnection(userid);
+    console.log('[remove rtc peer connection] ', userid);
+    //
+
     if(Users[userid]){
         game.remove(Users[userid].object);
         delete Users[userid];
@@ -140,7 +141,11 @@ socket.on('update user', function(userdata){
         Users[userdata.id].object.position.y = userdata.position.y;
         Users[userdata.id].object.position.z = userdata.position.z;
         Users[userdata.id].object.rotation.y = userdata.rotation._y;
+
+        //for rtc
         Users[userdata.id].object.update();
+        //
+        
         // Users[userdata.id].object.rotation.x = userdata.rotation.x;
         // Users[userdata.id].object.rotation.y = userdata.rotation.y;
         // Users[userdata.id].object.rotation.z = userdata.rotation.z;
@@ -176,14 +181,3 @@ socket.on('welcome',function(){
 //         this.body.material.color.setHex( 0x000000 );
 //     }
 // });
-
-//for rtc
-// socket.on('get local stream', function() {
-//     var stream = player.webcam.getLocalStream();
-//     socket.emit('add local stream in pc', stream);
-// });
-
-// socket.on('set new remote stream', function(event) {
-//     player.webcam.setRemoteStream(event);
-// });
-//

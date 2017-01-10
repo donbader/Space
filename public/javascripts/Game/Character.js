@@ -8,23 +8,6 @@
 
     const MODE_VIEW = { FIRST_PERSON: 0, THIRD_PERSON: 1 };
 
-    //for rtc
-    const constraints = { audio: true, video: true };
-    // const constrains = {
-    //     'audio': true,
-    //     'video': {
-    //         'width': {
-    //             'min': '327',
-    //             'max': '640'
-    //         },
-    //         'height': {
-    //             'min': '200',
-    //             'max': '480'
-    //         }
-    //     }
-    // };
-    //
-
     var Character = this.Character = THREE.Object3D.extend({
         init: function(data, info) {
             'use strict';
@@ -40,10 +23,7 @@
             //for rtc
             this.name = data.name;
             this.userID = data.id;
-            // this.server = server;
             //
-
-            // this.socket = {};
 
             this.position.set(0, this.info.height / 2, 500);
             // Body

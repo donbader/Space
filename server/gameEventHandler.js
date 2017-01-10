@@ -14,13 +14,8 @@ var RoomManager = new(require('./RoomManager'))();
 var server;
 
 //for rtc
-// { 'iceServers': [{ 'urls': 'stun:stun.iptel.org' }] };
-// var iceConfig = { 'iceServers': [{ 'url': 'stun:stun.l.google.com:19302' }]},
-//     peerConnections = {};
-
 //in room????
 var clients = {};
-
 //
 
 handler.setServer = function(s) {
@@ -34,12 +29,11 @@ handler.connection = function(client) {
         log("[Connection]", "(", user.name, ")", client.id);
         if (!user) return console.error("No this user");
         user.id = client.id;
+
         //for rtc
         clients[user.id] = client;
-        // if(!clients[user.id]) {
-        //     clients[user.id] = client;
-        // }
         //
+
         GameSet(user);
         client.emit('welcome');
     });
@@ -67,19 +61,7 @@ handler.connection = function(client) {
             clients[user.id].emit('RTC close');
             delete clients[user.id];
 
-            // Room.KickUser("id",user, ROOMID, kickUserCallback);
             RoomManager.kickUser(ROOMID, user, kickUserCallback);
-
-            RoomManager.getRoom(ROOMID).do((room) => {
-                room.users.forEach((roomUser) => {
-                    console.log('roomUser ' + roomUser.name + ' in ' + room + ' now');
-
-                    if (clients[roomUser.id]) {
-                        //to prevent the disconnection before connection??
-                        clients[roomUser.id].emit('RTC peer disconnection', { id: user.id });
-                    }
-                });
-            });
         }
         //
 
@@ -161,50 +143,7 @@ handler.connection = function(client) {
         if (!user || !roomID) return;
         log('[Add User]', user.name, user.id, " to ", roomID);
         client.broadcast.to(roomID).emit('add user', user);
-
-        //for rtc
-        // RoomManager.getRoom(ROOMID).do((room) => {
-        //     room.users.forEach((roomUser) => {
-        //         console.log('roomUser ' + roomUser.name + ' in ' + room);
-
-        //         if(roomUser.id !== USER.id) {
-        //             console.log('YOOO ' + roomUser.id + ' to ' + USER.id);
-        //             clients[roomUser.id].emit('RTC peer connection', {id: USER.id});
-        //         }
-        //     });
-        // });
-        //
     }
-
-    //for rtc
-    // function getPeerConnection(name) {
-    //     if(peerConnections[name]) {
-    //         //be created in advance
-    //         return peerConnections[name];
-    //     }
-
-    //     //to create new peer connection
-    //     var pc = new RTCPeerConnection(iceConfig);
-    //     peerConnections[name] = pc;
-
-    //     client.on('add local stream in pc', function(stream) {
-    //         pc.addStream(stream);
-    //     })
-
-    //     client.emit('get local stream');
-
-    //     pc.onicecandidate = function(event) {
-    //         client.emit('msg', {})
-    //     };
-
-    //     pc.onaddstream = function(event) {
-    //         console.log('Received new stream');
-    //         client.emit('set new remote stream', event);
-    //     };
-
-    //     return pc;
-    // }
-    //
 
     function GameSet(user) {
         client.on("join", (roomID) => {
@@ -241,16 +180,6 @@ handler.connection = function(client) {
             //     }
             // );
 
-            // for rtc
-            // function makeOffer(name) {
-            //     var pc = getPeerConnection(name);
-            //     pc.createOffer(function(sdp) {
-            //         pc.setLocalDescription(sdp);
-            //         console.log('create an offer for', name);
-            //         client.
-            //     });
-            // }
-
             client.on('RTC msg to server', function(msg) {
                 if (!clients[msg.to]) {
                     console.log('no client ' + msg.to);
@@ -258,8 +187,8 @@ handler.connection = function(client) {
                 }
                 console.log('get msg from ' + msg.by + ' to ' + msg.to);
 
-                if(!msg.ice)
-                    console.log('msg = ', msg);
+                // if(msg.type !== 'ice')
+                //     console.log('msg = ', msg);
                 
                 clients[msg.to].emit('RTC msg to client', msg);
             });
@@ -272,7 +201,7 @@ handler.connection = function(client) {
                         console.log('roomUser ' + roomUser.name + ' in ' + room);
 
                         if (roomUser.id !== id) {
-                            console.log('YOOO ' + roomUser.id + ' to ' + id);
+                            console.log(roomUser.id + ' connect to ' + id);
                             clients[roomUser.id].emit('RTC peer connection', { id: id });
                         }
                     });
