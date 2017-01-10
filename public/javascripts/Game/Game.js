@@ -206,8 +206,9 @@
 
             // controller.in(this.scene, this.renderer);
             this.add(controller);
-            this.add(controller.controls.positionFlag);
-            controller.controls.enable(true, this.container);
+            this.add(controller.feet);
+            this.add(controller.dummyBody);
+            controller.controls = new Controls(controller).mode("normal").enable(true, this.scene, this.container);
 
             if (this.socket)
                 controller.socket = this.socket;

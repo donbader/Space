@@ -1,13 +1,16 @@
 
       var gui = new dat.GUI();
-
       var parameters =
       {
         name : function(){},
-        room : roomID,
+        room :roomID,
+        firstPerson: function(){
+            player.view();
+        },
         friend1 : function(){alert("hi")},
         friend2 : function(){},
         friend3 : function(){}, // numeric
+
         // b: 200, // numeric slider
         // c: "Hello, GUI!", // string
         // d: false, // boolean (checkbox)
@@ -19,9 +22,20 @@
         // x: 0, y: 0, z: 0
       };
 
-
+      gui.add( parameters, 'firstPerson').name("ZZZ");
       gui.add( parameters, 'name').name("Hello " + username);
-      gui.add( parameters, 'room' ).name("Switch Room");
+      var switchRoom = gui.add( parameters, 'room' ).name("Switch Room");
+      switchRoom.onChange(function(value){
+          player.controls.mode('TYPING');
+      })
+      switchRoom.onFinishChange(function(value){
+          player.controls.mode('NORMAL');
+      });
+      switchRoom.domElement.addEventListener('click', function(event){
+          console.log(event);
+          player.controls.mode("TYPING");
+      })
+
 
       // gui.add( parameters, 'b' ).min(128).max(256).step(16).name('Slider');
       // gui.add( parameters, 'c' ).name('String');

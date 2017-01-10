@@ -56,11 +56,12 @@ RoomManager.prototype.addUser = function(owner, user, addUserCallback, kickUserC
 
 RoomManager.prototype.kickUser = function(owner, user, kickUserCallback){
     this.getRoom(owner).do(function(room){
-
-        var index = room.users.findIndex((element)=>(element.name === user.name) && (element.id === user.id));
-        if(index !== -1){
-            kickUserCallback && kickUserCallback(owner, room.users[index]);
-            room.users.splice(index, 1);
+        if(room.users && room.users.length){
+            var index = room.users.findIndex((element)=>(element.name === user.name) && (element.id === user.id));
+            if(index !== -1){
+                kickUserCallback && kickUserCallback(owner, room.users[index]);
+                room.users.splice(index, 1);
+            }
         }
 
     });
@@ -70,10 +71,22 @@ RoomManager.prototype.render = function(owner, username, callbacks){
     if(!callbacks)return;
     this.getRoom(owner).do(function(room){
         room.items.forEach((item)=>{
-            ItemDB.getById(item.id, (err, itemdata)=>{
-                Object.assign(item, itemdata._doc);
-                callbacks.item && callbacks.item(item);
-            });
+            if(!item.from)return;
+            if(item.from === "public"){
+                ItemDB.getById(item.id, (err, itemdata)=>{
+                    Object.assign(item, itemdata._doc);
+                    callbacks.item && callbacks.item(item);
+                });
+                return;
+            }
+            else{
+                var from = item.from.split(".");
+                if(from[0] === "VoxelWarehouse"){
+                    UserDB.getVoxel(from[1], item.name, (item)=>{
+                        callbacks.item && callbacks.item(item);
+                    });
+                }
+            }
         });
         room.users.forEach((userdata)=>{
             if(callbacks.user && userdata.name !== username){

@@ -27,12 +27,13 @@ socket.on('sys', function(data){
     console.log('sys:' + data);
 });
 
-console.log('YO socekt connection');
+
 
 socket.on('create game', function(user){
     if(game)return ;
     console.log("[Create Game By User]" , user, user.type);
     // player = eval("new "+user.type+"()");
+
     // player = new Saiyan();
     // player = new Character();
 
@@ -74,7 +75,6 @@ socket.on('render item', function(data){
             if(data.rotation)
                 item.rotation.set(data.rotation.x, data.rotation.y, data.rotation.z);
             game.add(item);
-            item.prop = data.data.prop;
             item.name = data.id;
 
             player.manipulate(item);
@@ -86,13 +86,19 @@ socket.on('render item', function(data){
                 if(data.rotation)item.rotation.set(data.rotation.x, data.rotation.y, data.rotation.z);
                 game.add(item);
                 // Property
-                item.prop = data.data.prop;
+                item.userData.prop = data.data.prop;
                 item.name = data.id;
 
                 player.manipulate(item);
 
             });
             break;
+        default:
+            SPACE_OBJECT.load(game, data, (obj)=>{
+                player.manipulate(obj);
+                // obj.position.set(resetVector.x, resetVector.y, resetVector.z);
+                // obj.position.set(resetVector);
+            });
     }
 
 
@@ -157,7 +163,7 @@ socket.on('update user', function(userdata){
         //for rtc
         Users[userdata.id].object.update();
         //
-        
+
         // Users[userdata.id].object.rotation.x = userdata.rotation.x;
         // Users[userdata.id].object.rotation.y = userdata.rotation.y;
         // Users[userdata.id].object.rotation.z = userdata.rotation.z;
