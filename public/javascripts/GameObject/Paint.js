@@ -15,40 +15,40 @@
             this.server = server;
             this.pivot = new THREE.Vector3(this.paintPosition.x - this.width * 0.5, this.paintPosition.y + this.height * 0.5, this.paintPosition.z);
 
-            //to create reset button
-            var button = document.createElement('input');
-            button.setAttribute('type', 'button');
-            button.setAttribute('id', 'reset');
-            button.setAttribute('value', 'Reset');
-            this.reset = button;
+            // //to create reset button
+            // var button = document.createElement('input');
+            // button.setAttribute('type', 'button');
+            // button.setAttribute('id', 'reset');
+            // button.setAttribute('value', 'Reset');
+            // this.reset = button;
 
-            //to create color button
-            this.colorButtons = [];
-            var length = fontColors.length;
-            for (var i = 0; i < length; ++i) {
-                var div = document.createElement('div');
-                div.setAttribute('id', fontColors[i]);
-                div.setAttribute('class', 'color');
-                this.colorButtons[i] = div;
-            }
+            // //to create color button
+            // this.colorButtons = [];
+            // var length = fontColors.length;
+            // for (var i = 0; i < length; ++i) {
+            //     var div = document.createElement('div');
+            //     div.setAttribute('id', fontColors[i]);
+            //     div.setAttribute('class', 'color');
+            //     this.colorButtons[i] = div;
+            // }
 
-            //to create size button
-            this.sizeButtons = [];
-            length = fontSizes.length;
-            for (var i = 0; i < length; ++i) {
-                var div = document.createElement('div');
-                div.setAttribute('id', fontSizeNames[i]);
-                div.setAttribute('class', 'color');
-                $(div).text(fontSizes[i]);
-                this.sizeButtons[i] = div;
-            }
+            // //to create size button
+            // this.sizeButtons = [];
+            // length = fontSizes.length;
+            // for (var i = 0; i < length; ++i) {
+            //     var div = document.createElement('div');
+            //     div.setAttribute('id', fontSizeNames[i]);
+            //     div.setAttribute('class', 'color');
+            //     $(div).text(fontSizes[i]);
+            //     this.sizeButtons[i] = div;
+            // }
 
-            //to create eraser button
-            var div = document.createElement('div');
-            div.setAttribute('id', 'eraser');
-            div.setAttribute('class', 'color');
-            $(div).html('<img src = "images/Eraser.jpg">');
-            this.eraser = div;
+            // //to create eraser button
+            // var div = document.createElement('div');
+            // div.setAttribute('id', 'eraser');
+            // div.setAttribute('class', 'color');
+            // $(div).html('<img src = "images/Eraser.jpg">');
+            // this.eraser = div;
 
             this.userData.prop = {
                 paint: true
@@ -84,30 +84,29 @@
 
             //to add to scene
             this.mesh.position.set(this.paintPosition.x, this.paintPosition.y, this.paintPosition.z);
-            // this.mesh.context = this.context;
             this.add(this.mesh);
 
             //to init
             //to set button click evnet
-            length = fontColors.length;
-            for (var i = 0; i < length; ++i) {
-                this.fontColorClick(i);
-                // this.setContext('strokeStyle', fontColors[i]);
-            }
+            // length = fontColors.length;
+            // for (var i = 0; i < length; ++i) {
+            //     this.fontColorClick(i);
+            //     // this.setContext('strokeStyle', fontColors[i]);
+            // }
 
-            length = fontSizes.length;
-            for (var i = 0; i < length; ++i) {
-                this.fontSizeClick(i);
-                // this.setContext('lineWidth', fontSizes[i]);
-            }
+            // length = fontSizes.length;
+            // for (var i = 0; i < length; ++i) {
+            //     this.fontSizeClick(i);
+            //     // this.setContext('lineWidth', fontSizes[i]);
+            // }
 
-            $('#eraser').on('click', () => {
-                this.setTool(toolMode.Eraser);
-            });
+            // $('#eraser').on('click', () => {
+            //     this.setTool(toolMode.Eraser);
+            // });
 
-            $('#reset').on('click', () => {
-                this.clear(0, 0, this.width, this.height);
-            });
+            // $('#reset').on('click', () => {
+            //     this.clear(0, 0, this.width, this.height);
+            // });
 
             this.setTool(toolMode.Brush);
             this.setContext('lineWidth', fontSizes[3]);
