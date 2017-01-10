@@ -11,6 +11,10 @@ var game;
 var player;
 var world;
 
+//for paint
+var paint;
+//
+
 //for rtc
 var rtc;
 var stream;
@@ -35,7 +39,15 @@ socket.on('create game', function(user){
     //for rtc
     player = new Character(user);
     //
+
     game = new Game("GamePlay", player, socket);
+
+    //for paint
+    // paint = new Paint(1000, 500, new THREE.Vector3(0, 300, -800), Users);
+    // game.add(paint.mesh);
+    // game.addDynamicObject(paint, 'paint');
+    // game.addCSSObject(paint.dummyPaintCSSObj);
+    //
 
     //for rtc
     rtc = new RTC(socket, player, Users);
