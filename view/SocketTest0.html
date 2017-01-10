@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,18 +9,16 @@
     <script src="/javascripts/jquery-3.1.1.min.js"></script>
     <script src="/javascripts/three.min.js"></script>
     <script src="/javascripts/CSS3DRenderer.js"></script>
-    <script src="/javascripts/Stats.js"></script>
-
-
-    <script type='text/javascript' src='javascripts/toolbar/DAT.GUI.min.js'></script>
-
-
+      <script src="/javascripts/Stats.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+      <script src="/javascripts/jquery.contextMenu.js"></script>
+      <script type='text/javascript' src='javascripts/toolbar/DAT.GUI.min.js'></script>
 </head>
 <body>
     <div id="GamePlay" style="top: 0; left: 0; position: absolute;"></div>
-<!--     <video id = 'monitor' autoplay width = '160' height = '120' style = 'visibility: hidden; float: left; position: fixed;'></video>
+    <video id = 'monitor' autoplay width = '160' height = '120' style = 'visibility: hidden; float: left; position: fixed;'></video>
         <canvas id = 'videoImage' width = '160' height = '120' style = 'visibility: hidden; float: left; position: fixed;'></canvas>
-        <canvas id = 'paint' width = '160' height = '120' style = 'visibility: hidden; float: left; position: fixed;'></canvas> -->
+        <canvas id = 'paint' width = '160' height = '120' style = ' visibility: visible; float: right; position: fixed; z-index: 5'></canvas>
         <!-- <div id="buttons">
             <input type="button" id="reset" value="Reset" />
             <div id='red' class="color"></div>
@@ -41,8 +42,8 @@
             </div>
         </div> -->
     <script src="/javascripts/Game/Class.js"></script>
+    <script src="/javascripts/Game/MakeExtendable.js"></script>
     <script src="/javascripts/Game/SpaceObject.js"></script>
-    <script src="/javascripts/Game/PositionFlag.js"></script>
     <script src="/javascripts/Game/Controls.js"></script>
     <script src="/javascripts/Game/Character.js"></script>
     <script src="/javascripts/Game/Saiyan.js"></script>
@@ -51,12 +52,11 @@
     <script src="/javascripts/GameObject/adapter.js"></script>
     <script src="/javascripts/GameObject/RTC.js"></script>
     <script src="/javascripts/Game/Main.js"></script>
-    <script src='javascripts/toolbar/toolbar.js'></script>
+    <script src="/javascripts/toolbar/toolbar.js"></script>
 
-  <script>
-
-
-  </script>
+    <style>
+    #gui { position: absolute; top: 0px; right: -15px; height:5000px}
+    </style>
 
 </body>
 

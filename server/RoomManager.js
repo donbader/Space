@@ -72,6 +72,7 @@ Room.prototype.render = function(username, callbacks){
             if(!item.from)return;
             if(item.from === "public"){
                 ItemDB.getById(item.id, (err, itemdata)=>{
+                    if(!itemdata)return;
                     Object.assign(item, itemdata._doc);
                     callbacks.item && callbacks.item(item);
                 });
