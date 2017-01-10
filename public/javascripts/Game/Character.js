@@ -9,7 +9,7 @@ const VIEW_ANGLE = 45,
 
 
 var Character = this.Character = THREE.Object3D.extend({
-    init: function(info){
+    init: function(data, info){
         'use strict';
         this._super();
         var scope = this;
@@ -20,7 +20,10 @@ var Character = this.Character = THREE.Object3D.extend({
         this.info.width = this.info.width || 50;
         this.info.thickness = this.info.thickness || 50;
 
-        // this.socket = {};
+        //for rtc
+        this.name = data.name;
+        this.userID = data.id;
+        //
 
         this.position.set(0,this.info.height / 2,500);
         // Body
@@ -50,11 +53,42 @@ var Character = this.Character = THREE.Object3D.extend({
 
         this._view = "THIRD_PERSON";
         this.view(this._view);
-        ////////////////////////////
-        ///// Controls /////////////
-        ////////////////////////////
-        // this.controls = new Controls(this).mode("normal");
-        // this.webcam = new RTC(this.socket, this);
+
+        //for rtc
+        // this.webcam = new RTC(this, this.server);
+
+        //to set webcam
+        this.webcamWidth = 100;
+        this.webcamHeight = 100;
+        this.webcamPosition = new THREE.Vector3(0, 250, 0);
+
+        //to create the html element
+        this.webcamVideo = document.createElement('video');
+        this.webcamImage = document.createElement('canvas');
+        //<canvas id = 'videowebcamImage' width = '160' height = '120' style = 'visibility: hidden; float: left; position: fixed;'></canvas>
+        this.webcamImageContext = this.webcamImage.getContext('2d');
+
+        //to fill up the background color
+        this.webcamImageContext.fillStyle = '#000000';
+        this.webcamImageContext.fillRect(0, 0, this.webcamImage.width, this.webcamImage.height);
+
+        //to create the video texture
+        this.webcamTexture = new THREE.Texture(this.webcamImage);
+        this.webcamTexture.minFilter = THREE.LinearFilter;
+        this.webcamTexture.magFilter = THREE.LinearFilter;
+
+        var webcamMaterial = new THREE.MeshBasicMaterial({
+            map: this.webcamTexture,
+            overdraw: true,
+            side: THREE.DoubleSide
+        });
+
+        var webcamGeometry = new THREE.PlaneGeometry(this.webcamWidth, this.webcamHeight, 1, 1);
+        var webcamMesh = new THREE.Mesh(webcamGeometry, webcamMaterial);
+
+        webcamMesh.position.set(this.webcamPosition.x, this.webcamPosition.y, this.webcamPosition.z);
+
+        this.add(webcamMesh);
     },
     update: function(delta){
         // update dummy, feet
@@ -69,7 +103,16 @@ var Character = this.Character = THREE.Object3D.extend({
         // Control moving
         if(this.controls)
             this.controls.update(delta);
-        // this.webcam.update();
+
+        //for rtc
+        if (this.webcamVideo.readyState === this.webcamVideo.HAVE_ENOUGH_DATA) {
+
+            this.webcamImageContext.drawImage(this.webcamVideo, 0, 0, this.webcamImage.width, this.webcamImage.height);
+
+            if (this.webcamTexture) {
+                this.webcamTexture.needsUpdate = true;
+            }
+        }
     },
     ServerUpdate: function(){
         if(!this.socket)return;
@@ -154,9 +197,13 @@ var Character = this.Character = THREE.Object3D.extend({
                 this.turnTo(0, -Math.PI / 2);
                 break;
         }
+    },
+    setStream: function(stream) {
+        console.log('character ' + this.name + ' set stream');
+        window.URL = window.URL || window.webkitURL;
+        this.webcamVideo.src = window.URL.createObjectURL(stream);
+        this.stream = stream;
     }
 });
-
-
 
 })();

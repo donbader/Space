@@ -13,207 +13,188 @@
     //         }
     //     }
     // };
+    //
+
+    const iceConfig = { 'iceServers': [{ 'urls': 'stun:stun.iptel.org' }] };
 
     var RTC = this.RTC = THREE.Object3D.extend({
-        init: function(server, player) {
+        init: function(server, player, users) {
             'use strict';
 
             //need?
-
-            // this.server = server;
-            this.server = { 'iceServers': [{ 'urls': 'stun:stun.iptel.org' }] };
+            this.server = server;
+            //main player
             this.player = player;
+            //others
+            this.users = users;
 
-            console.log('this.server in init = ' + this.server);
+            this.trace('I am ' + this.player.name + ' id = ' + this.player.userID);
 
-            this.planeWidth = 100;
-            this.planeHeight = 100;
-
-            //<video id = 'monitor' autoplay width = '160' height = '120' style = 'visibility: hidden; float: left; position: fixed;'></video>
-
-            this.localVideo = document.createElement('video');
-            this.remoteVideo = document.createElement('video');
-
-            var temp = null;
-            temp = this.addMeshToPlayer(new THREE.Vector3(0, 250, 0));
-            this.localVideoImage = temp[0];
-            this.localVideoImageContext = temp[1];
-            this.localVideoTexture = temp[2];
-
-            temp = this.addMeshToPlayer(new THREE.Vector3(0, 400, 0));
-            this.remoteVideoImage = temp[0];
-            this.remoteVideoImageContext = temp[1];
-            this.remoteVideoTexture = temp[2];
-
-            this.start(() => this.call());
-            //this.call();
+            //to get camera stream
+            this.getLocalStream();
         },
         trace: function(text) {
-            // console.log((performance.now() / 1000).toFixed(3) + ': ' + text);
-            console.log('text = ' + text);
+            console.log((performance.now() / 1000).toFixed(3) + ': ', text);
         },
-        gotStream: function(stream) {
-            console.log("got stream this = ", this);
-            this.trace('Received local stream');
-
-            // this.localVideo.src = window.URL.createObjectURL(stream);
-
-            window.URL = window.URL || window.webkitURL;
-            console.log("stream = " + stream);
-            console.log('video = ' + this.localVideo);
-            console.log('window.URL = ' + window.URL);
-
-            this.localVideo.src = window.URL.createObjectURL(stream);
-            this.localStream = stream;
+        errorHandler: function(error) {
+            this.trace('error = ', error);
         },
-        start: function(call) {
-            this.trace('Requesting local stream');
+        createPeerConnection(id) {
+            if (this.users[id] && this.users[id].pc) {
+                this.trace('id = ' + id + ' has created');
+                return this.users[id].pc;
+            }
+
+            //to create new peer
+            this.trace('creating a new peer connection');
+
+            var pc = new RTCPeerConnection(iceConfig);
+            this.users[id].pc = pc;
+
+            pc.onicecandidate = (event) => {
+                // this.trace('on ice candidate');
+                this.server.emit('RTC msg to server', { by: this.player.userID, to: id, ice: event.candidate, type: 'ice' });
+            };
+
+            pc.onaddstream = (event) => {
+                this.trace('receiving new stream');
+
+                //??
+                event.stream.onended = () => {
+                    this.trace('id ' + this.player.userID + ' stream end');
+                }
+
+                this.setRemoteStream(event, id);
+            };
+
+            pc.onremovestream = (evnet) => {
+                this.trace('id ' + this.player.userID + ' stream close');
+            }
+
+            pc.addStream(this.stream);
+
+            return pc;
+        },
+        getPeerConnection: function(id) {
+            if (this.users[id] && this.users[id].pc) {
+                //be created in advance
+                return this.users[id].pc;
+            }
+
+            return this.createPeerConnection(id);
+        },
+        deletePeerConnection: function(id) {
+            if (!this.users[id] || !this.users[id].pc) {
+                this.trace('there is no users with id = ' + id);
+                return;
+            }
+
+            if(this.users[id].stream.getVideoTracks()[0])
+                this.users[id].stream.getVideoTracks()[0].stop();
+
+            if(this.users[id].stream.getAudioTracks()[0])
+                this.users[id].stream.getAudioTracks()[0].stop();
+
+            this.users[id].pc.removeStream(this.users[id].stream);
+            this.users[id].pc.close();
+            this.users[id].pc = null;
+            delete this.users[id].pc;
+        },
+        makeOffer: function(id) {
+            var pc = this.getPeerConnection(id);
+            //why pc create offer ???
+            pc.createOffer((sdp) => {
+                pc.setLocalDescription(sdp);
+                this.trace('creating an offer for', id);
+
+                this.server.emit('RTC msg to server', { by: this.player.userID, to: id, sdp: sdp, type: 'sdp-offer' });
+            }, (error) => this.errorHandler(error));
+        },
+        handleMessage(msg) {
+            var pc = this.getPeerConnection(msg.by);
+            switch (msg.type) {
+                case 'sdp-offer':
+                    pc.setRemoteDescription(new RTCSessionDescription(msg.sdp), () => {
+                        this.trace('setting remote description by offer');
+                        pc.createAnswer((sdp) => {
+                            pc.setLocalDescription(sdp);
+                            this.trace('send out answer from ' + this.player.userID + ' to ' + msg.by);
+                            this.server.emit('RTC msg to server', { by: this.player.userID, to: msg.by, sdp: sdp, type: 'sdp-answer' });
+                        }, (error) => this.errorHandler(error));
+                    });
+                    break;
+                case 'sdp-answer':
+                    pc.setRemoteDescription(new RTCSessionDescription(msg.sdp), () => {
+                        this.trace('setting remote description by answer');
+                    }, (error) => this.errorHandler(error));
+                    break;
+                case 'ice':
+                    if (msg.ice) {
+                        // this.trace('adding ice candidates');
+                        pc.addIceCandidate(new RTCIceCandidate(msg.ice));
+                    }
+                    break;
+            }
+        },
+        addHandlers: function() {
+            this.server.on('RTC peer connection', (msg) => {
+                // this.trace('receiving peer connection to ' + this.player.userID);
+                this.makeOffer(msg.id);
+            });
+
+            this.server.on('RTC peer disconnection', (msg) => {
+                this.trace('client disconnection');
+                this.deletePeerConnection(msg.id);
+            });
+
+            this.server.on('RTC msg to client', (msg) => {
+                // this.trace('receiving msg');
+                this.handleMessage(msg);
+            });
+
+            this.server.on('RTC close', () => {
+                this.trace('rtc close');
+                this.close();
+                // this.localStream.stop();
+            });
+        },
+        getLocalStream: function(RTCstream) {
+            this.trace('requesting local stream');
 
             navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-
             if (navigator.getUserMedia) {
                 navigator.getUserMedia(constraints, (stream) => {
-                        this.gotStream(stream);
-                        call();
+                        this.trace('receiving local stream');
+
+                        this.stream = stream;
+                        this.player.setStream(stream);
+
+                        //to add handlers after setting up local stream
+                        this.addHandlers();
+                        this.server.emit('RTC new connection', this.player.userID)
                     },
-                    function(error) {
-                        //??
+                    (error) => {
                         this.trace('getUserMedia error: ', error);
                     }
                 );
             } else {
-                console.log('gg');
-            }
-
-        },
-        call: function() {
-            this.trace('Starting call');
-
-            //???
-            if (this.localStream.getVideoTracks().length > 0) {
-                this.trace('Using video device: ' + this.localStream.getVideoTracks()[0].label);
-            }
-            if (this.localStream.getAudioTracks().length > 0) {
-                this.trace('Using audio device: ' + this.localStream.getAudioTracks()[0].label);
-            }
-
-            console.log('this.server in calll = ' + this.server);
-
-            this.localPeerConnection = new RTCPeerConnection(this.server);
-            this.trace('Created local peer connection object localPeerConnection');
-            this.localPeerConnection.onicecandidate = (event) => this.gotLocalIceCandidate(event);
-
-            this.remotePeerConnection = new RTCPeerConnection(this.server);
-            this.trace('Created remote peer connection object remotePeerConnection');
-            this.remotePeerConnection.onicecandidate = (event) => this.gotRemoteIceCandidate(event);
-            this.remotePeerConnection.onaddstream = (event) => this.gotRemoteStream(event);
-
-            this.localPeerConnection.addStream(this.localStream);
-            this.trace('Added localStream to localPeerConnection');
-            this.localPeerConnection.createOffer((description) => this.gotLocalDescription(description),
-                function(error) {
-                    this.trace('localPeerConnection.createOffer error: ', error);
-                }
-            );
-
-            console.log('this.localStream = ' + this.localStream);
-        },
-        gotLocalDescription: function(description) {
-            //???
-            this.localPeerConnection.setLocalDescription(description);
-            // this.trace('Offer from localPeerConnection: \n' + description.sdp);
-            this.trace('Offer from localPeerConnection');
-            this.remotePeerConnection.setRemoteDescription(description);
-            this.remotePeerConnection.createAnswer((description) => this.gotRemoteDescription(description),
-                function(error) {
-                    this.trace('remotePeerConnection.createAnswer error: ', error);
-                }
-            );
-        },
-        gotRemoteDescription: function(description) {
-            //???
-            this.remotePeerConnection.setLocalDescription(description);
-            // this.trace('Answer from remotePeerConnection: \n' + description.sdp);
-            this.trace('Answer from remotePeerConnection');
-            this.localPeerConnection.setRemoteDescription(description);
-        },
-        gotRemoteStream: function(event) {
-            // this.remoteVideo.src = window.URL.createObjectURL(stream);
-            console.log('remote video in got remote stream = ' + this.remoteVideo);
-            console.log('this in got remote stream = ' + this);
-            this.remoteVideo.src = window.URL.createObjectURL(event.stream);
-            this.trace('Received remote stream');
-        },
-        gotLocalIceCandidate: function(event) {
-            //???
-            console.log('this in got local ice candidate = ' + this);
-
-            if (event.candidate) {
-                this.remotePeerConnection.addIceCandidate(new RTCIceCandidate(event.candidate));
-                this.trace('Local ICE candidate: \n' + event.candidate.candidate);
+                this.trace('navigator.getUserMedia is null');
             }
         },
-        gotRemoteIceCandidate: function(event) {
-            //???
-            if (event.candidate) {
-                this.localPeerConnection.addIceCandidate(new RTCIceCandidate(event.candidate));
-                this.trace('Remote ICE candidate: \n' + event.candidate.candidate);
-            }
-        },
-        addMeshToPlayer: function(position) {
-            //to create the html element
-            var videoImage = document.createElement('canvas');
-            //<canvas id = 'videoImage' width = '160' height = '120' style = 'visibility: hidden; float: left; position: fixed;'></canvas>
-            var videoImageContext = videoImage.getContext('2d');
-
-            //to fill up the background color
-            videoImageContext.fillStyle = '#000000';
-            videoImageContext.fillRect(0, 0, videoImage.width, videoImage.height);
-
-            //to create the video texture
-            var videoTexture = new THREE.Texture(videoImage);
-            videoTexture.minFilter = THREE.LinearFilter;
-            videoTexture.magFilter = THREE.LinearFilter;
-
-            var videoMaterial = new THREE.MeshBasicMaterial({
-                map: videoTexture,
-                overdraw: true,
-                side: THREE.DoubleSide
-            });
-
-            var videoGeometry = new THREE.PlaneGeometry(this.planeWidth, this.planeHeight, 1, 1);
-            var videoMesh = new THREE.Mesh(videoGeometry, videoMaterial);
-
-            videoMesh.position.set(position.x, position.y, position.z);
-
-            this.player.add(videoMesh);
-            
-            return [videoImage, videoImageContext, videoTexture]
-        },
-        update: function() {
-            if (this.localVideo.readyState === this.localVideo.HAVE_ENOUGH_DATA) {
-                this.localVideoImageContext.drawImage(this.localVideo, 0, 0, this.localVideoImage.width, this.localVideoImage.height);
-
-                if (this.localVideoTexture) {
-                    this.localVideoTexture.needsUpdate = true;
-                }
-            }
-
-            if (this.remoteVideo.readyState === this.remoteVideo.HAVE_ENOUGH_DATA) {
-                this.remoteVideoImageContext.drawImage(this.remoteVideo, 0, 0, this.remoteVideoImage.width, this.remoteVideoImage.height);
-
-                if (this.remoteVideoTexture) {
-                    this.remoteVideoTexture.needsUpdate = true;
-                }
+        setRemoteStream: function(event, id) {
+            if (this.users[id] && this.users[id].object) {
+                this.users[id].stream = event.stream;
+                this.users[id].object.setStream(event.stream);
+            } else {
+                this.trace('no user has id = ' + id + ' or user with id has no character object');
             }
         },
         close: function() {
-            this.trace('close RTC');
+            this.trace('closing RTC self');
 
-            this.localPeerConnection.close();
-            this.remotePeerConnection.close();
-            this.localPeerConnection = null;
-            this.remotePeerConnection = null;
+            for (var id in this.users) {
+                deletePeerConnection(id);
+            }
         }
     });
 })();

@@ -59,13 +59,34 @@
             // TODO: Think the better way to store
             // player.canMoveOn(world.ground);
 
-			//to create the plane mesh
+			// to create the plane mesh
             // var iframeWidth = 1004, iframeHeight = 504;
             // var planeMaterial = new THREE.MeshBasicMaterial({ wireframe: true , color: 0x000000});
             // var planeGeometry = new THREE.PlaneGeometry(iframeWidth, iframeHeight);
             // var planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
             // planeMesh.position.set(0, 250, -1000);
             // this.add(planeMesh);
+
+            var element1 = document.createElement('iframe');
+            element1.src = '/Paint';
+            element1.setAttribute('width', 1004);
+            element1.setAttribute('height', 1004);
+            element1.scrolling = 'no';
+            var cssObj1 = new THREE.CSS3DObject(element1);
+            cssObj1.position.set(0, 300,-8000);
+            //cssObj.rotation.copy(planeMesh.rotation);
+            this.CssScene.add(cssObj1);
+
+            // var element2 = document.createElement('iframe');
+            // element2.src = '/WebcamCanvas';
+            // element2.with = 504;
+            // element2.height = 404;
+            // element2.scrolling = 'no';
+            // var cssObj2 = new THREE.CSS3DObject(element2);
+            // cssObj2.position.set(400, 250, 1000);
+            // //cssObj2.rotation.copy(planeMesh.rotation);
+            // this.CssScene.add(cssObj2);
+
 
 			//to create the dom element
 
@@ -467,6 +488,16 @@
                 console.error("This is not an Dynamic Object");
                 return;
             }
+
+            //for paint
+            if(model === 'paint') {
+               this.scene.add(obj.mesh);
+               this.CssScene.add(obj.dummyPaintCSSObj);
+               this.ObjectsToUpdate.push(obj);
+               return;
+            }
+            //
+
             // WARNING: This obj must have update();
             this.scene.add(model ? model : obj);
             this.ObjectsToUpdate.push(obj);
@@ -476,6 +507,7 @@
                 console.error("There is no update() in", obj);
                 return ;
             }
+
             // TODO: CssScene Must be added.
             this.CssScene.add(obj);
             this.ObjectsToUpdate.push(obj);
