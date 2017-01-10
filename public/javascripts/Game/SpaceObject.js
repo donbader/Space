@@ -34,7 +34,6 @@
                     child.position.add(offset);
                     console.log(child.position)
                 });
-                console.log("XDDD",bbox.max,bbox.min);
                 object3d.updateMatrix();
                 object3d.updateMatrixWorld(true);
                 object3d.userData.anchored = true;

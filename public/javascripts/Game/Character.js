@@ -100,7 +100,8 @@ var Character = this.Character = THREE.Object3D.extend({
         y = y || 0;
         this.rotation.y += x;
         this.eye.rotation.x += y;
-        this.eye.rotation.x = Math.max( - PI_2, Math.min( PI_2, this.eye.rotation.x ) );
+        if(this._view !== "GOD_VIEW")
+            this.eye.rotation.x = Math.max( - PI_2, Math.min( PI_2, this.eye.rotation.x ) );
         if(x || y && this.socket){
             this.ServerUpdate();
         }
@@ -132,6 +133,8 @@ var Character = this.Character = THREE.Object3D.extend({
         if(!v){
             if(this._view === "FIRST_PERSON")
                 v = "THIRD_PERSON";
+            else if((this._view) === "THIRD_PERSON")
+                v = "GOD_VIEW";
             else
                 v = "FIRST_PERSON";
             this._view = v;
@@ -140,12 +143,16 @@ var Character = this.Character = THREE.Object3D.extend({
         this._view = v;
         switch (this._view) {
             case "FIRST_PERSON":
-            this.eye.position.set(0,this.info.height-10,0);
-            break;
+                this.eye.position.set(0,this.info.height-10,0);
+                break;
             case "THIRD_PERSON":
-            this.eye.position.set(0,this.info.height+300,500);
-            this.turnTo(0, -0.5);
-            break;
+                this.eye.position.set(0,this.info.height+300,500);
+                this.turnTo(0, -0.5);
+                break;
+            case "GOD_VIEW":
+                this.eye.position.set(0, 1600 ,0);
+                this.turnTo(0, -Math.PI / 2);
+                break;
         }
     }
 });

@@ -13,6 +13,8 @@
 
 
     Controls = function(player) {
+        this.i=0;
+
         if(!player.camera)return console.error("This player didn't have camera (eye).");
         var scope = this;
         this.player = player;
@@ -61,11 +63,7 @@
             velocity: 1500.0,
             to: {
                 enable: false,
-                destination: {
-                    x: 0,
-                    y: 0,
-                    z: 0
-                },
+                destination: new THREE.Vector3(),
             },
             set method(m){
                 m = m.toUpperCase();
@@ -350,25 +348,17 @@
                             }
                         }
                         else{ // rotation
+                            var x = Math.PI * 2 *( event.offsetX / window.innerWidth);
+                            // x = Math.cos(Math.PI * x);
                             var deltaMove = {
-                                x: event.offsetX-this.mouse.previousPosition.x,
-                                y: event.offsetY-this.mouse.previousPosition.y
+                                x: x-this.mouse.previousPosition.x,
                             };
-                            var deltaRotationQuaternion = new THREE.Quaternion()
-                                .setFromEuler(new THREE.Euler(
-                                    0,
-                                    deltaMove.x * Math.PI / 180.0,
-                                    0,
-                                    'XYZ'
-                                ));
-                            for(var i in this.Controlling['objects']){
-                                var selected = this.Controlling['objects'][i];
-                                selected.quaternion.multiplyQuaternions(deltaRotationQuaternion, selected.quaternion);
-                            }
-
+                            var selected = this.Controlling['objects'][0];
+                            selected.rotation.y += deltaMove.x;
+                            // format to 90 degree
+                            // console.log(Math.floor(selected.rotation.y / (Math.PI / 2) + 1));
                             this.mouse.previousPosition = {
-                                x: event.offsetX,
-                                y: event.offsetY
+                                x: x
                             }
                         }
                     }
@@ -398,9 +388,7 @@
         		positionFlag.position.set(intersects[0].point.x, intersects[0].point.y + positionFlag.height/2, intersects[0].point.z);
                 this.move.method = "MOUSECLICK";
                 this.move.to.enabled = true;
-                this.move.to.destination.x = intersects[0].point.x;
-                this.move.to.destination.y = intersects[0].point.y;
-                this.move.to.destination.z = intersects[0].point.z;
+                this.move.to.destination.copy(intersects[0].point);
         	}
             // if(this._mode === "NORMAL")
         },
@@ -421,49 +409,48 @@
 
             // Moving method
 
-            // TODO: dynamic decide distance
             if(this.player.isOnObject(this.Objects['collide'], -this.velocity.y*delta)){
                 this.velocity.y = Math.max(0, this.velocity.y);
                 this.move.jump = true;
-                // console.log("On", this.player.onObject.name);
             }
-            // TODO: can step On Object with collision
             if(this.move.method === "KEYPRESS"){
                 if ( this.move.forward )this.velocity.z -= this.move.velocity * delta;
                 if ( this.move.backward )this.velocity.z += this.move.velocity * delta;
                 if ( this.move.left )this.velocity.x -= this.move.velocity * delta;
                 if ( this.move.right )this.velocity.x += this.move.velocity * delta;
 
-                var tendency = new THREE.Vector3(this.velocity.x * delta, this.velocity.y * delta, this.velocity.z * delta);
-                if(this.player.willCollideObject(tendency, this.Objects['collide'], 4)){
-                    // console.log("Will collide", this.player.collideObject.name);
-                    this.player.translate(0, tendency.y, 0);
-                }
-                else{
-                    this.player.translate(tendency.x, tendency.y, tendency.z);
+                if(!this.velocity.equals(new THREE.Vector3(0,0,0))){
+                    var tendency = new THREE.Vector3(this.velocity.x * delta, this.velocity.y * delta, this.velocity.z * delta);
+                    if(this.player.willCollideObject(tendency, this.Objects['collide'], 0)){
+                        this.player.translate(0, tendency.y, 0);
+                    }
+                    else{
+                        this.player.translate(tendency.x, tendency.y, tendency.z);
+                    }
                 }
             }
             else if(this.move.method === "MOUSECLICK"){
                 // TODO: simplify distance (Vector3()'s method)
-                var deltaX = this.move.to.destination.x - this.player.position.x;
-                var deltaY = this.move.to.destination.y - this.player.position.y;
-                var deltaZ = this.move.to.destination.z - this.player.position.z;
-                var distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaZ, 2) + Math.pow(deltaY,2));
-                this.velocity.x = deltaX / distance * this.move.velocity;
-                this.velocity.y = deltaY / distance * this.move.velocity;
-                this.velocity.z = deltaZ / distance * this.move.velocity;
+                var moveDelta = new THREE.Vector3().subVectors(this.move.to.destination, this.player.position);
+                var distance = moveDelta.length();
+                var heightVelocity = this.velocity.y;
+                moveDelta.multiplyScalar(this.move.velocity / distance);
+                this.velocity.copy(moveDelta);
+                this.velocity.y = heightVelocity;
                 if(distance <= 10){
                     this.positionFlag.visible = false;
                     this.move.to.enabled = false;
-                    this.velocity.x = 0;
-                    this.velocity.y = 0;
-                    this.velocity.z = 0;
+                    this.velocity.set(0, 0, 0);
                 }
-
-                // if(this.freeToMove(this.player.dummyBody, 0, delta))
-                //     this.player.move(this.velocity.x * delta, this.velocity.y * delta, this.velocity.z * delta);
-                // else
-                //     this.player.move(0, 0, 0);
+                if(!this.velocity.equals(new THREE.Vector3(0,0,0))){
+                    var tendency = new THREE.Vector3().copy(this.velocity).multiplyScalar(delta);
+                    if(this.player.willCollideObject(tendency, this.Objects['collide'], 0)){
+                        this.player.move(0, tendency.y, 0);
+                    }
+                    else{
+                        this.player.move(tendency.x, tendency.y, tendency.z);
+                    }
+                }
             }
 
             // this.player move
