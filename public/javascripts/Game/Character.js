@@ -156,6 +156,7 @@ var Character = this.Character = THREE.Object3D.extend({
         switch (this._view) {
             case "FIRST_PERSON":
                 this.eye.position.set(0,this.info.height-10,0);
+                this.turnTo(0, 0);
                 break;
             case "THIRD_PERSON":
                 this.eye.position.set(0,this.info.height+300,500);

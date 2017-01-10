@@ -1,9 +1,10 @@
 function AfterLogIn(username, roomID){
+
+
 ////////////////////
 //////SOCKET////////
 ////////////////////
-window.username = username;
-window.roomID = roomID;
+
 var Users = {};
 var game;
 var player;
@@ -59,6 +60,12 @@ socket.on('start game', function(){
     if(game.isRunning())return console.log("Game is already running");
     game.start();
     console.log("[game started]");
+    
+window.username = username;
+window.roomID = roomID;
+window.player = player; 
+    $("#GamePlay").trigger('AfterLogIn');
+
 });
 
 socket.on('render item', function(data){
@@ -204,5 +211,8 @@ socket.on('welcome',function(){
 //         this.body.material.color.setHex( 0x000000 );
 //     }
 // });
+
+
+//  window.view = view:
 
 }

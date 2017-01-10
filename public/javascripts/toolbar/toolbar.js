@@ -1,19 +1,26 @@
+$("#GamePlay").on('AfterLogIn', ()=>{
 
 var gui = new dat.GUI({
     width: 350,
     height: 700
 });
 gui.domElement.id = 'gui';
+$(gui.domElement).on('dragover',function(event){
+  event.preventDefault();
+})
 var parameters = {
     name: function() {},
     room: roomID,
 
     Control_Mode: function() {},
     FirstPerson_view: function() {
-        player.view();
+        player.view("FIRST_PERSON");
     },
     ThirdPerson_view: function() {
-        player.view();
+        player.view("THIRD_PERSON");
+    },
+    God_view:function(){
+        player.view("GOD_VIEW");
     },
 
     Normal_Mode: function() {
@@ -38,6 +45,14 @@ var parameters = {
         player.controls.voxelPainter.mode("DESTROY");
     },
     Add_Friend: "",
+    Painting_Brush: function(){},
+    Painting_Eraser: function(){},
+    color : [ 0, 128, 255 ],
+    FontSize : 100,
+    Painting_Reset: function(){},
+
+
+
     //
     //
     // friend1 : function(){alert("hi")},
@@ -55,14 +70,25 @@ var parameters = {
     // x: 0, y: 0, z: 0
 };
 
-gui.add(parameters, 'name').name("Hello " + username);
+gui.add(parameters, 'name').name("WELLCOME  " + username);
 
-var ViewsFloder = gui.addFolder('Views Mode');
-ViewsFloder.add(parameters, 'FirstPerson_view').name("First-Person");
-ViewsFloder.add(parameters, 'ThirdPerson_view').name("Third-Person");
+var ToolsFolder = gui.addFolder('TOOLS');
+ToolsFolder.add(parameters, 'Painting_Brush').name('Brush');
 
+ToolsFolder.addColor(parameters, 'color');
 
-var ControlsFloder = gui.addFolder('Control Mode')
+var controller = ToolsFolder.add(parameters,'FontSize',0,25);
+controller.onChange(function(value){});
+
+ToolsFolder.add(parameters, 'Painting_Eraser').name('Eraser');
+ToolsFolder.add(parameters, 'Painting_Reset').name('Reset');
+
+var ViewsFloder = gui.addFolder('VIEWS');
+ViewsFloder.add(parameters, 'FirstPerson_view').name("第一人稱");
+ViewsFloder.add(parameters, 'ThirdPerson_view').name("第三人稱");
+ViewsFloder.add(parameters, 'God_view').name("上帝視角");
+
+var ControlsFloder = gui.addFolder('MANIPULATE')
 ControlsFloder.add(parameters, 'Normal_Mode').name("Normal");
 ControlsFloder.add(parameters, 'CS_Mode').name("CS");
 ControlsFloder.add(parameters, 'Edit_Mode').name("Edit");
@@ -71,10 +97,11 @@ var VoXEL_Mode = ControlsFloder.addFolder("VoXEL");
 VoXEL_Mode.add(parameters, "Create_mode").name("Create");
 VoXEL_Mode.add(parameters, "Destory_mode").name("Destory");
 
-
+var FriendsFolder = gui.addFolder('FRIENDS');
 
 /////////////////////////SwitchRoom//////////////////////////
-var switchRoom = gui.add(parameters, 'room').name("Switch Room");
+var switchRoom = FriendsFolder.add(parameters,'room' ).name('Switch Room');
+// var switchRoom = gui.add(parameters, 'room').name("Switch Room");
 switchRoom.onChange(function(value) {
     player.controls.mode('TYPING');
 })
@@ -87,12 +114,13 @@ switchRoom.domElement.addEventListener('click', function(event) {
     console.log(event);
     player.controls.mode("TYPING");
 })
-/////////////////////////SwitchRoom//////////////////////////
+
 
 
 /////////////////////////Add Friend//////////////////////////
-var Add_Friend = gui.add(parameters, 'Add_Friend').name("Add Friends")
-
+var Add_Friend = FriendsFolder.add(parameters,'Add_Friend' ).name('Add Friends');
+// var Add_Friend = gui.add(parameters, 'Add_Friend').name("Add Friends")
+var FriendListFolder = FriendsFolder.addFolder('Friend List');
 Add_Friend.onFinishChange(function(value) {
     console.log(value);
     parameters[value] = function() {
@@ -100,7 +128,7 @@ Add_Friend.onFinishChange(function(value) {
         console.log("fuck");
     };
     console.log(parameters);
-    gui.add(parameters, value).name(value);
+    FriendListFolder.add(parameters, value).name(value);
     player.controls.mode("NORMAL");
 });
 
@@ -109,6 +137,7 @@ Add_Friend.domElement.addEventListener('click', function(event) {
     player.controls.mode("TYPING");
     console.log("1");
 })
+
 
 /////////////////////////Add Friend//////////////////////////
 
@@ -135,3 +164,4 @@ Add_Friend.domElement.addEventListener('click', function(event) {
 // folder1.add( parameters, 'y' );
 // folder1.close();
 gui.open();
+});
