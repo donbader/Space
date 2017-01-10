@@ -393,6 +393,7 @@
                 this.move.to.destination.copy(intersects[0].point);
         }
         if (this._mode === "CS"){
+
         }
           // if(this._mode === "NORMAL")
         },

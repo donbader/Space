@@ -3,7 +3,7 @@
 /**
  * Module dependencies.
  */
-
+var fs = require('fs');
 var app = require('../app');
 var debug = require('debug')('space:server');
 var http = require('http');
@@ -13,21 +13,24 @@ var io = require('socket.io')
 var gameEventHandler = require('../server/gameEventHandler');
 
 
+var options = {
+  key : fs.readFileSync('./privatekey.pem'),
+  cert : fs.readFileSync('./certificate.pem')
+};
 
-
-/**
+/**hi
  * Get port from environment and store in Express.
  */
 
 var port = normalizePort(process.env.PORT || '3001');
 app.set('port', port);
-
+// app.set('httpport', 3002);
 /**
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
-
+// var httpsserver = https.createServer(options,app).listen(app.get("httpport"));
+var server = https.createServer(options,app);
 /**
  * Listen on provided port, on all network interfaces.
  */
