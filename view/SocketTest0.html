@@ -5,58 +5,42 @@
 <html>
 <head>
     <title>SocketTest</title>
+    <link href="/stylesheets/jquery-contextMenu/jquery.contextMenu.min.css" rel="stylesheet" type="text/css" />
     <script src="/socket.io/socket.io.js"></script>
     <script src="/javascripts/jquery-3.1.1.min.js"></script>
     <script src="/javascripts/three.min.js"></script>
     <script src="/javascripts/CSS3DRenderer.js"></script>
       <script src="/javascripts/Stats.js"></script>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-      <script src="/javascripts/jquery.contextMenu.js"></script>
+      <script src="/javascripts/jquery.contextMenu.min.js"></script>
+      <script src="/javascripts/jquery.ui.position.min.js"></script>
       <script type='text/javascript' src='javascripts/toolbar/DAT.GUI.min.js'></script>
 </head>
 <body>
-    <div id="GamePlay" style="top: 0; left: 0; position: absolute;"></div>
-    <video id = 'monitor' autoplay width = '160' height = '120' style = 'visibility: hidden; float: left; position: fixed;'></video>
-        <canvas id = 'videoImage' width = '160' height = '120' style = 'visibility: hidden; float: left; position: fixed;'></canvas>
-        <canvas id = 'paint' width = '160' height = '120' style = ' visibility: visible; float: right; position: fixed; z-index: 5'></canvas>
-        <!-- <div id="buttons">
-            <input type="button" id="reset" value="Reset" />
-            <div id='red' class="color"></div>
-            <div id='blue' class="color"></div>
-            <div id='green' class="color"></div>
-            <div id='purple' class="color"></div>
-            <div id='yellow' class="color"></div>
-            <div id='orange' class="color"></div>
-            <div id='pink' class="color"></div>
-            <div id='black' class="color"></div>
-            <div id='white' class="color"></div>
-            <div id='ebebeb' class="color"></div>
-            <div id="default" class="color">1</div>
-            <div id="three" class="color">3</div>
-            <div id="five" class="color">5</div>
-            <div id="ten" class="color">10</div>
-            <div id="fifteen" class="color">15</div>
-            <div id="twenty" class="color">20</div>
-            <div id="eraser" class="color">
-                <img src="images/Eraser.jpg">
-            </div>
-        </div> -->
-    <script src="/javascripts/Game/Class.js"></script>
-    <script src="/javascripts/Game/MakeExtendable.js"></script>
-    <script src="/javascripts/Game/SpaceObject.js"></script>
-    <script src="/javascripts/Game/Controls.js"></script>
-    <script src="/javascripts/Game/Character.js"></script>
-    <script src="/javascripts/Game/Saiyan.js"></script>
-    <script src="/javascripts/Game/World.js"></script>
-    <script src="/javascripts/Game/Game.js"></script>
-    <script src="/javascripts/GameObject/adapter.js"></script>
-    <script src="/javascripts/GameObject/RTC.js"></script>
-    <script src="/javascripts/Game/Main.js"></script>
-    <script src="/javascripts/toolbar/toolbar.js"></script>
-
-    <style>
-    #gui { position: absolute; top: 0px; right: -15px; height:5000px}
-    </style>
+    <div id="zzz">
+        <h1>HIHI</h1>
+    </div>
+    <script>
+        $("#zzz").contextMenu({
+            selector: 'h1',
+            callback: function(key, options) {
+                var m = "clicked: " + key;
+                alert("Z");
+                window.console && console.log(m) || alert(m);
+            },
+            items: {
+                "edit": {name: "Edit", icon: "edit"},
+                "cut": {name: "Cut", icon: "cut"},
+                copy: {name: "Copy", icon: "copy"},
+                "paste": {name: "Paste", icon: "paste"},
+                "delete": {name: "Delete", icon: "delete"},
+                "sep1": "---------",
+                "quit": {name: "Quit", icon: function(){
+                    return 'context-menu-icon context-menu-icon-quit';
+                }}
+            }
+        });
+    </script>
 
 </body>
 

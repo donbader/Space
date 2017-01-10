@@ -95,7 +95,9 @@
         };
         this.Controlling = {
             rotation: false,
-            objects: []
+            object: undefined,
+            method: "move",
+            contextMenuing: false,
         }
         /*====================
             Voxel Painter
@@ -205,32 +207,44 @@
             dom = dom || document;
             var handle = e ? dom.addEventListener : dom.removeEventListener;
 
-            // if(e)
-            //     $.contextMenu({
-            //         selector: dom,
-            //         callback: function(key, options) {
-            //             var m = "clicked: " + key;
-            //             window.console && console.log(m) || alert(m);
-            //         },
-            //         items: {
-            //             "edit": {name: "Edit", icon: "edit"},
-            //             "cut": {name: "Cut", icon: "cut"},
-            //            copy: {name: "Copy", icon: "copy"},
-            //             "paste": {name: "Paste", icon: "paste"},
-            //             "delete": {name: "Delete", icon: "delete"},
-            //             "sep1": "---------",
-            //             "quit": {name: "Quit", icon: function(){
-            //                 return 'context-menu-icon context-menu-icon-quit';
-            //             }}
-            //         }
-            //     });
+            // contextMenu
+            if(e){
+                $.contextMenu({
+                    selector: '#GamePlay',
+                    callback: function(key, options) {
+                        switch (key) {
+                            case "delete":
+                                scope.Controlling['object'].parent.remove(scope.Controlling['object']);
+                                break;
+                            default:
+
+                        }
+                        scope.Controlling.method = "select";
+                        scope.Controlling.contextMenuing = false;
+                    },
+                    items: {
+                        "delete": {name: "Delete", icon: "delete"}
+                    }
+                });
+                this.contextMenu = $("ul.context-menu-list.context-menu-root");
+                this.contextMenu.on('contextmenu:hide', function(){
+                    scope.mouse.state = MOUSE_STATE.KEYUP;
+                    scope.Controlling.method = "move";
+                    scope.Controlling.contextMenuing = false;
+                })
+                this.contextMenu.on('mouseup', ()=>scope.mouse.state = MOUSE_STATE.KEYUP);
+            }
+
+
+
+            $(dom).on('contextmenu', (event)=>scope.onRightClick(event));
+
 
             handle('keydown', (event)=>scope.onKey("down", event));
             handle('keyup', (event)=>scope.onKey("up", event));
             handle('mousedown', (event)=>scope.onMouseDown(event));
             handle('mouseup', (event)=>scope.onMouseUp(event));
             handle('mousemove', (event)=>scope.onMouseMove(event));
-            handle('contextmenu', (event)=>scope.onRightClick(event));
             handle('mousewheel', (event)=>scope.onMouseWheel(event));
 
             this.enabled = e;
@@ -295,18 +309,19 @@
         },
         onMouseDown:function(event){
             this.mouse.state = MOUSE_STATE.KEYDOWN;
-            if(this._mode === "OBJ_EDITING"){
+            if(this._mode === "OBJ_EDITING" && event.which === 1 && !this.Controlling.contextMenuing ){
+                console.log("ON");
                 var intersects = this.getObjectOnMouse(event, this.Objects['move'], true);
 
                 if(intersects.length){
                     var intersect = SPACE_OBJECT.getTheOuttest(intersects[0].object);
+
                     var anchor = intersects[0].point.clone();
                     anchor.y = 0;
                     SPACE_OBJECT.allChildrenMoveToAnchor(intersect, anchor);
-                    this.Controlling['objects'].push(intersect);
+                    this.Controlling['object'] = intersect;
                 }
             }
-
 
         },
         onMouseUp:function(event){
@@ -314,8 +329,8 @@
             if(this._mode === "NORMAL"){
                 this.headDirection = {x:0, y:0, enabled:false};
             }
-            else if(this._mode === 'OBJ_EDITING'){
-                this.Controlling['objects'] = [];
+            else if(this._mode === 'OBJ_EDITING' && !this.Controlling.contextMenuing){
+                delete this.Controlling['object'] ;
             }
             else if(this._mode === "VOXEL" && event.which !== 3){
                 if(this.voxelPainter._mode === "CREATE" && this.voxelPainter.prevIntersect !== this.voxelPainter.intersect){
@@ -347,24 +362,22 @@
                     this.headDirection = {x:x, y:y, enabled:true};
                     return;
                 case "OBJ_EDITING":
-                    if(this.mouse.state !== MOUSE_STATE.KEYDOWN)return;
+                    if(this.mouse.state !== MOUSE_STATE.KEYDOWN || this.Controlling.method !== "move" || this.Controlling.contextMenuing)return;
                     var intersects = this.getObjectOnMouse(event, this.Objects['stepOn'], true);
 
-                    if(intersects.length && this.Controlling['objects'].length){
+                    if(intersects.length && this.Controlling['object']){
                         var intersect, index;
                         for(index in intersects){
                             intersect = SPACE_OBJECT.getTheOuttest(intersects[index].object);
-                            if(intersect !== this.Controlling['objects'][0])
+                            if(intersect !== this.Controlling['object'])
                                 break;
                         }
                         if(!this.Controlling.rotation){ // move position
-                            for(var i in this.Controlling['objects']){
-                                this.Controlling['objects'][i].position.set(
-                                    intersects[index].point.x
-                                    , this.Controlling['objects'][i].position.y
-                                    , intersects[index].point.z
-                                );
-                            }
+                            this.Controlling['object'].position.set(
+                                intersects[index].point.x
+                                , this.Controlling['object'].position.y
+                                , intersects[index].point.z
+                            );
                         }
                         else{ // rotation
                             var x = Math.PI * 2 *( event.offsetX / window.innerWidth);
@@ -372,7 +385,7 @@
                             var deltaMove = {
                                 x: x-this.mouse.previousPosition.x,
                             };
-                            var selected = this.Controlling['objects'][0];
+                            var selected = this.Controlling['object'];
                             selected.rotation.y += deltaMove.x;
                             // format to 90 degree
                             // console.log(Math.floor(selected.rotation.y / (Math.PI / 2) + 1));
@@ -395,26 +408,32 @@
         onRightClick:function(event){
         	event.preventDefault();
 
-          console.log(this._mode);
-
         	var mousePosition = new THREE.Vector2();
         	mousePosition.x = ( event.clientX / window.innerWidth ) * 2 - 1;
         	mousePosition.y = 1 - ( event.clientY / window.innerHeight ) * 2;
 
-        	this.raycaster.setFromCamera(mousePosition, this.player.camera);
-        	var intersects = this.raycaster.intersectObjects(this.Objects['stepOn'], true);
+            if(this._mode === "NORMAL"){
+                $("#GamePlay").contextMenu(false);
+                var intersects = this.getObjectOnMouse(event, this.Objects['stepOn'], true);
+                if(intersects.length){
+                    var positionFlag = this.positionFlag;
+                    positionFlag.visible = true;
+                    positionFlag.position.set(intersects[0].point.x, intersects[0].point.y + positionFlag.height/2, intersects[0].point.z);
+                    this.move.method = "MOUSECLICK";
+                    this.move.to.destination.copy(intersects[0].point);
+                }
+            }
+            else if(this._mode === "OBJ_EDITING"){
+                var intersects = this.getObjectOnMouse(event, this.Objects['select'], true);
+                if(intersects.length){
+                    this.Controlling['object'] = intersects[0].object;
+                    this.Controlling.method = "select";
+                    this.Controlling.contextMenuing = true;
+                    $("#GamePlay").contextMenu(true);
+                }
+            }
 
-        	if(intersects.length){
-        		var positionFlag = this.positionFlag;
-                positionFlag.visible = true;
-        		positionFlag.position.set(intersects[0].point.x, intersects[0].point.y + positionFlag.height/2, intersects[0].point.z);
-                this.move.method = "MOUSECLICK";
-                this.move.to.destination.copy(intersects[0].point);
-        }
-        if (this._mode === "CS"){
 
-        }
-          // if(this._mode === "NORMAL")
         },
         onMouseWheel:function(event){
         	event.preventDefault();
