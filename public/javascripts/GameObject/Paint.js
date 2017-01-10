@@ -50,79 +50,93 @@
 
             //to create the dummy paint
             this.dummyPaint = document.createElement('canvas');
+            // this.dummyPaint.src = '/Paint';
             this.dummyPaint.setAttribute('width', this.width);
             this.dummyPaint.setAttribute('height', this.height);
-            // this.dummyPaint.style['opacity'] = 0;
-
-            var context = this.dummyPaint.getContext('2d');
+            // this.dummyPaint.scrolling = 'no';
+                        var context = this.dummyPaint.getContext('2d');
             context.fillStyle = '#000000';
             context.fillRect(0, 0, this.width, this.height);
+            this.dummyPaint.style['opacity'] = 0.3;
 
-            this.dummyPaintJObj = $(this.dummyPaint);
             this.dummyPaintCSSObj = new THREE.CSS3DObject(this.dummyPaint);
-
             this.dummyPaintCSSObj.position.set(this.paintPosition.x, this.paintPosition.y, this.paintPosition.z);
 
-            //to create the true paint
-            this.paint = document.createElement('canvas');
-            this.paint.setAttribute('width', this.width);
-            this.paint.setAttribute('height', this.height);
+            // //to create the dummy paint
+            // this.dummyPaint = document.createElement('canvas');
+            // this.dummyPaint.setAttribute('width', this.width);
+            // this.dummyPaint.setAttribute('height', this.height);
+            // this.dummyPaint.style['opacity'] = 0.3;
 
-            this.paintJObj = $(this.paint);
+            // var context = this.dummyPaint.getContext('2d');
+            // context.fillStyle = '#000000';
+            // context.fillRect(0, 0, this.width, this.height);
 
-            this.context = this.paint.getContext('2d');
-            this.context.lineCap = 'round';
-            this.context.fillStyle = '#ffffff';
-            this.context.fillRect(0, 0, this.width, this.height);
+            // this.dummyPaintJObj = $(this.dummyPaint);
+            // this.dummyPaintCSSObj = new THREE.CSS3DObject(this.dummyPaint);
 
-            //to create the paint texture
-            this.texture = new THREE.Texture(this.paint);
-            this.texture.minFilter = THREE.LinearFilter;
-            this.texture.magFilter = THREE.LinearFilter;
+            // this.dummyPaintCSSObj.position.set(this.paintPosition.x, this.paintPosition.y, this.paintPosition.z);
 
-            //to create the paint mesh
-            var paintMaterial = new THREE.MeshBasicMaterial({
-                map: this.texture,
-                overdraw: true,
-                side: THREE.DoubleSide
-            });
+            // //to create the true paint
+            // this.paint = document.createElement('canvas');
+            // this.paint.setAttribute('width', this.width);
+            // this.paint.setAttribute('height', this.height);
 
-            var paintGeometry = new THREE.PlaneGeometry(this.width, this.height, 1, 1);
-            this.mesh = new THREE.Mesh(paintGeometry, paintMaterial);
-            //to add to scene
+            // this.paintJObj = $(this.paint);
 
-            this.mesh.position.set(this.paintPosition.x, this.paintPosition.y, this.paintPosition.z);
+            // this.context = this.paint.getContext('2d');
+            // this.context.lineCap = 'round';
+            // this.context.fillStyle = '#ffffff';
+            // this.context.fillRect(0, 0, this.width, this.height);
+
+            // //to create the paint texture
+            // this.texture = new THREE.Texture(this.paint);
+            // this.texture.minFilter = THREE.LinearFilter;
+            // this.texture.magFilter = THREE.LinearFilter;
+
+            // //to create the paint mesh
+            // var paintMaterial = new THREE.MeshBasicMaterial({
+            //     map: this.texture,
+            //     overdraw: true,
+            //     side: THREE.DoubleSide
+            // });
+
+            // var paintGeometry = new THREE.PlaneGeometry(this.width, this.height, 1, 1);
+            // this.mesh = new THREE.Mesh(paintGeometry, paintMaterial);
+            // //to add to scene
+
+            // this.mesh.position.set(this.paintPosition.x, this.paintPosition.y, this.paintPosition.z);
         
-            //to init
+            // //to init
 
-            //to set dummy paint event
-            this.dummyPaintJObj.on('mousedown mouseup', (event) => this.mouseOnCanvas(event));
+            // //to set dummy paint event
+            // this.dummyPaintJObj.on('mousedown mouseup', (event) => this.mouseOnCanvas(event));
 
-            //to set button click evnet
-            length = fontColors.length;
-            for(var i = 0; i < length; ++i) {
-                this.fontColorClick(i);
-                // this.setContext('strokeStyle', fontColors[i]);
-            }
+            // //to set button click evnet
+            // length = fontColors.length;
+            // for(var i = 0; i < length; ++i) {
+            //     this.fontColorClick(i);
+            //     // this.setContext('strokeStyle', fontColors[i]);
+            // }
 
-            length = fontSizes.length;
-            for(var i = 0; i < length; ++i) {
-                this.fontSizeClick(i);
-                // this.setContext('lineWidth', fontSizes[i]);
-            }
+            // length = fontSizes.length;
+            // for(var i = 0; i < length; ++i) {
+            //     this.fontSizeClick(i);
+            //     // this.setContext('lineWidth', fontSizes[i]);
+            // }
 
-            $('#eraser').on('click', () => {
-                this.setTool(toolMode.Eraser);
-            });
+            // $('#eraser').on('click', () => {
+            //     this.setTool(toolMode.Eraser);
+            // });
 
-            $('#reset').on('click', () => {
-                this.clear(0, 0, this.width, this.height);
-            });
+            // $('#reset').on('click', () => {
+            //     this.clear(0, 0, this.width, this.height);
+            // });
 
 
-            this.setTool(toolMode.Brush);
-            this.setContext('lineWidth', fontSizes[3]);
-            this.setContext('strokeStyle', fontColors[7]);
+            // this.setTool(toolMode.Brush);
+            // this.setContext('lineWidth', fontSizes[3]);
+            // this.setContext('strokeStyle', fontColors[7]);
         },
         draw: function(x, y, type) {
             console.log('draw type = ', type);

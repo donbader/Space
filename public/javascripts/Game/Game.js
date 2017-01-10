@@ -15,27 +15,86 @@
             ///////////
             this.scene = new THREE.Scene();
             this.scene.updateMatrixWorld();
-			this.CssScene = new THREE.Scene();
+            this.CssScene = new THREE.Scene();
 
             //////////////
             // RENDERER //
             //////////////
             this.renderer = new THREE.WebGLRenderer({
-                antialias: true
+                alpha: true
             });
 
-			// this.renderer.setPixelRatio( window.devicePixelRatio );
+
+            this.renderer.setClearColor(0xECF8ff);
+            this.renderer.setPixelRatio(window.devicePixelRatio);
             this.renderer.setSize(window.innerWidth, window.innerHeight);
             this.renderer.domElement.style.position = 'absolute';
+            this.renderer.domElement.style.zIndex = 0;
             this.renderer.domElement.style.top = 0;
-            // this.renderer.domElement.style.zIndex = 5;
             this.container.appendChild(this.renderer.domElement);
 
-			this.CssRenderer = new THREE.CSS3DRenderer();
+            this.CssRenderer = new THREE.CSS3DRenderer();
             this.CssRenderer.setSize(window.innerWidth, window.innerHeight);
             this.CssRenderer.domElement.style.position = 'absolute';
+            this.CssRenderer.domElement.style.zIndex = 1;
             this.CssRenderer.domElement.style.top = 0;
             this.container.appendChild(this.CssRenderer.domElement);
+            // this.CssRenderer.domElement.appendChild(this.renderer.domElement);
+            // this.renderer.domElement.appendChild(this.CssRenderer.domElement);
+
+            //test
+            var w = 500;
+            var h = 200;
+            var position = new THREE.Vector3(0, 200, -200);
+            var rotation = new THREE.Vector3(0, 0, 0);
+            var url = '/Paint';
+
+            var material = new THREE.MeshBasicMaterial({
+                color: 0x000000,
+                opacity: 0.0,
+                side: THREE.DoubleSide
+            });
+            var geometry = new THREE.PlaneGeometry(w, h);
+            var plane = new THREE.Mesh(geometry, material);
+            plane.position.x = position.x;
+            plane.position.y = position.y;
+            plane.position.z = position.z;
+            plane.rotation.x = rotation.x;
+            plane.rotation.y = rotation.y;
+            plane.rotation.z = rotation.z;
+            this.scene.add(plane);
+
+            var element1 = document.createElement('iframe');
+            element1.src = '/Paint';
+            element1.setAttribute('width', w);
+            element1.setAttribute('height', h);
+            element1.scrolling = 'no';
+            var cssObj = new THREE.CSS3DObject(element1);
+            cssObj.position.x = position.x;
+            cssObj.position.y = position.y;
+            cssObj.position.z = position.z;
+            cssObj.rotation.x = rotation.x;
+            cssObj.rotation.y = rotation.y;
+            cssObj.rotation.z = rotation.z;
+            this.CssScene.add(cssObj);
+
+            // var html = [
+            //     '<div style="width:' + w + 'px; height:' + h + 'px;">',
+            //     '<iframe src="' + url + '" width="' + w + '" height="' + h + '">',
+            //     '</iframe>',
+            //     '</div>'
+            // ].join('\n');
+
+            // var div = document.createElement('div');
+            // $(div).html(html);
+            // var cssObj = new THREE.CSS3DObject(div);
+            // cssObj.position.x = position.x;
+            // cssObj.position.y = position.y;
+            // cssObj.position.z = position.z;
+            // cssObj.rotation.x = rotation.x;
+            // cssObj.rotation.y = rotation.y;
+            // cssObj.rotation.z = rotation.z;
+            // this.CssScene.add(cssObj);
 
             ///////////
             // STATS //
@@ -59,401 +118,26 @@
             // TODO: Think the better way to store
             // player.canMoveOn(world.ground);
 
-			// to create the plane mesh
-            // var iframeWidth = 1004, iframeHeight = 504;
-            // var planeMaterial = new THREE.MeshBasicMaterial({ wireframe: true , color: 0x000000});
-            // var planeGeometry = new THREE.PlaneGeometry(iframeWidth, iframeHeight);
-            // var planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
-            // planeMesh.position.set(0, 250, -1000);
-            // this.add(planeMesh);
-
-            var element1 = document.createElement('iframe');
-            element1.src = '/Paint';
-            element1.setAttribute('width', 1004);
-            element1.setAttribute('height', 1004);
-            element1.scrolling = 'no';
-            var cssObj1 = new THREE.CSS3DObject(element1);
-            cssObj1.position.set(0, 300,-8000);
-            //cssObj.rotation.copy(planeMesh.rotation);
-            this.CssScene.add(cssObj1);
-
-            // var element2 = document.createElement('iframe');
-            // element2.src = '/WebcamCanvas';
-            // element2.with = 504;
-            // element2.height = 404;
-            // element2.scrolling = 'no';
-            // var cssObj2 = new THREE.CSS3DObject(element2);
-            // cssObj2.position.set(400, 250, 1000);
-            // //cssObj2.rotation.copy(planeMesh.rotation);
-            // this.CssScene.add(cssObj2);
-
-
-			//to create the dom element
-
-
-   //          var paintWidth = 160, paintHeight = 120;
-   //          var dummyPaint = document.createElement('canvas');
-   //          // element.src = '/Paint';
-   //          // element.innerHTML = "FUCK　ＹＯＵ＠！＠1321251351351313213213515311531514531848564658<br><br><br><br><br><br><br><br>41";
-   //          // element.style['font-size'] = '100px';
-   //          // element.style["background-color"] = "green" ;
-   //          // element.style["width"] = '1004px !important' ;
-   //          // element.style["height"] = '504px !important' ;
-   //          // element.width = 1004;
-   //          // element.height = 504;
-   //          dummyPaint.style['opacity'] = 0;
-   //          // dummyPaint.style['background-color'] = 'blue';
-   //          dummyPaint.setAttribute('width', paintWidth);
-   //          dummyPaint.setAttribute('height', paintHeight);
-
-   //          var dummyPaintJObj = $(dummyPaint);
-   //          dummyPaintJObj.on('click', function() {
-   //              console.log('canvas click');
-   //          });
-
-   //          // element.scrolling = 'no';
-			// var dummyPaintCSSObj = new THREE.CSS3DObject(dummyPaint);
-			// // cssObj.position.copy(planeMesh.position);
-   // //          cssObj.rotation.copy(planeMesh.rotation);
-			//  dummyPaintCSSObj.position.set(0, 300, -800);
-   //          //cssObj.rotation.copy(planeMesh.rotation);
-   //          this.CssScene.add(dummyPaintCSSObj);
-
-   //          //to create the paint system
-   //          var paintToolMode = this.paintToolMode = { Brush: 0, Eraser: 1 };
-   //          var paintTool = this.paintTool = paintToolMode.Brush;
-   //          var paintFontColors = ['red', 'blue', 'green', 'purple', 'yellow', 'orange', 'pink', 'black', 'white', 'ebebeb'];
-   //          var paintFontSizes = [1, 3, 5, 10, 15, 20];
-   //          var paintFontSizeNames = ['default', 'three', 'five', 'ten', 'fifteen', 'twenty'];
-   //          var paint = this.paint = document.getElementById('paint');
-   //          var paintJObj = this.paintJObj = $('paint');
-
-   //          // this.paint.setAttribute('width', 160);
-   //          // this.paint.setAttribute('height', 120);
-   //          paint.style['border'] = '1px solid #000';
-   //          paint.style['background-color'] = 'white';
-   //          // paint.style['color'] = 'white';
-   //          var paintContext = this.paintContext = this.paint.getContext('2d');
-   //          // paint.style['opacity'] = 1;
-
-   //          //to fill up the background color
-   //          this.paintContext.fillStyle = 'solid';
-   //          // this.paintContext.fillRect(0, 0, paintWidth, paintHeight);
-
-   //          // this.paintContext.fillRect(0, 0, this.paint.width, this.paint.height);
-   //          this.paintContext.lineCap = 'round';
-   //          this.paintContext.fillStyle = '#ffffff';
-   //          this.paintContext.fillRect(0,0,paintWidth,paintHeight);
-   //          // this.paintContext.fillStyle = '#000000';
-   //          // this.paintContext.fillRect(0, 0, paintWidth, paintHeight);
-
-
-
-
-   //          //to create the video texture
-   //          this.paintTexture = new THREE.Texture(this.paint);
-   //          this.paintTexture.minFilter = THREE.LinearFilter;
-   //          this.paintTexture.magFilter = THREE.LinearFilter;
-
-   //          var paintMaterial = new THREE.MeshBasicMaterial({
-   //              map: this.paintTexture,
-   //              overdraw: true,
-   //              side: THREE.DoubleSide
-   //          });
-
-   //          var paintGeometry = new THREE.PlaneGeometry(100, 100, 1, 1);
-   //          var paintMesh = new THREE.Mesh(paintGeometry, paintMaterial);
-   //          paintMesh.position.set(0, 300, -800);
-   //          this.scene.add(paintMesh);
-
-   //          function draw (x, y, type) {
-   //              if(type === 'mousedown') {
-   //                  console.log('mousedown');
-   //                  paintContext.beginPath();
-   //                  paintContext.moveTo(x, y);
-   //                  dummyPaintJObj.on('mousemove', mouseOnCanvas);
-   //              } else if (type === 'mousemove') {
-   //                  console.log('mousemove');
-   //                  mouseMove(x, y);
-   //              } else if (type === 'mouseup') {
-   //                  console.log('mouseup');
-   //                  paintContext.closePath();
-   //                  dummyPaintJObj.off('mousemove', mouseOnCanvas);
-   //              }
-   //              else {
-   //                  console.log('draw error');
-   //              }
-   //          };
-
-   //          paintContext.strokeStyle = paintFontColors[0];
-   //          paintContext.lineWidth = paintFontSizes[5];
-
-   //          function setPaintTool (tool) {
-   //              paintTool = tool;
-   //          };
-
-   //          function setPaintFontColor (i) {
-   //              paintContext.strokeStyle = paintFontColors[i];
-   //          };
-
-   //          function setPaintFontSize (i) {
-   //              paintContext.lineWidth = paintFontSizess[i];
-   //          };
-
-   //          function clearPaint (x, y, width, height) {
-   //              paintContext.clearRect(x, y, width, height);
-   //          };
-
-   //          function paintFontColorClick (i) {
-   //              $('#' + paintFontColors[i]).on('click', function() {
-   //                  SetColor(i);
-   //                  SetTool(paintToolMode.Brush);
-   //              })
-   //          }
-
-   //          function paintFontSizeClick (i) {
-   //              $('#' + paintFontSizeNames[i]).on('click', function() {
-   //                  SetSize(i);
-   //              });
-   //          }
-
-   //          function SetPaintFontColor (i) {
-   //              setColor(i);
-   //              //socket
-   //          }
-
-   //          function SetPaintTool (i) {
-   //              setTool(tool);
-   //              //socket
-   //          }
-
-   //          function ClearPaint (x, y, width, height) {
-   //              clearPaint(x, y, width, height);
-   //              //socket
-   //          }
-
-   //          //to set paint event
-
-   //          //to use dummyPaint event
-   //          dummyPaintJObj.on('mousedown mouseup', mouseOnCanvas);
-
-   //          for(var i = 0; i < paintFontColors.length; ++i) {
-   //              paintFontColorClick(i);
-   //          }
-
-   //          for(var i = 0; i < paintFontSizes.length; ++i) {
-   //              paintFontSizeClick(i);
-   //          }
-
-   //          $('#eraser').on('click', function() {
-   //              SetTool(paintToolMode.Eraser);
-   //          });
-
-   //          $('#reset').on('click', function() {
-   //              ClearPaint(0, 0, paint.width, paint.height);
-   //          });
-
-   //          function getMousePos(canvas, evt) {
-   //              console.log('get mouse position');
-   //              var rect = canvas.getBoundingClientRect();
-
-   //                  // console.log()
-   //              return {
-   //                  x: evt.clientX - rect.left,
-   //                  y: evt.clientY - rect.top
-   //              };
-   //          };
-
-   //          function mouseMove(x, y) {
-   //              switch(paintTool) {
-   //                  case paintToolMode.Brush:
-   //                      paintContext.lineTo(x, y);
-   //                      paintContext.stroke();
-   //                      break;
-   //                  case paintToolMode.Eraser:
-   //                      var halfWidth = paintContext.lineWidth * 0.5;
-   //                      paintContext.clearRect(x - halfWidth, y - halfWidth, paintContext.lineWidth, paintContext.lineWidth);
-   //                      break;
-   //              }
-   //          };
-
-   //          function mouseOnCanvas(e) {
-   //              console.log('event');
-   //              var type = e.handleObj.type,
-   //                  mousePos = getMousePos(dummyPaint, e);
-   //                  // mousePos = getMousePos(paint, e);
-
-   //              console.log(mousePos);
-   //              draw(mousePos.x, mousePos.y, type);
-   //              //socket
-   //          }
-
-            // to create the web camera
-
-
-            // var element1 = document.createElement('iframe');
-            // element1.src = '/Webcam';
-            // element1.with = 504;
-            // element1.height = 404;
-            // element1.scrolling = 'no';
-            // var cssObj1 = new THREE.CSS3DObject(element1);
-            // cssObj1.position.set(200, 250,1000);
-            // //cssObj.rotation.copy(planeMesh.rotation);
-            // this.CssScene.add(cssObj1);
-
-            // var element2 = document.createElement('iframe');
-            // element2.src = '/WebcamCanvas';
-            // element2.with = 504;
-            // element2.height = 404;
-            // element2.scrolling = 'no';
-            // var cssObj2 = new THREE.CSS3DObject(element2);
-            // cssObj2.position.set(400, 250, 1000);
-            // //cssObj2.rotation.copy(planeMesh.rotation);
-            // this.CssScene.add(cssObj2);
-
-            //web RTC
-            //var rtc = new RTC(null, player);
-            //to get the web camera
-            // navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-            // window.URL = window.URL || window.webkitURL;
-
-            // var video = this.video = document.getElementById('monitor');
-            // var constraints = {audio: true, video: true};
-
-            // // var constraints = {
-            // //     'audio': true,
-            // //     'video': {
-            // //         'width': {
-            // //             'min': '327',
-            // //             'max': '640'
-            // //         },
-            // //         'height': {
-            // //             'min': '200',
-            // //             'max': '480'
-            // //         }
-            // //     }
-            // // };
-
-            // if(navigator.getUserMedia) {
-            //     navigator.getUserMedia(constraints, successCallback, errorCallback);
-            // }
-            // else {
-            //     console.log('webcam GG');
-            // }
-
-            // function successCallback(stream) {
-            //     console.log('stream = ' + stream);
-            //     console.log(video);
-            //     if(window.URL) {
-            //         video.src = window.URL.createObjectURL(stream);
-            //         //URL.revokeObjectURL()   release
-            //     }
-            //     else {
-            //         //Opera
-            //         video.src = stream;
-            //     }
-
-            //     video.onerror = function(e) {
-            //         stream.stop();
-            //     };
-
-            //     stream.onended = errorCallback;
-            //     // video.play()
-            // }
-
-            // function errorCallback(e) {
-            //     var msg = '';
-
-            //     if(e.code == 1) {
-            //         msg = 'User denied access to use camera';
-            //     }
-
-            //     console.log('navigator.getUserMedia error: ', error, msg);
-            // }
-
-
-            // //to get the html element
-
-            // this.videoImage = document.getElementById('videoImage');
-            // this.videoImageContext = this.videoImage.getContext('2d');
-
-            // //to fill up the background color
-            // this.videoImageContext.fillStyle = '#000000';
-            // this.videoImageContext.fillRect(0, 0, this.videoImage.width, this.videoImage.height);
-
-            // //to create the video texture
-            // this.videoTexture = new THREE.Texture(this.videoImage);
-            // this.videoTexture.minFilter = THREE.LinearFilter;
-            // this.videoTexture.magFilter = THREE.LinearFilter;
-
-            // var videoMaterial = new THREE.MeshBasicMaterial({
-            //     map: this.videoTexture,
-            //     overdraw: true,
-            //     side: THREE.DoubleSide
-            // });
-
-            // var videoGeometry = new THREE.PlaneGeometry(100, 100, 1, 1);
-            // var videoMesh = new THREE.Mesh(videoGeometry, videoMaterial);
-
-            // videoMesh.position.set(0, 50, 0);
-            // this.scene.add(videoMesh);
-            // // player.addObj(videoMesh, new THREE.Vector3(0, player.height - 10, 0));
-
-
             //important
-			scope.camera.updateProjectionMatrix();
-
-                //             var image = new Image();
-                // image.src = scope.paint.toDataURL('image/png');
-                // scope.
-
-            // Canvas2Image.saveAsPNG(this.paint);
+            scope.camera.updateProjectionMatrix();
 
             /////////////////////
             // FUNCTION DEFINE //
             /////////////////////
             this.render = function() {
                 var delta = scope.clock.getDelta();
-                scope.ObjectsToUpdate.forEach((obj)=>obj.update(delta < 0.03 ? delta : 0.03));
+                scope.ObjectsToUpdate.forEach((obj) => obj.update(delta < 0.03 ? delta : 0.03));
                 scope.stats.update();
-
-                // if( scope.video.readyState === scope.video.HAVE_ENOUGH_DATA ) {
-                //     scope.videoImageContext.drawImage(scope.video, 0, 0, scope.videoImage.width, scope.videoImage.height);
-                //     // scope.paintContext.drawImage(scope.video, 0, 0, paintWidth, paintHeight);
-
-
-
-                //     if( scope.videoTexture ){
-                //         scope.videoTexture.needsUpdate = true;
-                //     }
-
-
-                // }
-
-
-                // scope.paint
-
-                //             var image = new Image();
-                // image.src = scope.paint.toDataURL('image/png');
-                // scope.paintContext.drawImage(image, 0, 0, paintWidth, paintHeight);
-
-                // if(scope.paintTexture) {
-                //     scope.paintTexture.needsUpdate = true;
-                //     // console.log('YO');
-                // }
-
-
-                // scope.paintContext.drawImage(scope.dummyPaint, 0, 0, scope.videoImage.width, scope.videoImage.height);
 
                 scope.renderer.render(scope.scene, scope.camera);
                 scope.CssRenderer.render(scope.CssScene, scope.camera);
 
-                if(scope.state == GAME_STATE.RUNNING)
+                if (scope.state == GAME_STATE.RUNNING)
                     scope.requestId = requestAnimationFrame(scope.render);
                 // else if(this.state == GAME_STATE.STOP)
-                    // cancelAnimationFrame(this.requestId);
+                // cancelAnimationFrame(this.requestId);
             }
-            this.pause = function(){
+            this.pause = function() {
                 console.log("PAUSE");
                 scope.state = GAME_STATE.PAUSE;
             }
@@ -466,35 +150,35 @@
             }
             this.stop = function() {
                 scope.state = GAME_STATE.STOP;
-                if (scope.requestId){
+                if (scope.requestId) {
                     cancelAnimationFrame(scope.requestId);
-                    console.log("Game has stopped..."+scope.requestId);
+                    console.log("Game has stopped..." + scope.requestId);
                 }
             }
 
             this.state = GAME_STATE.READY;
         },
-        isRunning: function(){
+        isRunning: function() {
             return this.state === GAME_STATE.RUNNING;
         },
         add: function(obj) {
             this.scene.add(obj);
         },
-        remove: function(obj){
+        remove: function(obj) {
             this.scene.remove(obj);
         },
-        addDynamicObject: function(obj, model){
-            if(!obj.update){
+        addDynamicObject: function(obj, model) {
+            if (!obj.update) {
                 console.error("This is not an Dynamic Object");
                 return;
             }
 
             //for paint
-            if(model === 'paint') {
-               this.scene.add(obj.mesh);
-               this.CssScene.add(obj.dummyPaintCSSObj);
-               this.ObjectsToUpdate.push(obj);
-               return;
+            if (model === 'paint') {
+                this.scene.add(obj.mesh);
+                this.CssScene.add(obj.dummyPaintCSSObj);
+                this.ObjectsToUpdate.push(obj);
+                return;
             }
             //
 
@@ -502,21 +186,22 @@
             this.scene.add(model ? model : obj);
             this.ObjectsToUpdate.push(obj);
         },
-        addCSSObject: function(obj, model){
-            if(!obj.update){
-                console.error("There is no update() in", obj);
-                return ;
+        addCSSObject: function(obj, model) {
+            //for paint
+            if (model === 'paint') {
+                this.CssScene.add(obj);
+                return;
             }
+            //
 
             // TODO: CssScene Must be added.
             this.CssScene.add(obj);
-            this.ObjectsToUpdate.push(obj);
         },
         children: function() {
             return scene.children;
         },
-        setController: function(controller){
-            if(this.Controller)
+        setController: function(controller) {
+            if (this.Controller)
                 this.Controller.controls.enable(false, this.container);
 
             // controller.in(this.scene, this.renderer);
@@ -524,7 +209,7 @@
             this.add(controller.controls.positionFlag);
             controller.controls.enable(true, this.container);
 
-            if(this.socket)
+            if (this.socket)
                 controller.socket = this.socket;
 
             this.camera = controller.camera;
