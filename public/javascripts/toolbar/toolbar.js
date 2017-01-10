@@ -1,3 +1,4 @@
+$("#GamePlay").on('AfterLogIn', ()=>{
 
 var gui = new dat.GUI({
     width: 350,
@@ -135,3 +136,4 @@ Add_Friend.domElement.addEventListener('click', function(event) {
 // folder1.add( parameters, 'y' );
 // folder1.close();
 gui.open();
+});

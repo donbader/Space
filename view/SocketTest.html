@@ -7,6 +7,8 @@
     <script src="/javascripts/three.min.js"></script>
     <script src="/javascripts/CSS3DRenderer.js"></script>
     <script src="/javascripts/Stats.js"></script>
+      <script src="/javascripts/jquery.contextMenu.js"></script>
+      <script type='text/javascript' src='javascripts/toolbar/DAT.GUI.min.js'></script>
 </head>
 <body>
     <div id="GamePlay" style="top: 0; left: 0; position: absolute;"></div>
@@ -47,6 +49,7 @@
     <script src="/javascripts/GameObject/adapter.js"></script>
     <script src="/javascripts/GameObject/RTC.js"></script>
     <script src="/javascripts/Game/Main.js"></script>
+    <script src="/javascripts/toolbar/toolbar.js"></script>
     <script>
     // TODO: Kick the user while he is logined;
     var query = window.location.href.split('?')[1].split("&");
@@ -54,6 +57,10 @@
     var roomID = query[1].split("=")[1];
     AfterLogIn(username, roomID);
     </script>
+
+    <style>
+    #gui { position: absolute; top: 0px; right: -15px; height:5000px}
+    </style>
 
 
 </body>
