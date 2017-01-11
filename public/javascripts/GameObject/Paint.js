@@ -100,6 +100,11 @@
 
             //socket
         },
+        reset: function() {
+            this.clear(0, 0, this.width, this.height);
+
+            this.server.emit('paint reset');
+        },
         mouseMove: function(x, y) {
             switch (this.tool) {
                 case 'Brush':
@@ -154,6 +159,10 @@
                 if (this.texture) {
                     this.texture.needsUpdate = true;
                 }
+            });
+
+            this.server.on('paint reset', () => {
+                this.clear(0, 0, this.width, this.height);
             });
         },
         update: function() {

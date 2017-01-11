@@ -235,14 +235,27 @@ handler.connection = function(client) {
                 });
             });
 
-            client.on('draw end', (info) => {
+            client.on('draw end', () => {
                 RoomManager.getRoom(ROOMID).do((room) => {
                     room.users.forEach((roomUser) => {
                         // console.log('roomUser ' + roomUser.name + ' in ' + room);
 
                         if (roomUser.id !== client.id) {
                             // console.log(roomUser.id + ' connect to ' + id);
-                            clients[roomUser.id].emit('drawn end', info);
+                            clients[roomUser.id].emit('drawn end');
+                        }
+                    });
+                });
+            });
+
+            client.on('paint reset', () => {
+                RoomManager.getRoom(ROOMID).do((room) => {
+                    room.users.forEach((roomUser) => {
+                        // console.log('roomUser ' + roomUser.name + ' in ' + room);
+
+                        if (roomUser.id !== client.id) {
+                            // console.log(roomUser.id + ' connect to ' + id);
+                            clients[roomUser.id].emit('paint reset');
                         }
                     });
                 });

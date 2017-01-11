@@ -48,7 +48,9 @@ var parameters = {
     Painting_Eraser: function(){
         player.controls.paint.setTool('Eraser');
     },
-    // color : [ 0, 128, 255 ],
+    Painting_Reset: function(){
+        player.controls.paint.reset();
+    },
     color: '#ff8800',
     FontSize : 10
 
@@ -69,29 +71,26 @@ var parameters = {
     // x: 0, y: 0, z: 0
 };
 
-gui.add(parameters, 'name').name("Hello " + username);
-
-var ViewsFloder = gui.addFolder('Views Mode');
-ViewsFloder.add(parameters, 'FirstPerson_view').name("First-Person");
-ViewsFloder.add(parameters, 'ThirdPerson_view').name("Third-Person");
+gui.add(parameters, 'name').name("WELLCOME  " + username);
 
 var ToolsFolder = gui.addFolder('TOOLS');
 ToolsFolder.add(parameters, 'Painting_Brush').name('Brush');
 
 ToolsFolder.addColor(player.controls.paint, 'color');
 
-
 var controller = ToolsFolder.add(parameters,'FontSize',0,25);
 controller.onChange(function(value){
     player.controls.paint.setContext('lineWidth', value);
 });
 
-
 ToolsFolder.add(parameters, 'Painting_Eraser').name('Eraser');
+ToolsFolder.add(parameters, 'Painting_Reset').name('Reset');
 
+var ViewsFloder = gui.addFolder('VIEWS');
+ViewsFloder.add(parameters, 'FirstPerson_view').name("First-Person");
+ViewsFloder.add(parameters, 'ThirdPerson_view').name("Third-Person");
 
-
-var ControlsFloder = gui.addFolder('Control Mode')
+var ControlsFloder = gui.addFolder('MANIPULATE')
 ControlsFloder.add(parameters, 'Normal_Mode').name("Normal");
 ControlsFloder.add(parameters, 'CS_Mode').name("CS");
 ControlsFloder.add(parameters, 'Edit_Mode').name("Edit");
@@ -100,10 +99,11 @@ var VoXEL_Mode = ControlsFloder.addFolder("VoXEL");
 VoXEL_Mode.add(parameters, "Create_mode").name("Create");
 VoXEL_Mode.add(parameters, "Destory_mode").name("Destory");
 
-
+var FriendsFolder = gui.addFolder('FRIENDS');
 
 /////////////////////////SwitchRoom//////////////////////////
-var switchRoom = gui.add(parameters, 'room').name("Switch Room");
+var switchRoom = FriendsFolder.add(parameters,'room' ).name('Switch Room');
+// var switchRoom = gui.add(parameters, 'room').name("Switch Room");
 switchRoom.onChange(function(value) {
     player.controls.mode('TYPING');
 })
@@ -119,12 +119,13 @@ switchRoom.domElement.addEventListener('click', function(event) {
     console.log(event);
     player.controls.mode("TYPING");
 })                        
-/////////////////////////SwitchRoom//////////////////////////
+
 
 
 /////////////////////////Add Friend//////////////////////////
-var Add_Friend = gui.add(parameters, 'Add_Friend').name("Add Friends")
-
+var Add_Friend = FriendsFolder.add(parameters,'Add_Friend' ).name('Add Friends');
+// var Add_Friend = gui.add(parameters, 'Add_Friend').name("Add Friends")
+var FriendListFolder = FriendsFolder.addFolder('Friend List');
 Add_Friend.onFinishChange(function(value) {
     console.log(value);
     parameters[value] = function() {
@@ -132,7 +133,7 @@ Add_Friend.onFinishChange(function(value) {
         console.log("fuck");
     };
     console.log(parameters);
-    gui.add(parameters, value).name(value);
+    FriendListFolder.add(parameters, value).name(value);
     player.controls.mode("NORMAL");
 });
 
@@ -141,6 +142,7 @@ Add_Friend.domElement.addEventListener('click', function(event) {
     player.controls.mode("TYPING");
     console.log("1");
 })
+
 
 /////////////////////////Add Friend//////////////////////////
 
