@@ -146,7 +146,6 @@
                 this.add(this.helper);
                 this.setScale(width);
 
-                this.voxelId = 0;
 
                 // Grid
                 // var size = 5, step = width;
@@ -194,19 +193,46 @@
             fitToFormat: function(vector){
                 vector.divideScalar( this.voxelWidth ).floor().multiplyScalar( this.voxelWidth ).addScalar(this.voxelWidth/2);
             },
-            create: function(material){
+            create: function(material, socket){
                 material = material || this.cubeMaterial;
                 var voxel = new THREE.Mesh( this.cubeGeo, material );
                 voxel.scale.set(this.voxelWidth, this.voxelWidth, this.voxelWidth );
                 voxel.position.copy( this.intersect.point ).add( this.intersect.face.normal );
                 this.fitToFormat(voxel.position);
-                voxel.name = "voxel" + ++this.voxelId;
+                voxel.name = "voxel";
                 this.Objects.add(voxel);
                 console.log(voxel.position);
+                if(socket)
+                    socket.emit('voxel create', {color:material.color.getHex(), position:voxel.position})
                 return voxel;
             },
-            destroy: function(voxel){
+            createVoxel: function(scene, position, color){
+                this.cubeMaterial.color.setHex(color);
+                var voxel = new THREE.Mesh( this.cubeGeo, this.cubeMaterial );
+                voxel.scale.set(this.voxelWidth, this.voxelWidth, this.voxelWidth );
+                voxel.position.set(position.x, position.y, position.z);
+                this.fitToFormat(voxel.position);
+                voxel.name = "voxel";
+                console.log(voxel.position);
+                scene.add(voxel);
+            },
+            destroy: function(voxel,socket){
                 this.Objects.remove(voxel);
+
+                if(socket)
+                    socket.emit('voxel destroy', voxel.position)
+            },
+            destroyVoxel: function(scene, position){
+                for(var i in scene.children){
+                    if(scene.children[i].name === "voxel"){
+                        if(scene.children[i].position.x === position.x
+                            && scene.children[i].position.y === position.y
+                            && scene.children[i].position.z === position.z){
+                                scene.children.splice(i,1);
+                                return ;
+                            }
+                    }
+                }
             },
             updateHelper: function(intersect){
 

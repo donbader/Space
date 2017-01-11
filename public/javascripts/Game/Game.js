@@ -94,12 +94,19 @@
                 requestAnimationFrame(scope.render);
             }
             this.stop = function() {
+                // TODO: Disable duplicated event
                 scope.state = GAME_STATE.STOP;
-                if (scope.requestId) {
+
+                this.Controller.controls.enable(false);
+                delete this.Controller.controls;
+                delete this.Controller;
+                if (scope.requestId){
                     cancelAnimationFrame(scope.requestId);
                     console.log("Game has stopped..." + scope.requestId);
                 }
-                this.container.innerHTML = '';
+
+                var replaceElement = this.container.cloneNode(true);
+                this.container.parentNode.replaceChild(replaceElement, this.container);
             }
 
             this.state = GAME_STATE.READY;
@@ -130,9 +137,11 @@
         children: function() {
             return scene.children;
         },
-        setController: function(controller) {
-            if (this.Controller)
-                this.Controller.controls.enable(false, this.container);
+        setController: function(controller){
+            if(this.Controller){
+                console.log("already have controller")
+                this.Controller.controls.enable(false,this.scene, this.container);
+            }
 
             if (this.socket)
                 controller.socket = this.socket;

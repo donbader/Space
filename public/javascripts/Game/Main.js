@@ -29,7 +29,7 @@ socket.on('sys', function(data){
 
 
 socket.on('create game', function(user){
-    if(game)return ;
+    // if(game)return ;
     console.log("[Create Game By User]" , user, user.type);
     // player = eval("new "+user.type+"()");
 
@@ -45,7 +45,7 @@ socket.on('create game', function(user){
     //for rtc
     rtc = new RTC(socket, player, Users);
     //
-
+    socket.emit('game ready');
     console.log("[game created]", game.scene);
 });
 
@@ -53,12 +53,11 @@ socket.on('start game', function(){
     if(game.isRunning())return console.log("Game is already running");
     game.start();
     console.log("[game started]");
-    
+
 window.username = username;
 window.roomID = roomID;
 window.player = player; 
 window.game = game;
-
     $("#GamePlay").trigger('AfterLogIn');
 
 });
@@ -93,6 +92,11 @@ socket.on('render item', function(data){
 
             });
             break;
+        case "voxel":
+            console.log(data);
+            var painter = player.controls.voxelPainter;
+            painter.createVoxel(game.scene, data.position, data.color);
+            break;
         default:
             SPACE_OBJECT.load(game, data, (obj)=>{
                 player.manipulate(obj);
@@ -104,6 +108,17 @@ socket.on('render item', function(data){
 
 });
 
+socket.on('remove item', function(data){
+    switch (data.type) {
+        case "voxel":
+            var painter = player.controls.voxelPainter;
+            painter.deleteVoxel(data.position);
+            break;
+        default:
+
+    }
+});
+
 
 socket.on('add user', function(userdata){
     console.log("[Add user]", userdata.name, ":",Users );
@@ -112,7 +127,6 @@ socket.on('add user', function(userdata){
     Users[userdata.id] = userdata;
     Users[userdata.id].object = new Character(userdata);
     Users[userdata.id].object.name = userdata.name;
-    Users[userdata.id].object.userData.prop = {collide:true};
     game.add(Users[userdata.id].object);
     player.manipulate(Users[userdata.id].object);
     //

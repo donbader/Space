@@ -1,4 +1,5 @@
 $("#GamePlay").on('AfterLogIn', ()=>{
+if(window.hasGUI)return;
 
 var gui = new dat.GUI({
     width: 350,
@@ -14,10 +15,13 @@ var parameters = {
 
     Control_Mode: function() {},
     FirstPerson_view: function() {
-        player.view();
+        player.view("FIRST_PERSON");
     },
     ThirdPerson_view: function() {
-        player.view();
+        player.view("THIRD_PERSON");
+    },
+    God_view:function(){
+        player.view("GOD_VIEW");
     },
 
     Normal_Mode: function() {
@@ -87,8 +91,9 @@ ToolsFolder.add(parameters, 'Painting_Eraser').name('Eraser');
 ToolsFolder.add(parameters, 'Painting_Reset').name('Reset');
 
 var ViewsFloder = gui.addFolder('VIEWS');
-ViewsFloder.add(parameters, 'FirstPerson_view').name("First-Person");
-ViewsFloder.add(parameters, 'ThirdPerson_view').name("Third-Person");
+ViewsFloder.add(parameters, 'FirstPerson_view').name("第一人稱");
+ViewsFloder.add(parameters, 'ThirdPerson_view').name("第三人稱");
+ViewsFloder.add(parameters, 'God_view').name("上帝視角");
 
 var ControlsFloder = gui.addFolder('MANIPULATE')
 ControlsFloder.add(parameters, 'Normal_Mode').name("Normal");
@@ -118,7 +123,7 @@ switchRoom.onFinishChange(function(value) {
 switchRoom.domElement.addEventListener('click', function(event) {
     console.log(event);
     player.controls.mode("TYPING");
-})                        
+})
 
 
 
@@ -169,4 +174,5 @@ Add_Friend.domElement.addEventListener('click', function(event) {
 // folder1.add( parameters, 'y' );
 // folder1.close();
 gui.open();
+window.hasGUI = true;
 });
