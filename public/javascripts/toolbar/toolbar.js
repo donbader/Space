@@ -44,8 +44,9 @@ var parameters = {
     Add_Friend: "",
     Painting_Brush: function(){},
     Painting_Eraser: function(){},
-    color : [ 0, 128, 255 ],
-    FontSize : 100,
+    // color : [ 0, 128, 255 ],
+    color: '#ff8800',
+    FontSize : 100
 
 
     //
@@ -74,11 +75,14 @@ ViewsFloder.add(parameters, 'ThirdPerson_view').name("Third-Person");
 var ToolsFolder = gui.addFolder('TOOLS');
 ToolsFolder.add(parameters, 'Painting_Brush').name('Brush');
 
-ToolsFolder.addColor(parameters, 'color');
+// ToolsFolder.addColor(parameters, 'color');
+ToolsFolder.addColor(player.controls.paint, 'color');
 
 
 var controller = ToolsFolder.add(parameters,'FontSize',0,25);
-controller.onChange(function(value){});
+controller.onChange(function(value){
+    player.controls.paint.setContext('lineWidth', value);
+});
 
 
 ToolsFolder.add(parameters, 'Painting_Eraser').name('Eraser');
@@ -104,6 +108,9 @@ switchRoom.onChange(function(value) {
 
 switchRoom.onFinishChange(function(value) {
     // Connect to other's room
+    game.stop();
+    delete game;
+    player.socket.emit('join', value);
 });
 
 switchRoom.domElement.addEventListener('click', function(event) {

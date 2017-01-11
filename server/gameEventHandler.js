@@ -198,6 +198,9 @@ handler.connection = function(client) {
             client.on('draw start', (info) => {
                 console.log('draw start');
                 RoomManager.getRoom(ROOMID).do((room) => {
+
+                console.log('info[x] = ' + info.x,' info[y] = ', info.y, ' lineWidth = ' + info.lineWidth);
+
                     room.users.forEach((roomUser) => {
                         // console.log('roomUser ' + roomUser.name + ' in ' + room);
 

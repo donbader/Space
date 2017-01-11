@@ -57,6 +57,8 @@ socket.on('start game', function(){
 window.username = username;
 window.roomID = roomID;
 window.player = player; 
+window.game = game;
+
     $("#GamePlay").trigger('AfterLogIn');
 
 });

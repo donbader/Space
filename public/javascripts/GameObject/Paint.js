@@ -109,8 +109,11 @@
             // });
 
             this.setTool(toolMode.Brush);
-            this.setContext('lineWidth', fontSizes[3]);
-            this.setContext('strokeStyle', fontColors[7]);
+            this.color = '#000000';
+            this.context.lineWidth = 10;
+            this.context.strokeStyle = this.color;
+            // this.setContext('lineWidth', this.color);
+            // this.setContext('strokeStyle', fontColors[7]);
 
             this.addHandlers();
         },
@@ -130,11 +133,12 @@
             this.context.closePath();
         },
         draw: function(x, y, type) {
-            console.log('draw type = ', type);
+            // console.log('draw type = ', type);
 
             if (type === 'mousedown') {
                 // this.context.beginPath();
                 // this.context.moveTo(x, y);
+                this.setContext('strokeStyle', this.color);
                 this.drawStart(x, y);
                 this.isDraw = true;
 
@@ -152,6 +156,7 @@
             this.context[attr] = value;
 
             //socket
+            // this.server.emit('')
         },
         setTool: function(tool) {
             this.tool = tool;
@@ -178,7 +183,8 @@
             switch (this.tool) {
                 case toolMode.Brush:
                     this.drawing(x, y);
-                    this.server.emit('drawing paint', { x: x, y: y });
+                    // console.log('lineWidth: ' + this.context.lineWidth + ' color: ' + this.context.strokeStyle);
+                    this.server.emit('drawing paint', { x: x, y: y, lineWidth: this.context.lineWidth, color: this.context.strokeStyle});
                     break;
                 case toolMode.Eraser:
                     this.erasing(x, y);
@@ -192,6 +198,15 @@
         },
         addHandlers: function() {
             this.server.on('drawn start', (info) => {
+                this.preLineWidth = this.context.lineWidth;
+                console.log('line width [] = ', info['lineWidth']);
+                console.log('line width = ', info.lineWidth);
+                this.setContext('lineWidth', info.lineWidth);
+
+                this.preColor = this.context.strokeStyle;
+                console.log('stroke style = ', info.color);
+                this.setContext('strokeStyle', info.color);
+
                 this.drawStart(info.x, info.y);
             });
 
@@ -205,6 +220,9 @@
 
             this.server.on('drawn end', (info) => {
                 this.drawEnd();
+
+                this.setContext('lineWidth', this.preLineWidth);
+                this.setContext('strokeStyle', this.strokeStyle);
             });
 
             this.server.on('set paint url', (url) => {

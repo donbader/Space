@@ -28,7 +28,7 @@
             this.renderer.setPixelRatio(window.devicePixelRatio);
             this.renderer.setSize(window.innerWidth, window.innerHeight);
             this.renderer.domElement.style.position = 'absolute';
-            this.renderer.domElement.style.zIndex = 1;
+            this.renderer.domElement.style.zIndex = 0;
             this.renderer.domElement.style.top = 0;
             this.container.appendChild(this.renderer.domElement);
 
@@ -99,6 +99,7 @@
                     cancelAnimationFrame(scope.requestId);
                     console.log("Game has stopped..." + scope.requestId);
                 }
+                this.container.innerHTML = '';
             }
 
             this.state = GAME_STATE.READY;
