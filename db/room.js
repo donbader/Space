@@ -43,7 +43,6 @@ RoomSchema.statics.refresh = function(owner, roomdata){
     );
 }
 
-
 var Room = mongoose.model('Room', RoomSchema);
 
 

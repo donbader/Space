@@ -4,7 +4,8 @@ var UserSchema = new mongoose.Schema({
   name : String,
   password : String,
   type: String,
-  VoxelWarehouse: Array
+  VoxelWarehouse: Array,
+  friends: Array
   });
 
 UserSchema.statics.getByName = function(name,callback){
@@ -61,6 +62,59 @@ UserSchema.statics.getVoxel = function(username, itemName, callback){
         }
     )
 }
+
+//for friends
+UserSchema.statics.getFriends = function(username, callback) {
+    if(!username || !callback) return;
+
+    this.findOne(
+        {name: username},
+        function(err, result) {
+            if(err) return console.log(err);
+            callback && callback(result.friends);
+        }
+    );
+}
+
+UserSchema.statics.appendFriend = function(username, friend, callback) {
+    if(!username || !friend) return;
+
+    this.getFriends(username, (friends) => {
+
+        if(friends.indexOf(friend) == -1) {
+            this.update(
+                {name: username},
+                {$push: {"friends": friend}},
+                {safe: true, upsert: true, new : true},
+                function(err, result){
+                    callback && callback(result);
+            });
+        }
+        else {
+            console.log('friend has been in friends');
+        }
+    });
+}
+
+UserSchema.statics.removeFriend = function(username, friend, callback) {
+    if(!username || !friend) return;
+
+    this.getFriends(username, (friends) => {
+        if(friends.indexOf(friend) != -1) {
+            this.update(
+                {name: username},
+                {$pull: {"friends": friend}},
+                {safe: true, upsert: true, new : true},
+                function(err, result){
+                    callback && callback(result);
+            });
+        }
+        else {
+            console.log('friend is not in friends');
+        }
+    });
+}
+//
 
 
 var User = mongoose.model('User', UserSchema);

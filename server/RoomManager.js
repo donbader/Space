@@ -95,6 +95,23 @@ Room.prototype.render = function(username, callbacks){
     });
 }
 
+//for paint
+Room.prototype.uploadPaint = function(url, callback) {
+    if(!callback) return;
+    
+    this.do(function(room) {
+        room.paint = url;
+    });
+}
+
+Room.prototype.getPaint = function(callback) {
+    if(!callback) return;
+    this.do(function(room) {
+        return callback(room.paint);
+    });
+}
+//
+
 //Manager
 
 
@@ -120,6 +137,14 @@ RoomManager.prototype.render = function(owner, username, callbacks){
     this.getRoom(owner).render(username, callbacks);
 }
 
+//for paint
+RoomManager.prototype.getPaint = function(owner, callback) {
+    this.getRoom(owner).getPaint(callback);
+}
 
+RoomManager.prototype.uploadPaint = function(owner, url, callback) {
+    this.getRoom(owner).uploadPaint(url, callback);
+}
+//
 
 module.exports = RoomManager;

@@ -1,69 +1,22 @@
 (function() {
-    const toolMode = { Brush: 0, Eraser: 1 },
-        fontColors = ['red', 'blue', 'green', 'purple', 'yellow', 'orange', 'pink', 'black', 'white', 'ebebeb'],
-        fontSizes = [1, 3, 5, 10, 15, 20],
-        fontSizeNames = ['default', 'three', 'five', 'ten', 'fifteen', 'twenty'];
+    const toolMode = ['Brush', 'Eraser'];
 
     var Paint = this.Paint = THREE.Object3D.extend({
-        init: function(width, height, position, users) {
+        init: function(width, height, position, server) {
             'use strict';
+            this._super();
 
             this.width = width;
             this.height = height;
             this.paintPosition = position;
-            this.users = users;
+            this.server = server;
+            this.pivot = new THREE.Vector3(this.paintPosition.x - this.width * 0.5, this.paintPosition.y + this.height * 0.5, this.paintPosition.z);
 
-            //to create reset button
-            var button = document.createElement('input');
-            button.setAttribute('type', 'button');
-            button.setAttribute('id', 'reset');
-            button.setAttribute('value', 'Reset');
-            this.reset = button;
+            this.userData.prop = {
+                paint: true
+            };
 
-            //to create color button
-            this.colorButtons = [];
-            var length = fontColors.length;
-            for(var i = 0; i < length; ++i) {
-                var div = document.createElement('div');
-                div.setAttribute('id', fontColors[i]);
-                div.setAttribute('class', 'color');
-                this.colorButtons[i] = div;
-            }
-
-            //to create size button
-            this.sizeButtons = [];
-            length = fontSizes.length;
-            for(var i = 0; i < length; ++i) {
-                var div = document.createElement('div');
-                div.setAttribute('id', fontSizeNames[i]);
-                div.setAttribute('class', 'color');
-                $(div).text(fontSizes[i]);
-                this.sizeButtons[i] = div;
-            }
-
-            //to create eraser button
-            var div = document.createElement('div');
-            div.setAttribute('id', 'eraser');
-            div.setAttribute('class', 'color');
-            $(div).html('<img src = "images/Eraser.jpg">');
-            this.eraser = div;
-
-            //to create the dummy paint
-            this.dummyPaint = document.createElement('canvas');
-            this.dummyPaint.setAttribute('width', this.width);
-            this.dummyPaint.setAttribute('height', this.height);
-            // this.dummyPaint.style['opacity'] = 0;
-
-            var context = this.dummyPaint.getContext('2d');
-            context.fillStyle = '#000000';
-            context.fillRect(0, 0, this.width, this.height);
-
-            this.dummyPaintJObj = $(this.dummyPaint);
-            this.dummyPaintCSSObj = new THREE.CSS3DObject(this.dummyPaint);
-
-            this.dummyPaintCSSObj.position.set(this.paintPosition.x, this.paintPosition.y, this.paintPosition.z);
-
-            //to create the true paint
+            //to create the paint
             this.paint = document.createElement('canvas');
             this.paint.setAttribute('width', this.width);
             this.paint.setAttribute('height', this.height);
@@ -89,122 +42,128 @@
 
             var paintGeometry = new THREE.PlaneGeometry(this.width, this.height, 1, 1);
             this.mesh = new THREE.Mesh(paintGeometry, paintMaterial);
+            this.mesh.name = 'paintMesh';
+
             //to add to scene
-
             this.mesh.position.set(this.paintPosition.x, this.paintPosition.y, this.paintPosition.z);
-        
-            //to init
+            this.add(this.mesh);
 
-            //to set dummy paint event
-            this.dummyPaintJObj.on('mousedown mouseup', (event) => this.mouseOnCanvas(event));
+            this.setTool('Brush');
+            //for GUI
+            this.color = '#000000';
+            this.context.lineWidth = 10;
+            this.context.strokeStyle = this.color;
 
-            //to set button click evnet
-            length = fontColors.length;
-            for(var i = 0; i < length; ++i) {
-                this.fontColorClick(i);
-                // this.setContext('strokeStyle', fontColors[i]);
-            }
-
-            length = fontSizes.length;
-            for(var i = 0; i < length; ++i) {
-                this.fontSizeClick(i);
-                // this.setContext('lineWidth', fontSizes[i]);
-            }
-
-            $('#eraser').on('click', () => {
-                this.setTool(toolMode.Eraser);
-            });
-
-            $('#reset').on('click', () => {
-                this.clear(0, 0, this.width, this.height);
-            });
-
-
-            this.setTool(toolMode.Brush);
-            this.setContext('lineWidth', fontSizes[3]);
-            this.setContext('strokeStyle', fontColors[7]);
+            this.addHandlers();
+        },
+        drawStart: function(x, y) {
+            this.context.beginPath();
+            this.context.moveTo(x, y);
+        },
+        drawing: function(x, y) {
+            this.context.lineTo(x, y);
+            this.context.stroke();
+        },
+        erasing: function(x, y) {
+            var halfWidth = this.context.lineWidth * 0.5;
+            this.clear(x - halfWidth, y - halfWidth, this.context.lineWidth, this.context.lineWidth);
+        },
+        drawEnd: function() {
+            this.context.closePath();
         },
         draw: function(x, y, type) {
-            console.log('draw type = ', type);
+            // console.log('draw type = ', type);
 
             if (type === 'mousedown') {
-                this.context.beginPath();
-                this.context.moveTo(x, y);
-                this.dummyPaintJObj.on('mousemove', (event) => this.mouseOnCanvas(event));
-            } else if (type === 'mousemove') {
+                this.setContext('strokeStyle', this.color);
+                this.drawStart(x, y);
+                this.isDraw = true;
+
+                this.server.emit('draw start',  { x: x, y: y, lineWidth: this.context.lineWidth, color: this.context.strokeStyle, tool: this.tool});
+            } else if (type === 'mousemove' && this.isDraw) {
                 this.mouseMove(x, y);
             } else if (type === 'mouseup') {
-                this.context.closePath();
-                this.dummyPaintJObj.off('mousemove', (event) => this.mouseOnCanvas(event));
-            } else {
-                console.error('draw type error');
+                this.drawEnd();
+                this.isDraw = false;
+
+                this.server.emit('draw end');
             }
         },
         setContext: function(attr, value) {
             this.context[attr] = value;
-
-            //socket
         },
         setTool: function(tool) {
             this.tool = tool;
-
-            //socket
         },
         clear: function(x, y, width, height) {
             this.context.clearRect(x, y, width, height);
 
             //socket
         },
-        getMousePos: function(canvas, event) {
-            console.log('get mouser position');
+        reset: function() {
+            this.clear(0, 0, this.width, this.height);
 
-            var rect = canvas.getBoundingClientRect();
-            console.log('event.clientX = ' + event.clientX + ' event.clientY = ' + event.clientY);
-            console.log('rect left = ' + rect.left + ' rect.top = ' + rect.top);
-            return {
-                x: event.clientX - rect.left,
-                y: event.clientY - rect.top
-            };
+            this.server.emit('paint reset');
         },
         mouseMove: function(x, y) {
-            switch(this.tool) {
-                case toolMode.Brush:
-                    this.context.lineTo(x, y);
-                    this.context.stroke();
+            switch (this.tool) {
+                case 'Brush':
+                    this.drawing(x, y);
+                    this.server.emit('drawing paint', { x: x, y: y});
                     break;
-                case toolMode.Eraser:
-                    var halfWidth = this.context.lineWidth * 0.5;
-                    this.clear(x - halfWidth, y - halfWidth, this.context.lineWidth, this.context.lineWidth);
+                case 'Eraser':
+                    this.erasing(x, y);
+                    this.server.emit('erasing paint', { x: x, y: y });
                     break;
             }
         },
-        mouseOnCanvas: function(event) {
-            var pos = this.getMousePos(this.dummyPaint, event);
-
-            if(event.handleObj.type !== 'mousemove')
-                console.log('mouse position = ', pos);
-            
-            this.draw(pos.x, pos.y, event.handleObj.type);
+        mouseOnCanvas: function(position, type) {
+            var pos = new THREE.Vector2(position.x - this.pivot.x, this.pivot.y - position.y);
+            this.draw(pos.x, pos.y, type);
         },
-        fontColorClick: function(i) {
-            $(this.colorButtons[i]).on('click', () => {
-                this.setContext('strokeStyle', fontColors[i]);
-                this.setTool(toolMode.Brush);
+        addHandlers: function() {
+            this.server.on('drawn start', (info) => {
+                this.preLineWidth = this.context.lineWidth;
+                this.setContext('lineWidth', info.lineWidth);
+
+                this.preColor = this.context.strokeStyle;
+                this.setContext('strokeStyle', info.color);
+
+                this.preTool = this.tool;
+                this.tool = info.tool;
+
+                this.drawStart(info.x, info.y);
             });
 
-            // $('#' + fontColors[i]).on('click', () => {
-            //     this.setContext('strokeStyle', fontColors[i]);
-            //     this.setTool(toolMode.Brush);
-            // });
-        },
-        fontSizeClick: function(i) {
-            $(this.sizeButtons[i]).on('click', () => {
-                this.setContext('lineWidth', fontSizes[i]);
+            this.server.on('drawn paint', (info) => {
+                this.drawing(info.x, info.y);
             });
 
-            // $('#' + fontSizeNames[i]).on('click', () => {
-            //     this.setContext('lineWidth', fontSizes[i]);
-            // });
+            this.server.on('erased paint', (info) => {
+                this.erasing(info.x, info.y);
+            });
+
+            this.server.on('drawn end', (info) => {
+                this.drawEnd();
+
+                this.setContext('lineWidth', this.preLineWidth);
+                this.setContext('strokeStyle', this.preColor);
+                this.tool = this.preTool;
+            });
+
+            this.server.on('set paint url', (url) => {
+                var image = new Image();
+                image.src = url;
+                this.context.drawImage(image, 0, 0, this.width, this.height);
+
+                if (this.texture) {
+                    this.texture.needsUpdate = true;
+                }
+            });
+
+            this.server.on('paint reset', () => {
+                this.clear(0, 0, this.width, this.height);
+            });
         },
         update: function() {
             var image = new Image();
@@ -215,143 +174,14 @@
                 // console.log('update paint texture');
                 this.texture.needsUpdate = true;
             }
-        }
+        },
+        save: function(name, socket) {
+            if (!name || !socket) return;
 
+            var url = this.paint.toDataURL('image/png');
+            socket.emit('paint upload', url);
+            console.log('paint has saved');
+        }
     });
 
 })();
-
-// this.CssScene.add(dummyPaintCSSObj);
-// this.scene.add(mesh);
-
-// function draw (x, y, type) {
-//     if(type === 'mousedown') {
-//         console.log('mousedown');
-//         paintContext.beginPath();
-//         paintContext.moveTo(x, y);
-//         dummyPaintJObj.on('mousemove', mouseOnCanvas);
-//     } else if (type === 'mousemove') {
-//         console.log('mousemove');
-//         mouseMove(x, y);
-//     } else if (type === 'mouseup') {
-//         console.log('mouseup');
-//         paintContext.closePath();
-//         dummyPaintJObj.off('mousemove', mouseOnCanvas);
-//     }
-//     else {
-//         console.log('draw error');
-//     }
-// };
-// set("strokeStyle", paintFontColors[i])
-// function set(attr, value){
-//  paintContext[attr] = value;
-// }
-
-// function setPaintTool (tool) {
-//     paintTool = tool;
-// };
-
-// function setPaintFontColor (i) {
-//     paintContext.strokeStyle = paintFontColors[i];
-// };
-
-// function setPaintFontSize (i) {
-//     paintContext.lineWidth = paintFontSizess[i];
-// };
-
-// function clearPaint (x, y, width, height) {
-//     paintContext.clearRect(x, y, width, height);
-// };
-
-// function paintFontColorClick (i) {
-//     $('#' + paintFontColors[i]).on('click', function() {
-//         SetColor(i);
-//         SetTool(paintToolMode.Brush);
-//     })
-// }
-
-// function paintFontSizeClick (i) {
-//     $('#' + paintFontSizeNames[i]).on('click', function() {
-//         SetSize(i);
-//     });
-// }
-
-// function SetPaintFontColor (i) {
-//     setColor(i);
-//     //socket
-// }
-
-// function SetPaintTool (i) {
-//     setTool(tool);
-//     //socket
-// }
-
-// function ClearPaint (x, y, width, height) {
-//     clearPaint(x, y, width, height);
-//     //socket
-// }
-
-// //to set paint event
-
-// //to use dummyPaint event
-// dummyPaintJObj.on('mousedown mouseup', mouseOnCanvas);
-
-// for(var i = 0; i < paintFontColors.length; ++i) {
-//     paintFontColorClick(i);
-// }
-
-// for(var i = 0; i < paintFontSizes.length; ++i) {
-//     paintFontSizeClick(i);
-// }
-
-// $('#eraser').on('click', function() {
-//     SetTool(paintToolMode.Eraser);
-// });
-
-// $('#reset').on('click', function() {
-//     ClearPaint(0, 0, paint.width, paint.height);
-// });
-
-// function getMousePos(canvas, evt) {
-//     console.log('get mouse position');
-//     var rect = canvas.getBoundingClientRect();
-
-//         // console.log()
-//     return {
-//         x: evt.clientX - rect.left,
-//         y: evt.clientY - rect.top
-//     };
-// };
-
-// function mouseMove(x, y) {
-//     switch(paintTool) {
-//         case paintToolMode.Brush:
-//             paintContext.lineTo(x, y);
-//             paintContext.stroke();
-//             break;
-//         case paintToolMode.Eraser:
-//             var halfWidth = paintContext.lineWidth * 0.5;
-//             paintContext.clearRect(x - halfWidth, y - halfWidth, paintContext.lineWidth, paintContext.lineWidth);
-//             break;
-//     }
-// };
-
-// function mouseOnCanvas(e) {
-//     console.log('event');
-//     var type = e.handleObj.type,
-//         mousePos = getMousePos(dummyPaint, e);
-//         // mousePos = getMousePos(paint, e);
-
-//     console.log(mousePos);
-//     draw(mousePos.x, mousePos.y, type);
-//     //socket
-// }
-
-//             var image = new Image();
-// image.src = this.paint.toDataURL('image/png');
-// this.context.drawImage(image, 0, 0, paintWidth, paintHeight);
-
-// if(this.texture) {
-//     this.texture.needsUpdate = true;
-//     // console.log('YO');
-// }

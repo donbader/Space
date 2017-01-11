@@ -91,7 +91,8 @@
             stepOn: [],
             select: [],
             collide: [],
-            move: []
+            move: [],
+            paint: []
         };
         this.Controlling = {
             rotation: false,
@@ -102,6 +103,11 @@
         ====================*/
         this.voxelPainter = new SPACE_OBJECT.VoxelPainter();
         this.manipulate(this.voxelPainter.Objects);
+
+        //for paint
+        this.paint = new Paint(1000, 500, new THREE.Vector3(0, 300, -500), scope.player.socket);
+        this.manipulate(this.paint);
+        //
 
         /*====================
             Deployment
@@ -182,12 +188,42 @@
             if(!bool)return;
             if(scope._mode === "VOXEL")
                 scope.voxelPainter.save("SONG", scope.player.socket);
+            else if(scope._mode === 'PAINTER') {
+                //for paint
+                scope.paint.save('paint', scope.player.socket);
+            }
         }
         hotkey["M"] = function(event, bool){
             if(!bool)return;
             if(scope._mode === "VOXEL")
                 scope.voxelPainter.delete("SONG", scope.player.socket);
         }
+
+        //for paint
+        hotkey["P"] = function(event, bool){
+            if(!bool)return;
+            
+            (scope._mode !== 'PAINTER') ?
+                scope.mode('PAINTER') :
+                scope.mode(scope._prevMode);
+        }
+        //
+
+        //for friend
+        // hotkey['F'] = function(event, bool) {
+        //     if(!bool) return;
+
+        //     console.log('add friend');
+        //     scope.player.socket.emit('adding friend', {name: scope.player.name, friendName: 'corey'});
+        // }
+
+        // hotkey['G'] = function(event, bool) {
+        //     if(!bool) return;
+
+        //     console.log('remove friend');
+        //     scope.player.socket.emit('removing friend', {name: scope.player.name, friendName: 'lam'});
+        // }
+        //
     };
 
     Controls.prototype = {
@@ -218,6 +254,10 @@
                 this.scene = scene;
                 scene.add(this.positionFlag);
                 scene.add(this.voxelPainter.helper);
+
+                //for paint
+                scene.add(this.paint);
+                //
             }
             else if(!e && scene){
                 scene.remove(this.positionFlag);
@@ -267,11 +307,13 @@
             switch (m) {
                 case "NORMAL":case "CS":
                 case "TYPING":case "OBJ_EDITING":
+                case 'PAINTER':
                 this.voxelPainter.helper.visible = false;
                 break;
                 case "VOXEL":
                     this.voxelPainter.helper.visible = true;
                 break;
+
                 default:
                     return console.error("Invalid Mode in Controls: ", m);
             }
@@ -328,8 +370,27 @@
                     this.Controlling['objects'].push(intersect);
                 }
             }
+            else if(this._mode === 'PAINTER') {
+                //for paint
+                var intersects = this.getObjectOnMouse(event, this.Objects['paint'], true);
 
+                if(intersects.length) {
+                    var length = intersects.length;
+                    for(var i = 0; i < length; ++i) {
+                        var intersect = intersects[i],
+                            obj = intersect.object;
+                        
+                        if(obj.name === 'paintMesh') {
+                            var point = intersect.point,
+                                parent = obj.parent,
+                                context = parent.context;
 
+                            parent.mouseOnCanvas(point, 'mousedown');
+                        }
+                    }
+                }
+            }
+            //
         },
         onMouseUp:function(event){
             this.mouse.state = MOUSE_STATE.KEYUP;
@@ -350,6 +411,26 @@
                     var intersects = this.getObjectOnMouse(event, voxels, false);
                     if(intersects.length){
                         this.voxelPainter.destroy(intersects[0].object);
+                    }
+                }
+            }
+            else if(this._mode === 'PAINTER') {
+                //for paint
+                var intersects = this.getObjectOnMouse(event, this.Objects['paint'], true);
+
+                if(intersects.length) {
+                    var length = intersects.length;
+                    for(var i = 0; i < length; ++i) {
+                        var intersect = intersects[i],
+                            obj = intersect.object;
+                        
+                        if(obj.name === 'paintMesh') {
+                            var point = intersect.point,
+                                parent = obj.parent,
+                                context = parent.context;
+
+                            parent.mouseOnCanvas(point, 'mouseup');
+                        }
                     }
                 }
             }
@@ -411,6 +492,27 @@
                         this.voxelPainter.updateHelper(intersects[0]);
 
 
+                break;
+
+                case 'PAINTER':
+                //for paint
+                var intersects = this.getObjectOnMouse(event, this.Objects['paint'], true);
+
+                if(intersects.length) {
+                    var length = intersects.length;
+                    for(var i = 0; i < length; ++i) {
+                        var intersect = intersects[i],
+                            obj = intersect.object;
+                        
+                        if(obj.name === 'paintMesh') {
+                            var point = intersect.point,
+                                parent = obj.parent,
+                                context = parent.context;
+                            
+                            parent.mouseOnCanvas(point, 'mousemove');
+                        }
+                    }
+                }
                 break;
             }
         },
@@ -506,6 +608,8 @@
                 this.headDirection.enabled = false;
             }
 
+
+            this.paint.update();
         }
     };
 

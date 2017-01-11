@@ -15,27 +15,31 @@
             ///////////
             this.scene = new THREE.Scene();
             this.scene.updateMatrixWorld();
-			this.CssScene = new THREE.Scene();
+            this.CssScene = new THREE.Scene();
 
             //////////////
             // RENDERER //
             //////////////
             this.renderer = new THREE.WebGLRenderer({
-                antialias: true
+                alpha: true
             });
 
-			// this.renderer.setPixelRatio( window.devicePixelRatio );
+            this.renderer.setClearColor(0x000);
+            this.renderer.setPixelRatio(window.devicePixelRatio);
             this.renderer.setSize(window.innerWidth, window.innerHeight);
             this.renderer.domElement.style.position = 'absolute';
+            this.renderer.domElement.style.zIndex = 0;
             this.renderer.domElement.style.top = 0;
-            // this.renderer.domElement.style.zIndex = 5;
             this.container.appendChild(this.renderer.domElement);
 
-			this.CssRenderer = new THREE.CSS3DRenderer();
+            this.CssRenderer = new THREE.CSS3DRenderer();
             this.CssRenderer.setSize(window.innerWidth, window.innerHeight);
             this.CssRenderer.domElement.style.position = 'absolute';
+            this.CssRenderer.domElement.style.zIndex = 0;
             this.CssRenderer.domElement.style.top = 0;
             this.container.appendChild(this.CssRenderer.domElement);
+            // this.CssRenderer.domElement.appendChild(this.renderer.domElement);
+            // this.renderer.domElement.appendChild(this.CssRenderer.domElement);
 
             ///////////
             // STATS //
@@ -59,61 +63,26 @@
             // TODO: Think the better way to store
             // player.canMoveOn(world.ground);
 
-
             //important
-			scope.camera.updateProjectionMatrix();
-
-                //             var image = new Image();
-                // image.src = scope.paint.toDataURL('image/png');
-                // scope.
-
-            // Canvas2Image.saveAsPNG(this.paint);
+            scope.camera.updateProjectionMatrix();
 
             /////////////////////
             // FUNCTION DEFINE //
             /////////////////////
             this.render = function() {
                 var delta = scope.clock.getDelta();
-                scope.ObjectsToUpdate.forEach((obj)=>obj.update(delta < 0.03 ? delta : 0.03));
+                scope.ObjectsToUpdate.forEach((obj) => obj.update(delta < 0.03 ? delta : 0.03));
                 scope.stats.update();
-
-                // if( scope.video.readyState === scope.video.HAVE_ENOUGH_DATA ) {
-                //     scope.videoImageContext.drawImage(scope.video, 0, 0, scope.videoImage.width, scope.videoImage.height);
-                //     // scope.paintContext.drawImage(scope.video, 0, 0, paintWidth, paintHeight);
-
-
-
-                //     if( scope.videoTexture ){
-                //         scope.videoTexture.needsUpdate = true;
-                //     }
-
-
-                // }
-
-
-                // scope.paint
-
-                //             var image = new Image();
-                // image.src = scope.paint.toDataURL('image/png');
-                // scope.paintContext.drawImage(image, 0, 0, paintWidth, paintHeight);
-
-                // if(scope.paintTexture) {
-                //     scope.paintTexture.needsUpdate = true;
-                //     // console.log('YO');
-                // }
-
-
-                // scope.paintContext.drawImage(scope.dummyPaint, 0, 0, scope.videoImage.width, scope.videoImage.height);
 
                 scope.renderer.render(scope.scene, scope.camera);
                 scope.CssRenderer.render(scope.CssScene, scope.camera);
 
-                if(scope.state == GAME_STATE.RUNNING)
+                if (scope.state == GAME_STATE.RUNNING)
                     scope.requestId = requestAnimationFrame(scope.render);
                 // else if(this.state == GAME_STATE.STOP)
-                    // cancelAnimationFrame(this.requestId);
+                // cancelAnimationFrame(this.requestId);
             }
-            this.pause = function(){
+            this.pause = function() {
                 console.log("PAUSE");
                 scope.state = GAME_STATE.PAUSE;
             }
@@ -126,67 +95,53 @@
             }
             this.stop = function() {
                 scope.state = GAME_STATE.STOP;
-                if (scope.requestId){
+                if (scope.requestId) {
                     cancelAnimationFrame(scope.requestId);
-                    console.log("Game has stopped..."+scope.requestId);
+                    console.log("Game has stopped..." + scope.requestId);
                 }
+                this.container.innerHTML = '';
             }
 
             this.state = GAME_STATE.READY;
         },
-        isRunning: function(){
+        isRunning: function() {
             return this.state === GAME_STATE.RUNNING;
         },
         add: function(obj) {
             this.scene.add(obj);
         },
-        remove: function(obj){
+        remove: function(obj) {
             this.scene.remove(obj);
         },
-        addDynamicObject: function(obj, model){
-            if(!obj.update){
+        addDynamicObject: function(obj, model) {
+            if (!obj.update) {
                 console.error("This is not an Dynamic Object");
                 return;
             }
-
-            //for paint
-            if(model === 'paint') {
-               this.scene.add(obj.mesh);
-               this.CssScene.add(obj.dummyPaintCSSObj);
-               this.ObjectsToUpdate.push(obj);
-               return;
-            }
-            //
 
             // WARNING: This obj must have update();
             this.scene.add(model ? model : obj);
             this.ObjectsToUpdate.push(obj);
         },
-        addCSSObject: function(obj, model){
-            if(!obj.update){
-                console.error("There is no update() in", obj);
-                return ;
-            }
-
+        addCSSObject: function(obj, model) {
             // TODO: CssScene Must be added.
             this.CssScene.add(obj);
-            this.ObjectsToUpdate.push(obj);
         },
         children: function() {
             return scene.children;
         },
-        setController: function(controller){
-            if(this.Controller)
+        setController: function(controller) {
+            if (this.Controller)
                 this.Controller.controls.enable(false, this.container);
+
+            if (this.socket)
+                controller.socket = this.socket;
 
             // controller.in(this.scene, this.renderer);
             this.add(controller);
             this.add(controller.feet);
             this.add(controller.dummyBody);
             controller.controls = new Controls(controller).mode("normal").enable(true, this.scene, this.container);
-
-            if(this.socket)
-                controller.socket = this.socket;
 
             this.camera = controller.camera;
             this.addDynamicObject(controller);

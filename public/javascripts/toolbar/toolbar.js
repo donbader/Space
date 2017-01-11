@@ -42,13 +42,17 @@ var parameters = {
         player.controls.voxelPainter.mode("DESTROY");
     },
     Add_Friend: "",
-    Painting_Brush: function(){},
-    Painting_Eraser: function(){},
-    color : [ 0, 128, 255 ],
-    FontSize : 100,
-    Painting_Reset: function(){},
-    
-
+    Painting_Brush: function(){
+        player.controls.paint.setTool('Brush');
+    },
+    Painting_Eraser: function(){
+        player.controls.paint.setTool('Eraser');
+    },
+    Painting_Reset: function(){
+        player.controls.paint.reset();
+    },
+    color: '#ff8800',
+    FontSize : 10
 
     //
     //
@@ -72,10 +76,12 @@ gui.add(parameters, 'name').name("WELLCOME  " + username);
 var ToolsFolder = gui.addFolder('TOOLS');
 ToolsFolder.add(parameters, 'Painting_Brush').name('Brush');
 
-ToolsFolder.addColor(parameters, 'color');
+ToolsFolder.addColor(player.controls.paint, 'color');
 
 var controller = ToolsFolder.add(parameters,'FontSize',0,25);
-controller.onChange(function(value){});
+controller.onChange(function(value){
+    player.controls.paint.setContext('lineWidth', value);
+});
 
 ToolsFolder.add(parameters, 'Painting_Eraser').name('Eraser');
 ToolsFolder.add(parameters, 'Painting_Reset').name('Reset');
@@ -104,6 +110,9 @@ switchRoom.onChange(function(value) {
 
 switchRoom.onFinishChange(function(value) {
     // Connect to other's room
+    game.stop();
+    delete game;
+    player.socket.emit('join', value);
 });
 
 switchRoom.domElement.addEventListener('click', function(event) {
