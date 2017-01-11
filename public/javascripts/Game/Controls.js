@@ -86,12 +86,14 @@
         /*====================
             Game Object
         ====================*/
+        this.dom = $("#GamePlay")[0];
         this.positionFlag = new SPACE_OBJECT.PositionFlag();
         this.Objects = {
             stepOn: [],
             select: [],
             collide: [],
-            move: []
+            move: [],
+            friend: []
         };
         this.Controlling = {
             rotation: false,
@@ -194,28 +196,7 @@
 
     Controls.prototype = {
         enable: function(e, scene, dom){
-          $(function() {
-            console.log("right click!!!");
-            $.contextMenu({
-              selector: 'dom',
-              callback: function(key, options) {
-                var m = "clicked: " + key;
-                window.console && console.log(m) || alert(m);
-              },
-              items: {
-          "edit": {name: "Edit", icon: "edit"},
-          "cut": {name: "Cut", icon: "cut"},
-         copy: {name: "Copy", icon: "copy"},
-          "paste": {name: "Paste", icon: "paste"},
-          "delete": {name: "Delete", icon: "delete"},
-          "sep1": "---------",
-          "quit": {name: "Quit", icon: function(){
-              return 'context-menu-icon context-menu-icon-quit';
-          }}
-      }
-  })
-});
-
+            console.log("ENABLE CONTROLS", e, scene, dom);
             if(e && scene){
                 this.scene = scene;
                 scene.add(this.positionFlag);
@@ -226,7 +207,7 @@
                 scene.remove(this.voxelPainter.helper);
             }
             var scope = this;
-            dom = dom || document;
+            dom = dom || this.dom;
             var handle = e ? dom.addEventListener : dom.removeEventListener;
 
             // contextMenu
@@ -236,6 +217,7 @@
                     callback: function(key, options) {
                         switch (key) {
                             case "delete":
+                                if(scope.Controlling['object'])
                                 scope.Controlling['object'].parent.remove(scope.Controlling['object']);
                                 break;
                             default:
@@ -270,6 +252,7 @@
             handle('mousewheel', (event)=>scope.onMouseWheel(event));
 
             this.enabled = e;
+            this.dom = dom;
             return this;
         },
         mode: function(m) {
@@ -302,8 +285,9 @@
             }
             if(item.userData.prop){
                 for(var manipulate in item.userData.prop){
-                    if(item.userData.prop[manipulate])
+                    if(item.userData.prop[manipulate]){
                         this.can(manipulate, [item]);
+                    }
                 }
             }
         },
@@ -321,7 +305,7 @@
         },
         onKey: function(dir, event) {
             event.stopPropagation();
-
+            console.log("666")
             var key = event.key.toUpperCase();
             var bool = dir === "down" ? true : false;
 
@@ -357,14 +341,14 @@
             else if(this._mode === "VOXEL" && event.which !== 3){
                 if(this.voxelPainter._mode === "CREATE" && this.voxelPainter.prevIntersect !== this.voxelPainter.intersect){
                     if(!this.voxelPainter.scene) this.voxelPainter.setScene(this.scene);
-                    this.voxelPainter.create();
+                    this.voxelPainter.create(undefined, this.player.socket);
                     this.voxelPainter.prevIntersect = this.voxelPainter.intersect;
                 }
                 else if(this.voxelPainter._mode === "DESTROY"){
                     var voxels = this.voxelPainter.Objects.children;
                     var intersects = this.getObjectOnMouse(event, voxels, false);
                     if(intersects.length){
-                        this.voxelPainter.destroy(intersects[0].object);
+                        this.voxelPainter.destroy(intersects[0].object, this.player.socket);
                     }
                 }
             }
@@ -430,19 +414,40 @@
         onRightClick:function(event){
         	event.preventDefault();
 
-        	var mousePosition = new THREE.Vector2();
-        	mousePosition.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-        	mousePosition.y = 1 - ( event.clientY / window.innerHeight ) * 2;
-
             if(this._mode === "NORMAL"){
-                $("#GamePlay").contextMenu(false);
-                var intersects = this.getObjectOnMouse(event, this.Objects['stepOn'], true);
-                if(intersects.length){
-                    var positionFlag = this.positionFlag;
-                    positionFlag.visible = true;
-                    positionFlag.position.set(intersects[0].point.x, intersects[0].point.y + positionFlag.height/2, intersects[0].point.z);
-                    this.move.method = "MOUSECLICK";
-                    this.move.to.destination.copy(intersects[0].point);
+                var intersectPeople = this.getObjectOnMouse(event, this.Objects['friend'], true);
+                if(!intersectPeople.length){
+                    $("#GamePlay").contextMenu(false);
+                    var intersects = this.getObjectOnMouse(event, this.Objects['stepOn'], true);
+                    if(intersects.length){
+                        var positionFlag = this.positionFlag;
+                        positionFlag.visible = true;
+                        positionFlag.position.set(intersects[0].point.x, intersects[0].point.y + positionFlag.height/2, intersects[0].point.z);
+                        this.move.method = "MOUSECLICK";
+                        this.move.to.destination.copy(intersects[0].point);
+                    }
+                }
+                else{
+                    console.log("HIHI");
+                    $("#GamePlay").contextMenu(false);
+                    $.contextMenu({
+                        selector: '#GamePlay',
+                        callback: function(key, options) {
+                            switch (key) {
+                                case "Fuck":
+                                    scope.Controlling['object'].parent.remove(scope.Controlling['object']);
+                                    break;
+                                default:
+
+                            }
+                            scope.Controlling.method = "select";
+                            scope.Controlling.contextMenuing = false;
+                        },
+                        items: {
+                            "FUCK": {name: "Fuck", icon: "delete"}
+                        }
+                    });
+                    $("#GamePlay").contextMenu(true);
                 }
             }
             else if(this._mode === "OBJ_EDITING"){

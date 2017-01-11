@@ -78,6 +78,9 @@ Room.prototype.render = function(username, callbacks){
                 });
                 return;
             }
+            else if(item.from === "voxel"){
+                callbacks.voxel && callbacks.voxel(item);
+            }
             else{
                 var from = item.from.split(".");
                 if(from[1] === "VoxelWarehouse"){
@@ -92,6 +95,37 @@ Room.prototype.render = function(username, callbacks){
                 callbacks.user(userdata);
             }
         })
+    });
+}
+
+Room.prototype.appendVoxel = function(posName, color, callback){
+    this.do((room)=>{
+        var index = room.items.findIndex((e)=>{e.from === "voxel"});
+        if(index === -1){
+            // create a
+            var item = {};
+            item.from = "voxel";
+            item.type = "voxel";
+            item[posName] = color;
+            room.items.push(item);
+        }
+        else {
+            room.items[index][posName] = color;
+        }
+        // update to user
+        callback && callback(posName, color);
+    });
+};
+
+Room.prototype.deleteVoxel = function(posName, callback){
+    this.do((room)=>{
+        var index = room.items.findIndex((e)=>{e.from === "voxel"});
+        if(index === -1)return;
+        else {
+            delete room.items[index][posName];
+        }
+        // update to user
+        callback && callback(posName);
     });
 }
 

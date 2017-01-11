@@ -1,4 +1,5 @@
 $("#GamePlay").on('AfterLogIn', ()=>{
+if(window.hasGUI)return;
 
 var gui = new dat.GUI({
     width: 350,
@@ -108,6 +109,9 @@ switchRoom.onChange(function(value) {
 
 switchRoom.onFinishChange(function(value) {
     // Connect to other's room
+    game.stop();
+    delete game;
+    player.socket.emit('join', value);
 });
 
 switchRoom.domElement.addEventListener('click', function(event) {
@@ -164,4 +168,5 @@ Add_Friend.domElement.addEventListener('click', function(event) {
 // folder1.add( parameters, 'y' );
 // folder1.close();
 gui.open();
+window.hasGUI = true;
 });

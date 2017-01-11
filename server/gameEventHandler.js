@@ -25,9 +25,9 @@ handler.setServer = function(s) {
 handler.connection = function(client) {
     var USER, ROOMID;
     User.getByName(client.handshake.query.username, (err, user) => {
+        if (!user) return console.error("No this user");
         USER = user;
         log("[Connection]", "(", user.name, ")", client.id);
-        if (!user) return console.error("No this user");
         user.id = client.id;
 
         GameSet(user);
@@ -163,6 +163,13 @@ handler.connection = function(client) {
                 user: (anotherUser) => {
                     client.emit('add user', anotherUser);
                     client.broadcast.to(roomID).emit('fetch userdata', user.id);
+                },
+                voxel: (voxel)=>{
+                    for(var pos in voxel){
+                        if(pos !== "from"){
+                            client.emit('render item', {position:stringToVector(pos),type:"voxel",color:voxel[pos]});
+                        }
+                    }
                 }
             });
             RoomManager.getRoom("corey").do((room) => {
@@ -226,7 +233,10 @@ handler.connection = function(client) {
             // client.emit('RTC start');
             //
 
-            client.emit("start game");
+            client.on('game ready', function(){
+                client.emit("start game");
+            });
+
 
             // Event handler
             client.on('Voxel upload', function(data){
@@ -244,7 +254,26 @@ handler.connection = function(client) {
 
             client.on('Voxel delete', function(name){
                 User.deleteVoxel(user.name, name);
-            })
+            });
+
+            client.on('voxel create', function(data){
+                RoomManager.getRoom(roomID).appendVoxel(vectorToString(data.position), data.color, ()=>{
+                    client.broadcast.to(roomID).emit('render item', {
+                        type: "voxel",
+                        position: data.position,
+                        color: data.color
+                    });
+                });
+            });
+
+            client.on('voxel destroy', function(data){
+                RoomManager.getRoom(roomID).deleteVoxel(vectorToString(data.position), ()=>{
+                    client.broadcast.to(roomID).emit('remove item', {
+                        type: "voxel",
+                        position: data.position
+                    });
+                });
+            });
         });
     }
 }
@@ -261,5 +290,17 @@ function tabs(n) {
     return " ".repeat(n * 4);
 }
 
+function vectorToString(v){
+    return v.x + ','+v.y+','+v.z;
+}
+
+function stringToVector(s){
+    var a = s.split(',');
+    return {
+        x: parseFloat(a[0]),
+        y: parseFloat(a[1]),
+        z: parseFloat(a[2])
+    }
+}
 
 module.exports = handler;

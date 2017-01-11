@@ -54,6 +54,12 @@ var Character = this.Character = THREE.Object3D.extend({
         this._view = "THIRD_PERSON";
         this.view(this._view);
 
+        // Can be friend1
+        this.userData.prop = {
+            friend:true,
+            collide:true
+        }
+
         // webcam
         this.webcam = new SPACE_OBJECT.WebCam(100,100, new THREE.Vector3(0,this.info.height * 3/2,0));
         this.add(this.webcam);
