@@ -1,6 +1,6 @@
 ![banner](/public/images/logo_banner.png)
 # Space
-![npm](https://david-dm.org/donbader/Space.svg)
+![npm](https://img.shields.io/npm/v/npm.svg)
 ![license](https://img.shields.io/npm/l/express.svg)
 
 Space create the possibility for users to **Create Their Own Area** !
