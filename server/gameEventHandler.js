@@ -196,11 +196,7 @@ handler.connection = function(client) {
 
             //for paint
             client.on('draw start', (info) => {
-                console.log('draw start');
                 RoomManager.getRoom(ROOMID).do((room) => {
-
-                console.log('info[x] = ' + info.x,' info[y] = ', info.y, ' lineWidth = ' + info.lineWidth);
-
                     room.users.forEach((roomUser) => {
                         // console.log('roomUser ' + roomUser.name + ' in ' + room);
 
@@ -240,7 +236,6 @@ handler.connection = function(client) {
             });
 
             client.on('draw end', (info) => {
-                console.log('draw end');
                 RoomManager.getRoom(ROOMID).do((room) => {
                     room.users.forEach((roomUser) => {
                         // console.log('roomUser ' + roomUser.name + ' in ' + room);

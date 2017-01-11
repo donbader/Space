@@ -42,12 +42,15 @@ var parameters = {
         player.controls.voxelPainter.mode("DESTROY");
     },
     Add_Friend: "",
-    Painting_Brush: function(){},
-    Painting_Eraser: function(){},
+    Painting_Brush: function(){
+        player.controls.paint.setTool('Brush');
+    },
+    Painting_Eraser: function(){
+        player.controls.paint.setTool('Eraser');
+    },
     // color : [ 0, 128, 255 ],
     color: '#ff8800',
-    FontSize : 100
-
+    FontSize : 10
 
     //
     //
@@ -75,7 +78,6 @@ ViewsFloder.add(parameters, 'ThirdPerson_view').name("Third-Person");
 var ToolsFolder = gui.addFolder('TOOLS');
 ToolsFolder.add(parameters, 'Painting_Brush').name('Brush');
 
-// ToolsFolder.addColor(parameters, 'color');
 ToolsFolder.addColor(player.controls.paint, 'color');
 
 

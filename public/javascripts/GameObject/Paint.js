@@ -1,8 +1,5 @@
 (function() {
-    const toolMode = { Brush: 0, Eraser: 1 },
-        fontColors = ['red', 'blue', 'green', 'purple', 'yellow', 'orange', 'pink', 'black', 'white'],
-        fontSizes = [1, 3, 5, 10, 15, 20],
-        fontSizeNames = ['default', 'three', 'five', 'ten', 'fifteen', 'twenty'];
+    const toolMode = ['Brush', 'Eraser'];
 
     var Paint = this.Paint = THREE.Object3D.extend({
         init: function(width, height, position, server) {
@@ -14,41 +11,6 @@
             this.paintPosition = position;
             this.server = server;
             this.pivot = new THREE.Vector3(this.paintPosition.x - this.width * 0.5, this.paintPosition.y + this.height * 0.5, this.paintPosition.z);
-
-            // //to create reset button
-            // var button = document.createElement('input');
-            // button.setAttribute('type', 'button');
-            // button.setAttribute('id', 'reset');
-            // button.setAttribute('value', 'Reset');
-            // this.reset = button;
-
-            // //to create color button
-            // this.colorButtons = [];
-            // var length = fontColors.length;
-            // for (var i = 0; i < length; ++i) {
-            //     var div = document.createElement('div');
-            //     div.setAttribute('id', fontColors[i]);
-            //     div.setAttribute('class', 'color');
-            //     this.colorButtons[i] = div;
-            // }
-
-            // //to create size button
-            // this.sizeButtons = [];
-            // length = fontSizes.length;
-            // for (var i = 0; i < length; ++i) {
-            //     var div = document.createElement('div');
-            //     div.setAttribute('id', fontSizeNames[i]);
-            //     div.setAttribute('class', 'color');
-            //     $(div).text(fontSizes[i]);
-            //     this.sizeButtons[i] = div;
-            // }
-
-            // //to create eraser button
-            // var div = document.createElement('div');
-            // div.setAttribute('id', 'eraser');
-            // div.setAttribute('class', 'color');
-            // $(div).html('<img src = "images/Eraser.jpg">');
-            // this.eraser = div;
 
             this.userData.prop = {
                 paint: true
@@ -86,34 +48,11 @@
             this.mesh.position.set(this.paintPosition.x, this.paintPosition.y, this.paintPosition.z);
             this.add(this.mesh);
 
-            //to init
-            //to set button click evnet
-            // length = fontColors.length;
-            // for (var i = 0; i < length; ++i) {
-            //     this.fontColorClick(i);
-            //     // this.setContext('strokeStyle', fontColors[i]);
-            // }
-
-            // length = fontSizes.length;
-            // for (var i = 0; i < length; ++i) {
-            //     this.fontSizeClick(i);
-            //     // this.setContext('lineWidth', fontSizes[i]);
-            // }
-
-            // $('#eraser').on('click', () => {
-            //     this.setTool(toolMode.Eraser);
-            // });
-
-            // $('#reset').on('click', () => {
-            //     this.clear(0, 0, this.width, this.height);
-            // });
-
-            this.setTool(toolMode.Brush);
+            this.setTool('Brush');
+            //for GUI
             this.color = '#000000';
             this.context.lineWidth = 10;
             this.context.strokeStyle = this.color;
-            // this.setContext('lineWidth', this.color);
-            // this.setContext('strokeStyle', fontColors[7]);
 
             this.addHandlers();
         },
@@ -136,13 +75,11 @@
             // console.log('draw type = ', type);
 
             if (type === 'mousedown') {
-                // this.context.beginPath();
-                // this.context.moveTo(x, y);
                 this.setContext('strokeStyle', this.color);
                 this.drawStart(x, y);
                 this.isDraw = true;
 
-                this.server.emit('draw start', { x: x, y: y });
+                this.server.emit('draw start',  { x: x, y: y, lineWidth: this.context.lineWidth, color: this.context.strokeStyle, tool: this.tool});
             } else if (type === 'mousemove' && this.isDraw) {
                 this.mouseMove(x, y);
             } else if (type === 'mouseup') {
@@ -154,39 +91,22 @@
         },
         setContext: function(attr, value) {
             this.context[attr] = value;
-
-            //socket
-            // this.server.emit('')
         },
         setTool: function(tool) {
             this.tool = tool;
-
-            //socket
         },
         clear: function(x, y, width, height) {
             this.context.clearRect(x, y, width, height);
 
             //socket
         },
-        getMousePos: function(canvas, event) {
-            console.log('get mouser position');
-
-            var rect = canvas.getBoundingClientRect();
-            console.log('event.clientX = ' + event.clientX + ' event.clientY = ' + event.clientY);
-            console.log('rect left = ' + rect.left + ' rect.top = ' + rect.top);
-            return {
-                x: event.clientX - rect.left,
-                y: event.clientY - rect.top
-            };
-        },
         mouseMove: function(x, y) {
             switch (this.tool) {
-                case toolMode.Brush:
+                case 'Brush':
                     this.drawing(x, y);
-                    // console.log('lineWidth: ' + this.context.lineWidth + ' color: ' + this.context.strokeStyle);
-                    this.server.emit('drawing paint', { x: x, y: y, lineWidth: this.context.lineWidth, color: this.context.strokeStyle});
+                    this.server.emit('drawing paint', { x: x, y: y});
                     break;
-                case toolMode.Eraser:
+                case 'Eraser':
                     this.erasing(x, y);
                     this.server.emit('erasing paint', { x: x, y: y });
                     break;
@@ -199,13 +119,13 @@
         addHandlers: function() {
             this.server.on('drawn start', (info) => {
                 this.preLineWidth = this.context.lineWidth;
-                console.log('line width [] = ', info['lineWidth']);
-                console.log('line width = ', info.lineWidth);
                 this.setContext('lineWidth', info.lineWidth);
 
                 this.preColor = this.context.strokeStyle;
-                console.log('stroke style = ', info.color);
                 this.setContext('strokeStyle', info.color);
+
+                this.preTool = this.tool;
+                this.tool = info.tool;
 
                 this.drawStart(info.x, info.y);
             });
@@ -222,7 +142,8 @@
                 this.drawEnd();
 
                 this.setContext('lineWidth', this.preLineWidth);
-                this.setContext('strokeStyle', this.strokeStyle);
+                this.setContext('strokeStyle', this.preColor);
+                this.tool = this.preTool;
             });
 
             this.server.on('set paint url', (url) => {
@@ -231,30 +152,9 @@
                 this.context.drawImage(image, 0, 0, this.width, this.height);
 
                 if (this.texture) {
-                    // console.log('update paint texture');
                     this.texture.needsUpdate = true;
                 }
             });
-        },
-        fontColorClick: function(i) {
-            $(this.colorButtons[i]).on('click', () => {
-                this.setContext('strokeStyle', fontColors[i]);
-                this.setTool(toolMode.Brush);
-            });
-
-            // $('#' + fontColors[i]).on('click', () => {
-            //     this.setContext('strokeStyle', fontColors[i]);
-            //     this.setTool(toolMode.Brush);
-            // });
-        },
-        fontSizeClick: function(i) {
-            $(this.sizeButtons[i]).on('click', () => {
-                this.setContext('lineWidth', fontSizes[i]);
-            });
-
-            // $('#' + fontSizeNames[i]).on('click', () => {
-            //     this.setContext('lineWidth', fontSizes[i]);
-            // });
         },
         update: function() {
             var image = new Image();
@@ -269,13 +169,7 @@
         save: function(name, socket) {
             if (!name || !socket) return;
 
-            // var image = new Image();
             var url = this.paint.toDataURL('image/png');
-
-            console.log('url in local = ', url);
-            // console.log('url string in local = ', JSON.stringify(url));
-
-            // socket.emit('paint upload', JSON.stringify(url));
             socket.emit('paint upload', url);
             console.log('paint has saved');
         }
