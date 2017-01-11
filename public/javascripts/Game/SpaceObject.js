@@ -217,12 +217,13 @@
                 scene.add(voxel);
             },
             destroy: function(voxel,socket){
-                this.Objects.remove(voxel);
+                voxel.parent.remove(voxel);
 
                 if(socket)
                     socket.emit('voxel destroy', voxel.position)
             },
             destroyVoxel: function(scene, position){
+                console.log("destroy voxel at ", position);
                 for(var i in scene.children){
                     if(scene.children[i].name === "voxel"){
                         if(scene.children[i].position.x === position.x

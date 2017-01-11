@@ -206,7 +206,7 @@
         //for paint
         hotkey["P"] = function(event, bool){
             if(!bool)return;
-            
+
             (scope._mode !== 'PAINTER') ?
                 scope.mode('PAINTER') :
                 scope.mode(scope._prevMode);
@@ -379,7 +379,7 @@
                     for(var i = 0; i < length; ++i) {
                         var intersect = intersects[i],
                             obj = intersect.object;
-                        
+
                         if(obj.name === 'paintMesh') {
                             var point = intersect.point,
                                 parent = obj.parent,
@@ -407,10 +407,12 @@
                     this.voxelPainter.prevIntersect = this.voxelPainter.intersect;
                 }
                 else if(this.voxelPainter._mode === "DESTROY"){
-                    var voxels = this.voxelPainter.Objects.children;
-                    var intersects = this.getObjectOnMouse(event, voxels, false);
-                    if(intersects.length){
-                        this.voxelPainter.destroy(intersects[0].object, this.player.socket);
+                    var intersects = this.getObjectOnMouse(event, this.scene.children, true);
+                    for(var i in intersects){
+                        if(intersects[i].object.name === "voxel"){
+                            this.voxelPainter.destroy(intersects[i].object, this.player.socket);
+                            return;
+                        }
                     }
                 }
             }
@@ -423,7 +425,7 @@
                     for(var i = 0; i < length; ++i) {
                         var intersect = intersects[i],
                             obj = intersect.object;
-                        
+
                         if(obj.name === 'paintMesh') {
                             var point = intersect.point,
                                 parent = obj.parent,
@@ -485,9 +487,16 @@
                     break;
                 case "VOXEL":
                     var voxels = this.voxelPainter.Objects.children;
-                    var intersects = this.getObjectOnMouse(event, this.Objects['stepOn'].concat(voxels), true);
-                    if(intersects.length)
-                        this.voxelPainter.updateHelper(intersects[0]);
+                    var intersects = this.getObjectOnMouse(event, this.scene.children, true);
+                    if(intersects.length){
+                        for(var i in intersects){
+                            if(intersects[i].object.name === "voxel" || intersects[i].object.name === "ground"){
+                                this.voxelPainter.updateHelper(intersects[i]);
+                                return;
+                            }
+
+                        }
+                    }
 
 
                 break;
@@ -501,12 +510,12 @@
                     for(var i = 0; i < length; ++i) {
                         var intersect = intersects[i],
                             obj = intersect.object;
-                        
+
                         if(obj.name === 'paintMesh') {
                             var point = intersect.point,
                                 parent = obj.parent,
                                 context = parent.context;
-                            
+
                             parent.mouseOnCanvas(point, 'mousemove');
                         }
                     }

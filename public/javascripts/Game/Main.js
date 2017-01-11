@@ -56,7 +56,7 @@ socket.on('start game', function(){
 
 window.username = username;
 window.roomID = roomID;
-window.player = player; 
+window.player = player;
 window.game = game;
     $("#GamePlay").trigger('AfterLogIn');
 
@@ -109,10 +109,11 @@ socket.on('render item', function(data){
 });
 
 socket.on('remove item', function(data){
+    console.log('remove item',data);
     switch (data.type) {
         case "voxel":
             var painter = player.controls.voxelPainter;
-            painter.deleteVoxel(data.position);
+            painter.destroyVoxel(game.scene, data.position);
             break;
         default:
 

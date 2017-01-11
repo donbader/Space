@@ -340,10 +340,10 @@ handler.connection = function(client) {
             });
 
             client.on('voxel destroy', function(data){
-                RoomManager.getRoom(roomID).deleteVoxel(vectorToString(data.position), ()=>{
+                RoomManager.getRoom(roomID).deleteVoxel(vectorToString(data), (posName)=>{
                     client.broadcast.to(roomID).emit('remove item', {
                         type: "voxel",
-                        position: data.position
+                        position: stringToVector(posName)
                     });
                 });
             });
@@ -364,6 +364,7 @@ function tabs(n) {
 }
 
 function vectorToString(v){
+    if(!v||!v.x || !v.y || !v.z)return;
     return v.x + ','+v.y+','+v.z;
 }
 

@@ -101,7 +101,7 @@ Room.prototype.render = function(username, callbacks){
 //for paint
 Room.prototype.uploadPaint = function(url, callback) {
     if(!callback) return;
-    
+
     this.do(function(room) {
         room.paint = url;
     });
@@ -115,6 +115,7 @@ Room.prototype.getPaint = function(callback) {
 }
 //
 Room.prototype.appendVoxel = function(posName, color, callback){
+    if(!posName)return;
     this.do((room)=>{
         var index = room.items.findIndex((e)=>{e.from === "voxel"});
         if(index === -1){
@@ -134,8 +135,10 @@ Room.prototype.appendVoxel = function(posName, color, callback){
 };
 
 Room.prototype.deleteVoxel = function(posName, callback){
+    console.log('[deleteVoxel]', posName);
+    if(!posName)return;
     this.do((room)=>{
-        var index = room.items.findIndex((e)=>{e.from === "voxel"});
+        var index = room.items.findIndex((e)=>{return e.from === "voxel"});
         if(index === -1)return;
         else {
             delete room.items[index][posName];
