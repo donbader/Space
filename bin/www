@@ -11,11 +11,12 @@ var https = require('https');
 // Socket EventHandler
 var io = require('socket.io')
 var gameEventHandler = require('../server/gameEventHandler');
+var path = require('path');
 
 
 var options = {
-  key : fs.readFileSync('./https/privatekey.pem'),
-  cert : fs.readFileSync('./https/certificate.pem')
+  key : fs.readFileSync(path.join(__dirname, '../https/privatekey.pem')),
+  cert : fs.readFileSync(path.join(__dirname, '../https/certificate.pem'))
 };
 
 /**hi
